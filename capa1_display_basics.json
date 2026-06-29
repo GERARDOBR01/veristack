@@ -1,0 +1,27 @@
+{
+  "version": "1.0",
+  "descripcion": "Básicos de display permanentes",
+  "criterios": [
+    {
+      "id": "triangulacion",
+      "aliases": ["triangulo", "disposicion_triangular"],
+      "texto": "Los productos se deben disponer en forma triangular con el producto principal al centro.",
+      "peso": "MANDATORY",
+      "aplica_a": null
+    },
+    {
+      "id": "precio_visible",
+      "aliases": ["etiqueta_precio", "visibilidad_precio"],
+      "texto": "El precio debe ser visible desde el frente sin necesidad de manipular el producto.",
+      "peso": "MANDATORY",
+      "aplica_a": null
+    },
+    {
+      "id": "limpieza_area",
+      "aliases": ["orden", "limpieza"],
+      "texto": "El área de display debe estar limpia y libre de material ajeno a la exhibición.",
+      "peso": "RECOMMENDATION",
+      "aplica_a": null
+    }
+  ]
+}

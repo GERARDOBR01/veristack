@@ -1,0 +1,22 @@
+{
+  "version": "1.0",
+  "etapa": "verano_2025",
+  "vigencia_inicio": "2025-06-01",
+  "vigencia_fin": "2025-08-31",
+  "criterios": [
+    {
+      "id": "grafico_etapa",
+      "aliases": ["grafico_campana", "grafico_temporada", "grafico_verano"],
+      "texto": "El gráfico de campaña verano 2025 debe estar presente en la posición superior del focal.",
+      "peso": "MANDATORY",
+      "aplica_a": null
+    },
+    {
+      "id": "producto_estrella_verano",
+      "aliases": ["hero_product", "producto_destacado"],
+      "texto": "El producto estrella de la temporada verano 2025 debe ocupar la posición central y de mayor jerarquía.",
+      "peso": "RECOMMENDATION",
+      "aplica_a": ["focal_show", "mesa_show"]
+    }
+  ]
+}
