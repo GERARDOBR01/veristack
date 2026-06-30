@@ -1,0 +1,75 @@
+{
+  "version": "1.0",
+  "descripcion": "Básicos de display permanentes Liverpool",
+  "criterios": [
+    {
+      "id": "limpieza",
+      "aliases": [
+        "mueble limpio",
+        "sin polvo",
+        "mercancia limpia"
+      ],
+      "texto": "Mantener la mercancía y mobiliario limpios para no afectar la imagen de la tienda y de los productos que exhibimos.",
+      "peso": "MANDATORY",
+      "aplica_a": null
+    },
+    {
+      "id": "alineacion",
+      "aliases": [
+        "pasillo libre",
+        "mueble derecho",
+        "sin estorbar"
+      ],
+      "texto": "Medida minima de pasillo 90 cm. Distribuir el Mobiliario o producto sobre una línea horizontal o vertical que facilite la circulación.",
+      "peso": "MANDATORY",
+      "aplica_a": null
+    },
+    {
+      "id": "planchado",
+      "aliases": [
+        "ropa lisa",
+        "sin arrugas",
+        "bien vaporizada"
+      ],
+      "texto": "Todas las prendas sin excepción deben de estar planchadas, dando prioridad a perimetros y frentes de departamentos.",
+      "peso": "MANDATORY",
+      "aplica_a": null
+    },
+    {
+      "id": "colorizacion",
+      "aliases": [
+        "acomodo por color",
+        "degradado",
+        "tonos juntos"
+      ],
+      "texto": "Ordenar la mercancía de acuerdo a una guía de color. CÁLIDOS, FRÍOS, NEUTROS.",
+      "peso": "RECOMMENDATION",
+      "aplica_a": null
+    },
+    {
+      "id": "triangulacion",
+      "aliases": [
+        "efecto piramide",
+        "focal en triangulo",
+        "alturas diferentes"
+      ],
+      "texto": "El ojo humano ve mas atractivo las formas triangulares por su anatomia, por lo que buscamos triangular las focales.",
+      "peso": "RECOMMENDATION",
+      "aplica_a": null
+    },
+    {
+      "id": "surtido",
+      "aliases": [
+        "mueble lleno",
+        "resurtido",
+        "sin huecos"
+      ],
+      "texto": "Surtido, lo que no se ve no se vende. Abastecer de producto.",
+      "peso": "MANDATORY",
+      "aplica_a": null
+    }
+  ],
+  "schema_version": "1.0",
+  "fecha_actualizacion": "2026-06-28",
+  "hash_contenido": "8dead25bb6fcae2deefbd36d5ede3456"
+}

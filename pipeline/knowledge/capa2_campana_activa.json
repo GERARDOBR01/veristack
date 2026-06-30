@@ -1,0 +1,66 @@
+{
+  "version": "1.0",
+  "etapa": "gran_barata_pv2026",
+  "vigencia_inicio": "2026-06-22",
+  "vigencia_fin": "2026-08-09",
+  "criterios": [
+    {
+      "id": "vigencia_campana",
+      "aliases": [
+        "graficos actuales",
+        "fechas validas",
+        "material de temporada"
+      ],
+      "texto": "VIGENCIA: 22 de junio al 9 de agosto 2026. Se desechan materiales con vigencia.",
+      "peso": "MANDATORY",
+      "aplica_a": null
+    },
+    {
+      "id": "etiquetado_maniquies",
+      "aliases": [
+        "precio en cadera",
+        "etiqueta de promo",
+        "señalizacion de maniqui"
+      ],
+      "texto": "2 maniquíes - 1 etiqueta, 3 maniquíes - 2 etiquetas, 5 maniquíes - 3 etiquetas. NOTA: Recuerda que las etiquetas solo van en la cadera del maniquí.",
+      "peso": "MANDATORY",
+      "aplica_a": null
+    },
+    {
+      "id": "focales_sin_mezcla",
+      "aliases": [
+        "mismo descuento",
+        "no revolver promos",
+        "porcentaje unificado"
+      ],
+      "texto": "Exhibir el producto por descuento sin mezclar.",
+      "peso": "MANDATORY",
+      "aplica_a": null
+    },
+    {
+      "id": "materiales_focales_softline",
+      "aliases": [
+        "solo torres y maniquies",
+        "sin graficos extra",
+        "focal limpio"
+      ],
+      "texto": "En los focales solo se colocan los gráficos de torres slim y maniquíes.",
+      "peso": "MANDATORY",
+      "aplica_a": null
+    },
+    {
+      "id": "agrupacion_mercancia",
+      "aliases": [
+        "bloque de barata",
+        "liquidaciones al frente",
+        "frentes de descuento"
+      ],
+      "texto": "Agrupar la mercancía calificada con Barata y Liquidación al frente de la sección sin mezclar.",
+      "peso": "MANDATORY",
+      "aplica_a": null
+    }
+  ],
+  "schema_version": "1.0",
+  "fecha_actualizacion": "2026-06-28",
+  "hash_contenido": "0a495047fd9e416394e0e339dcd3110d"
+}

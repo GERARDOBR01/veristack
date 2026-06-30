@@ -18,13 +18,16 @@ El modelo entra ÚNICAMENTE en PASO 6, nunca antes.
 """
 
 import json
+import logging
 import os
 import re
 import ssl
 import sys
+import time
 import urllib.error
 import urllib.request
 from dataclasses import dataclass, field
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional
 
@@ -35,6 +38,30 @@ import confidence_engine
 from mandatory_engine import ConfigEngine, ResultadoPipeline, Severidad
 from retrieval_engine import Confianza, ConfigRetrieval, Peso, ResultadoRetrieval
 from confidence_engine import ConfigConfianza, ResultadoConfianza
+
+# Logger del pipeline. La aplicación decide handlers/nivel; aquí solo se
+# registra un NullHandler para no emitir warnings si nadie configura logging.
+logger = logging.getLogger("visual_lv.pipeline")
+logger.addHandler(logging.NullHandler())
+
+# Versión del contrato de salida (ResultadoFinal). Si cambia, la UI lo detecta.
+SCHEMA_VERSION_SALIDA = "1.0"
+
+
+def _log_paso(nivel: int, paso: str, criterio: str, accion: str,
+              detalle: str = "", ms: Optional[int] = None) -> None:
+    """Formato uniforme: [PASO_N][criterio] acción — detalle (Xms)."""
+    msg = f"[{paso}][{criterio or '-'}] {accion}"
+    if detalle:
+        msg += f" — {detalle}"
+    if ms is not None:
+        msg += f" ({ms}ms)"
+    logger.log(nivel, msg)
+
+
+def _ahora_iso() -> str:
+    """Timestamp ISO 8601 en UTC."""
+    return datetime.now(timezone.utc).isoformat()
 
 
 # ──────────────────────────────────────────────
@@ -50,6 +77,11 @@ class ResultadoFinal:
     tokens_modelo_usados:           int  = 0
     criterios_decididos_por_codigo: int  = 0
     criterios_delegados_a_modelo:   int  = 0
+    # ── Contrato de salida versionado (MEJORA 4) ──
+    schema_version:                 str  = SCHEMA_VERSION_SALIDA
+    timestamp_evaluacion:           str  = ""
+    duracion_ms:                    int  = 0
+    versiones_capas:                dict = field(default_factory=dict)
 
 
 # ──────────────────────────────────────────────
@@ -261,12 +293,21 @@ def _construir_prompt(
 
 
 # ── Configuración del modelo ───────────────────────────────────────
-GEMINI_MODEL     = "gemini-1.5-pro"
-GEMINI_ENDPOINT  = (
+GEMINI_MODEL        = "gemini-1.5-pro"
+GEMINI_ENDPOINT     = (
     "https://generativelanguage.googleapis.com/v1beta/models/"
     "{model}:generateContent"
 )
-GEMINI_TIMEOUT_S = 30
+GEMINI_TIMEOUT_S    = 15            # timeout por intento (MEJORA 3)
+GEMINI_MAX_INTENTOS = 3             # número máximo de intentos
+GEMINI_BACKOFF_S    = (1, 2, 4)     # espera tras cada intento fallido
+# Códigos HTTP deterministas: reintentar no ayuda, se aborta de inmediato.
+_HTTP_NO_REINTENTABLES = frozenset({400, 401, 403, 404})
+
+
+def _ms(t0: float) -> int:
+    """Milisegundos transcurridos desde t0 (time.perf_counter())."""
+    return int((time.perf_counter() - t0) * 1000)
 
 # Instrucción de formato que se agrega al final del prompt antes de enviarlo
 # al modelo. El prompt original (de _construir_prompt) no se modifica.
@@ -357,17 +398,22 @@ def _llamar_modelo(prompt: str) -> tuple[str, int]:
     Agrega la instrucción de formato JSON al final y normaliza la respuesta al
     shape que _merge_veredictos() sabe parsear.
 
+    Reintentos (MEJORA 3): hasta GEMINI_MAX_INTENTOS, con backoff
+    GEMINI_BACKOFF_S (1→2→4s) y timeout GEMINI_TIMEOUT_S por intento.
+    Loggea WARNING en cada reintento y ERROR si se agotan los intentos.
+    Los códigos HTTP deterministas (_HTTP_NO_REINTENTABLES) abortan sin reintentar.
+
     Retorna (json_respuesta, tokens_usados).
-    Ante cualquier fallo de API o respuesta inválida retorna ("", 0|tokens) —
-    loguea a stderr y nunca lanza excepción (PASO 6 no debe tumbar el pipeline).
+    Ante cualquier fallo o respuesta inválida retorna ("", 0|tokens) — nunca
+    lanza excepción (PASO 6 no debe tumbar el pipeline).
     """
     if not prompt:
         return "", 0
 
     api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key:
-        print("[_llamar_modelo] GEMINI_API_KEY no está definida en el entorno.",
-              file=sys.stderr)
+        _log_paso(logging.WARNING, "PASO_4", "-",
+                  "modelo no invocado", "GEMINI_API_KEY ausente en el entorno")
         return "", 0
 
     url    = GEMINI_ENDPOINT.format(model=GEMINI_MODEL) + f"?key={api_key}"
@@ -380,39 +426,55 @@ def _llamar_modelo(prompt: str) -> tuple[str, int]:
             "response_mime_type": "application/json",
         },
     }
-    req = urllib.request.Request(
-        url,
-        data    = json.dumps(cuerpo).encode("utf-8"),
-        method  = "POST",
-        headers = {"Content-Type": "application/json"},
-    )
+    data = json.dumps(cuerpo).encode("utf-8")
+    t0   = time.perf_counter()
 
-    try:
-        with urllib.request.urlopen(req, timeout=GEMINI_TIMEOUT_S,
-                                    context=_contexto_ssl()) as resp:
-            payload = json.loads(resp.read().decode("utf-8"))
-    except urllib.error.HTTPError as exc:
-        detalle = ""
+    for intento in range(1, GEMINI_MAX_INTENTOS + 1):
+        req = urllib.request.Request(
+            url, data=data, method="POST",
+            headers={"Content-Type": "application/json"},
+        )
         try:
-            detalle = exc.read().decode("utf-8", "replace")
-        except Exception:
-            pass
-        print(f"[_llamar_modelo] HTTPError {exc.code} de Gemini: {detalle[:500]}",
-              file=sys.stderr)
-        return "", 0
-    except Exception as exc:
-        print(f"[_llamar_modelo] Error al llamar a Gemini: "
-              f"{type(exc).__name__}: {exc}", file=sys.stderr)
-        return "", 0
+            with urllib.request.urlopen(req, timeout=GEMINI_TIMEOUT_S,
+                                        context=_contexto_ssl()) as resp:
+                payload = json.loads(resp.read().decode("utf-8"))
+            tokens      = _extraer_tokens(payload)
+            normalizado = _normalizar_respuesta(_extraer_texto(payload))
+            if normalizado is None:
+                _log_paso(logging.WARNING, "PASO_4", "-",
+                          "respuesta del modelo no es JSON válido; se ignora",
+                          f"intento {intento}", ms=_ms(t0))
+                return "", tokens
+            _log_paso(logging.INFO, "PASO_4", "-", "modelo respondió",
+                      f"tokens={tokens}, intento {intento}", ms=_ms(t0))
+            return normalizado, tokens
 
-    tokens      = _extraer_tokens(payload)
-    normalizado = _normalizar_respuesta(_extraer_texto(payload))
-    if normalizado is None:
-        print("[_llamar_modelo] Respuesta del modelo no es JSON válido; se ignora.",
-              file=sys.stderr)
-        return "", tokens
+        except urllib.error.HTTPError as exc:
+            detalle = ""
+            try:
+                detalle = exc.read().decode("utf-8", "replace")[:300]
+            except Exception:
+                pass
+            if exc.code in _HTTP_NO_REINTENTABLES:
+                _log_paso(logging.ERROR, "PASO_4", "-",
+                          f"HTTP {exc.code} no reintentable", detalle, ms=_ms(t0))
+                return "", 0
+            ultimo_error = f"HTTP {exc.code}: {detalle}"
+        except Exception as exc:
+            ultimo_error = f"{type(exc).__name__}: {exc}"
 
-    return normalizado, tokens
+        # Llegamos aquí solo si el intento falló de forma reintentable.
+        if intento < GEMINI_MAX_INTENTOS:
+            espera = GEMINI_BACKOFF_S[min(intento - 1, len(GEMINI_BACKOFF_S) - 1)]
+            _log_paso(logging.WARNING, "PASO_4", "-",
+                      f"fallo intento {intento}/{GEMINI_MAX_INTENTOS}, "
+                      f"reintenta en {espera}s", ultimo_error, ms=_ms(t0))
+            time.sleep(espera)
+        else:
+            _log_paso(logging.ERROR, "PASO_4", "-",
+                      f"agotados {GEMINI_MAX_INTENTOS} intentos", ultimo_error, ms=_ms(t0))
+
+    return "", 0
 
 
 def _merge_veredictos(
@@ -482,6 +544,18 @@ def _construir_resumen_ejecutivo(
     return " | ".join(partes)
 
 
+def _leer_versiones_capas(config: ConfigRetrieval, tipo_foto: Optional[str]) -> dict:
+    """
+    Versiones de schema de las capas en disco. Reutiliza el cargador de
+    retrieval_engine para mantener una sola fuente de verdad del versionado.
+    """
+    _, meta1 = retrieval_engine._cargar_capa_full(config.ruta_capa1, "capa1")
+    _, meta2 = retrieval_engine._cargar_capa_full(config.ruta_capa2, "capa2")
+    ruta_c3  = retrieval_engine._ruta_capa3(config.ruta_capa3_template, tipo_foto)
+    meta3    = retrieval_engine._cargar_capa_full(ruta_c3, "capa3")[1] if ruta_c3 else {}
+    return retrieval_engine._construir_versiones(meta1, meta2, meta3, ruta_c3 is not None)
+
+
 # ──────────────────────────────────────────────
 # ENGINE PRINCIPAL
 # ──────────────────────────────────────────────
@@ -508,14 +582,30 @@ def ejecutar(
     if config is None:
         config = ConfigPipeline()
 
+    t_total   = time.perf_counter()
+    timestamp = _ahora_iso()
+
     # ── PASO 0: preparar metadata ──────────────────────────────────
     metadata          = _preparar_metadata(imagen_path, etapa_activa, tipo_foto, metadata_extra)
     tipo_foto_efectivo = metadata.get("tipo_foto")
 
     # ── PASO 1: mandatory — reglas duras ──────────────────────────
+    t1        = time.perf_counter()
     mandatory = mandatory_engine.ejecutar(metadata, config.config_mandatory)
 
+    disparadas = [c for c in mandatory.criterios if c.severidad != Severidad.CUMPLE]
+    cumplen    = [c for c in mandatory.criterios if c.severidad == Severidad.CUMPLE]
+    for c in disparadas:
+        nivel = logging.WARNING if c.severidad == Severidad.GRAVE else logging.INFO
+        _log_paso(nivel, "PASO_1", c.criterio, f"disparó {c.severidad.value}", c.descripcion)
+    _log_paso(logging.INFO, "PASO_1", "-", "mandatory completado",
+              f"{len(disparadas)} disparada(s), {len(cumplen)} cumple(n)", ms=_ms(t1))
+
     if not mandatory.puede_continuar:
+        _log_paso(logging.WARNING, "PASO_1", "-", "pipeline detenido",
+                  "mandatory bloqueó la evaluación; foto no evaluable", ms=_ms(t1))
+        _log_paso(logging.INFO, "PASO_FINAL", "-", "veredicto=GRAVE",
+                  "puede_continuar=False", ms=_ms(t_total))
         return ResultadoFinal(
             veredicto_global               = Severidad.GRAVE,
             criterios                      = [],
@@ -524,9 +614,13 @@ def ejecutar(
             tokens_modelo_usados           = 0,
             criterios_decididos_por_codigo = 0,
             criterios_delegados_a_modelo   = 0,
+            timestamp_evaluacion           = timestamp,
+            duracion_ms                    = _ms(t_total),
+            versiones_capas                = _leer_versiones_capas(config.config_retrieval, tipo_foto_efectivo),
         )
 
     # ── PASO 2: retrieval — evidencia del knowledge base ──────────
+    t2              = time.perf_counter()
     criterios_ids   = _extraer_criterios_del_knowledge(config.config_retrieval, tipo_foto_efectivo)
     mandatory_extras = _criterios_mandatory_solo_codigo(mandatory, set(criterios_ids))
     retrieval_list = retrieval_engine.buscar_lote(
@@ -537,7 +631,16 @@ def ejecutar(
     )
     retrieval_por_criterio = {r.criterio: r for r in retrieval_list}
 
+    con_evidencia     = sum(1 for r in retrieval_list if not r.sin_evidencia)
+    capas_consultadas = retrieval_list[0].capas_consultadas if retrieval_list else []
+    versiones_capas   = next((r.versiones_capas for r in retrieval_list if r.versiones_capas), None) \
+                        or _leer_versiones_capas(config.config_retrieval, tipo_foto_efectivo)
+    _log_paso(logging.INFO, "PASO_2", "-", "retrieval completado",
+              f"{len(retrieval_list)} criterio(s), {con_evidencia} con evidencia, "
+              f"capas={capas_consultadas}", ms=_ms(t2))
+
     # ── PASO 3: confidence — calibrar confianza ───────────────────
+    t3 = time.perf_counter()
     confianza_list = confidence_engine.evaluar_lote(
         resultados_retrieval = retrieval_list,
         resultado_mandatory  = mandatory,
@@ -547,11 +650,16 @@ def ejecutar(
     # ── PASO 4: separar criterios por destino ─────────────────────
     delegados    = [c for c in confianza_list if c.delegar_a_modelo]
     no_delegados = [c for c in confianza_list if not c.delegar_a_modelo]
+    _log_paso(logging.INFO, "PASO_3", "-", "confianza calibrada",
+              f"codigo={len(no_delegados)}, modelo={len(delegados)}", ms=_ms(t3))
 
     # ── PASO 5: construir prompt ───────────────────────────────────
     prompt = _construir_prompt(delegados, retrieval_por_criterio, metadata)
 
-    # ── PASO 6: llamar al modelo ───────────────────────────────────
+    # ── PASO 6: llamar al modelo (loggea PASO_4 internamente) ──────
+    if not prompt:
+        _log_paso(logging.INFO, "PASO_4", "-", "modelo no invocado",
+                  "sin criterios delegados")
     respuesta_modelo, tokens_modelo = _llamar_modelo(prompt)
 
     # ── PASO 7: merge — código + modelo ───────────────────────────
@@ -567,6 +675,10 @@ def ejecutar(
     n_codigo          = len(no_delegados) + len(mandatory_extras)
     n_delegados       = len(delegados)
 
+    _log_paso(logging.INFO, "PASO_FINAL", "-", f"veredicto={veredicto_global.value}",
+              f"codigo={n_codigo}, modelo={n_delegados}, tokens={tokens_modelo}",
+              ms=_ms(t_total))
+
     return ResultadoFinal(
         veredicto_global               = veredicto_global,
         criterios                      = criterios_finales,
@@ -577,6 +689,9 @@ def ejecutar(
         tokens_modelo_usados           = tokens_modelo,
         criterios_decididos_por_codigo = n_codigo,
         criterios_delegados_a_modelo   = n_delegados,
+        timestamp_evaluacion           = timestamp,
+        duracion_ms                    = _ms(t_total),
+        versiones_capas                = versiones_capas,
     )
 
 
@@ -588,6 +703,14 @@ def ejecutar(
 
 if __name__ == "__main__":
 
+    # Logging visible solo al correr el módulo directamente. Como librería,
+    # el NullHandler mantiene el silencio hasta que la app configure logging.
+    logging.basicConfig(
+        level  = logging.INFO,
+        format = "%(levelname)-7s %(name)s | %(message)s",
+        stream = sys.stderr,
+    )
+
     def _imprimir(label: str, r: ResultadoFinal) -> None:
         print(f"\n{'='*65}")
         print(f"CASO: {label}")
@@ -597,6 +720,10 @@ if __name__ == "__main__":
         print(f"  criterios código:    {r.criterios_decididos_por_codigo}")
         print(f"  criterios modelo:    {r.criterios_delegados_a_modelo}")
         print(f"  tokens modelo:       {r.tokens_modelo_usados}")
+        print(f"  schema_version:      {r.schema_version}")
+        print(f"  timestamp:           {r.timestamp_evaluacion}")
+        print(f"  duracion_ms:         {r.duracion_ms}")
+        print(f"  versiones_capas:     {r.versiones_capas}")
         print(f"  resumen_ejecutivo:   {r.resumen_ejecutivo}")
         if r.criterios:
             print("  criterios:")
