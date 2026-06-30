@@ -38,7 +38,9 @@ Schema esperado por cada JSON de capa:
 ──────────────────────────────────────────────────────────────────
 """
 
+import hashlib
 import json
+import logging
 import re
 from dataclasses import dataclass, field
 from enum import Enum
@@ -46,6 +48,13 @@ from pathlib import Path
 from typing import Optional
 
 from mandatory_engine import ResultadoPipeline, Severidad
+
+logger = logging.getLogger("visual_lv.retrieval")
+logger.addHandler(logging.NullHandler())  # la app decide los handlers/nivel
+
+# Versión de schema que este motor sabe interpretar. Un JSON con otra
+# schema_version se carga igual, pero genera WARNING (no crash).
+SCHEMA_VERSION_ESPERADA = "1.0"
 
 
 # ──────────────────────────────────────────────
@@ -81,6 +90,7 @@ class ResultadoRetrieval:
     capas_vacias:      list[int]                = field(default_factory=list)
     sin_evidencia:     bool                     = False
     resumen:           str                      = ""
+    versiones_capas:   dict                     = field(default_factory=dict)
 
 
 # ──────────────────────────────────────────────
@@ -150,18 +160,49 @@ def _coerce_peso(raw) -> Peso:
 # Retorna [] si el archivo no existe, está vacío, o es inválido.
 # ──────────────────────────────────────────────
 
-def _cargar_capa(ruta: str) -> list[dict]:
+def _cargar_capa_full(ruta: str, etiqueta: str = "") -> tuple[list[dict], dict]:
+    """
+    Carga una capa y su metadata de versionado.
+    Retorna (criterios, meta) donde
+        meta = {"schema_version": str|None, "fecha_actualizacion": str|None}.
+    Loggea schema_version + fecha_actualizacion al cargar; WARNING si la
+    schema_version no coincide con la esperada o falta. Nunca lanza excepción:
+    ante archivo ausente/ inválido retorna ([], {}).
+    """
     try:
         path = Path(ruta)
         if not path.exists():
-            return []
+            return [], {}
         data = json.loads(path.read_text(encoding="utf-8"))
         if not isinstance(data, dict):
-            return []
-        criterios = data.get("criterios", [])
-        return [e for e in criterios if isinstance(e, dict)]
-    except Exception:
-        return []
+            return [], {}
+    except Exception as exc:
+        logger.warning("[%s] no se pudo cargar capa %s: %s", etiqueta or "capa", ruta, exc)
+        return [], {}
+
+    criterios = [e for e in data.get("criterios", []) if isinstance(e, dict)]
+
+    schema_version = data.get("schema_version")
+    fecha          = data.get("fecha_actualizacion")
+    tag            = etiqueta or "capa"
+
+    if schema_version is None:
+        logger.warning("[%s] sin schema_version — se carga igual (%d criterios)", tag, len(criterios))
+    elif schema_version != SCHEMA_VERSION_ESPERADA:
+        logger.warning(
+            "[%s] schema_version=%s no coincide con la esperada %s — se carga igual (fecha=%s)",
+            tag, schema_version, SCHEMA_VERSION_ESPERADA, fecha,
+        )
+    else:
+        logger.info("[%s] schema_version=%s fecha=%s (%d criterios)", tag, schema_version, fecha, len(criterios))
+
+    return criterios, {"schema_version": schema_version, "fecha_actualizacion": fecha}
+
+
+def _cargar_capa(ruta: str) -> list[dict]:
+    """Wrapper retrocompatible: solo los criterios, sin metadata."""
+    criterios, _ = _cargar_capa_full(ruta)
+    return criterios
 
 
 def _ruta_capa3(template: str, tipo_foto: Optional[str]) -> Optional[str]:
@@ -313,6 +354,7 @@ def _ejecutar_busqueda(
     tipo_foto:           Optional[str],
     resultado_mandatory: ResultadoPipeline,
     config:              ConfigRetrieval,
+    versiones_capas:     Optional[dict] = None,
 ) -> ResultadoRetrieval:
     ev1 = _buscar_en_capa(criterio, capa1_entradas, 1, tipo_foto, config)
     ev2 = _buscar_en_capa(criterio, capa2_entradas, 2, tipo_foto, config)
@@ -334,6 +376,7 @@ def _ejecutar_busqueda(
         capas_vacias      = capas_vacias,
         sin_evidencia     = not todas,
         resumen           = _generar_resumen(criterio, todas, capas_consultadas, capas_vacias, resultado_mandatory),
+        versiones_capas   = dict(versiones_capas) if versiones_capas else {},
     )
 
 
@@ -372,15 +415,25 @@ def buscar(
 
     ruta_c3 = _ruta_capa3(config.ruta_capa3_template, tipo_foto)
 
+    capa1_entradas, meta1 = _cargar_capa_full(config.ruta_capa1, "capa1")
+    capa2_entradas, meta2 = _cargar_capa_full(config.ruta_capa2, "capa2")
+    if ruta_c3:
+        capa3_entradas, meta3 = _cargar_capa_full(ruta_c3, "capa3")
+    else:
+        capa3_entradas, meta3 = [], {}
+
+    versiones = _construir_versiones(meta1, meta2, meta3, ruta_c3 is not None)
+
     return _ejecutar_busqueda(
         criterio            = criterio,
-        capa1_entradas      = _cargar_capa(config.ruta_capa1),
-        capa2_entradas      = _cargar_capa(config.ruta_capa2),
-        capa3_entradas      = _cargar_capa(ruta_c3) if ruta_c3 else [],
+        capa1_entradas      = capa1_entradas,
+        capa2_entradas      = capa2_entradas,
+        capa3_entradas      = capa3_entradas,
         capa3_disponible    = ruta_c3 is not None,
         tipo_foto           = tipo_foto,
         resultado_mandatory = resultado_mandatory,
         config              = config,
+        versiones_capas     = versiones,
     )
 
 
@@ -410,10 +463,15 @@ def buscar_lote(
 
     # Cargar las 3 capas una sola vez
     ruta_c3        = _ruta_capa3(config.ruta_capa3_template, tipo_foto)
-    capa1_entradas = _cargar_capa(config.ruta_capa1)
-    capa2_entradas = _cargar_capa(config.ruta_capa2)
-    capa3_entradas = _cargar_capa(ruta_c3) if ruta_c3 else []
+    capa1_entradas, meta1 = _cargar_capa_full(config.ruta_capa1, "capa1")
+    capa2_entradas, meta2 = _cargar_capa_full(config.ruta_capa2, "capa2")
+    if ruta_c3:
+        capa3_entradas, meta3 = _cargar_capa_full(ruta_c3, "capa3")
+    else:
+        capa3_entradas, meta3 = [], {}
     capa3_disponible = ruta_c3 is not None
+
+    versiones = _construir_versiones(meta1, meta2, meta3, capa3_disponible)
 
     resultados: list[ResultadoRetrieval] = []
     for criterio in criterios:
@@ -428,9 +486,21 @@ def buscar_lote(
             tipo_foto           = tipo_foto,
             resultado_mandatory = resultado_mandatory,
             config              = config,
+            versiones_capas     = versiones,
         ))
 
     return resultados
+
+
+def _construir_versiones(meta1: dict, meta2: dict, meta3: dict, capa3_disponible: bool) -> dict:
+    """{"capa1": <schema_version>, "capa2": ..., "capa3": ...} — capa3 solo si está disponible."""
+    versiones = {
+        "capa1": meta1.get("schema_version"),
+        "capa2": meta2.get("schema_version"),
+    }
+    if capa3_disponible:
+        versiones["capa3"] = meta3.get("schema_version")
+    return versiones
 
 
 def _generar_resumen(
