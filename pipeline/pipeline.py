@@ -25,6 +25,7 @@ import re
 import ssl
 import sys
 import time
+import unicodedata
 import urllib.error
 import urllib.request
 from dataclasses import dataclass, field
@@ -222,8 +223,11 @@ def _preparar_metadata(
         # Visión (PASO 0): detecta el gráfico de etapa en la imagen, salvo
         # que el llamador ya lo haya inyectado vía metadata_extra (tests y
         # overrides mandan — evita llamadas al modelo innecesarias).
+        # El nombre visible se normaliza al ID técnico de etapa cuando
+        # coinciden canónicamente ("Gran Barata" → gran_barata_pv2026).
         if not (metadata_extra and "grafico_detectado" in metadata_extra):
-            base["grafico_detectado"] = _detectar_grafico_etapa(imagen_path)
+            base["grafico_detectado"] = _normalizar_grafico_a_etapa(
+                _detectar_grafico_etapa(imagen_path), etapa_activa)
 
     if metadata_extra:
         base.update(metadata_extra)
@@ -272,10 +276,12 @@ def _construir_prompt(
     delegados:              list[ResultadoConfianza],
     retrieval_por_criterio: dict[str, ResultadoRetrieval],
     metadata:               dict,
+    con_imagen:             bool = False,
 ) -> str:
     """
     Prompt estructurado para el modelo. Solo incluye criterios delegados.
     El modelo debe responder en JSON estricto — no en texto libre.
+    Con con_imagen=True instruye evaluar contra la fotografía adjunta.
     """
     if not delegados:
         return ""
@@ -288,6 +294,17 @@ def _construir_prompt(
         "Tu rol es evaluar ÚNICAMENTE los criterios listados a continuación.",
         "NO agregues observaciones sobre otros aspectos de la imagen.",
         "NO inventes criterios adicionales fuera de los que se te piden.",
+    ]
+    if con_imagen:
+        lineas += [
+            "",
+            "Se adjunta la FOTOGRAFÍA DE EVIDENCIA. Evalúa cada criterio contra",
+            "lo que se VE en la imagen — no asumas cumplimiento sin verificarlo",
+            "visualmente. Si la foto muestra un incumplimiento, repórtalo como",
+            "OBSERVACION o GRAVE según la severidad del criterio. Si un criterio",
+            "no se puede verificar en esta foto, responde NO_CALIFICA.",
+        ]
+    lineas += [
         "",
         "Responde EXCLUSIVAMENTE con este JSON (sin texto adicional antes ni después):",
         '{"evaluaciones": [{"criterio": "<id>", "veredicto": "CUMPLE|OBSERVACION|GRAVE|NO_CALIFICA", "razon": "<razón concisa basada en la evidencia>"}]}',
@@ -323,8 +340,12 @@ GEMINI_ENDPOINT     = (
     "{model}:generateContent"
 )
 GEMINI_TIMEOUT_S    = 15            # timeout por intento (MEJORA 3)
+GEMINI_TIMEOUT_IMG_S = 90           # con imagen adjunta: evaluar 20+ criterios
+                                    # visuales tarda mucho más que texto puro
 GEMINI_MAX_INTENTOS = 3             # número máximo de intentos
 GEMINI_BACKOFF_S    = (1, 2, 4)     # espera tras cada intento fallido
+GEMINI_BACKOFF_429_S = 30           # rate limit: la ventana free tier es por
+                                    # minuto — reintentar antes es quemar intentos
 # Códigos HTTP deterministas: reintentar no ayuda, se aborta de inmediato.
 _HTTP_NO_REINTENTABLES = frozenset({400, 401, 403, 404})
 
@@ -416,9 +437,29 @@ def _normalizar_respuesta(texto: str) -> Optional[str]:
     return json.dumps({"evaluaciones": evaluaciones}, ensure_ascii=False)
 
 
-def _llamar_modelo(prompt: str) -> tuple[str, int]:
+def _parte_imagen(imagen_path: str) -> Optional[dict]:
     """
-    Llama a Gemini 1.5 Pro con el prompt ya construido por _construir_prompt().
+    Construye la parte inline_data (base64) de Gemini para la imagen.
+    Retorna None si la imagen no se puede leer — el llamador decide el log.
+    """
+    path = Path(imagen_path)
+    try:
+        img_bytes = path.read_bytes()
+    except OSError:
+        return None
+    mime = _MIME_POR_EXTENSION.get(path.suffix.lower(), "image/jpeg")
+    return {"inline_data": {
+        "mime_type": mime,
+        "data":      base64.b64encode(img_bytes).decode("ascii"),
+    }}
+
+
+def _llamar_modelo(prompt: str, imagen_path: Optional[str] = None) -> tuple[str, int]:
+    """
+    Llama a Gemini con el prompt ya construido por _construir_prompt().
+    Si imagen_path está disponible, adjunta la imagen (base64) al payload —
+    los criterios delegados son de juicio visual y el modelo debe VER la
+    foto, no evaluar a ciegas sobre texto.
     Agrega la instrucción de formato JSON al final y normaliza la respuesta al
     shape que _merge_veredictos() sabe parsear.
 
@@ -440,10 +481,27 @@ def _llamar_modelo(prompt: str) -> tuple[str, int]:
                   "modelo no invocado", "GEMINI_API_KEY ausente en el entorno")
         return "", 0
 
+    partes: list[dict] = [{"text": prompt + _INSTRUCCION_FORMATO_JSON}]
+    con_imagen = False
+    if imagen_path:
+        parte_img = _parte_imagen(imagen_path)
+        if parte_img:
+            partes.append(parte_img)
+            con_imagen = True
+            _log_paso(logging.INFO, "PASO_4", "-", "imagen adjuntada al modelo",
+                      Path(imagen_path).name)
+        else:
+            _log_paso(logging.WARNING, "PASO_4", "-",
+                      "imagen ilegible — modelo evalúa solo con texto", str(imagen_path))
+    else:
+        _log_paso(logging.WARNING, "PASO_4", "-",
+                  "sin imagen — modelo evalúa solo con texto")
+    timeout_s = GEMINI_TIMEOUT_IMG_S if con_imagen else GEMINI_TIMEOUT_S
+
     url    = GEMINI_ENDPOINT.format(model=GEMINI_MODEL) + f"?key={api_key}"
     cuerpo = {
         "contents": [
-            {"role": "user", "parts": [{"text": prompt + _INSTRUCCION_FORMATO_JSON}]}
+            {"role": "user", "parts": partes}
         ],
         "generationConfig": {
             "temperature":        0.0,
@@ -459,7 +517,7 @@ def _llamar_modelo(prompt: str) -> tuple[str, int]:
             headers={"Content-Type": "application/json"},
         )
         try:
-            with urllib.request.urlopen(req, timeout=GEMINI_TIMEOUT_S,
+            with urllib.request.urlopen(req, timeout=timeout_s,
                                         context=_contexto_ssl()) as resp:
                 payload = json.loads(resp.read().decode("utf-8"))
             tokens      = _extraer_tokens(payload)
@@ -484,12 +542,16 @@ def _llamar_modelo(prompt: str) -> tuple[str, int]:
                           f"HTTP {exc.code} no reintentable", detalle, ms=_ms(t0))
                 return "", 0
             ultimo_error = f"HTTP {exc.code}: {detalle}"
+            fue_429      = exc.code == 429
         except Exception as exc:
             ultimo_error = f"{type(exc).__name__}: {exc}"
+            fue_429      = False
 
         # Llegamos aquí solo si el intento falló de forma reintentable.
         if intento < GEMINI_MAX_INTENTOS:
             espera = GEMINI_BACKOFF_S[min(intento - 1, len(GEMINI_BACKOFF_S) - 1)]
+            if fue_429:
+                espera = max(espera, GEMINI_BACKOFF_429_S)
             _log_paso(logging.WARNING, "PASO_4", "-",
                       f"fallo intento {intento}/{GEMINI_MAX_INTENTOS}, "
                       f"reintenta en {espera}s", ultimo_error, ms=_ms(t0))
@@ -508,8 +570,11 @@ def _merge_veredictos(
 ) -> list[ResultadoConfianza]:
     """
     Actualiza los criterios delegados con los veredictos del modelo.
-    Si la respuesta no es JSON válido (ej. stub), los delegados conservan
-    su veredicto de confidence_engine sin modificación.
+
+    Un criterio delegado es de juicio visual: si el modelo no lo evaluó
+    (fallo de llamada, timeout, o ausente en la respuesta), NO puede quedar
+    con el CUMPLE preliminar de confidence_engine — sería un cumplimiento
+    fantasma sin verificación visual. Degrada a NO_CALIFICA explícito.
     """
     evaluaciones: dict[str, dict] = {}
     try:
@@ -534,7 +599,10 @@ def _merge_veredictos(
             if razon_modelo:
                 rc.razon = f"[MODELO] {razon_modelo}"
         else:
-            rc.razon = f"{rc.razon} | [MODELO] Sin respuesta para este criterio."
+            rc.veredicto = Severidad.NO_CALIFICA
+            rc.confianza = Confianza.BAJO
+            rc.razon     = (f"{rc.razon} | [MODELO] Sin respuesta para este "
+                            "criterio — juicio visual no verificado.")
 
     return criterios
 
@@ -561,6 +629,37 @@ _PROMPT_DETECCION_GRAFICO = (
     "Responde solo el identificador de etapa, o 'ninguna' si no hay "
     "gráfico visible."
 )
+
+
+def _canonizar(texto: str) -> str:
+    """Minúsculas, sin acentos, solo [a-z0-9] — para comparar nombres."""
+    t = unicodedata.normalize("NFKD", texto)
+    t = "".join(ch for ch in t if not unicodedata.combining(ch))
+    return re.sub(r"[^a-z0-9]", "", t.lower())
+
+
+def _normalizar_grafico_a_etapa(
+    grafico:      Optional[str],
+    etapa_activa: Optional[str],
+) -> Optional[str]:
+    """
+    El gráfico muestra el nombre comercial ("Gran Barata"), no el ID técnico
+    (gran_barata_pv2026) — comparar exacto siempre fallaría. Si el nombre
+    detectado y el ID coinciden canónicamente (uno es prefijo del otro sin
+    acentos/espacios/guiones), retorna el ID exacto para que
+    _regla_grafico_etapa compare igual que hoy. Si no coinciden, retorna el
+    valor detectado tal cual → mismatch → GRAVE (comportamiento actual).
+    """
+    if not grafico or not etapa_activa:
+        return grafico
+    g, e = _canonizar(grafico), _canonizar(etapa_activa)
+    if g and e and (e.startswith(g) or g.startswith(e)):
+        if grafico != etapa_activa:
+            _log_paso(logging.INFO, "PASO_0", "grafico_detectado",
+                      "nombre visible normalizado a ID de etapa",
+                      f"'{grafico}' → '{etapa_activa}'")
+        return etapa_activa
+    return grafico
 
 
 def _detectar_grafico_etapa(imagen_path: str) -> Optional[str]:
@@ -639,11 +738,15 @@ def _detectar_grafico_etapa(imagen_path: str) -> Optional[str]:
                           detalle, ms=_ms(t0))
                 return None
             ultimo_error = f"HTTP {exc.code}: {detalle}"
+            fue_429      = exc.code == 429
         except Exception as exc:
             ultimo_error = f"{type(exc).__name__}: {exc}"
+            fue_429      = False
 
         if intento < GEMINI_MAX_INTENTOS:
             espera = GEMINI_BACKOFF_S[min(intento - 1, len(GEMINI_BACKOFF_S) - 1)]
+            if fue_429:
+                espera = max(espera, GEMINI_BACKOFF_429_S)
             _log_paso(logging.WARNING, "PASO_0", "grafico_detectado",
                       f"fallo intento {intento}/{GEMINI_MAX_INTENTOS}, "
                       f"reintenta en {espera}s", ultimo_error, ms=_ms(t0))
@@ -797,13 +900,14 @@ def ejecutar(
               f"codigo={len(no_delegados)}, modelo={len(delegados)}", ms=_ms(t3))
 
     # ── PASO 5: construir prompt ───────────────────────────────────
-    prompt = _construir_prompt(delegados, retrieval_por_criterio, metadata)
+    prompt = _construir_prompt(delegados, retrieval_por_criterio, metadata,
+                               con_imagen=bool(imagen_path))
 
-    # ── PASO 6: llamar al modelo (loggea PASO_4 internamente) ──────
+    # ── PASO 6: llamar al modelo con la imagen (loggea PASO_4) ─────
     if not prompt:
         _log_paso(logging.INFO, "PASO_4", "-", "modelo no invocado",
                   "sin criterios delegados")
-    respuesta_modelo, tokens_modelo = _llamar_modelo(prompt)
+    respuesta_modelo, tokens_modelo = _llamar_modelo(prompt, imagen_path)
 
     # ── PASO 7: merge — código + modelo ───────────────────────────
     criterios_finales = _merge_veredictos(
@@ -916,8 +1020,10 @@ if __name__ == "__main__":
     )
 
     # ── Caso 2: foto bien armada — pipeline completo ──────────────
+    # Sin key (unitario): los delegados degradan a NO_CALIFICA — un
+    # criterio visual sin verificación del modelo nunca es CUMPLE.
     _imprimir(
-        "Happy path — focal bien armado",
+        "Happy path sin modelo — delegados NO_CALIFICA (esperado)",
         ejecutar(
             imagen_path    = None,
             etapa_activa   = "verano_2025",
@@ -979,9 +1085,10 @@ if __name__ == "__main__":
     )
 
     # ── Caso 6: sin etapa activa — Capa2 excluida del lote ───────
-    # Esperado: veredicto_global=CUMPLE, sin criterios de Capa2 en output.
+    # Esperado: sin criterios de Capa2 en output. Sin key, los delegados
+    # degradan a NO_CALIFICA (verificación visual pendiente de modelo).
     _imprimir(
-        "Sin etapa activa — Capa2 excluida (esperado: CUMPLE)",
+        "Sin etapa activa — Capa2 excluida del lote",
         ejecutar(
             imagen_path    = None,
             etapa_activa   = None,
@@ -1114,3 +1221,28 @@ if __name__ == "__main__":
         finally:
             if _key_guardada is not None:
                 os.environ["GEMINI_API_KEY"] = _key_guardada
+
+    # ──────────────────────────────────────────────────────────────
+    # CASO 9 — VERIFICACIÓN VISUAL REAL (end-to-end completo)
+    # Foto real de piso vía VERISTACK_IMG_REAL. Sin metadata_extra:
+    # photo_analyzer mide la foto, visión detecta el gráfico, y el
+    # modelo evalúa los criterios delegados VIENDO la imagen.
+    # Con una foto con defectos visibles (tag mal puesto, props fuera
+    # de spec), 26/26 CUMPLE significa que el fix NO funcionó.
+    # ──────────────────────────────────────────────────────────────
+    ruta_real = os.environ.get("VERISTACK_IMG_REAL")
+    if ruta_real and Path(ruta_real).exists():
+        print(f"\n{'#'*65}")
+        print("# CASO 9 — foto real, evaluación visual completa")
+        print(f"# imagen: {ruta_real}")
+        print(f"{'#'*65}")
+        _imprimir(
+            "Foto real — modelo evalúa criterios delegados con la imagen",
+            ejecutar(
+                imagen_path  = ruta_real,
+                etapa_activa = "gran_barata_pv2026",
+                tipo_foto    = "focal_show",
+            ),
+        )
+    else:
+        print("\n[CASO 9 omitido] define VERISTACK_IMG_REAL=<ruta a foto real> para correrlo")

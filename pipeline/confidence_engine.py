@@ -7,7 +7,9 @@ Produce un veredicto calibrado con nivel de confianza y señal de delegación al
 
 Jerarquía de reglas (orden estricto, primera que aplica gana):
   Regla 1 — Mandatory bloqueó        → GRAVE,        ALTO,  no delegar
-  Regla 2 — Evidencia MANDATORY+ALTO  → del mandatory, ALTO,  no delegar (configurable)
+  Regla 2 — Evidencia MANDATORY+ALTO  → del mandatory, ALTO,  delegar (configurable;
+            NUNCA delega si mandatory_engine ya midió el criterio en píxeles —
+            el modelo no puede sobreescribir lo que el código ya determinó)
   Regla 3 — Evidencia REC+ALTO        → del mandatory, MEDIO, delegar
   Regla 4 — Solo BAJO o EXCEPTION     → del mandatory, BAJO,  delegar
   Regla 5 — Sin evidencia             → NO_CALIFICA,   ALTO,  no delegar
@@ -45,7 +47,11 @@ class ResultadoConfianza:
 
 @dataclass
 class ConfigConfianza:
-    delegar_si_mandatory:     bool = False  # Regla 2: MANDATORY+ALTO es definitivo
+    # Regla 2: los criterios de juicio visual (planchado, tags, props,
+    # colorización, triangulación...) requieren que el modelo VEA la imagen.
+    # El código solo decide lo que mide en píxeles (mandatory_engine) —
+    # esos criterios nunca se delegan, sin importar este flag.
+    delegar_si_mandatory:     bool = True
     delegar_si_recomendacion: bool = True   # Regla 3: RECOMMENDATION necesita modelo
     delegar_si_bajo:          bool = True   # Regla 4: evidencia débil necesita modelo
 
@@ -140,17 +146,26 @@ def _aplicar_reglas(
     ]
     if ev_mandatory_alto:
         best = ev_mandatory_alto[0]
+        # Regla fija #5 del proyecto: si mandatory_engine ya midió este
+        # criterio en píxeles, su veredicto es definitivo — el modelo no
+        # puede sobreescribirlo. Solo se delegan criterios de juicio visual
+        # que el código no midió.
+        medido_por_codigo = any(c.criterio == criterio for c in mandatory.criterios)
+        delegar = config.delegar_si_mandatory and not medido_por_codigo
+        if medido_por_codigo:
+            detalle = "Veredicto medido por código (píxeles) — definitivo."
+        elif delegar:
+            detalle = "Criterio de juicio visual — evaluación delegada al modelo con la imagen."
+        else:
+            detalle = "Criterio evaluable sin intervención del modelo."
         return ResultadoConfianza(
             criterio         = criterio,
             veredicto        = _veredicto_desde_mandatory(criterio, mandatory),
             confianza        = Confianza.ALTO,
             fuente_dominante = _fuente(best.capa),
             peso_dominante   = Peso.MANDATORY,
-            delegar_a_modelo = config.delegar_si_mandatory,
-            razon            = (
-                f"Evidencia MANDATORY con confianza ALTO en Capa{best.capa}. "
-                "Criterio evaluable sin intervención del modelo."
-            ),
+            delegar_a_modelo = delegar,
+            razon            = f"Evidencia MANDATORY con confianza ALTO en Capa{best.capa}. {detalle}",
         )
 
     # ── Regla 3: evidencia RECOMMENDATION con confianza ALTO ───────
