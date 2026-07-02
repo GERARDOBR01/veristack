@@ -17,6 +17,7 @@ No tiene lógica de evaluación propia — solo dirige el flujo.
 El modelo entra ÚNICAMENTE en PASO 6, nunca antes.
 """
 
+import base64
 import json
 import logging
 import os
@@ -218,6 +219,12 @@ def _preparar_metadata(
         except Exception:
             pass  # photo_analyzer no disponible o imagen inválida — defaults ya aplicados
 
+        # Visión (PASO 0): detecta el gráfico de etapa en la imagen, salvo
+        # que el llamador ya lo haya inyectado vía metadata_extra (tests y
+        # overrides mandan — evita llamadas al modelo innecesarias).
+        if not (metadata_extra and "grafico_detectado" in metadata_extra):
+            base["grafico_detectado"] = _detectar_grafico_etapa(imagen_path)
+
     if metadata_extra:
         base.update(metadata_extra)
 
@@ -308,7 +315,9 @@ def _construir_prompt(
 
 
 # ── Configuración del modelo ───────────────────────────────────────
-GEMINI_MODEL        = "gemini-1.5-pro"
+# gemini-1.5-pro fue retirado de la API (404). 2.5-pro devuelve 429 en el
+# plan actual. Modelo definido por Gerardo: gemini-3.5-flash (multimodal).
+GEMINI_MODEL        = "gemini-3.5-flash"
 GEMINI_ENDPOINT     = (
     "https://generativelanguage.googleapis.com/v1beta/models/"
     "{model}:generateContent"
@@ -531,6 +540,123 @@ def _merge_veredictos(
 
 
 # ──────────────────────────────────────────────
+# HELPERS — VISIÓN (PASO 0)
+# Detección del gráfico de etapa en la imagen, previa a mandatory_engine.
+# Separada de la llamada de PASO 6: aquí el modelo solo LEE la imagen.
+# La decisión GRAVE/CUMPLE sigue siendo de _regla_grafico_etapa (código),
+# comparando el valor detectado contra etapa_activa.
+# ──────────────────────────────────────────────
+
+GEMINI_VISION_TIMEOUT_S = 20    # visión tarda más que texto; timeout propio
+
+_MIME_POR_EXTENSION = {
+    ".jpg":  "image/jpeg",
+    ".jpeg": "image/jpeg",
+    ".png":  "image/png",
+    ".webp": "image/webp",
+}
+
+_PROMPT_DETECCION_GRAFICO = (
+    "¿Qué etapa/campaña muestra el gráfico visible en esta imagen? "
+    "Responde solo el identificador de etapa, o 'ninguna' si no hay "
+    "gráfico visible."
+)
+
+
+def _detectar_grafico_etapa(imagen_path: str) -> Optional[str]:
+    """
+    Manda la imagen a Gemini Vision y retorna el identificador de etapa
+    del gráfico visible, o None si no hay gráfico o la llamada falla.
+
+    Fallback obligatorio: sin key, imagen ilegible, timeout, HTTP error o
+    respuesta vacía → None. Con None, _regla_grafico_etapa degrada a
+    NO_CALIFICA controlado (comportamiento actual, sin cambios).
+    Nunca lanza excepción — PASO 0 no debe tumbar el pipeline.
+    """
+    api_key = os.environ.get("GEMINI_API_KEY")
+    if not api_key:
+        _log_paso(logging.WARNING, "PASO_0", "grafico_detectado",
+                  "visión no invocada", "GEMINI_API_KEY ausente en el entorno")
+        return None
+
+    path = Path(imagen_path)
+    try:
+        img_bytes = path.read_bytes()
+    except OSError as exc:
+        _log_paso(logging.WARNING, "PASO_0", "grafico_detectado",
+                  "imagen ilegible — visión no invocada",
+                  f"{type(exc).__name__}: {exc}")
+        return None
+
+    mime   = _MIME_POR_EXTENSION.get(path.suffix.lower(), "image/jpeg")
+    url    = GEMINI_ENDPOINT.format(model=GEMINI_MODEL) + f"?key={api_key}"
+    cuerpo = {
+        "contents": [{
+            "role": "user",
+            "parts": [
+                {"text": _PROMPT_DETECCION_GRAFICO},
+                {"inline_data": {
+                    "mime_type": mime,
+                    "data":      base64.b64encode(img_bytes).decode("ascii"),
+                }},
+            ],
+        }],
+        "generationConfig": {"temperature": 0.0},
+    }
+    data = json.dumps(cuerpo).encode("utf-8")
+    t0   = time.perf_counter()
+
+    for intento in range(1, GEMINI_MAX_INTENTOS + 1):
+        req = urllib.request.Request(
+            url, data=data, method="POST",
+            headers={"Content-Type": "application/json"},
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=GEMINI_VISION_TIMEOUT_S,
+                                        context=_contexto_ssl()) as resp:
+                payload = json.loads(resp.read().decode("utf-8"))
+            texto = _extraer_texto(payload).strip()
+            texto = texto.splitlines()[0].strip().strip('"\'`').rstrip(".") if texto else ""
+            if not texto or texto.lower() == "ninguna":
+                _log_paso(logging.INFO, "PASO_0", "grafico_detectado",
+                          "visión respondió — sin gráfico visible",
+                          f"intento {intento}", ms=_ms(t0))
+                return None
+            _log_paso(logging.INFO, "PASO_0", "grafico_detectado",
+                      "visión respondió",
+                      f"grafico='{texto}', intento {intento}", ms=_ms(t0))
+            return texto
+
+        except urllib.error.HTTPError as exc:
+            detalle = ""
+            try:
+                detalle = exc.read().decode("utf-8", "replace")[:300]
+            except Exception:
+                pass
+            if exc.code in _HTTP_NO_REINTENTABLES:
+                _log_paso(logging.ERROR, "PASO_0", "grafico_detectado",
+                          f"HTTP {exc.code} no reintentable — visión sin resultado",
+                          detalle, ms=_ms(t0))
+                return None
+            ultimo_error = f"HTTP {exc.code}: {detalle}"
+        except Exception as exc:
+            ultimo_error = f"{type(exc).__name__}: {exc}"
+
+        if intento < GEMINI_MAX_INTENTOS:
+            espera = GEMINI_BACKOFF_S[min(intento - 1, len(GEMINI_BACKOFF_S) - 1)]
+            _log_paso(logging.WARNING, "PASO_0", "grafico_detectado",
+                      f"fallo intento {intento}/{GEMINI_MAX_INTENTOS}, "
+                      f"reintenta en {espera}s", ultimo_error, ms=_ms(t0))
+            time.sleep(espera)
+        else:
+            _log_paso(logging.ERROR, "PASO_0", "grafico_detectado",
+                      f"agotados {GEMINI_MAX_INTENTOS} intentos — visión sin resultado",
+                      ultimo_error, ms=_ms(t0))
+
+    return None
+
+
+# ──────────────────────────────────────────────
 # HELPERS — RESUMEN
 # ──────────────────────────────────────────────
 
@@ -728,6 +854,31 @@ if __name__ == "__main__":
         stream = sys.stderr,
     )
 
+    def _cargar_env_local() -> None:
+        """
+        Carga KEY=VALUE de <repo>/.env sin dependencias externas.
+        No sobreescribe variables ya presentes en el entorno.
+        Los valores nunca se loggean ni se imprimen.
+        """
+        ruta = Path(__file__).resolve().parent.parent / ".env"
+        if not ruta.exists():
+            return
+        for linea in ruta.read_text(encoding="utf-8").splitlines():
+            linea = linea.strip()
+            if not linea or linea.startswith("#") or "=" not in linea:
+                continue
+            k, _, v = linea.partition("=")
+            if k.strip():
+                os.environ.setdefault(k.strip(), v.strip())
+
+    _cargar_env_local()
+
+    # Casos 1-6 son unitarios y deterministas: corren SIN modelo (key
+    # removida temporalmente) para que los veredictos no dependan de la
+    # respuesta de Gemini ni gasten quota. Se restaura antes de los
+    # tests de integración.
+    _key_para_integracion = os.environ.pop("GEMINI_API_KEY", None)
+
     def _imprimir(label: str, r: ResultadoFinal) -> None:
         print(f"\n{'='*65}")
         print(f"CASO: {label}")
@@ -850,6 +1001,10 @@ if __name__ == "__main__":
     # loguea a stderr y degrada de forma controlada (los criterios
     # delegados conservan su veredicto de confidence_engine).
     # ──────────────────────────────────────────────────────────────
+    # Tests de integración: requieren la key real — se restaura aquí.
+    if _key_para_integracion is not None:
+        os.environ["GEMINI_API_KEY"] = _key_para_integracion
+
     print(f"\n{'#'*65}")
     print("# TEST DE INTEGRACIÓN — Caso 3 con modelo real")
     print(f"# GEMINI_API_KEY presente: {'sí' if os.environ.get('GEMINI_API_KEY') else 'NO'}")
@@ -880,3 +1035,82 @@ if __name__ == "__main__":
               f"{c.criterio:<25} {destino}")
         print(f"      fuente:  {c.fuente_dominante} ({c.peso_dominante.value})")
         print(f"      razón:   {c.razon}")
+
+    # ──────────────────────────────────────────────────────────────
+    # TEST DE INTEGRACIÓN — VISIÓN (PASO 0)
+    # Caso 7: imagen con gráfico de etapa incorrecta → Gemini detecta
+    #         el gráfico y mandatory_engine marca GRAVE (código decide).
+    # Caso 8: GEMINI_API_KEY ausente → fallback a NO_CALIFICA sin crash.
+    #
+    # Imagen: usa VERISTACK_IMG_TEST si apunta a una foto real de piso.
+    # Si no, genera una imagen SINTÉTICA (texto "primavera_2024" sobre
+    # fondo blanco) — valida el circuito técnico end-to-end, pero queda
+    # PENDIENTE validar con foto real de Gerardo. No se inventa evidencia.
+    # ──────────────────────────────────────────────────────────────
+
+    def _imagen_para_test_vision() -> Optional[str]:
+        ruta_real = os.environ.get("VERISTACK_IMG_TEST")
+        if ruta_real and Path(ruta_real).exists():
+            print(f"  usando foto real: {ruta_real}")
+            return ruta_real
+        try:
+            import tempfile
+            from PIL import Image, ImageDraw, ImageFont
+            img  = Image.new("RGB", (800, 600), "white")
+            draw = ImageDraw.Draw(img)
+            font = ImageFont.load_default(size=64)
+            draw.text((80, 250), "primavera_2024", fill="black", font=font)
+            destino = Path(tempfile.gettempdir()) / "veristack_test_grafico.png"
+            img.save(destino)
+            print(f"  usando imagen SINTÉTICA (pendiente foto real): {destino}")
+            return str(destino)
+        except Exception as exc:
+            print(f"  [SKIP] sin foto real ni PIL para generar sintética: {exc}")
+            return None
+
+    print(f"\n{'#'*65}")
+    print("# CASO 7 — visión detecta gráfico de etapa incorrecta → GRAVE")
+    print(f"# GEMINI_API_KEY presente: {'sí' if os.environ.get('GEMINI_API_KEY') else 'NO'}")
+    print(f"{'#'*65}")
+
+    ruta_img = _imagen_para_test_vision()
+    if ruta_img:
+        # brillo/nitidez inyectados: la imagen sintética plana no debe
+        # disparar los bloqueos de calidad — aquí se prueba solo visión.
+        # grafico_detectado NO se inyecta: debe llenarlo _detectar_grafico_etapa.
+        _imprimir(
+            "Visión PASO 0 — gráfico incorrecto (esperado: GRAVE)",
+            ejecutar(
+                imagen_path    = ruta_img,
+                etapa_activa   = "gran_barata_pv2026",
+                tipo_foto      = "focal_show",
+                metadata_extra = {
+                    "brillo": 120,
+                    "nitidez": 85,
+                    "espacio_vacio_pct": 25,
+                },
+            ),
+        )
+
+        print(f"\n{'#'*65}")
+        print("# CASO 8 — sin GEMINI_API_KEY → fallback NO_CALIFICA sin crash")
+        print(f"{'#'*65}")
+
+        _key_guardada = os.environ.pop("GEMINI_API_KEY", None)
+        try:
+            _imprimir(
+                "Visión PASO 0 — sin key (esperado: NO_CALIFICA, sin crash)",
+                ejecutar(
+                    imagen_path    = ruta_img,
+                    etapa_activa   = "gran_barata_pv2026",
+                    tipo_foto      = "focal_show",
+                    metadata_extra = {
+                        "brillo": 120,
+                        "nitidez": 85,
+                        "espacio_vacio_pct": 25,
+                    },
+                ),
+            )
+        finally:
+            if _key_guardada is not None:
+                os.environ["GEMINI_API_KEY"] = _key_guardada
