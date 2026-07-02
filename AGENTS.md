@@ -19,18 +19,21 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 
 ---
 
-## Estado actual (2 Jul 2026)
+## Estado actual (2 Jul 2026 — sesión tarde)
 
-✅ Completado y en repo remoto (verificado con `git diff HEAD origin/main`):
+✅ Completado y en repo remoto (verificado con `git log origin/main`):
 - Pipeline determinista 4 módulos (`mandatory_engine`, `retrieval_engine`, `confidence_engine`, `pipeline`)
-- 4 mejoras empresariales: logging estructurado, versionado de capas, retry/backoff Gemini, contrato de salida versionado — verificadas con 7 casos de prueba reales
-- `app.py` (UI Streamlit) — confirmado en remoto (commit `b0eb129`)
-- Estructura `pipeline/` + `pipeline/knowledge/` correcta en remoto (resuelto en commits anteriores)
+- 4 mejoras empresariales: logging estructurado, versionado de capas, retry/backoff Gemini, contrato de salida versionado
+- `app.py` (UI Streamlit) — commit `b0eb129`
+- Fix Capa2 (`936b21f`, `3238769`): sin `etapa_activa`, Capa2 se excluye del lote; NO_CALIFICA de mandatory solo se excluye del veredicto global cuando etapa es None (Caso 5 y 6 correctos)
+- **Detección de etapa por visión** (`f1a084f`): `_detectar_grafico_etapa()` en PASO 0 manda la imagen a Gemini y llena `grafico_detectado`; el código sigue decidiendo GRAVE/CUMPLE. Fallback verificado por 3 vías: sin key, key inválida (400) y quota (429) → NO_CALIFICA sin crash
+- **GEMINI_API_KEY real conectada** (`.env` local, git-ignored, nunca en historial) — primer test end-to-end con modelo real: PASO 0 y PASO 6 responden
+- `GEMINI_MODEL = gemini-3.5-flash` (1.5-pro retirado de la API con 404; 2.5-pro da 429 en el plan actual; 3.5-flash definido por Gerardo)
+- 8 casos de prueba: unitarios 1-6 corren sin key (deterministas), integración con modelo real (Caso 3, 7, 8)
+- `CLAUDE.md`, `AGENTS.md`, `.claude/commands/cerrar-sesion.md`
 
-🟡 Completado local — pendiente push:
-- Fix Capa2: cuando `etapa_activa` es None, los criterios de campaña se excluyen del lote; `_calcular_veredicto_global()` ya no propaga NO_CALIFICA de mandatory — Caso 6 confirmado: CUMPLE sin criterios de Capa2
-- `CLAUDE.md` y `AGENTS.md` creados (fuente de verdad + espejo OpenCode)
-- `.claude/commands/cerrar-sesion.md` — protocolo de cierre de sesión
+🟡 Verificado solo con imagen sintética:
+- Caso 7 (visión detecta gráfico incorrecto → GRAVE) usa imagen generada con texto "primavera_2024" — no hay foto real de focal en el filesystem. Colocar foto real y correr con `VERISTACK_IMG_TEST=<ruta>` para validación definitiva
 
 🔴 Gaps conocidos (sin resolver):
 - Faltan `capa3_tringla.json` y `capa3_mesa_show.json` en `pipeline/knowledge/`
@@ -42,12 +45,11 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 - Cola de consenso `pendientes_revision.json`
 
 ## Próximos pasos (orden de prioridad)
-1. Confirmar estructura real del repo remoto (git fetch + diff)
-2. Reorganizar repo a estructura `pipeline/` + `pipeline/knowledge/` si sigue plano
-3. Confirmar `app.py` en GitHub (no asumir)
-4. Agregar `capa3_tringla.json` y `capa3_mesa_show.json`
-5. Conectar GEMINI_API_KEY real, primer test end-to-end con modelo
-6. Implementar extractor híbrido de PDFs
+1. Validar Caso 7 con foto real de piso (`VERISTACK_IMG_TEST=<ruta a la foto>`)
+2. Agregar `capa3_tringla.json` y `capa3_mesa_show.json`
+3. Probar `app.py` end-to-end con la key real (UI + visión + modelo)
+4. Actualizar README a estado real
+5. Implementar extractor híbrido de PDFs
 
 ---
 
