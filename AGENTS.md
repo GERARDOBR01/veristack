@@ -19,21 +19,24 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 
 ---
 
-## Estado actual (2 Jul 2026 — sesión tarde)
+## Estado actual (2 Jul 2026 — sesión noche)
 
-✅ Completado y en repo remoto (verificado con `git log origin/main`):
-- Pipeline determinista 4 módulos (`mandatory_engine`, `retrieval_engine`, `confidence_engine`, `pipeline`)
-- 4 mejoras empresariales: logging estructurado, versionado de capas, retry/backoff Gemini, contrato de salida versionado
-- `app.py` (UI Streamlit) — commit `b0eb129`
-- Fix Capa2 (`936b21f`, `3238769`): sin `etapa_activa`, Capa2 se excluye del lote; NO_CALIFICA de mandatory solo se excluye del veredicto global cuando etapa es None (Caso 5 y 6 correctos)
-- **Detección de etapa por visión** (`f1a084f`): `_detectar_grafico_etapa()` en PASO 0 manda la imagen a Gemini y llena `grafico_detectado`; el código sigue decidiendo GRAVE/CUMPLE. Fallback verificado por 3 vías: sin key, key inválida (400) y quota (429) → NO_CALIFICA sin crash
-- **GEMINI_API_KEY real conectada** (`.env` local, git-ignored, nunca en historial) — primer test end-to-end con modelo real: PASO 0 y PASO 6 responden
-- `GEMINI_MODEL = gemini-3.5-flash` (1.5-pro retirado de la API con 404; 2.5-pro da 429 en el plan actual; 3.5-flash definido por Gerardo)
-- 8 casos de prueba: unitarios 1-6 corren sin key (deterministas), integración con modelo real (Caso 3, 7, 8)
-- `CLAUDE.md`, `AGENTS.md`, `.claude/commands/cerrar-sesion.md`
+✅ Completado y en repo remoto (verificado con `git log origin/main`, working tree limpio):
+- Pipeline determinista 4 módulos + 4 mejoras empresariales + `app.py` (histórico, ver commits)
+- Fix Capa2 (`936b21f`, `3238769`) y detección de etapa por visión en PASO 0 (`f1a084f`)
+- **Verificación visual real** (`2e2dff4`) — fix arquitectónico validado con `simulation.jpeg`:
+  - `confidence_engine`: `delegar_si_mandatory=True` default. Juicio visual (planchado, tags, props, colorización, triangulación) siempre pasa por modelo con imagen. Guarda de regla fija #5: lo que `mandatory_engine` midió en píxeles nunca se delega
+  - PASO 6 adjunta la imagen (base64) al modelo; timeout 90s con imagen; prompt instruye evaluar contra la foto
+  - Normalización canónica nombre visible → ID de etapa ("Gran Barata" → `gran_barata_pv2026`) en PASO 0, sin tocar `mandatory_engine` ni el schema JSON
+  - `_merge_veredictos`: delegado sin respuesta del modelo → NO_CALIFICA (nunca CUMPLE fantasma)
+  - Backoff 30s para HTTP 429 (ventana free tier por minuto, límite 20 req/min con gemini-3.5-flash)
+- **Test con foto real**: ya NO da 26/26 CUMPLE. El modelo detectó la etiqueta con 40% vs beneficio de etapa (50%/50+20%) y punto verde ausente en torres slim → OBSERVACION (3 criterios)
+- GEMINI_API_KEY en `.env` local (git-ignored, jamás en historial ni logs). `GEMINI_MODEL = gemini-3.5-flash`
+- 9 casos: unitarios 1-6 sin key (deterministas — delegados quedan NO_CALIFICA sin modelo, por diseño), integración 3/7/8/9 con modelo real
 
-🟡 Verificado solo con imagen sintética:
-- Caso 7 (visión detecta gráfico incorrecto → GRAVE) usa imagen generada con texto "primavera_2024" — no hay foto real de focal en el filesystem. Colocar foto real y correr con `VERISTACK_IMG_TEST=<ruta>` para validación definitiva
+🟡 Observaciones de la última corrida:
+- El modelo NO marcó los props fuera de spec (mochila, espejo, planta) en `props_decoracion` — detectó el tag y el punto verde, pero props quedó CUMPLE. Puede requerir evidencia más explícita en `capa3_focal_show.json` o prompt más agudo. Validar con Gerardo si es aceptable
+- Quota free tier (20 req/min) se agota rápido en corridas de suite completa — espaciar corridas o subir de plan
 
 🔴 Gaps conocidos (sin resolver):
 - Faltan `capa3_tringla.json` y `capa3_mesa_show.json` en `pipeline/knowledge/`
@@ -45,9 +48,9 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 - Cola de consenso `pendientes_revision.json`
 
 ## Próximos pasos (orden de prioridad)
-1. Validar Caso 7 con foto real de piso (`VERISTACK_IMG_TEST=<ruta a la foto>`)
-2. Agregar `capa3_tringla.json` y `capa3_mesa_show.json`
-3. Probar `app.py` end-to-end con la key real (UI + visión + modelo)
+1. Decidir con Gerardo: ¿props_decoracion necesita evidencia más rica en capa3 para que el modelo los marque?
+2. Probar `app.py` end-to-end con la key real (UI + visión + modelo)
+3. Agregar `capa3_tringla.json` y `capa3_mesa_show.json`
 4. Actualizar README a estado real
 5. Implementar extractor híbrido de PDFs
 
