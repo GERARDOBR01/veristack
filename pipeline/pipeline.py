@@ -114,17 +114,24 @@ def _leer_capa(ruta: str) -> list[dict]:
 
 
 def _extraer_criterios_del_knowledge(
-    config:    ConfigRetrieval,
-    tipo_foto: Optional[str],
+    config:       ConfigRetrieval,
+    tipo_foto:    Optional[str],
+    etapa_activa: Optional[str] = None,
 ) -> list[str]:
     """
     Extrae todos los IDs únicos del knowledge base activo.
-    Lee Capa1 y Capa2 siempre; Capa3 solo si tipo_foto está disponible.
+    Lee Capa1 siempre; Capa2 solo si etapa_activa está definida;
+    Capa3 solo si tipo_foto está disponible.
     """
     ids: set[str] = set()
 
-    for ruta in [config.ruta_capa1, config.ruta_capa2]:
-        for entry in _leer_capa(ruta):
+    for entry in _leer_capa(config.ruta_capa1):
+        id_ = entry.get("id")
+        if isinstance(id_, str) and id_.strip():
+            ids.add(id_.strip())
+
+    if etapa_activa and etapa_activa.strip():
+        for entry in _leer_capa(config.ruta_capa2):
             id_ = entry.get("id")
             if isinstance(id_, str) and id_.strip():
                 ids.add(id_.strip())
@@ -173,7 +180,7 @@ def _criterios_mandatory_solo_codigo(
 
 def _preparar_metadata(
     imagen_path:    Optional[str],
-    etapa_activa:   str,
+    etapa_activa:   Optional[str],
     tipo_foto:      Optional[str],
     metadata_extra: Optional[dict],
 ) -> dict:
@@ -235,7 +242,11 @@ def _calcular_veredicto_global(
     mandatory: ResultadoPipeline,
 ) -> Severidad:
     jerarquia = [Severidad.GRAVE, Severidad.OBSERVACION, Severidad.NO_CALIFICA, Severidad.CUMPLE]
-    severidades = {c.veredicto for c in criterios} | {mandatory.veredicto_final}
+    severidades = {c.veredicto for c in criterios}
+    # NO_CALIFICA de mandatory significa "no se pudo evaluar" — no contamina el veredicto global.
+    # GRAVE/OBSERVACION sí se propagan: reflejan fallas reales de mandatory no capturadas por criterios_finales.
+    if mandatory.veredicto_final in (Severidad.GRAVE, Severidad.OBSERVACION):
+        severidades.add(mandatory.veredicto_final)
     for nivel in jerarquia:
         if nivel in severidades:
             return nivel
@@ -562,7 +573,7 @@ def _leer_versiones_capas(config: ConfigRetrieval, tipo_foto: Optional[str]) -> 
 
 def ejecutar(
     imagen_path:    Optional[str],
-    etapa_activa:   str,
+    etapa_activa:   Optional[str],
     tipo_foto:      Optional[str] = None,
     metadata_extra: Optional[dict] = None,
     config:         Optional[ConfigPipeline] = None,
@@ -621,7 +632,9 @@ def ejecutar(
 
     # ── PASO 2: retrieval — evidencia del knowledge base ──────────
     t2              = time.perf_counter()
-    criterios_ids   = _extraer_criterios_del_knowledge(config.config_retrieval, tipo_foto_efectivo)
+    criterios_ids   = _extraer_criterios_del_knowledge(
+        config.config_retrieval, tipo_foto_efectivo, metadata.get("etapa_activa")
+    )
     mandatory_extras = _criterios_mandatory_solo_codigo(mandatory, set(criterios_ids))
     retrieval_list = retrieval_engine.buscar_lote(
         criterios           = criterios_ids,
@@ -806,6 +819,23 @@ if __name__ == "__main__":
                 "brillo": 110,
                 "nitidez": 80,
                 "espacio_vacio_pct": 30,
+            },
+        ),
+    )
+
+    # ── Caso 6: sin etapa activa — Capa2 excluida del lote ───────
+    # Esperado: veredicto_global=CUMPLE, sin criterios de Capa2 en output.
+    _imprimir(
+        "Sin etapa activa — Capa2 excluida (esperado: CUMPLE)",
+        ejecutar(
+            imagen_path    = None,
+            etapa_activa   = None,
+            tipo_foto      = "focal_show",
+            metadata_extra = {
+                "brillo": 120,
+                "nitidez": 85,
+                "espacio_vacio_pct": 25,
+                "grafico_detectado": None,
             },
         ),
     )
