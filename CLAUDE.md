@@ -19,7 +19,7 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 
 ---
 
-## Estado actual (2 Jul 2026 — sesión noche)
+## Estado actual (2 Jul 2026 — cierre de sesión, noche)
 
 ✅ Completado y en repo remoto (verificado con `git log origin/main`, working tree limpio):
 - Pipeline determinista 4 módulos + 4 mejoras empresariales + `app.py` (histórico, ver commits)
@@ -33,9 +33,9 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 - **Test con foto real**: ya NO da 26/26 CUMPLE. El modelo detectó la etiqueta con 40% vs beneficio de etapa (50%/50+20%) y punto verde ausente en torres slim → OBSERVACION (3 criterios)
 - GEMINI_API_KEY en `.env` local (git-ignored, jamás en historial ni logs). `GEMINI_MODEL = gemini-3.5-flash`
 - 9 casos: unitarios 1-6 sin key (deterministas — delegados quedan NO_CALIFICA sin modelo, por diseño), integración 3/7/8/9 con modelo real
+- **`props_decoracion` con ejemplos concretos** (`e07d1ed`) en `capa3_focal_show.json` — el modelo ahora marca la planta y la mochila sobre pedestales (OBSERVACION). Corrida con simulation.jpeg: 6 OBSERVACION (props, materiales ajenos, punto verde, beneficio, mezcla, gráficos)
 
 🟡 Observaciones operativas:
-- **Resuelto**: `props_decoracion` enriquecido con ejemplos concretos en `capa3_focal_show.json` — el modelo ahora marca la planta y la mochila sobre pedestales (OBSERVACION). Corrida con simulation.jpeg: 6 OBSERVACION (props, materiales ajenos, punto verde, beneficio, mezcla, gráficos)
 - Quota free tier (20 req/min) se agota rápido — hay 3 GEMINI_API_KEY en `.env` local, pero las 3 líneas usan el mismo nombre: el loader solo lee la primera. Para rotación automática hay que renombrarlas (`GEMINI_API_KEY_2`...) y agregar lógica de rotación en 429 (no implementada — decidir si vale la pena)
 
 🔴 Gaps conocidos (sin resolver):
