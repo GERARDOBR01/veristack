@@ -238,14 +238,18 @@ _SEVERIDAD_RANK: dict[Severidad, int] = {
 }
 
 def _calcular_veredicto_global(
-    criterios: list[ResultadoConfianza],
-    mandatory: ResultadoPipeline,
+    criterios:    list[ResultadoConfianza],
+    mandatory:    ResultadoPipeline,
+    etapa_activa: Optional[str] = None,
 ) -> Severidad:
     jerarquia = [Severidad.GRAVE, Severidad.OBSERVACION, Severidad.NO_CALIFICA, Severidad.CUMPLE]
     severidades = {c.veredicto for c in criterios}
-    # NO_CALIFICA de mandatory significa "no se pudo evaluar" — no contamina el veredicto global.
-    # GRAVE/OBSERVACION sí se propagan: reflejan fallas reales de mandatory no capturadas por criterios_finales.
-    if mandatory.veredicto_final in (Severidad.GRAVE, Severidad.OBSERVACION):
+    # Solo excluir NO_CALIFICA de mandatory cuando etapa_activa es None:
+    # en ese caso, "etapa_no_definida" es "Capa2 no aplica", no un fallo real.
+    # Otros NO_CALIFICA de mandatory (grafico_no_detectado, tipo_foto_desconocido)
+    # sí deben propagarse — son señales reales de evaluación incompleta.
+    sin_etapa = not (etapa_activa and etapa_activa.strip())
+    if mandatory.veredicto_final != Severidad.NO_CALIFICA or not sin_etapa:
         severidades.add(mandatory.veredicto_final)
     for nivel in jerarquia:
         if nivel in severidades:
@@ -684,7 +688,7 @@ def ejecutar(
 
     # ── PASO 8: resultado final ────────────────────────────────────
     criterios_finales = criterios_finales + mandatory_extras
-    veredicto_global  = _calcular_veredicto_global(criterios_finales, mandatory)
+    veredicto_global  = _calcular_veredicto_global(criterios_finales, mandatory, metadata.get("etapa_activa"))
     n_codigo          = len(no_delegados) + len(mandatory_extras)
     n_delegados       = len(delegados)
 
