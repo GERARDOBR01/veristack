@@ -34,9 +34,9 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 - GEMINI_API_KEY en `.env` local (git-ignored, jamás en historial ni logs). `GEMINI_MODEL = gemini-3.5-flash`
 - 9 casos: unitarios 1-6 sin key (deterministas — delegados quedan NO_CALIFICA sin modelo, por diseño), integración 3/7/8/9 con modelo real
 
-🟡 Observaciones de la última corrida:
-- El modelo NO marcó los props fuera de spec (mochila, espejo, planta) en `props_decoracion` — detectó el tag y el punto verde, pero props quedó CUMPLE. Puede requerir evidencia más explícita en `capa3_focal_show.json` o prompt más agudo. Validar con Gerardo si es aceptable
-- Quota free tier (20 req/min) se agota rápido en corridas de suite completa — espaciar corridas o subir de plan
+🟡 Observaciones operativas:
+- **Resuelto**: `props_decoracion` enriquecido con ejemplos concretos en `capa3_focal_show.json` — el modelo ahora marca la planta y la mochila sobre pedestales (OBSERVACION). Corrida con simulation.jpeg: 6 OBSERVACION (props, materiales ajenos, punto verde, beneficio, mezcla, gráficos)
+- Quota free tier (20 req/min) se agota rápido — hay 3 GEMINI_API_KEY en `.env` local, pero las 3 líneas usan el mismo nombre: el loader solo lee la primera. Para rotación automática hay que renombrarlas (`GEMINI_API_KEY_2`...) y agregar lógica de rotación en 429 (no implementada — decidir si vale la pena)
 
 🔴 Gaps conocidos (sin resolver):
 - Faltan `capa3_tringla.json` y `capa3_mesa_show.json` en `pipeline/knowledge/`
@@ -48,8 +48,8 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 - Cola de consenso `pendientes_revision.json`
 
 ## Próximos pasos (orden de prioridad)
-1. Decidir con Gerardo: ¿props_decoracion necesita evidencia más rica en capa3 para que el modelo los marque?
-2. Probar `app.py` end-to-end con la key real (UI + visión + modelo)
+1. Probar `app.py` end-to-end con la key real (UI + visión + modelo)
+2. Decidir: ¿rotación automática de API keys en 429? (hay 3 keys en `.env`, solo se usa la primera)
 3. Agregar `capa3_tringla.json` y `capa3_mesa_show.json`
 4. Actualizar README a estado real
 5. Implementar extractor híbrido de PDFs

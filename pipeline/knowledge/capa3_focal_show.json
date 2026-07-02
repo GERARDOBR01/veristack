@@ -191,7 +191,7 @@
         "cosas de mas",
         "ambientacion extra"
       ],
-      "texto": "Props específicos sin contexto de sección. Nivel de decoración más allá de lo que pide la mecánica.",
+      "texto": "Props específicos sin contexto de sección. Nivel de decoración más allá de lo que pide la mecánica. NO PERMITIDO en el focal: mobiliario decorativo (espejos, pedestales, plantas), mochilas u objetos no relacionados a la mecánica de campaña, y cualquier elemento que no sea producto en exhibición o gráfico oficial de torres slim y maniquíes.",
       "peso": "EXCEPTION",
       "aplica_a": [
         "focal_show"
@@ -199,6 +199,6 @@
     }
   ],
   "schema_version": "1.0",
-  "fecha_actualizacion": "2026-06-28",
-  "hash_contenido": "0c851370d23daf235d6903607c9f73be"
+  "fecha_actualizacion": "2026-07-02",
+  "hash_contenido": "877d1c35cb6846496f3f7124dd711e16"
 }
