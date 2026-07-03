@@ -19,9 +19,14 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 
 ---
 
-## Estado actual (3 Jul 2026 — Sesión E: Motor 2, setup inicial del extractor de manuales)
+## Estado actual (3 Jul 2026 — Sesión F: Motor 2, segmentador de secciones)
 
 ✅ Completado y en repo remoto (verificado con `git log origin/main`, working tree limpio):
+- **Motor 2 — segmentador de secciones** (`motor2/segmenter.py`, 100% heurística, SIN IA):
+  - Lee el texto por página con pdfplumber (misma lógica de lectura que `test_pdfplumber.py`, replicada porque ese script no expone función importable y el alcance era no tocarlo) y agrupa en bloques por sección hasta el próximo encabezado. Cada `Bloque` conserva: `seccion` (texto crudo del encabezado, SIN normalizar), `pagina_inicio`, `pagina_fin`, `texto`
+  - Heurística de encabezado (`es_encabezado`): primera línea de la página, `len ≤ 60` y (`ratio_mayúsculas ≥ 0.6` **o** prefijo en mayúsculas seguido de `:`/`-`, ej. "HOGAR - Muebles", "SOFTLINE: FOCAL SHOW..."). Patrón confirmado inspeccionando el PDF real antes de codificar: la primera línea de CADA página del manual es un encabezado
+  - **Criterio de éxito cumplido** (revisión a ojo vs Gran Barata): 47 bloques de 48 páginas. Los 6 separadores de una línea (9 PAUTA GENERAL, 15 DESARROLLOS, 17 PDV IMPULSO VIVE, 19 MONTAJE SOFTLINE, 30 MONTAJE HARDLINE, 45 EXTERIORES) se detectan y marcan `(separador sin contenido)`; la pág 48 "¡gracias!" (cierre, sin mayúsculas) NO se toma como sección y se fusiona con APARADORES → bloque `p47-48`. Rangos de página todos correctos
+  - **2 imperfecciones conocidas (no fallos de segmentación)**: en págs 24 y 44 el título del PDF se parte en 2 líneas en el origen, así que el encabezado crudo sale truncado ("SOFTLINE: FOCAL SHOW INFANTILES (1a y 2da", "DEPORTES - DEPORTES Y DEPORTIVO") y el resto ("ETAPA)", "NIÑO/NIÑA") cae al inicio del contenido. Bajo el umbral de 2-3 casos; se resuelve al normalizar el nombre de sección (siguiente sesión). langextract sigue SIN usarse
 - **Motor 2 — setup validado** (`motor2/`, aislado; pipeline/ y core/ intactos):
   - Entorno virtual en `motor2/venv/` (git-ignored por la regla `venv/`), Python 3.13.3, con `pdfplumber 0.11.10` y `langextract 1.6.0` instalados — import limpio verificado, langextract NO se usó todavía (solo instalación)
   - `motor2/test_pdfplumber.py`: recorre TODAS las páginas del PDF (incluye separadores sin criterios) e imprime número de página real + primeros 100 caracteres. Acepta ruta por argumento; default: `Downloads\MECÁNICA MONTAJE GRAN BARATA PV 2026 .pdf` (48 páginas, confirmado por Gerardo como fuente)
@@ -72,7 +77,7 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 - Cola de consenso `pendientes_revision.json`
 
 ## Próximos pasos (orden de prioridad)
-1. **Motor 2 — siguiente sesión: lógica de extracción de criterios** (setup ya validado en Sesión E; explícitamente fuera del alcance de esa sesión). Primer uso real de langextract. Nota: `condicion_libre` y `referencia_no_resuelta` siguen siendo solo datos, sin lógica en el motor
+1. **Motor 2 — siguiente sesión: normalización de secciones + extracción de criterios** (segmentador ya validado en Sesión F). Normalizar el nombre crudo de cada bloque a Softline/Hardline/etc. (aquí se corrigen de paso los 2 títulos partidos de págs 24/44). Después, primer uso real de langextract para interpretar el contenido de cada bloque. Nota: `condicion_libre` y `referencia_no_resuelta` siguen siendo solo datos, sin lógica en el motor
 2. Resolver las 2 referencias no resueltas de capa2 (`etiquetado_hogar_diversos` → manual señalización Hardline; `exhibicion_book_impulsos` → Book de impulsos) cuando Gerardo consiga esos documentos
 3. Decidir si los campos de proveniencia (`pagina_origen`, `confianza_extraccion`, `referencia_cruzada`) se formalizan en el schema o se eliminan del JSON
 4. Validar `app.py` en navegador (la lógica ya está probada end-to-end por script; falta el click manual en la UI)
@@ -108,7 +113,8 @@ veristack/
 │       └── capa3_focal_show.json
 ├── motor2/                 ← extractor de manuales (aislado del pipeline)
 │   ├── venv/               ← git-ignored (pdfplumber + langextract)
-│   └── test_pdfplumber.py  ← validación de setup (Sesión E)
+│   ├── test_pdfplumber.py  ← validación de setup (Sesión E)
+│   └── segmenter.py        ← segmentador de secciones por heurística (Sesión F)
 ├── core/
 │   └── photo_analyzer.py
 ├── brains/
