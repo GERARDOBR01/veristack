@@ -19,10 +19,15 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 
 ---
 
-## Estado actual (2 Jul 2026 — Sesión A de fixes, cierre)
+## Estado actual (2 Jul 2026 — Sesión B: schema v1.1 + capa2 real, cierre)
 
 ✅ Completado y en repo remoto (verificado con `git log origin/main`, working tree limpio):
-- **Fix .env + export CSV** (`e8c3051`, push verificado en origin/main):
+- **Schema v1.1 + capa2 con 101 criterios reales** (`be0baf1`):
+  - `schema_conocimiento_v1.md` **creado** en la raíz (no existía como archivo — la regla fija #4 lo referenciaba pero estaba en "pendiente de diseño"). Documenta el schema v1.0 de facto (extraído de los JSONs reales y del contrato de `retrieval_engine.py`) y agrega 3 campos v1.1: `etapa_aplicable` (array o null), `condicion_libre` (texto libre), `referencia_no_resuelta` (bool). Cero cambios a campos existentes
+  - `capa2_campana_activa.json` regenerado: los 5 criterios genéricos reemplazados por los **101 criterios reales de Gran Barata** (fuente: `Gran barata 101 criterios · JSON` en la raíz del repo, subido por Gerardo). Mapeo: 15 criterios con `etapa_aplicable`, 11 con `condicion_libre`, 2 con `referencia_no_resuelta: true` (manual de señalización Hardline y Book de impulsos). Generado por script con verificaciones (101 únicos, pesos válidos, guarda anti-condición-de-etapa sin mapear)
+  - Se conservaron campos de proveniencia de la extracción en cada criterio (`pagina_origen`, `confianza_extraccion`, `referencia_cruzada`) — NO son parte del schema v1.1; los motores los ignoran. Decidir si se formalizan en el schema o se eliminan
+  - **Validado sin tocar motores**: pipeline completo con `simulation.jpeg` + E1 + focal_show (config idéntica a app.py). Sin excepciones; `versiones_capas` reporta capa2 `1.1`; 123 criterios evaluados (40 por código, 83 delegados); veredicto global GRAVE por `grafico_etapa_incorrecta` (E1 vs foto Gran Barata), consistente con Sesión A
+- **Fix .env + export CSV** (`e8c3051`, Sesión A, push verificado en origin/main):
   - `app.py` carga `.env` con `load_dotenv()` al inicio (antes de los imports del pipeline y de cualquier `os.environ.get`). Ya no se necesita `$env:GEMINI_API_KEY` manual en PowerShell. `python-dotenv` agregado a `requirements.txt`
   - Export CSV: **no existía función de export previa** (se auditó main y la rama remota) — se creó `_df_criterios()` como única fuente de filas para la tabla en pantalla Y el CSV (`st.download_button` con `on_click="ignore"`, sin rerun al descargar). Imposible desincronizarse por construcción
   - Probado end-to-end con `simulation.jpeg` (Downloads) + modelo real: 27 criterios, CSV == tabla 1:1 (comparación programática), `grafico_etapa_incorrecta` presente como GRAVE/MANDATORY (etapa activa E1 vs foto Gran Barata → veredicto global GRAVE, correcto)
@@ -52,12 +57,14 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 - Cola de consenso `pendientes_revision.json`
 
 ## Próximos pasos (orden de prioridad)
-1. Sesión B pendiente: schema v1.1 (fuera del alcance de la Sesión A — no tocado)
-2. Validar `app.py` en navegador (la lógica ya está probada end-to-end por script; falta el click manual en la UI)
-3. Decidir: ¿rotación automática de API keys en 429? (hay 3 keys en `.env`, solo se usa la primera)
-4. Agregar `capa3_tringla.json` y `capa3_mesa_show.json`
-5. Actualizar README a estado real
-6. Implementar extractor híbrido de PDFs
+1. **Sesión C: el motor aún NO usa `etapa_aplicable` para filtrar** — hoy los criterios de etapas 2/3 se evalúan igual con E1 activa (quedan NO_CALIFICA vía delegación, no filtrados por código). Implementar filtro por etapa en el motor (requiere autorización para tocar `retrieval_engine.py`/`mandatory_engine.py`). Ídem `condicion_libre` y `referencia_no_resuelta`: solo datos, sin lógica todavía
+2. Resolver las 2 referencias no resueltas de capa2 (`etiquetado_hogar_diversos` → manual señalización Hardline; `exhibicion_book_impulsos` → Book de impulsos) cuando Gerardo consiga esos documentos
+3. Decidir si los campos de proveniencia (`pagina_origen`, `confianza_extraccion`, `referencia_cruzada`) se formalizan en el schema o se eliminan del JSON
+4. Validar `app.py` en navegador (la lógica ya está probada end-to-end por script; falta el click manual en la UI)
+5. Decidir: ¿rotación automática de API keys en 429? (hay 3 keys en `.env`, solo se usa la primera)
+6. Agregar `capa3_tringla.json` y `capa3_mesa_show.json`
+7. Actualizar README a estado real
+8. Implementar extractor híbrido de PDFs
 
 ---
 
