@@ -19,9 +19,16 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 
 ---
 
-## Estado actual (3 Jul 2026 — Sesión G: Motor 2, normalización de secciones)
+## Estado actual (3 Jul 2026 — Sesión H: Motor 2, PILOTO de extracción con langextract)
 
 ✅ Completado y en repo remoto (verificado con `git log origin/main`, working tree limpio):
+- **Motor 2 — extractor de criterios, PILOTO** (`motor2/extractor.py`, PRIMER uso real de IA/langextract):
+  - Corre SOLO sobre 5 bloques de prueba (págs 29, 20, 43, 10, 35 — elegidos por complejidad distinta: simple / con NOTA-excepción / tabla larga / referencia externa / condiciones múltiples). NO se escaló a los 47 (Gerardo revisa a mano primero, por brief)
+  - Reparto de responsabilidad respetado: `segmenter.py`+`normalizer.py` fijan página y `seccion_aplicable` por CÓDIGO; langextract SOLO decide `texto`(literal)/`peso`/`severidad`/`condicion_libre`/`referencia_no_resuelta`. Página y sección se PEGAN del código al armar el JSON — el modelo nunca las decide (p10 quedó `seccion_aplicable=null`, no inventó sección)
+  - `model_id=gemini-3.5-flash`, `temperature=0.0`, `max_char_buffer=1500` (>bloque más largo → 1 chunk). API key leída de `.env` raíz sin imprimirla. Few-shot (2 ejemplos) anclados en texto REAL de bloques fuera del piloto (p26, p31) para no filtrar respuestas — regla #1 respetada
+  - **Verificación de grounding por `char_interval`**: cada criterio se compara contra el span real de la fuente (normalizando whitespace, porque el PDF parte frases a media línea). Solo `match_exact` = OK; `match_fuzzy`/`match_lesser` = SIN GROUNDING para revisión
+  - **Resultado**: 24 criterios extraídos, **21 con grounding exacto, 3 sin grounding — los 3 en p10**. peso siguió el patrón estructural real (INDICACIONES→MANDATORY, SUGERENCIA→RECOMMENDATION, NOTA→EXCEPTION); severidad independiente del peso y variada; condicion_libre capturó circunstancias reales (Mascotas, Artículos de viaje, en mesa, muebles de focal) sin meter sección/etapa; sin duplicados
+  - **🔴 2 hallazgos para revisión de Gerardo antes de escalar**: (1) **p10 es layout de 2 columnas** → pdfplumber intercala las columnas y revuelve el texto fuente; el modelo reensambla la frase correcta pero deja de ser span literal contiguo (los 3 SIN GROUNDING). No es falla del extractor ni del modelo — es del texto de origen; las páginas multicolumna necesitan tratamiento antes del run completo. (2) **falso positivo en `referencia_no_resuelta`**: "Cuida tus básicos de Display." (p20) salió `true` (concepto interno, no doc externo); en contraste "manual de señalización" (p10) → `true` correcto
 - **Motor 2 — normalizador de secciones** (`motor2/normalizer.py`, 100% código, SIN IA):
   - Consume los bloques de `segmenter.py` (import directo, no lo toca) y mapea el encabezado crudo de cada bloque a `seccion_aplicable`: uno de `Softline · Hardline · Diversos · Multimedia · Deportes · Niño/Niña · Hogar` o `None` (null). **`seccion_aplicable` es campo NUEVO** — no existe en el knowledge (que solo tiene `etapa_aplicable`); el vocabulario lo definió Gerardo en el brief de sesión
   - Mapeo por diccionario explícito con precedencia: (1) bloque sin contenido = separador → null; (2) keyword de departamento en el encabezado → su valor (orden fijo, el prefijo gana: `DEPORTES` antes que `NIÑO/NIÑA`); (3) allowlist de genéricos sin depto (portada, materiales, planogramas, exteriores) → null; (4) nada matchea → REPORTA en consola, no fuerza. Umbral duro: >3 sin match → `sys.exit`
@@ -83,7 +90,7 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 - Cola de consenso `pendientes_revision.json`
 
 ## Próximos pasos (orden de prioridad)
-1. **Motor 2 — siguiente sesión: extracción de criterios** (segmentador validado en Sesión F, normalización de secciones en Sesión G — cada bloque ya tiene `seccion_aplicable`). Primer uso real de langextract para interpretar el contenido de cada bloque y sacar los criterios. Nota: `condicion_libre` y `referencia_no_resuelta` siguen siendo solo datos, sin lógica en el motor
+1. **Motor 2 — siguiente sesión: escalar la extracción a los 47 bloques** (piloto validado en Sesión H sobre 5 bloques). ANTES de escalar, Gerardo debe decidir sobre los 2 hallazgos: (a) tratamiento de páginas multicolumna (p10 y las que estén igual) para que pdfplumber no intercale columnas; (b) afinar el prompt para el falso positivo de `referencia_no_resuelta`. `condicion_libre` y `referencia_no_resuelta` siguen siendo solo datos, sin lógica en el motor
 2. Resolver las 2 referencias no resueltas de capa2 (`etiquetado_hogar_diversos` → manual señalización Hardline; `exhibicion_book_impulsos` → Book de impulsos) cuando Gerardo consiga esos documentos
 3. Decidir si los campos de proveniencia (`pagina_origen`, `confianza_extraccion`, `referencia_cruzada`) se formalizan en el schema o se eliminan del JSON
 4. Validar `app.py` en navegador (la lógica ya está probada end-to-end por script; falta el click manual en la UI)
@@ -121,7 +128,8 @@ veristack/
 │   ├── venv/               ← git-ignored (pdfplumber + langextract)
 │   ├── test_pdfplumber.py  ← validación de setup (Sesión E)
 │   ├── segmenter.py        ← segmentador de secciones por heurística (Sesión F)
-│   └── normalizer.py       ← mapea encabezado crudo → seccion_aplicable (Sesión G)
+│   ├── normalizer.py       ← mapea encabezado crudo → seccion_aplicable (Sesión G)
+│   └── extractor.py        ← langextract: criterios+peso+severidad por bloque (Sesión H, piloto)
 ├── core/
 │   └── photo_analyzer.py
 ├── brains/
