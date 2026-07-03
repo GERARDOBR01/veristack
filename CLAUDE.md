@@ -19,9 +19,16 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 
 ---
 
-## Estado actual (2 Jul 2026 — Sesión D: filtro de etapa conectado a la UI, cierre)
+## Estado actual (3 Jul 2026 — Sesión E: Motor 2, setup inicial del extractor de manuales)
 
 ✅ Completado y en repo remoto (verificado con `git log origin/main`, working tree limpio):
+- **Motor 2 — setup validado** (`motor2/`, aislado; pipeline/ y core/ intactos):
+  - Entorno virtual en `motor2/venv/` (git-ignored por la regla `venv/`), Python 3.13.3, con `pdfplumber 0.11.10` y `langextract 1.6.0` instalados — import limpio verificado, langextract NO se usó todavía (solo instalación)
+  - `motor2/test_pdfplumber.py`: recorre TODAS las páginas del PDF (incluye separadores sin criterios) e imprime número de página real + primeros 100 caracteres. Acepta ruta por argumento; default: `Downloads\MECÁNICA MONTAJE GRAN BARATA PV 2026 .pdf` (48 páginas, confirmado por Gerardo como fuente)
+  - **Criterio de éxito cumplido**: verificación visual de 4 páginas al azar (9, 22, 35, 43) renderizadas con pypdfium2 vs salida de pdfplumber — los números de página coinciden exactos con el slide real (pág 9 "PAUTA GENERAL" separador, pág 22 "FOCAL SHOW HOMBRES 1a y 2a ETAPA", pág 35 "DIVERSOS", pág 43 "DEPORTES – Zapatos Deportivos")
+  - GEMINI_API_KEY confirmada presente en `.env` local (no se tocó)
+  - Nota: el PDF vive en Downloads, NO en el repo (`.gitignore` no bloquea PDFs, pero es material de Liverpool — decidir si se versiona). El venv es local: en otra máquina se recrea con `python -m venv motor2/venv` + `pip install pdfplumber langextract`
+- **UI → filtro de etapa activo en producción** (`d59b08e`, 3 líneas en `app.py`): `_config_pipeline(etapa_activa)` recibe el valor del selectbox "Etapa activa" y lo pone en `ConfigRetrieval.etapa_activa`. El filtro de Sesión C ya no está dormido
 - **UI → filtro de etapa activo en producción** (`d59b08e`, 3 líneas en `app.py`): `_config_pipeline(etapa_activa)` recibe el valor del selectbox "Etapa activa" y lo pone en `ConfigRetrieval.etapa_activa`. El filtro de Sesión C ya no está dormido
   - **Probado en la UI real** (Streamlit + Playwright, no solo script): subir `simulation.jpeg`, E1 + focal_show, click Verificar → tabla/CSV con **116 criterios** (antes 123), los 7 de etapas 2/3 ausentes (`barras_segunda_tercera_etapa`, `columnas_segunda_etapa`, `columnas_tercera_etapa`, `agregar_puntos_verdes`, `focal_show_mujeres_etapa3`, `prohibicion_graficos_barata_etapa3`, `colocar_atriles_marca_etapa3`), los de E1 presentes, GRAVE global por `grafico_etapa_incorrecta`, delegados 83→76. CSV verificado contra los IDs (misma fuente que la tabla, por construcción)
 - **Filtro por `etapa_aplicable` en `retrieval_engine.py`** (`22f28f0`) — único archivo de motor tocado, según límite de sesión:
@@ -65,7 +72,7 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 - Cola de consenso `pendientes_revision.json`
 
 ## Próximos pasos (orden de prioridad)
-1. **Motor 2** (siguiente bloque de trabajo — Gerardo define alcance). Nota: `condicion_libre` y `referencia_no_resuelta` siguen siendo solo datos, sin lógica en el motor
+1. **Motor 2 — siguiente sesión: lógica de extracción de criterios** (setup ya validado en Sesión E; explícitamente fuera del alcance de esa sesión). Primer uso real de langextract. Nota: `condicion_libre` y `referencia_no_resuelta` siguen siendo solo datos, sin lógica en el motor
 2. Resolver las 2 referencias no resueltas de capa2 (`etiquetado_hogar_diversos` → manual señalización Hardline; `exhibicion_book_impulsos` → Book de impulsos) cuando Gerardo consiga esos documentos
 3. Decidir si los campos de proveniencia (`pagina_origen`, `confianza_extraccion`, `referencia_cruzada`) se formalizan en el schema o se eliminan del JSON
 4. Validar `app.py` en navegador (la lógica ya está probada end-to-end por script; falta el click manual en la UI)
@@ -99,6 +106,9 @@ veristack/
 │       ├── capa1_display_basics.json
 │       ├── capa2_campana_activa.json
 │       └── capa3_focal_show.json
+├── motor2/                 ← extractor de manuales (aislado del pipeline)
+│   ├── venv/               ← git-ignored (pdfplumber + langextract)
+│   └── test_pdfplumber.py  ← validación de setup (Sesión E)
 ├── core/
 │   └── photo_analyzer.py
 ├── brains/

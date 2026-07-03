@@ -19,10 +19,30 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 
 ---
 
-## Estado actual (2 Jul 2026 — Sesión A de fixes, cierre)
+## Estado actual (3 Jul 2026 — Sesión E: Motor 2, setup inicial del extractor de manuales)
 
 ✅ Completado y en repo remoto (verificado con `git log origin/main`, working tree limpio):
-- **Fix .env + export CSV** (`e8c3051`, push verificado en origin/main):
+- **Motor 2 — setup validado** (`motor2/`, aislado; pipeline/ y core/ intactos):
+  - Entorno virtual en `motor2/venv/` (git-ignored por la regla `venv/`), Python 3.13.3, con `pdfplumber 0.11.10` y `langextract 1.6.0` instalados — import limpio verificado, langextract NO se usó todavía (solo instalación)
+  - `motor2/test_pdfplumber.py`: recorre TODAS las páginas del PDF (incluye separadores sin criterios) e imprime número de página real + primeros 100 caracteres. Acepta ruta por argumento; default: `Downloads\MECÁNICA MONTAJE GRAN BARATA PV 2026 .pdf` (48 páginas, confirmado por Gerardo como fuente)
+  - **Criterio de éxito cumplido**: verificación visual de 4 páginas al azar (9, 22, 35, 43) renderizadas con pypdfium2 vs salida de pdfplumber — los números de página coinciden exactos con el slide real (pág 9 "PAUTA GENERAL" separador, pág 22 "FOCAL SHOW HOMBRES 1a y 2a ETAPA", pág 35 "DIVERSOS", pág 43 "DEPORTES – Zapatos Deportivos")
+  - GEMINI_API_KEY confirmada presente en `.env` local (no se tocó)
+  - Nota: el PDF vive en Downloads, NO en el repo (`.gitignore` no bloquea PDFs, pero es material de Liverpool — decidir si se versiona). El venv es local: en otra máquina se recrea con `python -m venv motor2/venv` + `pip install pdfplumber langextract`
+- **UI → filtro de etapa activo en producción** (`d59b08e`, 3 líneas en `app.py`): `_config_pipeline(etapa_activa)` recibe el valor del selectbox "Etapa activa" y lo pone en `ConfigRetrieval.etapa_activa`. El filtro de Sesión C ya no está dormido
+- **UI → filtro de etapa activo en producción** (`d59b08e`, 3 líneas en `app.py`): `_config_pipeline(etapa_activa)` recibe el valor del selectbox "Etapa activa" y lo pone en `ConfigRetrieval.etapa_activa`. El filtro de Sesión C ya no está dormido
+  - **Probado en la UI real** (Streamlit + Playwright, no solo script): subir `simulation.jpeg`, E1 + focal_show, click Verificar → tabla/CSV con **116 criterios** (antes 123), los 7 de etapas 2/3 ausentes (`barras_segunda_tercera_etapa`, `columnas_segunda_etapa`, `columnas_tercera_etapa`, `agregar_puntos_verdes`, `focal_show_mujeres_etapa3`, `prohibicion_graficos_barata_etapa3`, `colocar_atriles_marca_etapa3`), los de E1 presentes, GRAVE global por `grafico_etapa_incorrecta`, delegados 83→76. CSV verificado contra los IDs (misma fuente que la tabla, por construcción)
+- **Filtro por `etapa_aplicable` en `retrieval_engine.py`** (`22f28f0`) — único archivo de motor tocado, según límite de sesión:
+  - Criterio cuyo `etapa_aplicable` excluye la etapa activa → **NO_APLICA**: `buscar_lote` lo omite del resultado, así que no llega a `confidence_engine`, no se delega al modelo y no aparece en `ResultadoFinal` (ni como NO_CALIFICA ni como CUMPLE fantasma). Cada omisión se loggea
+  - `etapa_aplicable` null/[] o etapa activa desconocida/no normalizable → el criterio aplica (comportamiento histórico intacto; nunca se descarta en silencio por datos ambiguos). Normalización acepta "E1" (UI) y "1" (schema)
+  - La etapa entra por parámetro `etapa_activa` de `buscar`/`buscar_lote` o por el campo nuevo `ConfigRetrieval.etapa_activa` (default None = sin filtro). También acepta `schema_version` 1.0 y 1.1 sin WARNING; `ResultadoRetrieval` ganó el flag `no_aplica`
+  - **⚠️ El filtro aún NO se activa desde la UI**: `pipeline.py` no pasa `etapa_activa` a `buscar_lote` y `app.py` no llena `ConfigRetrieval.etapa_activa` — ambos archivos estaban fuera del límite de esta sesión. Falta 1 línea (en `app.py` `_config_pipeline()` o en `pipeline.py` PASO 2) que requiere autorización → Sesión D
+  - **Validado E2E** (config con `etapa_activa="E1"`, `simulation.jpeg`, focal_show): 116 criterios (antes 123) — desaparecen exactamente los 7 de etapas 2/3, cero fugas como NO_CALIFICA, los de E1 permanecen, GRAVE global por `grafico_etapa_incorrecta` se mantiene; delegaciones al modelo 83→76. Retrocompatibilidad: sin etapa, 122/122 criterios del knowledge se comportan igual que antes; E2 omite 8, E3 omite 9 (conteos verificados contra el mapeo). Tests internos de `retrieval_engine.py` (`__main__`) ampliados con 3 casos de filtro por etapa
+- **Schema v1.1 + capa2 con 101 criterios reales** (`be0baf1`):
+  - `schema_conocimiento_v1.md` **creado** en la raíz (no existía como archivo — la regla fija #4 lo referenciaba pero estaba en "pendiente de diseño"). Documenta el schema v1.0 de facto (extraído de los JSONs reales y del contrato de `retrieval_engine.py`) y agrega 3 campos v1.1: `etapa_aplicable` (array o null), `condicion_libre` (texto libre), `referencia_no_resuelta` (bool). Cero cambios a campos existentes
+  - `capa2_campana_activa.json` regenerado: los 5 criterios genéricos reemplazados por los **101 criterios reales de Gran Barata** (fuente: `Gran barata 101 criterios · JSON` en la raíz del repo, subido por Gerardo). Mapeo: 15 criterios con `etapa_aplicable`, 11 con `condicion_libre`, 2 con `referencia_no_resuelta: true` (manual de señalización Hardline y Book de impulsos). Generado por script con verificaciones (101 únicos, pesos válidos, guarda anti-condición-de-etapa sin mapear)
+  - Se conservaron campos de proveniencia de la extracción en cada criterio (`pagina_origen`, `confianza_extraccion`, `referencia_cruzada`) — NO son parte del schema v1.1; los motores los ignoran. Decidir si se formalizan en el schema o se eliminan
+  - **Validado sin tocar motores**: pipeline completo con `simulation.jpeg` + E1 + focal_show (config idéntica a app.py). Sin excepciones; `versiones_capas` reporta capa2 `1.1`; 123 criterios evaluados (40 por código, 83 delegados); veredicto global GRAVE por `grafico_etapa_incorrecta` (E1 vs foto Gran Barata), consistente con Sesión A
+- **Fix .env + export CSV** (`e8c3051`, Sesión A, push verificado en origin/main):
   - `app.py` carga `.env` con `load_dotenv()` al inicio (antes de los imports del pipeline y de cualquier `os.environ.get`). Ya no se necesita `$env:GEMINI_API_KEY` manual en PowerShell. `python-dotenv` agregado a `requirements.txt`
   - Export CSV: **no existía función de export previa** (se auditó main y la rama remota) — se creó `_df_criterios()` como única fuente de filas para la tabla en pantalla Y el CSV (`st.download_button` con `on_click="ignore"`, sin rerun al descargar). Imposible desincronizarse por construcción
   - Probado end-to-end con `simulation.jpeg` (Downloads) + modelo real: 27 criterios, CSV == tabla 1:1 (comparación programática), `grafico_etapa_incorrecta` presente como GRAVE/MANDATORY (etapa activa E1 vs foto Gran Barata → veredicto global GRAVE, correcto)
@@ -52,12 +72,14 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 - Cola de consenso `pendientes_revision.json`
 
 ## Próximos pasos (orden de prioridad)
-1. Sesión B pendiente: schema v1.1 (fuera del alcance de la Sesión A — no tocado)
-2. Validar `app.py` en navegador (la lógica ya está probada end-to-end por script; falta el click manual en la UI)
-3. Decidir: ¿rotación automática de API keys en 429? (hay 3 keys en `.env`, solo se usa la primera)
-4. Agregar `capa3_tringla.json` y `capa3_mesa_show.json`
-5. Actualizar README a estado real
-6. Implementar extractor híbrido de PDFs
+1. **Motor 2 — siguiente sesión: lógica de extracción de criterios** (setup ya validado en Sesión E; explícitamente fuera del alcance de esa sesión). Primer uso real de langextract. Nota: `condicion_libre` y `referencia_no_resuelta` siguen siendo solo datos, sin lógica en el motor
+2. Resolver las 2 referencias no resueltas de capa2 (`etiquetado_hogar_diversos` → manual señalización Hardline; `exhibicion_book_impulsos` → Book de impulsos) cuando Gerardo consiga esos documentos
+3. Decidir si los campos de proveniencia (`pagina_origen`, `confianza_extraccion`, `referencia_cruzada`) se formalizan en el schema o se eliminan del JSON
+4. Validar `app.py` en navegador (la lógica ya está probada end-to-end por script; falta el click manual en la UI)
+5. Decidir: ¿rotación automática de API keys en 429? (hay 3 keys en `.env`, solo se usa la primera)
+6. Agregar `capa3_tringla.json` y `capa3_mesa_show.json`
+7. Actualizar README a estado real
+8. Implementar extractor híbrido de PDFs
 
 ---
 
@@ -84,6 +106,9 @@ veristack/
 │       ├── capa1_display_basics.json
 │       ├── capa2_campana_activa.json
 │       └── capa3_focal_show.json
+├── motor2/                 ← extractor de manuales (aislado del pipeline)
+│   ├── venv/               ← git-ignored (pdfplumber + langextract)
+│   └── test_pdfplumber.py  ← validación de setup (Sesión E)
 ├── core/
 │   └── photo_analyzer.py
 ├── brains/
