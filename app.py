@@ -53,12 +53,13 @@ from retrieval_engine import ConfigRetrieval
 # pipeline/knowledge/, así que fijamos rutas absolutas aquí.
 # ──────────────────────────────────────────────────────────────
 
-def _config_pipeline() -> ConfigPipeline:
+def _config_pipeline(etapa_activa: str | None = None) -> ConfigPipeline:
     return ConfigPipeline(
         config_retrieval=ConfigRetrieval(
             ruta_capa1          = str(KNOWLEDGE / "capa1_display_basics.json"),
             ruta_capa2          = str(KNOWLEDGE / "capa2_campana_activa.json"),
             ruta_capa3_template = str(KNOWLEDGE / "capa3_{tipo_foto}.json"),
+            etapa_activa        = etapa_activa,
         )
     )
 
@@ -186,7 +187,7 @@ try:
             imagen_path  = imagen_path,
             etapa_activa = etapa_activa,
             tipo_foto    = tipo_foto,
-            config       = _config_pipeline(),
+            config       = _config_pipeline(etapa_activa),
         )
 except Exception as exc:  # el pipeline no debe tumbar la UI
     st.error("El pipeline lanzó un error y no pudo completar la evaluación.")
