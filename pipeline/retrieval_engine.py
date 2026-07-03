@@ -31,10 +31,18 @@ Schema esperado por cada JSON de capa:
       "aliases":  ["triangulo", "disposicion_triangular"],
       "texto":    "Texto exacto del manual...",
       "peso":     "MANDATORY | RECOMMENDATION | EXCEPTION",
-      "aplica_a": ["focal_show", "tringla"] | null
+      "aplica_a": ["focal_show", "tringla"] | null,
+      "etapa_aplicable": ["1", "2"] | null    ← v1.1: null = todas las etapas
     }
   ]
 }
+
+Filtrado por etapa (schema v1.1):
+  Si se conoce la etapa activa (parámetro etapa_activa o ConfigRetrieval.etapa_activa)
+  y un criterio declara etapa_aplicable que NO incluye esa etapa, el criterio es
+  NO_APLICA: no genera evidencia, buscar_lote lo omite del resultado (no llega a
+  confidence ni al modelo). Sin etapa conocida o con etapa_aplicable null,
+  el comportamiento es el histórico: el criterio aplica.
 ──────────────────────────────────────────────────────────────────
 """
 
@@ -52,9 +60,9 @@ from mandatory_engine import ResultadoPipeline, Severidad
 logger = logging.getLogger("visual_lv.retrieval")
 logger.addHandler(logging.NullHandler())  # la app decide los handlers/nivel
 
-# Versión de schema que este motor sabe interpretar. Un JSON con otra
+# Versiones de schema que este motor sabe interpretar. Un JSON con otra
 # schema_version se carga igual, pero genera WARNING (no crash).
-SCHEMA_VERSION_ESPERADA = "1.0"
+SCHEMAS_VERSION_ESPERADAS = frozenset({"1.0", "1.1"})
 
 
 # ──────────────────────────────────────────────
@@ -91,6 +99,9 @@ class ResultadoRetrieval:
     sin_evidencia:     bool                     = False
     resumen:           str                      = ""
     versiones_capas:   dict                     = field(default_factory=dict)
+    # v1.1: True si el criterio declara etapa_aplicable y la etapa activa no está
+    # incluida. buscar_lote omite estos resultados (no llegan a confidence/modelo).
+    no_aplica:         bool                     = False
 
 
 # ──────────────────────────────────────────────
@@ -108,6 +119,9 @@ class ConfigRetrieval:
     min_keywords_id:         int = 1
     # Mínimo de keywords que deben aparecer en el texto → BAJO
     min_keywords_texto:      int = 2
+    # Etapa activa de la campaña seleccionada en la UI (ej. "E1"). None = no se
+    # filtra por etapa_aplicable (comportamiento previo a schema v1.1).
+    etapa_activa:            Optional[str] = None
 
 
 # ──────────────────────────────────────────────
@@ -188,10 +202,10 @@ def _cargar_capa_full(ruta: str, etiqueta: str = "") -> tuple[list[dict], dict]:
 
     if schema_version is None:
         logger.warning("[%s] sin schema_version — se carga igual (%d criterios)", tag, len(criterios))
-    elif schema_version != SCHEMA_VERSION_ESPERADA:
+    elif schema_version not in SCHEMAS_VERSION_ESPERADAS:
         logger.warning(
-            "[%s] schema_version=%s no coincide con la esperada %s — se carga igual (fecha=%s)",
-            tag, schema_version, SCHEMA_VERSION_ESPERADA, fecha,
+            "[%s] schema_version=%s no está entre las esperadas %s — se carga igual (fecha=%s)",
+            tag, schema_version, sorted(SCHEMAS_VERSION_ESPERADAS), fecha,
         )
     else:
         logger.info("[%s] schema_version=%s fecha=%s (%d criterios)", tag, schema_version, fecha, len(criterios))
@@ -285,17 +299,72 @@ def _aplica_a_tipo(entry: dict, tipo_foto: Optional[str]) -> bool:
     return tipo_foto in aplica_a
 
 
+def _norm_etapa(valor) -> Optional[str]:
+    """
+    Número de etapa como string, o None si no se puede determinar.
+    Acepta las dos formas en uso: "E1" (UI) y "1" (etapa_aplicable del schema v1.1).
+    """
+    s = _to_str(valor)
+    if not s:
+        return None
+    m = re.fullmatch(r"[eE]?\s*(\d+)", s)
+    return m.group(1) if m else None
+
+
+def _aplica_a_etapa(entry: dict, etapa_activa: Optional[str]) -> bool:
+    """
+    True si la entrada aplica a la etapa activa, o si es universal.
+    Ante ambigüedad (etapa desconocida o valores no normalizables) NO filtra:
+    un criterio jamás se descarta en silencio por datos dudosos.
+    """
+    etapas = _to_list(entry.get("etapa_aplicable"))
+    if not etapas:
+        return True          # null / [] = aplica a todas las etapas
+    activa = _norm_etapa(etapa_activa)
+    if activa is None:
+        return True          # sin contexto de etapa: no filtrar
+    declaradas = {_norm_etapa(e) for e in etapas} - {None}
+    if not declaradas:
+        return True          # etapa_aplicable no normalizable: no filtrar
+    return activa in declaradas
+
+
+def _criterio_no_aplica_por_etapa(
+    criterio:     str,
+    capas:        list[list[dict]],
+    etapa_activa: Optional[str],
+) -> bool:
+    """
+    True si el criterio (por ID exacto) existe en el knowledge base y TODAS las
+    entradas con ese ID declaran etapa_aplicable que excluye la etapa activa.
+    Si alguna entrada con ese ID aplica (o es universal), el criterio aplica.
+    """
+    criterio_norm = _norm(criterio)
+    encontrado    = False
+    for entradas in capas:
+        for entry in entradas:
+            if _norm(_to_str(entry.get("id")) or "") != criterio_norm:
+                continue
+            encontrado = True
+            if _aplica_a_etapa(entry, etapa_activa):
+                return False
+    return encontrado
+
+
 def _buscar_en_capa(
-    criterio:    str,
-    entradas:    list[dict],
-    numero_capa: int,
-    tipo_foto:   Optional[str],
-    config:      ConfigRetrieval,
+    criterio:     str,
+    entradas:     list[dict],
+    numero_capa:  int,
+    tipo_foto:    Optional[str],
+    config:       ConfigRetrieval,
+    etapa_activa: Optional[str] = None,
 ) -> list[EvidenciaRetrieved]:
     resultados: list[EvidenciaRetrieved] = []
 
     for entry in entradas:
         if not _aplica_a_tipo(entry, tipo_foto):
+            continue
+        if not _aplica_a_etapa(entry, etapa_activa):
             continue
         confianza = _score_entry(criterio, entry, config)
         if confianza is None:
@@ -355,10 +424,21 @@ def _ejecutar_busqueda(
     resultado_mandatory: ResultadoPipeline,
     config:              ConfigRetrieval,
     versiones_capas:     Optional[dict] = None,
+    etapa_activa:        Optional[str] = None,
 ) -> ResultadoRetrieval:
-    ev1 = _buscar_en_capa(criterio, capa1_entradas, 1, tipo_foto, config)
-    ev2 = _buscar_en_capa(criterio, capa2_entradas, 2, tipo_foto, config)
-    ev3 = _buscar_en_capa(criterio, capa3_entradas, 3, tipo_foto, config)
+    capas = [capa1_entradas, capa2_entradas, capa3_entradas]
+    if _criterio_no_aplica_por_etapa(criterio, capas, etapa_activa):
+        return ResultadoRetrieval(
+            criterio        = criterio,
+            sin_evidencia   = True,
+            no_aplica       = True,
+            resumen         = f"RETRIEVAL: {criterio} | NO_APLICA (etapa activa {etapa_activa})",
+            versiones_capas = dict(versiones_capas) if versiones_capas else {},
+        )
+
+    ev1 = _buscar_en_capa(criterio, capa1_entradas, 1, tipo_foto, config, etapa_activa)
+    ev2 = _buscar_en_capa(criterio, capa2_entradas, 2, tipo_foto, config, etapa_activa)
+    ev3 = _buscar_en_capa(criterio, capa3_entradas, 3, tipo_foto, config, etapa_activa)
 
     capas_consultadas = [1, 2] + ([3] if capa3_disponible else [])
     capas_vacias = [
@@ -389,10 +469,14 @@ def buscar(
     resultado_mandatory: ResultadoPipeline,
     tipo_foto:           Optional[str] = None,
     config:              Optional[ConfigRetrieval] = None,
+    etapa_activa:        Optional[str] = None,
 ) -> ResultadoRetrieval:
     """
     Busca evidencia para un criterio en las 3 capas de conocimiento.
     Retorna evidencias ordenadas: peso de fuente × peso de regla.
+    Si el criterio no aplica a la etapa activa (etapa_aplicable, schema v1.1),
+    retorna ResultadoRetrieval con no_aplica=True y sin evidencias.
+    La etapa se toma del parámetro o, en su defecto, de config.etapa_activa.
     """
     if not isinstance(criterio, str) or not criterio.strip():
         return ResultadoRetrieval(
@@ -412,6 +496,8 @@ def buscar(
 
     if config is None:
         config = ConfigRetrieval()
+
+    etapa_activa = _to_str(etapa_activa) or _to_str(config.etapa_activa)
 
     ruta_c3 = _ruta_capa3(config.ruta_capa3_template, tipo_foto)
 
@@ -434,6 +520,7 @@ def buscar(
         resultado_mandatory = resultado_mandatory,
         config              = config,
         versiones_capas     = versiones,
+        etapa_activa        = etapa_activa,
     )
 
 
@@ -442,10 +529,14 @@ def buscar_lote(
     resultado_mandatory: ResultadoPipeline,
     tipo_foto:           Optional[str] = None,
     config:              Optional[ConfigRetrieval] = None,
+    etapa_activa:        Optional[str] = None,
 ) -> list[ResultadoRetrieval]:
     """
     Busca evidencia para múltiples criterios.
     Las capas se cargan una sola vez — eficiente para 10+ criterios seguidos.
+    Los criterios que no aplican a la etapa activa (etapa_aplicable, schema v1.1)
+    se OMITEN del resultado: no llegan a confidence ni se delegan al modelo.
+    La etapa se toma del parámetro o, en su defecto, de config.etapa_activa.
     """
     if not isinstance(criterios, list):
         return []
@@ -460,6 +551,8 @@ def buscar_lote(
 
     if config is None:
         config = ConfigRetrieval()
+
+    etapa_activa = _to_str(etapa_activa) or _to_str(config.etapa_activa)
 
     # Cargar las 3 capas una sola vez
     ruta_c3        = _ruta_capa3(config.ruta_capa3_template, tipo_foto)
@@ -477,7 +570,7 @@ def buscar_lote(
     for criterio in criterios:
         if not isinstance(criterio, str) or not criterio.strip():
             continue
-        resultados.append(_ejecutar_busqueda(
+        resultado = _ejecutar_busqueda(
             criterio            = criterio.strip(),
             capa1_entradas      = capa1_entradas,
             capa2_entradas      = capa2_entradas,
@@ -487,7 +580,13 @@ def buscar_lote(
             resultado_mandatory = resultado_mandatory,
             config              = config,
             versiones_capas     = versiones,
-        ))
+            etapa_activa        = etapa_activa,
+        )
+        if resultado.no_aplica:
+            logger.info("[retrieval] %s NO_APLICA — etapa_aplicable excluye la etapa activa %s",
+                        resultado.criterio, etapa_activa)
+            continue
+        resultados.append(resultado)
 
     return resultados
 
@@ -587,6 +686,14 @@ if __name__ == "__main__":
                 "texto": "El producto estrella de la temporada verano 2025 debe ocupar la posición central y de mayor jerarquía.",
                 "peso": "RECOMMENDATION",
                 "aplica_a": ["focal_show", "mesa_show"],
+            },
+            {
+                "id": "parche_segunda_etapa",
+                "aliases": ["parche 20", "beneficio adicional"],
+                "texto": "Colocar el parche +20 sobre el gráfico base durante la segunda y tercera etapa.",
+                "peso": "MANDATORY",
+                "aplica_a": None,
+                "etapa_aplicable": ["2", "3"],
             },
         ],
     }
@@ -709,6 +816,26 @@ if __name__ == "__main__":
             "tipo_foto": "focal_show",
             "mandatory": {"no_es": "un_pipeline"},
         },
+        {
+            "nombre":    "Filtro etapa v1.1 — criterio de etapa 2/3 con E1 activa → NO_APLICA",
+            "criterio":  "parche_segunda_etapa",
+            "tipo_foto": "focal_show",
+            "mandatory": mandatory_ok,
+            "etapa":     "E1",
+        },
+        {
+            "nombre":    "Filtro etapa v1.1 — criterio de etapa 2/3 con E2 activa → aplica",
+            "criterio":  "parche_segunda_etapa",
+            "tipo_foto": "focal_show",
+            "mandatory": mandatory_ok,
+            "etapa":     "E2",
+        },
+        {
+            "nombre":    "Filtro etapa v1.1 — sin etapa activa → no se filtra (histórico)",
+            "criterio":  "parche_segunda_etapa",
+            "tipo_foto": "focal_show",
+            "mandatory": mandatory_ok,
+        },
     ]
 
     for caso in casos:
@@ -720,9 +847,11 @@ if __name__ == "__main__":
             resultado_mandatory = caso["mandatory"],
             tipo_foto           = caso.get("tipo_foto"),
             config              = config_test,
+            etapa_activa        = caso.get("etapa"),
         )
         print(f"RESUMEN:           {resultado.resumen}")
         print(f"SIN EVIDENCIA:     {resultado.sin_evidencia}")
+        print(f"NO APLICA:         {resultado.no_aplica}")
         print(f"CAPAS CONSULTADAS: {resultado.capas_consultadas}")
         print(f"CAPAS VACÍAS:      {resultado.capas_vacias}")
         if resultado.evidencias:
