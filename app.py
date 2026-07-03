@@ -19,6 +19,9 @@ import traceback
 from pathlib import Path
 
 import streamlit as st
+from dotenv import load_dotenv
+
+load_dotenv(Path(__file__).resolve().parent / ".env")
 
 # ──────────────────────────────────────────────────────────────
 # IMPORTS DEL PIPELINE
@@ -85,15 +88,14 @@ def _mostrar_veredicto_global(veredicto: Severidad) -> None:
         st.info(texto, icon="ℹ️")
 
 
-def _tabla_criterios(criterios) -> None:
+def _df_criterios(criterios):
     """
-    Tabla con columnas: criterio | veredicto | confianza | fuente | delegado_a_modelo.
-    Primero los criterios que NO cumplen (ordenados por severidad), luego los
-    CUMPLE al final, mostrados en gris.
+    DataFrame con las filas de criterios, en el mismo orden que la tabla en
+    pantalla. Única fuente para la tabla Y el CSV exportado: ambos salen de
+    aquí, así no pueden desincronizarse. Devuelve None si no hay criterios.
     """
     if not criterios:
-        st.caption("El pipeline no devolvió criterios individuales para este caso.")
-        return
+        return None
 
     ordenados = sorted(
         criterios,
@@ -116,7 +118,18 @@ def _tabla_criterios(criterios) -> None:
     ]
 
     import pandas as pd
-    df = pd.DataFrame(filas, columns=["criterio", "veredicto", "confianza", "fuente", "delegado_a_modelo"])
+    return pd.DataFrame(filas, columns=["criterio", "veredicto", "confianza", "fuente", "delegado_a_modelo"])
+
+
+def _tabla_criterios(df) -> None:
+    """
+    Tabla con columnas: criterio | veredicto | confianza | fuente | delegado_a_modelo.
+    Primero los criterios que NO cumplen (ordenados por severidad), luego los
+    CUMPLE al final, mostrados en gris. Recibe el DataFrame de _df_criterios().
+    """
+    if df is None:
+        st.caption("El pipeline no devolvió criterios individuales para este caso.")
+        return
 
     def _gris_si_cumple(row):
         return ["color: gray" if row["veredicto"] == "CUMPLE" else "" for _ in row]
@@ -201,4 +214,16 @@ if resultado is not None:
         st.caption(resultado.resumen_ejecutivo)
 
     st.subheader("Criterios")
-    _tabla_criterios(resultado.criterios)
+    df_criterios = _df_criterios(resultado.criterios)
+    _tabla_criterios(df_criterios)
+
+    if df_criterios is not None:
+        # on_click="ignore": la descarga no dispara rerun, así el CSV servido
+        # es exactamente el de la corrida que está en pantalla.
+        st.download_button(
+            "Descargar CSV",
+            data=df_criterios.to_csv(index=False).encode("utf-8-sig"),
+            file_name="criterios_verificacion.csv",
+            mime="text/csv",
+            on_click="ignore",
+        )
