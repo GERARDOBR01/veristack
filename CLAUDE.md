@@ -19,7 +19,15 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 
 ---
 
-## Estado actual (3 Jul 2026 — Sesión I: Motor 2, fix multicolumna + fix referencia_no_resuelta)
+## Estado actual (3 Jul 2026 — Sesión J: Motor 2, volcado de páginas multicolumna para revisión)
+
+✅ Completado y en repo remoto (verificado con `git log origin/main`, working tree limpio):
+- **Motor 2 — volcado de páginas multicolumna** (`motor2/revisar_multicolumna.py`, SIN IA, cero costo API):
+  - Imprime el texto crudo completo (`use_text_flow=True`) de las páginas multicolumna, para que Gerardo compare a ojo contra el PDF antes de escalar la extracción. La lista NO se hardcodea: reimporta `_es_multicolumna` de `test_pdfplumber.py` (importar no ejecuta su main) y la recalcula, así no se desincroniza. Solo pdfplumber, ninguna llamada a langextract/Gemini
+  - **Resultado**: 20 páginas volcadas (1, 2, 3, 5, 6, 7, 10, 11, 12, 13, 16, 18, 26, 27, 28, 31, 32, 34, 35, 42). Observaciones para la revisión: (a) con use_text_flow el **encabezado de sección suele quedar al final** del volcado (orden del stream; no afecta al extractor porque página+sección vienen del código); (b) p16 sigue con "OUTPOS **T** BOLSA **S**" (texto vertical "TS" intercalado) — artefacto gráfico puntual que use_text_flow no resuelve
+  - No se corrió extractor.py ni langextract (por brief); segmenter/normalizer/extractor intactos
+
+## Estado previo (3 Jul 2026 — Sesión I: Motor 2, fix multicolumna + fix referencia_no_resuelta)
 
 ✅ Completado y en repo remoto (verificado con `git log origin/main`, working tree limpio):
 - **Motor 2 — 2 fixes del piloto** (`motor2/extractor.py` + `motor2/test_pdfplumber.py`, sigue en PILOTO):
@@ -134,7 +142,8 @@ veristack/
 │   ├── test_pdfplumber.py  ← validación de setup (Sesión E)
 │   ├── segmenter.py        ← segmentador de secciones por heurística (Sesión F)
 │   ├── normalizer.py       ← mapea encabezado crudo → seccion_aplicable (Sesión G)
-│   └── extractor.py        ← langextract: criterios+peso+severidad por bloque (Sesión H, piloto)
+│   ├── extractor.py        ← langextract: criterios+peso+severidad por bloque (Sesión H, piloto)
+│   └── revisar_multicolumna.py ← vuelca texto crudo de páginas multicolumna (Sesión J, sin IA)
 ├── core/
 │   └── photo_analyzer.py
 ├── brains/
