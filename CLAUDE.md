@@ -19,11 +19,22 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 
 ---
 
-## Estado actual (3 Jul 2026 — Sesión M: Motor 2, fallback Gemini Vision para páginas diagrama)
+## Estado actual (3 Jul 2026 — Sesión N: Motor 2, consolidado de las 48 páginas del manual)
 
-🟡 Trabajo local, aún SIN push (Gerardo confirma push después de revisar a ojo el JSON de 2-3 páginas):
+🟡 Trabajo local, aún SIN push (Gerardo confirma después de ver el reporte):
+- **Motor 2 — consolidado base del manual** (`motor2/consolidar_manual.py` + `motor2/manual_consolidado.json`):
+  - **Une TODO el manual en un solo JSON ordenado por página real, sin huecos ni duplicados**: las páginas DIAGRAMA toman el resultado ya generado por `vision_fallback.py` (`resultados_vision/pagina_N.json`); el resto sale por pdfplumber `use_text_flow=True`. **Cero llamadas a API en este paso** — el script NO llama a Gemini, y si falta un JSON de visión o vino con `parseo_ok=false`, ABORTA con error explícito (nunca rellena en silencio)
+  - **⚠️ Hallazgo de conteo**: el PDF Gran Barata tiene **48 páginas reales, no 47**. El "47" que circulaba en el proyecto son los **47 BLOQUES de conocimiento** (`extractor.py`), no páginas del PDF. Reparto real: **14 por Gemini Vision + 34 por texto plano = 48**
+  - La lista de páginas diagrama NO se hardcodea: se recalcula importando `clasificar_pdf` (misma regla que `vision_fallback.py`). Cada entrada trae `pagina`, `fuente` (`gemini_vision` | `pdfplumber_text_flow`) y su contenido; las de visión incluyen además el `texto_crudo` de pdfplumber y la referencia al archivo de origen
+  - **Integridad validada por código antes de reportar "listo"**: 48/48 presentes, secuencia 1–48 exacta, las 14 de visión con `estructura.secciones` no vacías. Nunca pisa una corrida anterior: respaldo `.bak-<timestamp>` antes de reescribir (misma convención que vision_fallback)
+  - **🟡 8 páginas de texto plano con muy poco texto, para que Gerardo revise a ojo si son separadores legítimos**: p9 "PAUTA GENERAL", p15 "DESARROLLOS", p17 "PDV IMPULSO VIVE", p19 "MONTAJE SOFTLINE", p30 "MONTAJE HARDLINE", p45 "EXTERIORES", p47 "APARADORES / Outfits sugeridos…" (48 chars), p48 "¡gracias!". Las 7 de una sola línea son las mismas que el clasificador excluyó por <5 palabras (portadas de sección, verosímil), pero **p47 (APARADORES) puede tener contenido visual que ni el clasificador ni Vision cubrieron** — si el slide real trae outfits con instrucciones, valdría mandarla a Vision manualmente
+  - **NO se corrió `extractor.py`** (LangExtract/criterios) — por brief, este paso es solo el insumo base limpio. pipeline/, core/, `capa2_campana_activa.json`, `schema_conocimiento_v1.md`, `vision_fallback.py` y `clasificador_layout.py` **intactos**
+
+## Estado previo (3 Jul 2026 — Sesión M: Motor 2, fallback Gemini Vision para páginas diagrama)
+
+✅ Completado y en repo remoto (push `8159469..fae9eb2` autorizado por Gerardo; p5, p11 y p18 revisadas a ojo contra el PDF real por Gerardo — confirmadas correctas, sin alucinación):
 - **Motor 2 — fallback de Gemini Vision** (`motor2/vision_fallback.py` + `motor2/resultados_vision/pagina_N.json` × 14):
-  - **"Código decide, modelo interpreta" respetado**: el script NO decide qué páginas necesitan visión — importa `clasificar_pdf` de `clasificador_layout.py` y recalcula la lista (no hardcodeada, misma regla que `revisar_multicolumna.py`). Vision solo interpreta las 14 marcadas; las otras 33 siguen por pdfplumber normal, cero gasto extra
+  - **"Código decide, modelo interpreta" respetado**: el script NO decide qué páginas necesitan visión — importa `clasificar_pdf` de `clasificador_layout.py` y recalcula la lista (no hardcodeada, misma regla que `revisar_multicolumna.py`). Vision solo interpreta las 14 marcadas; las demás (34 — en esa sesión se creían 33, ver hallazgo de conteo en Sesión N) siguen por pdfplumber normal, cero gasto extra
   - **Cómo**: renderiza cada página a JPEG ~1024px (pdfplumber/pypdfium2, ya estaban en el venv — no se instaló nada; 57–137 KB por página) y llama a `gemini-2.5-flash` (temperature 0, `response_mime_type=application/json`) con la imagen + el texto crudo `use_text_flow=True` de esa página como contexto — el modelo no adivina palabras, solo reconstruye la relación espacial que la extracción plana pierde
   - **Schema consistente en las 14**: `tipo_layout` (planograma/timeline/matriz/lista_prioridades/mixto/otro), `titulo`, `descripcion_general`, `secciones[{nombre, rol, elementos}]`, `relaciones` (las ligas que el texto plano pierde), `texto_no_ubicado` (honestidad: lo que el modelo no pudo ubicar)
   - **Claves**: el `.env` trae **4** `GEMINI_API_KEY` (mismo nombre, separadas por retorno de carro — un loader dotenv normal solo vería la última); el script las parsea TODAS por regex y rota a la siguiente ante 429/cuota o clave inválida. En esta corrida **no hizo falta rotar**: las 14 páginas salieron con la primera clave
@@ -183,7 +194,9 @@ veristack/
 │   ├── revisar_multicolumna.py ← vuelca texto crudo de páginas multicolumna (Sesión J, sin IA)
 │   ├── clasificador_layout.py  ← detecta layout prosa vs diagrama/matriz por página (Sesión L, sin IA)
 │   ├── vision_fallback.py      ← Gemini Vision SOLO para las páginas que el clasificador marcó (Sesión M)
-│   └── resultados_vision/      ← pagina_N.json × 14 (estructura reconstruida por Vision, Sesión M)
+│   ├── resultados_vision/      ← pagina_N.json × 14 (estructura reconstruida por Vision, Sesión M)
+│   ├── consolidar_manual.py    ← une Vision (14) + texto plano (34) en un solo JSON (Sesión N)
+│   └── manual_consolidado.json ← las 48 páginas consolidadas, insumo base para extractor.py (Sesión N)
 ├── core/
 │   └── photo_analyzer.py
 ├── brains/

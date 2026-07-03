@@ -1,0 +1,1067 @@
+{
+  "pdf": "MECÁNICA MONTAJE GRAN BARATA PV 2026 .pdf",
+  "generado": "2026-07-03T16:24:25",
+  "total_paginas": 48,
+  "paginas_vision": [
+    4,
+    5,
+    6,
+    8,
+    10,
+    11,
+    12,
+    13,
+    18,
+    28,
+    34,
+    35,
+    36,
+    44
+  ],
+  "n_vision": 14,
+  "n_texto_plano": 34,
+  "paginas": [
+    {
+      "pagina": 1,
+      "fuente": "pdfplumber_text_flow",
+      "texto": "22 de junio al 9 de agosto 2026\nGRAN BARATA\nPRIMAVERA - VERANO\n2026\nVIGENCIA:"
+    },
+    {
+      "pagina": 2,
+      "fuente": "pdfplumber_text_flow",
+      "texto": "GRAN\nBARATA\nPRIMAVERA - VERANO\n2026\nPREVENTA\n22 -25 Junio 2026\nBeneficio: hasta 40% desc. y 9 MSI DILISA.\nSOFTLINE\n● 1° etapa: 26 Junio 2026 al 9 Julio 2026.\n● Beneficio: hasta 40% desc. y 9 MSI Dilisa/6 MSI externas.\n● 2° etapa: 10 al 23 Julio 2026.\n● Beneficio: hasta 50% desc. y 9 MSI Dilisa/6 MSI externas.\n● 3° etapa: 24 Julio al 9 Agosto 2026.\n● Beneficio: hasta 50%+20% desc. y 9 MSI Dilisa/6 MSI ext +\n20% desc. adicional.\nHARDLINE\n● 1° etapa: 22 Junio 2026 al 9 Julio 2026.\n● Beneficio: hasta 30% desc. o 25% desc. y 15 MSI Dilisa/13\nMSI externas.\n● 2° etapa: 10 Julio al 9 Agosto 2026.\n● Beneficio: hasta 35% desc. o 25% desc. y 20 MSI Dilisa/18\nMSI externas."
+    },
+    {
+      "pagina": 3,
+      "fuente": "pdfplumber_text_flow",
+      "texto": "● Objetivo de la campaña:\n○ Desplazar la mayor cantidad de producto\nde temporadas anteriores, en el menor\ntiempo posible; contando con la\nseñalización en piso de los productos con\nlos más altos descuentos exhibidos de\nforma masiva.\n● Direcciones participantes:\n○ TODAS\n● Cantidad indispensable de fotos:\n○ Puntos focales marcados como prioridad\n○ Foto panorámica de sección marcada\ncomo prioridad (3 primeras por material flat)\n● Mecánica de materiales:\n● Mecánica de Materiales\n● Responsable de Material Gráfico:\n○ Desarrollos: Héctor Aguilar\n○ Flat: Diana Acevedo\n● Responsable de Mercadeo:\n○ Claudia Trejo\n○ Emma Aguilar\n● Material se desecha\n● Se desechan materiales con vigencia.\nINFORMACIÓN GENERAL"
+    },
+    {
+      "pagina": 4,
+      "fuente": "gemini_vision",
+      "texto_crudo": "LÍNEA DE TIEMPO\nMontaje de Gráficos\ncon Beneficios\n22 al 25 Junio\nPre Venta\n26 Junio al 09 Julio\nE1 Inicio 40%\n10 Julio al 23 de Julio\nE2 Inició 50%\n24 Julio al 09 Agosto\nE3 Inicio 50%+20%\nE\nX\nT\nE\nR\nI\nO\nR\nE\nS\nC\no\nn\nt\na\nc\nt\no :\nL\ni\nl\na\nN\na\nv\na\nr\nr\no\nI\nN\nT\nE\nR\nI\nO\nR\nE\nS\nI\nM\nO\nMontaje Etapa 1\nGráficos sin Beneficios\n24 Junio\nMontaje de Gráficos\ncon Beneficios parche\nMontaje de Gráficos\ncon Beneficios Parche\nAURA 2 MOOD BOARD BARATA\nAVANCES DE\nTEMPORADA\nCalificación, etiquetado Mercadeos\nCampamentos de Mercancía\nGráficos sin Beneficios en interiores.",
+      "estructura": {
+        "tipo_layout": "timeline",
+        "titulo": "LÍNEA DE TIEMPO",
+        "descripcion_general": "Este diagrama presenta una línea de tiempo que detalla las fases de montaje de una campaña, diferenciando actividades para exteriores, interiores y elementos de IMO. Muestra fechas clave y los porcentajes de descuento asociados a cada etapa.",
+        "secciones": [
+          {
+            "nombre": "Ejes de Contenido",
+            "rol": "etiquetas de categorías principales en el eje vertical",
+            "elementos": [
+              "EXTERIORES",
+              "Contacto: Lila Navarro",
+              "INTERIORES",
+              "IMO"
+            ]
+          },
+          {
+            "nombre": "Actividades de Exteriores",
+            "rol": "eventos y montajes específicos para el exterior de la tienda",
+            "elementos": [
+              "Montaje Etapa 1 Gráficos sin Beneficios",
+              "Montaje de Gráficos con Beneficios",
+              "Montaje de Gráficos con Beneficios parche",
+              "Montaje de Gráficos con Beneficios Parche"
+            ]
+          },
+          {
+            "nombre": "Eje Temporal Principal",
+            "rol": "fechas y descripciones de las fases de la campaña",
+            "elementos": [
+              "22 al 25 Junio",
+              "Pre Venta",
+              "24 Junio",
+              "26 Junio al 09 Julio",
+              "E1 Inicio 40%",
+              "10 Julio al 23 de Julio",
+              "E2 Inició 50%",
+              "24 Julio al 09 Agosto",
+              "E3 Inicio 50%+20%"
+            ]
+          },
+          {
+            "nombre": "Actividades de Interiores",
+            "rol": "actividades de preparación y montaje para el interior de la tienda",
+            "elementos": [
+              "Calificación, etiquetado Mercadeos",
+              "Campamentos de Mercancía",
+              "Gráficos sin Beneficios en interiores."
+            ]
+          },
+          {
+            "nombre": "Elementos IMO",
+            "rol": "elementos de merchandising y comunicación interna",
+            "elementos": [
+              "AURA 2",
+              "MOOD BOARD BARATA",
+              "AVANCES DE TEMPORADA"
+            ]
+          }
+        ],
+        "relaciones": [
+          "La sección 'Actividades de Exteriores' se alinea con las fechas del 'Eje Temporal Principal' en la parte superior de la línea.",
+          "La sección 'Actividades de Interiores' se alinea con las fechas del 'Eje Temporal Principal' en la parte inferior de la línea.",
+          "La sección 'Elementos IMO' se alinea con las fases de la campaña en la parte más baja del diagrama.",
+          "El contacto 'Lila Navarro' está asociado a las actividades de 'EXTERIORES'.",
+          "El período '22 al 25 Junio' corresponde a la fase de 'Pre Venta', que incluye 'Calificación, etiquetado Mercadeos', 'Campamentos de Mercancía' y 'Gráficos sin Beneficios en interiores'.",
+          "El '24 Junio' marca el 'Montaje Etapa 1 Gráficos sin Beneficios' para exteriores.",
+          "El período '26 Junio al 09 Julio' corresponde a la fase 'E1 Inicio 40%' y al 'Montaje de Gráficos con Beneficios' para exteriores.",
+          "El período '10 Julio al 23 de Julio' corresponde a la fase 'E2 Inició 50%' y al 'Montaje de Gráficos con Beneficios parche' para exteriores.",
+          "El período '24 Julio al 09 Agosto' corresponde a la fase 'E3 Inicio 50%+20%' y al 'Montaje de Gráficos con Beneficios Parche' para exteriores.",
+          "El elemento 'AURA 2' está alineado con la fase inicial de la campaña (22 al 25 Junio / 24 Junio).",
+          "El elemento 'MOOD BOARD BARATA' está alineado con las fases intermedias de la campaña (26 Junio al 09 Julio / 10 Julio al 23 de Julio).",
+          "El elemento 'AVANCES DE TEMPORADA' está alineado con la fase final de la campaña (24 Julio al 09 Agosto)."
+        ],
+        "texto_no_ubicado": []
+      },
+      "vision_meta": {
+        "modelo": "gemini-2.5-flash",
+        "timestamp": "2026-07-03T15:54:45",
+        "archivo": "resultados_vision/pagina_4.json"
+      }
+    },
+    {
+      "pagina": 5,
+      "fuente": "gemini_vision",
+      "texto_crudo": "LÍNEA DE TIEMPO POR ETAPA\nPre Venta\n22 al 25 Junio\nInicio 40%\n26 Junio al 09 Julio\nInicio 50%\n10 Julio al 23 de Julio\nInicio 50%+20%\n24 Julio al 09 Agosto\nPre Venta\n22 al 25 Junio\nInicio 40%\n22 Junio al 09 Julio\nInicio 50%\n10 Julio al 23 de Julio\nInicio 50%+20%\n24 Julio al 09 Agosto",
+      "estructura": {
+        "tipo_layout": "timeline",
+        "titulo": "LÍNEA DE TIEMPO POR ETAPA",
+        "descripcion_general": "Este diagrama presenta dos líneas de tiempo paralelas que detallan las etapas de una campaña de ventas, mostrando los descuentos y las fechas correspondientes para cada fase. La línea superior está asociada con la exhibición de maniquíes, mientras que la línea inferior muestra la evolución de los displays de tienda.",
+        "secciones": [
+          {
+            "nombre": "Línea de Tiempo Superior",
+            "rol": "eje temporal principal",
+            "elementos": [
+              "Pre Venta",
+              "22 al 25 Junio",
+              "Inicio 40%",
+              "26 Junio al 09 Julio",
+              "Inicio 50%",
+              "10 Julio al 23 de Julio",
+              "Inicio 50%+20%",
+              "24 Julio al 09 Agosto"
+            ]
+          },
+          {
+            "nombre": "Línea de Tiempo Inferior",
+            "rol": "eje temporal secundario",
+            "elementos": [
+              "Pre Venta",
+              "22 al 25 Junio",
+              "Inicio 40%",
+              "22 Junio al 09 Julio",
+              "Inicio 50%",
+              "10 Julio al 23 de Julio",
+              "Inicio 50%+20%",
+              "24 Julio al 09 Agosto"
+            ]
+          }
+        ],
+        "relaciones": [
+          "La etapa 'Pre Venta' con fecha '22 al 25 Junio' aplica a ambas líneas de tiempo.",
+          "La etapa 'Inicio 40%' en la línea de tiempo superior abarca del '26 Junio al 09 Julio' y está visualmente representada con maniquíes.",
+          "La etapa 'Inicio 40%' en la línea de tiempo inferior abarca del '22 Junio al 09 Julio' y está visualmente representada con displays de tienda.",
+          "La etapa 'Inicio 50%' con fecha '10 Julio al 23 de Julio' aplica a ambas líneas de tiempo.",
+          "La etapa 'Inicio 50%+20%' con fecha '24 Julio al 09 Agosto' aplica a ambas líneas de tiempo."
+        ],
+        "texto_no_ubicado": []
+      },
+      "vision_meta": {
+        "modelo": "gemini-2.5-flash",
+        "timestamp": "2026-07-03T15:55:12",
+        "archivo": "resultados_vision/pagina_5.json"
+      }
+    },
+    {
+      "pagina": 6,
+      "fuente": "gemini_vision",
+      "texto_crudo": "GRÁFICOS\nImprimir una torre slim, mandar\nparche 50, colocar el +20 sobre el 50\nTORRE SLIM Imprimir primera etapa\n40% genérico\n60% beneficio\nBARRAS\nNada se resguarda\n2da etapa 100% beneficio\n(Como años pasados)\n3era etapa 100% beneficio\n(Como años pasados)\nCOLUMNAS\nImprimir primera etapa\n40% genérico\n60% beneficio\n2da etapa 100% beneficio\n(Como años pasados)\n3ERA etapa solo producir parches\n+20\nATRILES\nImprimir primera\netapa genérico, se\nusan para ambas\nsecciones",
+      "estructura": {
+        "tipo_layout": "planograma",
+        "titulo": "GRÁFICOS",
+        "descripcion_general": "Esta página de manual de montaje de campaña detalla las directrices para la configuración de diferentes tipos de displays de retail: torres slim, barras, columnas y atriles. Las instrucciones se organizan por tipo de display y por etapas de campaña.",
+        "secciones": [
+          {
+            "nombre": "TORRE SLIM",
+            "rol": "Tipo de display: torre vertical",
+            "elementos": [
+              "Imprimir una torre slim, mandar parche 50, colocar el +20 sobre el 50"
+            ]
+          },
+          {
+            "nombre": "BARRAS",
+            "rol": "Tipo de display: barras horizontales",
+            "elementos": [
+              "Imprimir primera etapa 40% genérico 60% beneficio",
+              "2da etapa 100% beneficio (Como años pasados)",
+              "3era etapa 100% beneficio (Como años pasados)"
+            ]
+          },
+          {
+            "nombre": "COLUMNAS",
+            "rol": "Tipo de display: columnas horizontales",
+            "elementos": [
+              "Imprimir primera etapa 40% genérico 60% beneficio",
+              "2da etapa 100% beneficio (Como años pasados)",
+              "3ERA etapa solo producir parches +20"
+            ]
+          },
+          {
+            "nombre": "ATRILES",
+            "rol": "Tipo de display: atriles",
+            "elementos": [
+              "Imprimir primera etapa genérico, se usan para ambas secciones"
+            ]
+          },
+          {
+            "nombre": "Nota general",
+            "rol": "Nota al pie de página",
+            "elementos": [
+              "Nada se resguarda"
+            ]
+          }
+        ],
+        "relaciones": [
+          "Las instrucciones de 'Imprimir primera etapa 40% genérico 60% beneficio' aplican tanto a la sección BARRAS como a la sección COLUMNAS.",
+          "Las instrucciones de '2da etapa 100% beneficio (Como años pasados)' aplican tanto a la sección BARRAS como a la sección COLUMNAS.",
+          "La instrucción 'Imprimir primera etapa genérico, se usan para ambas secciones' en ATRILES indica que los atriles son un tipo de display genérico utilizado para las campañas descritas en las secciones BARRAS y COLUMNAS."
+        ],
+        "texto_no_ubicado": []
+      },
+      "vision_meta": {
+        "modelo": "gemini-2.5-flash",
+        "timestamp": "2026-07-03T15:55:32",
+        "archivo": "resultados_vision/pagina_6.json"
+      }
+    },
+    {
+      "pagina": 7,
+      "fuente": "pdfplumber_text_flow",
+      "texto": "PARCHES ATRILES Y TORRES (ETAPA 2 Y 3)\nETAPA 2 ETAPA 3\nETAPA 2 ETAPA 3\nEstos materiales llegan sin puntos verdes.\nAgregar los puntos\n(llegan en una plantilla aparte)*\ndependiendo la etapa en\nla que se encuentre la campaña conforme a la visualización.\n*Distribuciones: PARCHES ATRILES Y TORRES SLIM 50 y PARCHES ATRILES Y TORRES SLIM 50+20"
+    },
+    {
+      "pagina": 8,
+      "fuente": "gemini_vision",
+      "texto_crudo": "CARTULINAS\nLINK CARTULINAS\nLINK ARTES INTERIORES\nLINK POLÍTICA CALIFICACIÓN\nMERCANCÍA",
+      "estructura": {
+        "tipo_layout": "otro",
+        "titulo": "CARTULINAS",
+        "descripcion_general": "Esta página presenta un título principal y una lista de enlaces. El texto crudo proporcionado solo contiene el título y los enlaces, y no incluye el contenido del banner promocional de 'GRAN BARATA' visible en la imagen.",
+        "secciones": [
+          {
+            "nombre": "Enlaces de Navegación",
+            "rol": "lista de enlaces",
+            "elementos": [
+              "LINK CARTULINAS",
+              "LINK ARTES INTERIORES",
+              "LINK POLÍTICA CALIFICACIÓN MERCANCÍA"
+            ]
+          }
+        ],
+        "relaciones": [],
+        "texto_no_ubicado": []
+      },
+      "vision_meta": {
+        "modelo": "gemini-2.5-flash",
+        "timestamp": "2026-07-03T15:56:01",
+        "archivo": "resultados_vision/pagina_8.json"
+      }
+    },
+    {
+      "pagina": 9,
+      "fuente": "pdfplumber_text_flow",
+      "texto": "PAUTA GENERAL"
+    },
+    {
+      "pagina": 10,
+      "fuente": "gemini_vision",
+      "texto_crudo": "Softline Hardline\nEtiquetas Hogar y Diversos\nConsulta en la liga el manual de señalización\nde Barata en piso, para Hardline.\nEtiquetas maniquíes\nUtilizar la siguiente fórmula.\n• 2 maniquíes – 1 etiqueta\n• 3 maniquíes – 2 etiquetas\n• 5 maniquíes – 3 etiquetas\nEtiquetas focales\nPara el caso de los muebles de focal,\ncoloca la etiqueta a la misma altura y\ndel mismo lado.\nNOTA: Recuerda que las etiquetas solo van en la cadera del maniquí.\nMANUAL ETIQUETADO\nETIQUETADO EN TIENDA",
+      "estructura": {
+        "tipo_layout": "mixto",
+        "titulo": "ETIQUETADO EN TIENDA",
+        "descripcion_general": "Esta página de manual de campaña presenta las directrices para el etiquetado de productos en tienda, dividiendo las instrucciones por tipo de producto (Softline y Hardline) y tipo de exhibición. Incluye ejemplos visuales de etiquetas de descuento.",
+        "secciones": [
+          {
+            "nombre": "Softline",
+            "rol": "categoría principal de productos",
+            "elementos": []
+          },
+          {
+            "nombre": "Etiquetas focales",
+            "rol": "sub-sección de instrucciones para Softline",
+            "elementos": [
+              "Para el caso de los muebles de focal, coloca la etiqueta a la misma altura y del mismo lado."
+            ]
+          },
+          {
+            "nombre": "Etiquetas maniquíes",
+            "rol": "sub-sección de instrucciones para Softline",
+            "elementos": [
+              "Utilizar la siguiente fórmula.",
+              "• 2 maniquíes – 1 etiqueta",
+              "• 3 maniquíes – 2 etiquetas",
+              "• 5 maniquíes – 3 etiquetas"
+            ]
+          },
+          {
+            "nombre": "NOTA",
+            "rol": "nota importante para la sección Softline",
+            "elementos": [
+              "Recuerda que las etiquetas solo van en la cadera del maniquí."
+            ]
+          },
+          {
+            "nombre": "Hardline",
+            "rol": "categoría principal de productos",
+            "elementos": []
+          },
+          {
+            "nombre": "Etiquetas Hogar y Diversos",
+            "rol": "sub-sección de instrucciones para Hardline",
+            "elementos": [
+              "Consulta en la liga el manual de señalización de Barata en piso, para Hardline."
+            ]
+          },
+          {
+            "nombre": "MANUAL ETIQUETADO",
+            "rol": "botón de acción/enlace a manual",
+            "elementos": []
+          }
+        ],
+        "relaciones": [
+          "La sección 'Softline' agrupa las instrucciones para 'Etiquetas focales' y 'Etiquetas maniquíes'.",
+          "La sección 'Hardline' agrupa las instrucciones para 'Etiquetas Hogar y Diversos'.",
+          "La 'NOTA' sobre la colocación de etiquetas en la cadera del maniquí se aplica específicamente a las 'Etiquetas maniquíes' dentro de la categoría 'Softline'.",
+          "El botón 'MANUAL ETIQUETADO' proporciona acceso a un manual más detallado sobre el etiquetado general."
+        ],
+        "texto_no_ubicado": []
+      },
+      "vision_meta": {
+        "modelo": "gemini-2.5-flash",
+        "timestamp": "2026-07-03T15:56:15",
+        "archivo": "resultados_vision/pagina_10.json"
+      }
+    },
+    {
+      "pagina": 11,
+      "fuente": "gemini_vision",
+      "texto_crudo": "VISUALIZACIÓN\nVista aérea Vista frontal\nNotas: Agrupar la mercancía calificada con Barata y Liquidación al frente de la sección sin mezclar\nDAR PRIORIDAD A MERCANCÍA CALIFICADA.\nPLANOGRAMA\nSOFTLINE\n+%\n-%\nAVANCES DE TEMPORADA",
+      "estructura": {
+        "tipo_layout": "planograma",
+        "titulo": "PLANOGRAMA SOFTLINE",
+        "descripcion_general": "Este planograma de softline presenta dos vistas (aérea y frontal) de la disposición de la mercancía en una sección de tienda, destacando los avances de temporada y las zonas de descuento. Incluye notas sobre la agrupación y priorización de mercancía calificada.",
+        "secciones": [
+          {
+            "nombre": "Título Principal",
+            "rol": "título principal de la página",
+            "elementos": [
+              "PLANOGRAMA",
+              "SOFTLINE"
+            ]
+          },
+          {
+            "nombre": "Sección de Vistas",
+            "rol": "encabezados de las diferentes perspectivas del planograma",
+            "elementos": [
+              "Vista aérea",
+              "Vista frontal"
+            ]
+          },
+          {
+            "nombre": "Título de Visualización",
+            "rol": "título de la sección de visualización",
+            "elementos": [
+              "VISUALIZACIÓN"
+            ]
+          },
+          {
+            "nombre": "Banner Superior",
+            "rol": "banner de la sección de avances de temporada",
+            "elementos": [
+              "AVANCES DE TEMPORADA"
+            ]
+          },
+          {
+            "nombre": "Eje de Porcentaje",
+            "rol": "eje vertical que indica rangos de descuento",
+            "elementos": [
+              "-%",
+              "+%"
+            ]
+          },
+          {
+            "nombre": "Notas y Prioridades",
+            "rol": "instrucciones para la disposición de la mercancía",
+            "elementos": [
+              "Notas: Agrupar la mercancía calificada con Barata y Liquidación al frente de la sección sin mezclar",
+              "DAR PRIORIDAD A MERCANCÍA CALIFICADA."
+            ]
+          }
+        ],
+        "relaciones": [
+          "La 'Vista aérea' y la 'Vista frontal' muestran diferentes perspectivas del mismo planograma de softline.",
+          "El banner 'AVANCES DE TEMPORADA' se ubica en la parte superior de la sección en ambas vistas.",
+          "El eje vertical con '-%' en la parte superior y '+%' en la parte inferior indica una gradación de descuentos, donde los descuentos menores están arriba y los mayores abajo.",
+          "En la 'Vista aérea', se observan zonas de mercancía con descuentos del 10%, 30%, 40% (en rosa) y 30%, 50% (en verde), distribuidos según el eje de porcentaje.",
+          "En la 'Vista frontal', se observan zonas de mercancía con descuentos del 30%, 40% (en rosa) y 30%, 50% (en verde).",
+          "Las 'Notas' aplican a la organización general de la mercancía mostrada en ambas vistas, enfatizando la agrupación de mercancía calificada con Barata y Liquidación al frente y la prioridad a la mercancía calificada."
+        ],
+        "texto_no_ubicado": []
+      },
+      "vision_meta": {
+        "modelo": "gemini-2.5-flash",
+        "timestamp": "2026-07-03T15:56:40",
+        "archivo": "resultados_vision/pagina_11.json"
+      }
+    },
+    {
+      "pagina": 12,
+      "fuente": "gemini_vision",
+      "texto_crudo": "VISUALIZACIÓN\nPLANOGRAMA\nSOFTLINE\nMateriales:\n● Cartulina descuentos\n● Visual perímetro\nUbicación:\n● Sección\n● Mesas pv y d.\n● Colgadores-Ts-Suasticas\nMercadeo:\n● Mercadeo por descuentos..\nPiso de venta:\n● Colocar cartulina con descuento\nespecífico a mercancía\nparticipante.\n● Respetar capacidad ideal del\nmobiliario, que permita tomar el\nproducto.\n● Distribuir cartulinas\nequilibradamente en piso y\ngarantizar vestir cada sección.",
+      "estructura": {
+        "tipo_layout": "planograma",
+        "titulo": "PLANOGRAMA SOFTLINE",
+        "descripcion_general": "Este planograma para la línea Softline presenta una visualización del piso de venta junto con instrucciones detalladas sobre los materiales a utilizar, la ubicación de los elementos, la estrategia de mercadeo y las acciones específicas para la implementación en tienda.",
+        "secciones": [
+          {
+            "nombre": "Título Principal",
+            "rol": "título de la página",
+            "elementos": [
+              "PLANOGRAMA SOFTLINE"
+            ]
+          },
+          {
+            "nombre": "Visualización del Piso de Venta",
+            "rol": "rótulo de la imagen principal del planograma",
+            "elementos": [
+              "VISUALIZACIÓN"
+            ]
+          },
+          {
+            "nombre": "Materiales",
+            "rol": "lista de materiales requeridos para la campaña",
+            "elementos": [
+              "Cartulina descuentos",
+              "Visual perímetro"
+            ]
+          },
+          {
+            "nombre": "Ubicación",
+            "rol": "lista de ubicaciones clave en el piso de venta para la campaña",
+            "elementos": [
+              "Sección",
+              "Mesas pv y d.",
+              "Colgadores-Ts-Suasticas"
+            ]
+          },
+          {
+            "nombre": "Mercadeo",
+            "rol": "estrategia de mercadeo principal",
+            "elementos": [
+              "Mercadeo por descuentos.."
+            ]
+          },
+          {
+            "nombre": "Piso de venta",
+            "rol": "instrucciones de ejecución y buenas prácticas en el piso de venta",
+            "elementos": [
+              "Colocar cartulina con descuento específico a mercancía participante.",
+              "Respetar capacidad ideal del mobiliario, que permita tomar el producto.",
+              "Distribuir cartulinas equilibradamente en piso y garantizar vestir cada sección."
+            ]
+          }
+        ],
+        "relaciones": [
+          "La imagen de 'VISUALIZACIÓN' ilustra el piso de venta real donde se aplican las instrucciones de 'Piso de venta'.",
+          "Las cartulinas de descuento mencionadas en 'Materiales' y 'Mercadeo' son visibles en la imagen con porcentajes como 40%, 30% y 10%.",
+          "Las ubicaciones como 'Sección', 'Mesas pv y d.' y 'Colgadores-Ts-Suasticas' descritas en 'Ubicación' corresponden a los elementos del mobiliario y áreas mostradas en la imagen."
+        ],
+        "texto_no_ubicado": []
+      },
+      "vision_meta": {
+        "modelo": "gemini-2.5-flash",
+        "timestamp": "2026-07-03T15:57:01",
+        "archivo": "resultados_vision/pagina_12.json"
+      }
+    },
+    {
+      "pagina": 13,
+      "fuente": "gemini_vision",
+      "texto_crudo": "PLANOGRAMA\nZAPATERÍAS\nREFERENCIA\nSelecciona el producto dando prioridad al Descuento:\n1. Descuento 50%, 40%, 30%, 20% u otros.\nAcción:\n(1) Colocar el producto por descuento de mayor a\nmenor.\n(2) Respetar los mundos sin romper las\nclasificaciones.\n(3) Exhibir todos los modelos sin repetirlos.\n(4) Identificar con cartulina de descuento.\n(5) Exhibir la liquidación en la zapatera.\nNota: La exhibición de producto en mesas y perímetros\nde las secciones de zapatos se mantiene con el\nmovimiento de mercadeo de frente y vuelta.\nEn caso de tener todos lo modelos exhibidos en las\nzapateras o mesas m y cuenten con niveles vacíos es\nposible realizar repetición de producto, esto solo aplica\npara zapateras y mesas mmm en exhibiciones fuera de la\nsección.",
+      "estructura": {
+        "tipo_layout": "planograma",
+        "titulo": "PLANOGRAMA ZAPATERÍAS",
+        "descripcion_general": "Esta página detalla el planograma para la exhibición de calzado, priorizando la selección de productos por descuento y estableciendo acciones específicas de merchandising. Está organizada con instrucciones textuales a la izquierda y referencias visuales a la derecha.",
+        "secciones": [
+          {
+            "nombre": "Selección de Producto por Descuento",
+            "rol": "instrucciones de prioridad para la selección de producto",
+            "elementos": [
+              "Selecciona el producto dando prioridad al Descuento:",
+              "1. Descuento 50%, 40%, 30%, 20% u otros."
+            ]
+          },
+          {
+            "nombre": "Acción",
+            "rol": "lista de acciones para el montaje del planograma",
+            "elementos": [
+              "(1) Colocar el producto por descuento de mayor a menor.",
+              "(2) Respetar los mundos sin romper las clasificaciones.",
+              "(3) Exhibir todos los modelos sin repetirlos.",
+              "(4) Identificar con cartulina de descuento.",
+              "(5) Exhibir la liquidación en la zapatera."
+            ]
+          },
+          {
+            "nombre": "Notas Adicionales",
+            "rol": "notas y excepciones sobre la exhibición de producto",
+            "elementos": [
+              "Nota: La exhibición de producto en mesas y perímetros de las secciones de zapatos se mantiene con el movimiento de mercadeo de frente y vuelta.",
+              "En caso de tener todos lo modelos exhibidos en las zapateras o mesas m y cuenten con niveles vacíos es posible realizar repetición de producto, esto solo aplica para zapateras y mesas mmm en exhibiciones fuera de la sección."
+            ]
+          },
+          {
+            "nombre": "REFERENCIA",
+            "rol": "columna de ejemplos visuales de planogramas",
+            "elementos": []
+          }
+        ],
+        "relaciones": [
+          "La sección 'REFERENCIA' en la columna derecha proporciona ejemplos visuales de la configuración del planograma, ilustrando las instrucciones dadas en la columna izquierda, particularmente en lo que respecta a la señalización de descuentos y la colocación de productos."
+        ],
+        "texto_no_ubicado": []
+      },
+      "vision_meta": {
+        "modelo": "gemini-2.5-flash",
+        "timestamp": "2026-07-03T15:57:20",
+        "archivo": "resultados_vision/pagina_13.json"
+      }
+    },
+    {
+      "pagina": 14,
+      "fuente": "pdfplumber_text_flow",
+      "texto": "ETIQUETADO\nFOCALES\nSelecciona el producto sin mezclar\ndescuentos, mundos y/o secciones:\n1. Descuento 50%, 40%, 30%, 20% u\notros.\nAcción:\n(1) Ubicar al frente de la sección ya sea en\nmueble genérico de Display o mueble del\ndepartamento.\n(2) Exhibir el producto por descuento sin\nmezclar.\n(3) Colocar las etiquetas cuidando que estén a\nla misma altura de la prenda o en el mismo lado\nde la caja.\n(4) Cuidar que este el entallado y/o variantes de\ncolor completos.\n(5) Identificar con cartulina de descuento.\n(6) Se puede colocar etiquetas colgantes en los\nmaniquíes cuidado no saturarlos."
+    },
+    {
+      "pagina": 15,
+      "fuente": "pdfplumber_text_flow",
+      "texto": "DESARROLLOS"
+    },
+    {
+      "pagina": 16,
+      "fuente": "pdfplumber_text_flow",
+      "texto": "OUTPOS\nT\nBOLSA\nS\nMATERIALES ESPECIALES DESARROLLO VIVE Y BOLSAS\nAgregar a Focales principales (Entradas, Hueco Central, Outpost, etc.)\n● Ubica los puntos focales en accesos importantes de la tienda.\n● Para la vestimenta de maniquíes revisa las apuestas comerciales..\n● Revisa que el producto para este focal sea mercancía con descuentos.\n● El maniquí o maniquíes deben integrarse con los elementos y accesorizar con base al enfoque.\nDESARROLLO VIVE BOLSAS"
+    },
+    {
+      "pagina": 17,
+      "fuente": "pdfplumber_text_flow",
+      "texto": "PDV IMPULSO VIVE"
+    },
+    {
+      "pagina": 18,
+      "fuente": "gemini_vision",
+      "texto_crudo": "Se requiere 1 fotografía por focal\n1 2 3\nPRIORIDAD DE PUNTOS FOCALES\n4 MUJER 5\nVinos y licores\nHOMBRES INFANTILES DEPORTES HOGAR\nNota: Todos los puntos focales de SL que se realicen en tienda deberan seguir\nesta Guia de atributos y la inspiración colocada en cada sección.",
+      "estructura": {
+        "tipo_layout": "lista_prioridades",
+        "titulo": "PRIORIDAD DE PUNTOS FOCALES",
+        "descripcion_general": "Este diagrama presenta una lista de 5 puntos focales priorizados para la implementación en tienda, cada uno con su categoría y una referencia visual. Incluye una instrucción general sobre la fotografía requerida y una nota con directrices para su ejecución.",
+        "secciones": [
+          {
+            "nombre": "Instrucción Superior",
+            "rol": "instrucción general aplicable a todos los puntos focales",
+            "elementos": [
+              "Se requiere 1 fotografía por focal"
+            ]
+          },
+          {
+            "nombre": "Punto Focal 1",
+            "rol": "categoría de punto focal",
+            "elementos": [
+              "MUJER"
+            ]
+          },
+          {
+            "nombre": "Punto Focal 2",
+            "rol": "categoría de punto focal",
+            "elementos": [
+              "HOMBRES"
+            ]
+          },
+          {
+            "nombre": "Punto Focal 3",
+            "rol": "categoría de punto focal",
+            "elementos": [
+              "INFANTILES"
+            ]
+          },
+          {
+            "nombre": "Punto Focal 4",
+            "rol": "categoría de punto focal",
+            "elementos": [
+              "DEPORTES"
+            ]
+          },
+          {
+            "nombre": "Punto Focal 5",
+            "rol": "categoría de punto focal",
+            "elementos": [
+              "HOGAR"
+            ]
+          },
+          {
+            "nombre": "Nota al Pie",
+            "rol": "directriz general para la implementación",
+            "elementos": [
+              "Nota: Todos los puntos focales de SL que se realicen en tienda deberan seguir esta Guia de atributos y la inspiración colocada en cada sección."
+            ]
+          }
+        ],
+        "relaciones": [
+          "El punto focal 'MUJER' está identificado con el número 1.",
+          "El punto focal 'HOMBRES' está identificado con el número 2.",
+          "El punto focal 'INFANTILES' está identificado con el número 3.",
+          "El punto focal 'DEPORTES' está identificado con el número 4.",
+          "El punto focal 'HOGAR' está identificado con el número 5.",
+          "Cada punto focal (Mujer, Hombres, Infantiles, Deportes, Hogar) está acompañado de una imagen de referencia visual.",
+          "La instrucción 'Se requiere 1 fotografía por focal' aplica a la documentación de cada uno de los 5 puntos focales.",
+          "La 'Nota al Pie' proporciona el marco general para la ejecución de todos los puntos focales en tienda."
+        ],
+        "texto_no_ubicado": [
+          "Vinos y licores"
+        ]
+      },
+      "vision_meta": {
+        "modelo": "gemini-2.5-flash",
+        "timestamp": "2026-07-03T15:57:37",
+        "archivo": "resultados_vision/pagina_18.json"
+      }
+    },
+    {
+      "pagina": 19,
+      "fuente": "pdfplumber_text_flow",
+      "texto": "MONTAJE SOFTLINE"
+    },
+    {
+      "pagina": 20,
+      "fuente": "pdfplumber_text_flow",
+      "texto": "SOFTLINE: FOCAL SHOW MUJERES (1a y 2a ETAPA)\nINDICACIONES: Focales fuera de la sección (Entradas, Hueco Central, Elevadores)\n● Exhibir producto de la sección de Juniors o Joven Contempo.\n● Revisa que el producto para este focal sea mercancía con el mismo descuento.\n● Integra los maniquíes de manera que se logren apreciar bien todos los looks.\n● Cuida tus básicos de Display.\n*NOTA: En en los focales solo se colocan los gráficos de torres slim y maniquíes"
+    },
+    {
+      "pagina": 21,
+      "fuente": "pdfplumber_text_flow",
+      "texto": "SOFTLINE: FOCAL SHOW MUJERES (3a ETAPA)\nINDICACIONES: Focales fuera de la sección (Entradas, Hueco Central, Elevadores)\n● Se impulsará IMO con los Avances de Temporada “TENDENCIA …”\n○ CLUSTER A - OH CLUSTER A\n○ CLUSTER B - OH CLUSTER B\n○ CLUSTER C - OH CLUSTER C\n● No colocar gráficos de Barata.\n*NOTA: En estos focales colocar los atriles de marca."
+    },
+    {
+      "pagina": 22,
+      "fuente": "pdfplumber_text_flow",
+      "texto": "SOFTLINE: FOCAL SHOW HOMBRES (1a y 2a ETAPA)\nINDICACIONES: Focales fuera de la sección (Entradas, Hueco Central, Elevadores)\n● Exhibir producto de la sección de Juveniles o Hombre Contempo.\n● Revisa que el producto para este focal sea mercancía con el mismo descuento.\n● Integra los maniquíes de manera que se logren apreciar bien todos los looks.\n● Cuida tus básicos de Display.\n*NOTA: En en los focales solo se colocan los gráficos de torres slim y maniquíes"
+    },
+    {
+      "pagina": 23,
+      "fuente": "pdfplumber_text_flow",
+      "texto": "SOFTLINE: FOCAL SHOW HOMBRES (3a ETAPA)\nINDICACIONES: Focales fuera de la sección (Entradas, Hueco Central, Elevadores)\n● Se impulsará IMO con los Avances de Temporada “TENDENCIA …”\n○ CLUSTER A - OH CLUSTER A\n○ CLUSTER B - OH CLUSTER B\n○ CLUSTER C - OH CLUSTER C\n● No colocar gráficos de Barata.\n*NOTA: En estos focales colocar los atriles de marca."
+    },
+    {
+      "pagina": 24,
+      "fuente": "pdfplumber_text_flow",
+      "texto": "SOFTLINE: FOCAL SHOW INFANTILES (1a y 2da\nETAPA)\nINDICACIONES: Focales fuera de la sección (Entradas, Hueco Central, Elevadores)\n● Exhibir producto de la sección de niños 8+ y niñas 8+.\n● Revisa que el producto para este focal sea mercancía con el mismo descuento.\n● Integra los maniquíes de manera que se logren apreciar bien todos los looks.\n● Cuida tus básicos de Display.\n*NOTA: En en los focales solo se colocan los gráficos de torres slim y maniquíes"
+    },
+    {
+      "pagina": 25,
+      "fuente": "pdfplumber_text_flow",
+      "texto": "SOFTLINE: FOCAL SHOW INFANTILES (3a ETAPA)\nINDICACIONES: Focales fuera de la sección (Entradas, Hueco Central, Elevadores)\n● Se impulsará IMO con los Avances de Temporada “TENDENCIA …”\n○ CLUSTER A - OH CLUSTER A\n○ CLUSTER B - OH CLUSTER B\n○ CLUSTER C - OH CLUSTER C\n● No colocar gráficos de Barata.\n*NOTA: En estos focales colocar los atriles de marca."
+    },
+    {
+      "pagina": 26,
+      "fuente": "pdfplumber_text_flow",
+      "texto": "SOFTLINE: BARRAS Y MANIQUÍES\nSUGERENCIA:\n● Da visibilidad al producto con el descuento más alto y corridas completas\n● En la mesa realizar bloques con mercancía doblada, se pueden integrar accesorios en bloques con el mismo descuento.\n● En la barra prendas con los descuentos más altos, incluyendo prendas altas y prendas bajas, un look por barra.\n● Vestir los maniquíes con prendas que estén en la exhibición.\n*NOTA: Poner etiquetas de descuento a las prendas, no saturar.\nFocal sencillo: Maniquíes + Barra + Cartulina"
+    },
+    {
+      "pagina": 27,
+      "fuente": "pdfplumber_text_flow",
+      "texto": "SOFTLINE: CAMPAMENTOS\nINDICACIONES:\n● Si cuentas con el espacio suficiente sin que obstruya el paso al cliente o realiza campamentos o focales en espacios\nprincipales de tienda. Recuerda no forzar el espacio.\n● Realiza el mercadeo por descuento (mayor a menor) y tipo de producto.\n● Si el campamento se realiza en la 1° ó 2° etapa de la promoción, realiza focales con propuesta de moda.\nNota mujeres: Realizar campamento de Punt Roma con 98´s\nCampamento: Maniquíes + Tringlas o Barra + Cartulina"
+    },
+    {
+      "pagina": 28,
+      "fuente": "gemini_vision",
+      "texto_crudo": "SOFTLINE: JOYERÍA/RELOJES\nELECTROSTÁTICO\nCAPELO\nTORRE SLIM\nINDICACIONES:\n● Coloca producto con\nmayor descuento para\nque sea atractivo al\ncliente.\n● Mantén el orden de la\nexhibición\n● Mercadeo por bloqueo\nde producto",
+      "estructura": {
+        "tipo_layout": "mixto",
+        "titulo": "SOFTLINE: JOYERÍA/RELOJES",
+        "descripcion_general": "Esta página presenta directrices de merchandising para la sección de joyería y relojes, mostrando un tipo de expositor específico (Torre Slim) y proporcionando instrucciones clave para la exhibición de productos.",
+        "secciones": [
+          {
+            "nombre": "Título de la Campaña",
+            "rol": "título principal de la página",
+            "elementos": [
+              "SOFTLINE: JOYERÍA/RELOJES"
+            ]
+          },
+          {
+            "nombre": "Descripción de Mueble",
+            "rol": "descripción de un mueble expositor específico",
+            "elementos": [
+              "TORRE SLIM",
+              "ELECTROSTÁTICO",
+              "CAPELO"
+            ]
+          },
+          {
+            "nombre": "Indicaciones de Merchandising",
+            "rol": "lista de instrucciones para la exhibición de productos",
+            "elementos": [
+              "INDICACIONES:",
+              "Coloca producto con mayor descuento para que sea atractivo al cliente.",
+              "Mantén el orden de la exhibición",
+              "Mercadeo por bloqueo de producto"
+            ]
+          }
+        ],
+        "relaciones": [
+          "La descripción 'TORRE SLIM ELECTROSTÁTICO CAPELO' se refiere al mueble expositor vertical mostrado en la parte inferior izquierda de la imagen.",
+          "Las 'INDICACIONES' son pautas generales de merchandising que aplican a la disposición de productos en los expositores, como los que se ven en la imagen principal del interior de la tienda."
+        ],
+        "texto_no_ubicado": []
+      },
+      "vision_meta": {
+        "modelo": "gemini-2.5-flash",
+        "timestamp": "2026-07-03T15:57:59",
+        "archivo": "resultados_vision/pagina_28.json"
+      }
+    },
+    {
+      "pagina": 29,
+      "fuente": "pdfplumber_text_flow",
+      "texto": "SOFTLINE FOCAL MMM\nINDICACIONES:\n● Coloca producto con mayor descuento para que sea\natractivo al cliente.\n● Mantén el orden de la exhibición\n● Mercadeo por bloqueo de producto"
+    },
+    {
+      "pagina": 30,
+      "fuente": "pdfplumber_text_flow",
+      "texto": "MONTAJE HARDLINE"
+    },
+    {
+      "pagina": 31,
+      "fuente": "pdfplumber_text_flow",
+      "texto": "Materiales:\n● Cartulinas\n● Carrito Italia\nPauta:\n● Colocar alternando a lo largo\nde la sección\nMercadeo:\n● Masivo en bloque de marca\ny tipo de producto\n● No mezclar marcas\n● Exhibir 1 focal por marca\nPrioridad Producto:\n● Mesa Fina - caja de vajilla\ncerrada Narrative y Kostlich.\n● Mesa Casual - coloca caja\nde vajilla cerrada en general.\nMASIVOS HARDLINE"
+    },
+    {
+      "pagina": 32,
+      "fuente": "pdfplumber_text_flow",
+      "texto": "Ubicación:\n● Pasillos principales.\n● Frentes de sección.\n● Intersecciones.\nMercadeo piso de venta:\n● Coloca exhibiciones masivas de producto\nparticipante y shots promocionales.\n● Exhibe por bloque y tipo de producto\n(marca/modelo)\n● Respetar alturas/estiba máxima\n● Asegura se coloque la cartulina con el\nbeneficio***\n● Es importante mantener surtido, en caso de\nvaciarse el modelo, resurtir con otro que tenga\nsuficiente profundidad.\nMesa MMM+Cartulina Carrito Italia + Cartulina\nTorre MMM+Cartulina\nPlataforma + Cartulina\nNOTA: Los masivos en pasillo deben contar con espacio que no obstruya la circulación del cliente.\nSeparación entre masivos de 3 a 5 metros\nFOCALES HARDLINE PASILLOS\nPrioridad Producto:\n● Cajas de vajilla cerrada,\n● Electrodomésticos en caja\n● TV’s"
+    },
+    {
+      "pagina": 33,
+      "fuente": "pdfplumber_text_flow",
+      "texto": "HARDLINE FOCAL MMM\nINDICACIONES:\n● Coloca producto con mayor descuento para que sea\natractivo al cliente.\n● Mantén el orden de la exhibición\n● Mercadeo por bloqueo de producto\nPrioridad Producto:\n● Exhibe producto de tendencia Oasis\nFloral y Oasis Tropical de las secciones\nde Mesa Fina, Mesa Casual, Blancos,\nBaño, Organización Hogar y Decoración\ntextil. (Evita mezclar las secciones de\ndiferentes mundos).\n● Mochilas, loncheras, lapiceras en\nconcepto."
+    },
+    {
+      "pagina": 34,
+      "fuente": "gemini_vision",
+      "texto_crudo": "Materiales:\n● Cartulinas\n● Carrito Italia\n● Tapetes\nPauta:\n● Colocar alternando a lo largo de la\nsección, los focales en volúmen por\nmarca.\nMercadeo:\n● Focal en bloque de marca y tipo de\nproducto\n● No mezclar marcas\n● Exhibir 1 focal por marca\nPrioridad Producto:\n● WESTINGHOUSE\n● T-FAL\n● JADE COOK\n● TRAMONTINA\n● CUISINART\n● ECOFILTRO\nCOCINA Y ELECTRO\n25% + MSI\n35% + MSI",
+      "estructura": {
+        "tipo_layout": "lista_prioridades",
+        "titulo": "COCINA Y ELECTRO",
+        "descripcion_general": "Este diagrama presenta las directrices de visual merchandising para la sección de Cocina y Electro, organizadas en materiales, pautas de exhibición, estrategias de mercadeo y una lista de productos prioritarios con sus respectivas condiciones de venta.",
+        "secciones": [
+          {
+            "nombre": "Materiales",
+            "rol": "lista de materiales requeridos para la exhibición",
+            "elementos": [
+              "Cartulinas",
+              "Carrito Italia",
+              "Tapetes"
+            ]
+          },
+          {
+            "nombre": "Pauta",
+            "rol": "instrucciones generales de colocación de productos",
+            "elementos": [
+              "Colocar alternando a lo largo de la sección, los focales en volúmen por marca."
+            ]
+          },
+          {
+            "nombre": "Mercadeo",
+            "rol": "estrategias de mercadeo para la exhibición",
+            "elementos": [
+              "Focal en bloque de marca y tipo de producto",
+              "No mezclar marcas",
+              "Exhibir 1 focal por marca"
+            ]
+          },
+          {
+            "nombre": "Prioridad Producto",
+            "rol": "lista de productos con prioridad de exhibición y sus condiciones",
+            "elementos": [
+              "WESTINGHOUSE",
+              "T-FAL",
+              "JADE COOK",
+              "TRAMONTINA",
+              "CUISINART",
+              "ECOFILTRO"
+            ]
+          }
+        ],
+        "relaciones": [
+          "Los productos WESTINGHOUSE, T-FAL, JADE COOK, TRAMONTINA y CUISINART están agrupados y asociados con la condición '25% + MSI'.",
+          "El producto ECOFILTRO está asociado con la condición '35% + MSI'."
+        ],
+        "texto_no_ubicado": []
+      },
+      "vision_meta": {
+        "modelo": "gemini-2.5-flash",
+        "timestamp": "2026-07-03T15:58:16",
+        "archivo": "resultados_vision/pagina_34.json"
+      }
+    },
+    {
+      "pagina": 35,
+      "fuente": "gemini_vision",
+      "texto_crudo": "Materiales:\n● Cartulinas\n● Mobiliario de la sección\n● Tapetes\nPauta:\nMascotas:\n● Agrupa el producto zoopet con descuento en una\ngóndola de la sección a pie de pasillo (hasta 50%)\n● Agrupa por tipo de producto\n● Dentro de su clasificación, agrupa la marca RIMAX\n(casas)\n● Señaliza con cartulina (30%)\nArtículos de viaje:\n● Dentro de su clasificación agrupa el producto con\ndescuento\n● Prioridad de producto: Mobility y Cloe (40%)\nArtículos de viaje:\n● Dentro de su clasificación señaliza las exhibición en cubos\nde hidrolavadoras (20%)\n● Señaliza el resto de la sección con la promoción del 25%\nDIVERSOS",
+      "estructura": {
+        "tipo_layout": "lista_prioridades",
+        "titulo": "DIVERSOS",
+        "descripcion_general": "Esta página presenta las directrices de visual merchandising para diversas categorías de productos, detallando los materiales a utilizar y las pautas específicas de exhibición para mascotas y artículos de viaje.",
+        "secciones": [
+          {
+            "nombre": "Materiales",
+            "rol": "lista de materiales generales",
+            "elementos": [
+              "Cartulinas",
+              "Mobiliario de la sección",
+              "Tapetes"
+            ]
+          },
+          {
+            "nombre": "Mascotas",
+            "rol": "pautas de merchandising por categoría de producto",
+            "elementos": [
+              "Agrupa el producto zoopet con descuento en una góndola de la sección a pie de pasillo (hasta 50%)",
+              "Agrupa por tipo de producto",
+              "Dentro de su clasificación, agrupa la marca RIMAX (casas)",
+              "Señaliza con cartulina (30%)"
+            ]
+          },
+          {
+            "nombre": "Artículos de viaje (parte 1)",
+            "rol": "pautas de merchandising por categoría de producto",
+            "elementos": [
+              "Dentro de su clasificación agrupa el producto con descuento",
+              "Prioridad de producto: Mobility y Cloe (40%)"
+            ]
+          },
+          {
+            "nombre": "Artículos de viaje (parte 2)",
+            "rol": "pautas de merchandising por categoría de producto",
+            "elementos": [
+              "Dentro de su clasificación señaliza las exhibición en cubos de hidrolavadoras (20%)",
+              "Señaliza el resto de la sección con la promoción del 25%"
+            ]
+          }
+        ],
+        "relaciones": [
+          "La sección 'Pauta' se divide en categorías de producto. La categoría 'Artículos de viaje' presenta dos conjuntos de instrucciones distintas, posiblemente para diferentes tipos de exhibición o fases de la promoción, que se muestran como bloques de texto separados en la imagen."
+        ],
+        "texto_no_ubicado": []
+      },
+      "vision_meta": {
+        "modelo": "gemini-2.5-flash",
+        "timestamp": "2026-07-03T15:58:32",
+        "archivo": "resultados_vision/pagina_35.json"
+      }
+    },
+    {
+      "pagina": 36,
+      "fuente": "gemini_vision",
+      "texto_crudo": "HOGAR - Muebles\nMateriales:\n● Cartulinas\n● Torres slim\n● Etiqueta Muebles 8x12\nPauta:\nColoca el material gráfico de forma alternada entre los\ndiferentes sets para evitar la saturación visual de la sección\ny mantener una exhibición más limpia y atractiva para el\ncliente.\nLa clasificación de la sección de Muebles no se modifica con\nesta campaña; los productos deberán permanecer dentro\nde su clasificación correspondiente.\nNOTA:\nSi cuentas con espacio disponible dentro de la sección de\nMuebles, puedes concentrar la mercancía de liquidación en\nuna exhibición tipo campamento, señalizándo con la\ncartulina correspondiente. En caso de no contar con el\nespacio necesario, la mercancía de liquidación deberá\npermanecer dentro de su clasificación actual, señalizando\ncada mueble con la cartulina correspondiente.\nP\nA\nS I\nL\nL\nO\nFLUJO PRINCIPAL\nP\nA\nS I\nL\nL\nO",
+      "estructura": {
+        "tipo_layout": "planograma",
+        "titulo": "HOGAR - Muebles",
+        "descripcion_general": "Este documento presenta un planograma para la sección de Muebles, detallando los materiales a utilizar y las pautas de colocación para una campaña específica. Incluye un diagrama de distribución de la sección y un ejemplo visual de la implementación en tienda, junto con instrucciones para la gestión de mercancía de liquidación.",
+        "secciones": [
+          {
+            "nombre": "Materiales",
+            "rol": "lista de materiales gráficos y de señalización a utilizar",
+            "elementos": [
+              "Cartulinas",
+              "Torres slim",
+              "Etiqueta Muebles 8x12"
+            ]
+          },
+          {
+            "nombre": "Pauta",
+            "rol": "instrucciones generales para la colocación de material gráfico y clasificación de productos",
+            "elementos": [
+              "Coloca el material gráfico de forma alternada entre los diferentes sets para evitar la saturación visual de la sección y mantener una exhibición más limpia y atractiva para el cliente.",
+              "La clasificación de la sección de Muebles no se modifica con esta campaña; los productos deberán permanecer dentro de su clasificación correspondiente."
+            ]
+          },
+          {
+            "nombre": "NOTA",
+            "rol": "instrucciones específicas para la gestión de mercancía de liquidación",
+            "elementos": [
+              "Si cuentas con espacio disponible dentro de la sección de Muebles, puedes concentrar la mercancía de liquidación en una exhibición tipo campamento, señalizándo con la cartulina correspondiente.",
+              "En caso de no contar con el espacio necesario, la mercancía de liquidación deberá permanecer dentro de su clasificación actual, señalizando cada mueble con la cartulina correspondiente."
+            ]
+          },
+          {
+            "nombre": "Diagrama de Distribución de Muebles",
+            "rol": "representación gráfica del layout de la sección con flujo principal y pasillos",
+            "elementos": [
+              "FLUJO PRINCIPAL",
+              "PASILLO (lateral izquierdo)",
+              "PASILLO (lateral derecho)",
+              "Mobiliario y sets de exhibición (representados por contornos)"
+            ]
+          },
+          {
+            "nombre": "Ejemplo Visual de Montaje (HAUS)",
+            "rol": "fotografía de referencia de la implementación de la campaña en una tienda",
+            "elementos": [
+              "HAUS (rótulo de la sección)",
+              "Ejemplo de torres slim y cartulinas en exhibición de mobiliario"
+            ]
+          }
+        ],
+        "relaciones": [
+          "Los 'Materiales' listados deben ser utilizados siguiendo las indicaciones de la 'Pauta' y la 'NOTA'.",
+          "La 'Pauta' sobre la colocación de material gráfico se aplica a los puntos señalados en el 'Diagrama de Distribución de Muebles' (indicados por cuadrados rojos/amarillos).",
+          "El 'FLUJO PRINCIPAL' en el diagrama indica la ruta de circulación preferente para el cliente dentro de la sección.",
+          "Los 'PASILLO's en el diagrama delimitan las áreas de exhibición y el acceso a los sets de muebles.",
+          "El 'Ejemplo Visual de Montaje (HAUS)' ilustra la aplicación práctica de las instrucciones de la 'Pauta' y el uso de los 'Materiales' en un entorno real de tienda."
+        ],
+        "texto_no_ubicado": []
+      },
+      "vision_meta": {
+        "modelo": "gemini-2.5-flash",
+        "timestamp": "2026-07-03T15:58:52",
+        "archivo": "resultados_vision/pagina_36.json"
+      }
+    },
+    {
+      "pagina": 37,
+      "fuente": "pdfplumber_text_flow",
+      "texto": "HOGAR - Blancos/Baño\nMateriales:\n● Cartulinas\n● Torre Slim\n● Columnas\nPauta:\nColocar de forma alterna el\nmaterial gráfico al costado de la\ncama"
+    },
+    {
+      "pagina": 38,
+      "fuente": "pdfplumber_text_flow",
+      "texto": "HARDLINE FOCAL MMM - 108 TAPICERÍA/110 DECO\nTEXTIL\nINDICACIONES:\n● Coloca producto con mayor descuento para que sea\natractivo al cliente.\n● Mantén el orden de la exhibición\n● Mercadeo por bloqueo de producto\nPrioridad Producto:\n● Cajas organizadoras.\n● Protectores de sofá.\n● Puff en caja."
+    },
+    {
+      "pagina": 39,
+      "fuente": "pdfplumber_text_flow",
+      "texto": "HOGAR - Mesa Casual\nMateriales:\n● Cartulinas\n● Atriles\nPauta:\nColocar alternando a lo largo de\nla sección.\nColoca la colección del Mundial\nen las mesas del frente.\nExhibe las colecciones como se\nindica en el Book de impulsos\ntomando en cuenta Mayo y Junio.\nPuedes sacar al pasillo masivos\nde cajas de vajilla cerrada."
+    },
+    {
+      "pagina": 40,
+      "fuente": "pdfplumber_text_flow",
+      "texto": "HOGAR - Mesa Fina\nMateriales:\n● Cartulinas institucionales\n● Cartulinas genéricas %\nPauta:\nColocar alternando a lo largo de\nla sección.\nCuidar señalización y no saturar\nsección, recuerda mantener\nproducto lujo.\nMercadea con forme al Book de\nImpulsos de Mayo y Junio.\nImpulsa todos los textiles que\nentran en 98´puedes apoyarte de\nmesa mmm para sacarlos a\npasillo."
+    },
+    {
+      "pagina": 41,
+      "fuente": "pdfplumber_text_flow",
+      "texto": "MULTIMEDIA - Línea Blanca\nMateriales:\n● Cartulinas\n● Visual de Línea Blanca\nPauta:\n● Distribuir material a lo largo del\ndepartamento.\n● Identificar con cartulina shots\npromocionales.\n● NO está permitido material\nPOP de marcas no autorizadas\nMercadeo:\n● Identificar producto con\ndescuento participante.\n● Evitar mezclar marcas y\nrespetar clasificación.\n● Agrupar combos en espacios\nprincipales de la sección."
+    },
+    {
+      "pagina": 42,
+      "fuente": "pdfplumber_text_flow",
+      "texto": "Materiales:\n● Cartulinas\n● Visuales Perímetros\nPauta:\n● Colocar producto de apuesta\ncomercial.\n● Impulsar producto especial de\nacuerdo a matriz.\n● Colocar cartulinas.\nMULTIMEDIA - COMPUTACIÓN"
+    },
+    {
+      "pagina": 43,
+      "fuente": "pdfplumber_text_flow",
+      "texto": "DEPORTES - Zapatos Deportivos\n50%\n+ 20%\n40%\n30%\n20%\n10%\n%\n+\n%\n-\nAvances temporada\nMateriales:\n● Cartulinas\n● Columnas CH o GD\nProducto:\nAcércate al jefe de la sección para que pueda dar\nvisibilidad del producto de apuestas comerciales\nparticipantes con descuento.\nMercadeo:\n➔ La exhibición por disciplinas se mantiene y dentro de\nellos y se separan por género y descuento.\n➔ Exhibe en mesa en la parte más visible los\ndescuentos más agresivos, en medio los descuentos\nmás bajos y en la parte menos visible los avances\nde temporada. Coloca la cartulina con el descuento\nmás agresivo con el que cuentes en la mesa\ncorrespondiente.\n➔ En perímetro coloca en la parte superior los\ndescuentos más agresivos, en medio los descuentos\nmás bajos y en la parte inferior los avances de\ntemporada.\n➔ La mesa de lanzamientos sigue manejando los\nlanzamientos que tengas por mes."
+    },
+    {
+      "pagina": 44,
+      "fuente": "gemini_vision",
+      "texto_crudo": "DEPORTES - DEPORTES Y DEPORTIVO\nNIÑO/NIÑA\nMateriales:\n● Cartulinas\n● Columnas CH o GD\n● Barra de Ballet\nProducto:\nAcércate al jefe de la sección para que pueda dar\nvisibilidad del producto de apuestas comerciales\nparticipantes con descuento.\nMercadeo:\n➔\nLa exhibición por disciplinas se mantiene y dentro de\nellos y se separan por género y descuento.\n➔\nExhibe y siembra en el espacio más visible de la\ndisciplina el producto con descuentos más agresivos, en\nmedio los descuentos más bajos y en la parte menos\nvisible los avances de temporada, este último puede ir al\nfondo del departamento o en perímetro. Coloca en el\nmueble la cartulina con el descuento correspondiente\n➔\nEn barra de Ballet exhibe el producto de una sola\ndisciplina con el descuento más agresivo. Recuerda\nseparar por género y por partes bajas ó altas.\n50\n+20%\n10%\n50 +20% 10%\n5 0\n+ 2 0 %\n1 0 %\n30%\n50\n+20% 50 +\n20%\n10%\n5 0\n+\n2 0\n%\n1 0\n% 5\n0 +\n2\n0 %\n1\n0 %\nNo calificado No calificado No calificado\nN\no\nc\nali fi c a\nd o\nNo\ncalifica\ndo\n50 +\n20%\n10%\n50 +\n20%\n10%\n50 +\n20%\n10%\n50 +\n20% 10%",
+      "estructura": {
+        "tipo_layout": "mixto",
+        "titulo": "DEPORTES - DEPORTES Y DEPORTIVO NIÑO/NIÑA",
+        "descripcion_general": "Esta página de manual de montaje de campaña comunica las directrices de visual merchandising para la sección de deportes infantil, incluyendo materiales necesarios, políticas de producto y estrategias de mercadeo, ilustradas con un planograma de exhibición y una fotografía de implementación en tienda.",
+        "secciones": [
+          {
+            "nombre": "Materiales",
+            "rol": "Lista de elementos físicos requeridos para la exhibición.",
+            "elementos": [
+              "Cartulinas",
+              "Columnas CH o GD",
+              "Barra de Ballet"
+            ]
+          },
+          {
+            "nombre": "Producto",
+            "rol": "Instrucciones sobre la visibilidad del producto.",
+            "elementos": [
+              "Acércate al jefe de la sección para que pueda dar visibilidad del producto de apuestas comerciales participantes con descuento."
+            ]
+          },
+          {
+            "nombre": "Mercadeo",
+            "rol": "Directrices para la exhibición y colocación de productos según disciplina, género y descuento.",
+            "elementos": [
+              "La exhibición por disciplinas se mantiene y dentro de ellos y se separan por género y descuento.",
+              "Exhibe y siembra en el espacio más visible de la disciplina el producto con descuentos más agresivos, en medio los descuentos más bajos y en la parte menos visible los avances de temporada, este último puede ir al fondo del departamento o en perímetro. Coloca en el mueble la cartulina con el descuento correspondiente",
+              "En barra de Ballet exhibe el producto de una sola disciplina con el descuento más agresivo. Recuerda separar por género y por partes bajas ó altas."
+            ]
+          },
+          {
+            "nombre": "Configuraciones de Exhibición (Planograma)",
+            "rol": "Ejemplos visuales de cómo aplicar diferentes niveles de descuento en varias unidades de exhibición.",
+            "elementos": [
+              "Unidad de exhibición horizontal (superior izquierda): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'.",
+              "Unidad de exhibición horizontal (superior centro): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'.",
+              "Unidad de exhibición horizontal (superior derecha): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'.",
+              "Unidad de exhibición horizontal (media izquierda): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'.",
+              "Unidad de exhibición vertical (media derecha): Con áreas de '30%', '50 + 20%' y '10%'.",
+              "Unidad de exhibición vertical (inferior izquierda): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'.",
+              "Unidad de exhibición vertical (inferior centro): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'.",
+              "Unidad de exhibición vertical (inferior derecha): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'."
+            ]
+          },
+          {
+            "nombre": "Ejemplo de Implementación en Tienda",
+            "rol": "Fotografía de una sección de tienda real mostrando la aplicación de las directrices de visual merchandising.",
+            "elementos": [
+              "Exhibición de ropa deportiva en estanterías y maniquíes, con señalización de descuentos visibles."
+            ]
+          }
+        ],
+        "relaciones": [
+          "La sección 'Mercadeo' detalla cómo aplicar los porcentajes de descuento mostrados en las 'Configuraciones de Exhibición (Planograma)', priorizando los descuentos más agresivos en los espacios más visibles.",
+          "La instrucción de 'Mercadeo' sobre la 'Barra de Ballet' se refiere al material listado en la sección 'Materiales' y especifica que debe exhibir el producto con el descuento más agresivo (50+20%).",
+          "Las 'Cartulinas' mencionadas en 'Materiales' deben usarse para indicar el 'descuento correspondiente' en el mueble, según la sección 'Mercadeo'."
+        ],
+        "texto_no_ubicado": []
+      },
+      "vision_meta": {
+        "modelo": "gemini-2.5-flash",
+        "timestamp": "2026-07-03T15:59:10",
+        "archivo": "resultados_vision/pagina_44.json"
+      }
+    },
+    {
+      "pagina": 45,
+      "fuente": "pdfplumber_text_flow",
+      "texto": "EXTERIORES"
+    },
+    {
+      "pagina": 46,
+      "fuente": "pdfplumber_text_flow",
+      "texto": "PUNTOS DE PUERTA\nMateriales:\n● Punto de Puerta\nARTE:\nParaguas de beneficio de la\npromoción."
+    },
+    {
+      "pagina": 47,
+      "fuente": "pdfplumber_text_flow",
+      "texto": "APARADORES\nOutfits sugeridos para los Aparadores"
+    },
+    {
+      "pagina": 48,
+      "fuente": "pdfplumber_text_flow",
+      "texto": "¡gracias!"
+    }
+  ]
+}
