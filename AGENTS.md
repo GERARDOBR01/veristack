@@ -19,9 +19,18 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 
 ---
 
-## Estado actual (3 Jul 2026 — Sesión J: Motor 2, volcado de páginas multicolumna para revisión)
+## Estado actual (3 Jul 2026 — Sesión K: Motor 2, cambio de backend a GitHub Models)
 
 ✅ Completado y en repo remoto (verificado con `git log origin/main`, working tree limpio):
+- **Motor 2 — backend de IA conmutable, default GitHub Models** (`motor2/extractor.py`, sigue en PILOTO):
+  - **Motivo**: desbloquear la cuota. Gemini free = 20 req/día (1 sola key) → imposible correr los 5 bloques juntos, menos los 47. GitHub Models (endpoint OpenAI-compatible `https://models.github.ai/inference`, `openai/gpt-4o-mini`, tier "low" ~150 req/día) sí alcanza. Se autentica con un GitHub PAT (`github_pat_…`, scope models:read) en `GITHUB_API_KEY` del `.env` (git-ignored, nunca impreso)
+  - **Cómo**: `MOTOR2_BACKEND` (env) elige `github` (default) o `gemini` (fallback, **no se borró**). langextract enruta al provider OpenAI vía `lx.factory.ModelConfig(provider="OpenAILanguageModel", provider_kwargs={api_key, base_url, temperature})` — se fija EXPLÍCITO porque el model_id con namespace `openai/…` no matchea el auto-routing `^gpt-4` del router. **La lógica de extracción, prompt, few-shot y grounding NO cambió** — solo el proveedor. Nueva dependencia `openai` (fijada en `motor2/requirements.txt` nuevo). segmenter/normalizer intactos
+  - **Resultado del piloto (5 bloques en UNA sola corrida, sin bloqueo de cuota)**: 28 criterios, **24 con grounding exacto**. p43 6/6, p10 6/6 (multicolumna, limpio con use_text_flow), p35 8/8 con condicion_libre bien poblada. El fix de `referencia_no_resuelta` funciona igual en GitHub Models: "Cuida tus básicos de Display" → `[AMBIGUO]`/`null`. Calidad de peso/severidad comparable a Gemini
+  - **🟡 Observaciones para Gerardo**: (a) los 4 "SIN GROUNDING" son benignos: 2 en p29 por **punto final agregado** por el modelo (`match_lesser`) y 2 en p20 por el prefijo `[AMBIGUO]` (sin grounding por diseño); (b) en p20 el modelo **over-aplicó `[AMBIGUO]`** a "En en los focales solo se colocan gráficos de torres slim…" (instrucción con material no definido — discutible, quedó `null`). Sigue en PILOTO: **no se escaló a los 47** (por brief)
+
+## Estado previo (3 Jul 2026 — Sesión J: Motor 2, volcado de páginas multicolumna para revisión)
+
+✅ En repo remoto (verificado con `git log origin/main`, working tree limpio):
 - **Motor 2 — volcado de páginas multicolumna** (`motor2/revisar_multicolumna.py`, SIN IA, cero costo API):
   - Imprime el texto crudo completo (`use_text_flow=True`) de las páginas multicolumna, para que Gerardo compare a ojo contra el PDF antes de escalar la extracción. La lista NO se hardcodea: reimporta `_es_multicolumna` de `test_pdfplumber.py` (importar no ejecuta su main) y la recalcula, así no se desincroniza. Solo pdfplumber, ninguna llamada a langextract/Gemini
   - **Resultado**: 20 páginas volcadas (1, 2, 3, 5, 6, 7, 10, 11, 12, 13, 16, 18, 26, 27, 28, 31, 32, 34, 35, 42). Observaciones para la revisión: (a) con use_text_flow el **encabezado de sección suele quedar al final** del volcado (orden del stream; no afecta al extractor porque página+sección vienen del código); (b) p16 sigue con "OUTPOS **T** BOLSA **S**" (texto vertical "TS" intercalado) — artefacto gráfico puntual que use_text_flow no resuelve
@@ -103,7 +112,7 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 - Cola de consenso `pendientes_revision.json`
 
 ## Próximos pasos (orden de prioridad)
-1. **Motor 2 — siguiente sesión: escalar la extracción a los 47 bloques** (piloto validado en Sesiones H–I; los 2 bloqueadores —multicolumna y falso positivo de referencia— ya están resueltos en Sesión I). Pendientes antes/durante el escalado: (a) **conseguir cuota** — el free tier es 20 req/día por key y solo hay 1 key; 47 bloques necesitan plan de pago o varias keys con rotación; (b) revisar a ojo el orden de lectura de las 20 páginas multicolumna reportadas por `test_pdfplumber.py` antes de confiar en su extracción; (c) completar la corrida combinada de p43/p35 con cuota fresca (ya validadas por separado). `condicion_libre` y `referencia_no_resuelta` siguen siendo solo datos, sin lógica en el motor
+1. **Motor 2 — siguiente sesión: escalar la extracción a los 47 bloques** (piloto validado en Sesiones H–I–K; los 3 bloqueadores —multicolumna, falso positivo de referencia y **cuota**— ya están resueltos: multicolumna+referencia en Sesión I, cuota en Sesión K con GitHub Models ~150 req/día). Pendientes antes/durante el escalado: (a) revisar a ojo el orden de lectura de las 20 páginas multicolumna reportadas por `test_pdfplumber.py` antes de confiar en su extracción; (b) vigilar que 47 bloques no rebasen el límite diario de gpt-4o-mini (~150 req/día) — con 1 chunk por bloque debería sobrar; (c) decidir qué hacer con los 2 detalles de calidad de Sesión K (punto final agregado; over-aplicación puntual de `[AMBIGUO]`). `condicion_libre` y `referencia_no_resuelta` siguen siendo solo datos, sin lógica en el motor
 2. Resolver las 2 referencias no resueltas de capa2 (`etiquetado_hogar_diversos` → manual señalización Hardline; `exhibicion_book_impulsos` → Book de impulsos) cuando Gerardo consiga esos documentos
 3. Decidir si los campos de proveniencia (`pagina_origen`, `confianza_extraccion`, `referencia_cruzada`) se formalizan en el schema o se eliminan del JSON
 4. Validar `app.py` en navegador (la lógica ya está probada end-to-end por script; falta el click manual en la UI)
@@ -138,11 +147,12 @@ veristack/
 │       ├── capa2_campana_activa.json
 │       └── capa3_focal_show.json
 ├── motor2/                 ← extractor de manuales (aislado del pipeline)
-│   ├── venv/               ← git-ignored (pdfplumber + langextract)
+│   ├── venv/               ← git-ignored (pdfplumber + langextract + openai)
+│   ├── requirements.txt    ← deps de Motor 2, incluye openai (Sesión K)
 │   ├── test_pdfplumber.py  ← validación de setup (Sesión E)
 │   ├── segmenter.py        ← segmentador de secciones por heurística (Sesión F)
 │   ├── normalizer.py       ← mapea encabezado crudo → seccion_aplicable (Sesión G)
-│   ├── extractor.py        ← langextract: criterios+peso+severidad por bloque (Sesión H, piloto)
+│   ├── extractor.py        ← langextract: criterios+peso+severidad por bloque (Sesión H piloto; backend GitHub Models Sesión K)
 │   └── revisar_multicolumna.py ← vuelca texto crudo de páginas multicolumna (Sesión J, sin IA)
 ├── core/
 │   └── photo_analyzer.py
