@@ -19,9 +19,11 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 
 ---
 
-## Estado actual (2 Jul 2026 — Sesión C: filtro por etapa_aplicable, cierre)
+## Estado actual (2 Jul 2026 — Sesión D: filtro de etapa conectado a la UI, cierre)
 
 ✅ Completado y en repo remoto (verificado con `git log origin/main`, working tree limpio):
+- **UI → filtro de etapa activo en producción** (`d59b08e`, 3 líneas en `app.py`): `_config_pipeline(etapa_activa)` recibe el valor del selectbox "Etapa activa" y lo pone en `ConfigRetrieval.etapa_activa`. El filtro de Sesión C ya no está dormido
+  - **Probado en la UI real** (Streamlit + Playwright, no solo script): subir `simulation.jpeg`, E1 + focal_show, click Verificar → tabla/CSV con **116 criterios** (antes 123), los 7 de etapas 2/3 ausentes (`barras_segunda_tercera_etapa`, `columnas_segunda_etapa`, `columnas_tercera_etapa`, `agregar_puntos_verdes`, `focal_show_mujeres_etapa3`, `prohibicion_graficos_barata_etapa3`, `colocar_atriles_marca_etapa3`), los de E1 presentes, GRAVE global por `grafico_etapa_incorrecta`, delegados 83→76. CSV verificado contra los IDs (misma fuente que la tabla, por construcción)
 - **Filtro por `etapa_aplicable` en `retrieval_engine.py`** (`22f28f0`) — único archivo de motor tocado, según límite de sesión:
   - Criterio cuyo `etapa_aplicable` excluye la etapa activa → **NO_APLICA**: `buscar_lote` lo omite del resultado, así que no llega a `confidence_engine`, no se delega al modelo y no aparece en `ResultadoFinal` (ni como NO_CALIFICA ni como CUMPLE fantasma). Cada omisión se loggea
   - `etapa_aplicable` null/[] o etapa activa desconocida/no normalizable → el criterio aplica (comportamiento histórico intacto; nunca se descarta en silencio por datos ambiguos). Normalización acepta "E1" (UI) y "1" (schema)
@@ -63,7 +65,7 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 - Cola de consenso `pendientes_revision.json`
 
 ## Próximos pasos (orden de prioridad)
-1. **Sesión D: conectar el filtro de etapa a la UI** — 1 línea: que `app.py._config_pipeline()` reciba la etapa del selectbox y la ponga en `ConfigRetrieval.etapa_activa` (o que `pipeline.py` PASO 2 pase `metadata.get("etapa_activa")` a `buscar_lote`). El filtro ya está implementado y validado en `retrieval_engine.py`; sin esta línea sigue dormido en producción. `condicion_libre` y `referencia_no_resuelta` siguen siendo solo datos, sin lógica
+1. **Motor 2** (siguiente bloque de trabajo — Gerardo define alcance). Nota: `condicion_libre` y `referencia_no_resuelta` siguen siendo solo datos, sin lógica en el motor
 2. Resolver las 2 referencias no resueltas de capa2 (`etiquetado_hogar_diversos` → manual señalización Hardline; `exhibicion_book_impulsos` → Book de impulsos) cuando Gerardo consiga esos documentos
 3. Decidir si los campos de proveniencia (`pagina_origen`, `confianza_extraccion`, `referencia_cruzada`) se formalizan en el schema o se eliminan del JSON
 4. Validar `app.py` en navegador (la lógica ya está probada end-to-end por script; falta el click manual en la UI)
