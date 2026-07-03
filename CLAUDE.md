@@ -19,9 +19,13 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 
 ---
 
-## Estado actual (2 Jul 2026 — cierre de sesión, noche)
+## Estado actual (2 Jul 2026 — Sesión A de fixes, cierre)
 
 ✅ Completado y en repo remoto (verificado con `git log origin/main`, working tree limpio):
+- **Fix .env + export CSV** (`e8c3051`, push verificado en origin/main):
+  - `app.py` carga `.env` con `load_dotenv()` al inicio (antes de los imports del pipeline y de cualquier `os.environ.get`). Ya no se necesita `$env:GEMINI_API_KEY` manual en PowerShell. `python-dotenv` agregado a `requirements.txt`
+  - Export CSV: **no existía función de export previa** (se auditó main y la rama remota) — se creó `_df_criterios()` como única fuente de filas para la tabla en pantalla Y el CSV (`st.download_button` con `on_click="ignore"`, sin rerun al descargar). Imposible desincronizarse por construcción
+  - Probado end-to-end con `simulation.jpeg` (Downloads) + modelo real: 27 criterios, CSV == tabla 1:1 (comparación programática), `grafico_etapa_incorrecta` presente como GRAVE/MANDATORY (etapa activa E1 vs foto Gran Barata → veredicto global GRAVE, correcto)
 - Pipeline determinista 4 módulos + 4 mejoras empresariales + `app.py` (histórico, ver commits)
 - Fix Capa2 (`936b21f`, `3238769`) y detección de etapa por visión en PASO 0 (`f1a084f`)
 - **Verificación visual real** (`2e2dff4`) — fix arquitectónico validado con `simulation.jpeg`:
@@ -48,11 +52,12 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 - Cola de consenso `pendientes_revision.json`
 
 ## Próximos pasos (orden de prioridad)
-1. Probar `app.py` end-to-end con la key real (UI + visión + modelo)
-2. Decidir: ¿rotación automática de API keys en 429? (hay 3 keys en `.env`, solo se usa la primera)
-3. Agregar `capa3_tringla.json` y `capa3_mesa_show.json`
-4. Actualizar README a estado real
-5. Implementar extractor híbrido de PDFs
+1. Sesión B pendiente: schema v1.1 (fuera del alcance de la Sesión A — no tocado)
+2. Validar `app.py` en navegador (la lógica ya está probada end-to-end por script; falta el click manual en la UI)
+3. Decidir: ¿rotación automática de API keys en 429? (hay 3 keys en `.env`, solo se usa la primera)
+4. Agregar `capa3_tringla.json` y `capa3_mesa_show.json`
+5. Actualizar README a estado real
+6. Implementar extractor híbrido de PDFs
 
 ---
 
