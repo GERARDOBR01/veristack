@@ -1,0 +1,6 @@
+# Motor 2 (extractor de criterios) — dependencias.
+# El backend por default es GitHub Models (OpenAI-compatible), que requiere el
+# paquete `openai`. langextract enruta al provider OpenAI con base_url custom.
+langextract==1.6.0
+pdfplumber==0.11.10
+openai==2.44.0

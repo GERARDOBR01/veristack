@@ -24,16 +24,27 @@ bloque, el criterio se marca SIN GROUNDING (no se confía en él).
 false (criterio normal), null (instrucción vaga sin doc externo — el modelo prefija
 el texto con "[AMBIGUO] " en vez de inventar una referencia).
 
+Backend (Sesión K): por default usa GitHub Models (endpoint OpenAI-compatible, free
+tier ~150 req/día para gpt-4o-mini — desbloquea la cuota de Gemini de 20 req/día).
+Se elige con la variable de entorno MOTOR2_BACKEND:
+  - "github" (default): openai/gpt-4o-mini vía https://models.github.ai/inference,
+    usando GITHUB_API_KEY del .env.
+  - "gemini" (fallback): gemini-3.5-flash usando GEMINI_API_KEY del .env.
+La lógica de extracción, grounding y prompt NO cambia entre backends: solo el proveedor.
+
 Uso:
     python extractor.py [ruta_al_pdf]
+    MOTOR2_BACKEND=gemini python extractor.py   # forzar el fallback de Gemini
 
-Requiere GEMINI_API_KEY en el .env de la raíz del repo (NUNCA se imprime).
+Requiere la API key del backend elegido en el .env de la raíz (NUNCA se imprime):
+GITHUB_API_KEY para github, GEMINI_API_KEY para gemini.
 """
 import logging
 import os
 import re
 import sys
 import time
+import warnings
 from pathlib import Path
 
 import langextract as lx
@@ -44,13 +55,32 @@ import pdfplumber
 # de alineación por eso; es esperado y benigno, se silencia para no ensuciar la salida.
 logging.getLogger("absl").setLevel(logging.ERROR)
 
+# Al usar `config=`, langextract avisa que las restricciones de esquema se aplican
+# vía ejemplos (no vía output_schema). Es el comportamiento buscado; se silencia.
+warnings.filterwarnings("ignore", message="With 'config', schema constraints")
+
 from segmenter import PDF_DEFAULT, leer_paginas, segmentar
 from normalizer import normalizar
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
-# Modelo alineado al resto del proyecto (CLAUDE.md: GEMINI_MODEL=gemini-3.5-flash).
-MODEL_ID = os.environ.get("GEMINI_MODEL", "gemini-3.5-flash")
+# --- Backend / proveedor de IA -------------------------------------------------
+# GitHub Models es OpenAI-compatible: mismo endpoint /chat/completions, se autentica
+# con un GitHub PAT (scope models:read). Se enruta al provider OpenAI de langextract
+# fijándolo EXPLÍCITO en ModelConfig (el model_id "openai/gpt-4o-mini" lleva namespace
+# y no matchea el patrón por defecto ^gpt-4 del router; por eso no se deja al auto-routing).
+BACKEND = os.environ.get("MOTOR2_BACKEND", "github").strip().lower()
+
+# github (default): mejor balance calidad/cuota en free tier. gpt-4o-mini = tier "low"
+# (~150 req/día), suficiente para los 47 bloques; vs. Gemini free = 20 req/día.
+GITHUB_MODEL = os.environ.get("GITHUB_MODEL", "openai/gpt-4o-mini")
+GITHUB_BASE_URL = os.environ.get("GITHUB_BASE_URL", "https://models.github.ai/inference")
+
+# gemini (fallback): se conserva la config previa; solo se usa con MOTOR2_BACKEND=gemini.
+GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.5-flash")
+
+# Etiqueta legible del modelo activo (para el encabezado del reporte).
+MODEL_ID = GITHUB_MODEL if BACKEND == "github" else GEMINI_MODEL
 
 # Bloques de prueba del piloto (por página), elegidos por complejidad distinta:
 #   p29  simple  — 3 indicaciones cortas, sin condición
@@ -171,18 +201,51 @@ EXAMPLES = [
 MARCA_AMBIGUO = "[AMBIGUO] "
 
 
-def _cargar_api_key() -> str:
-    """Devuelve la GEMINI_API_KEY sin imprimirla. Busca env y luego el .env raíz."""
-    key = os.environ.get("GEMINI_API_KEY") or os.environ.get("LANGEXTRACT_API_KEY")
-    if key:
-        return key
+def _leer_env(nombre: str):
+    """Devuelve el valor de una variable, del entorno o del .env raíz. Sin imprimirla."""
+    if os.environ.get(nombre):
+        return os.environ[nombre]
     env_path = Path(__file__).resolve().parent.parent / ".env"
     if env_path.exists():
         for linea in env_path.read_text(encoding="utf-8").splitlines():
             linea = linea.strip()
-            if linea.startswith("GEMINI_API_KEY") and "=" in linea:
+            if linea.startswith(nombre) and "=" in linea:
                 return linea.split("=", 1)[1].strip().strip('"').strip("'")
+    return None
+
+
+def _cargar_api_key() -> str:
+    """Devuelve la API key del backend activo sin imprimirla (env o .env raíz)."""
+    if BACKEND == "github":
+        key = _leer_env("GITHUB_API_KEY")
+        if key:
+            return key
+        sys.exit("ERROR: falta GITHUB_API_KEY (env o .env de la raíz). No se ejecuta.")
+    # gemini (fallback)
+    key = _leer_env("GEMINI_API_KEY") or _leer_env("LANGEXTRACT_API_KEY")
+    if key:
+        return key
     sys.exit("ERROR: falta GEMINI_API_KEY (env o .env de la raíz). No se ejecuta.")
+
+
+def _construir_config(api_key: str, temperature: float = 0.0):
+    """ModelConfig del backend activo. El provider OpenAI se fija EXPLÍCITO para
+    GitHub Models (el model_id con namespace no matchea el auto-routing del router)."""
+    if BACKEND == "github":
+        return lx.factory.ModelConfig(
+            model_id=GITHUB_MODEL,
+            provider="OpenAILanguageModel",
+            provider_kwargs={
+                "api_key": api_key,
+                "base_url": GITHUB_BASE_URL,
+                "temperature": temperature,
+            },
+        )
+    # gemini (fallback): auto-routing por model_id (^gemini) resuelve el provider.
+    return lx.factory.ModelConfig(
+        model_id=GEMINI_MODEL,
+        provider_kwargs={"api_key": api_key, "temperature": temperature},
+    )
 
 
 def _norm_ws(s: str) -> str:
@@ -237,20 +300,18 @@ def _retry_delay_seg(exc, default=30):
     return default
 
 
-def extraer_bloque(texto: str, api_key: str, reintentos=2):
+def extraer_bloque(texto: str, config, reintentos=2):
     """Corre langextract sobre el texto de un bloque y devuelve su AnnotatedDocument.
 
-    Reintenta con backoff ante 429 (free tier: 20 req/min). Si se agota la cuota
-    diaria, el 429 persiste y se propaga tras los reintentos."""
+    `config` fija el proveedor/modelo (ver _construir_config). Reintenta con backoff
+    ante 429 (rate limit). Si se agota la cuota, el 429 persiste y se propaga."""
     for intento in range(reintentos + 1):
         try:
             return lx.extract(
                 text_or_documents=texto,
                 prompt_description=PROMPT_DESCRIPTION,
                 examples=EXAMPLES,
-                model_id=MODEL_ID,
-                api_key=api_key,
-                temperature=0.0,          # piloto determinista
+                config=config,            # backend/modelo (github o gemini)
                 max_char_buffer=1500,     # > el bloque más largo (p43 ~844) -> 1 chunk
                 show_progress=False,
             )
@@ -270,6 +331,7 @@ def main() -> None:
         sys.exit(f"ERROR: no existe el PDF: {pdf_path}")
 
     api_key = _cargar_api_key()
+    config = _construir_config(api_key, temperature=0.0)  # piloto determinista
     bloques = segmentar(leer_paginas(pdf_path))
     norm, _ = normalizar(bloques)
     # Índice por página para pegar página+sección (del código) al output del modelo.
@@ -278,7 +340,7 @@ def main() -> None:
     flow_por_pagina = leer_texto_flow(pdf_path)
 
     print(f"PDF: {pdf_path.name}")
-    print(f"Modelo: {MODEL_ID}  |  Bloques piloto: {BLOQUES_PRUEBA}")
+    print(f"Backend: {BACKEND}  |  Modelo: {MODEL_ID}  |  Bloques piloto: {BLOQUES_PRUEBA}")
     print(f"Lectura de texto: use_text_flow=True (des-intercala columnas)")
     print("=" * 90)
 
@@ -299,7 +361,7 @@ def main() -> None:
         print("#" * 90)
 
         try:
-            doc = extraer_bloque(texto_flow, api_key)
+            doc = extraer_bloque(texto_flow, config)
         except Exception as exc:  # noqa: BLE001 — piloto: reportar y seguir
             print(f"  ⚠️  ERROR al extraer p{pag}: {type(exc).__name__}: {exc}")
             continue
