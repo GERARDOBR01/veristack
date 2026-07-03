@@ -19,7 +19,20 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 
 ---
 
-## Estado actual (3 Jul 2026 — Sesión K: Motor 2, cambio de backend a GitHub Models)
+## Estado actual (3 Jul 2026 — Sesión L: Motor 2, clasificador de layout diagrama/matriz)
+
+🟡 Trabajo local, aún SIN push (pendiente de confirmación/decisión de Gerardo antes de subir):
+- **Motor 2 — clasificador determinista de layout** (`motor2/clasificador_layout.py`, SIN IA, cero costo API):
+  - Detecta, por página, si el layout es "prosa multicolumna" (ya se lee bien con `use_text_flow=True`) o "diagrama/matriz" (planogramas, líneas de tiempo, cuadrículas — pdfplumber aplana la relación espacial y rompe el significado, aunque el texto a veces se siga leyendo "bonito" como bullets sueltos, caso p35)
+  - Se evaluó DBSCAN/sklearn en la exploración de calibración y **no separaba mejor** que density/dispersión simple — se descartó (misma regla del proyecto que rechazó `layout=True` y el declusterizador por posición X en sesiones previas: no meter maquinaria que no compra nada)
+  - **Heurístico**: score = `z(cv_vecino_más_cercano) + z(ratio_espacios_grandes_entre_palabras) - z(mediana_palabras_por_línea)`, z-scores contra las 12 páginas limpias de calibración. Umbral = score mínimo entre las 5 páginas diagrama de calibración (prioriza recall sobre precisión: mejor marcar una limpia de más que dejar pasar un diagrama real, porque el falso positivo solo cuesta una llamada extra al fallback de Vision de la siguiente sesión)
+  - **Ground truth de calibración** (revisión manual Sesión J + QA sobre las 20 páginas "multicolumna" de `test_pdfplumber.py`): 5 diagrama real con fallas bloqueantes (**5, 10, 11, 18, 35**) vs 12 confirmadas limpias (1, 2, 3, 6, 7, 26, 27, 28, 31, 32, 34, 42)
+  - **Resultado sobre las 47 páginas** (41 con texto evaluable, 6 separadores sin texto se excluyen): **14 páginas clasificadas DIAGRAMA** → `[4, 5, 6, 8, 10, 11, 12, 13, 18, 28, 34, 35, 36, 44]`. Las 5 confirmadas SÍ caen todas en DIAGRAMA (recall 5/5, ninguna se escapó). **Costo en precisión**: 3 falsos positivos dentro de las 12 limpias de calibración (**6, 28, 34**); las 9 páginas extra marcadas (4, 8, 12, 13, 36, 44) no tienen ground truth — no se puede confirmar si son diagramas reales o falsos positivos adicionales sin revisión a ojo
+  - **🟡 Para Gerardo**: el heurístico geométrico puro tiene techo de precisión (p35 en particular lee como prosa coherente en texto plano — solo el umbral ajustado a las 5 conocidas la atrapa). Recomendación para la siguiente sesión: mandar las 14 marcadas (no solo las 5 confirmadas) al fallback de Gemini Vision, dado el sesgo a recall del umbral
+  - `GEMINI_API_KEY` (ya en `.env`) **NO se tocó ni se usó** — el fallback de Vision queda para la siguiente sesión, por brief explícito
+  - Motor 2 — volcado de páginas multicolumna (`motor2/revision_multicolumna.txt`, generado esta sesión, corriendo el script ya existente de Sesión J): confirma el mismo listado de 20 páginas multicolumna documentado en Sesión J, sin cambios ni hallazgos nuevos
+
+## Estado previo (3 Jul 2026 — Sesión K: Motor 2, cambio de backend a GitHub Models)
 
 ✅ Completado y en repo remoto (verificado con `git log origin/main`, working tree limpio):
 - **Motor 2 — backend de IA conmutable, default GitHub Models** (`motor2/extractor.py`, sigue en PILOTO):
@@ -153,7 +166,8 @@ veristack/
 │   ├── segmenter.py        ← segmentador de secciones por heurística (Sesión F)
 │   ├── normalizer.py       ← mapea encabezado crudo → seccion_aplicable (Sesión G)
 │   ├── extractor.py        ← langextract: criterios+peso+severidad por bloque (Sesión H piloto; backend GitHub Models Sesión K)
-│   └── revisar_multicolumna.py ← vuelca texto crudo de páginas multicolumna (Sesión J, sin IA)
+│   ├── revisar_multicolumna.py ← vuelca texto crudo de páginas multicolumna (Sesión J, sin IA)
+│   └── clasificador_layout.py  ← detecta layout prosa vs diagrama/matriz por página (Sesión L, sin IA)
 ├── core/
 │   └── photo_analyzer.py
 ├── brains/
