@@ -19,9 +19,15 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 
 ---
 
-## Estado actual (2 Jul 2026 — Sesión B: schema v1.1 + capa2 real, cierre)
+## Estado actual (2 Jul 2026 — Sesión C: filtro por etapa_aplicable, cierre)
 
 ✅ Completado y en repo remoto (verificado con `git log origin/main`, working tree limpio):
+- **Filtro por `etapa_aplicable` en `retrieval_engine.py`** (`22f28f0`) — único archivo de motor tocado, según límite de sesión:
+  - Criterio cuyo `etapa_aplicable` excluye la etapa activa → **NO_APLICA**: `buscar_lote` lo omite del resultado, así que no llega a `confidence_engine`, no se delega al modelo y no aparece en `ResultadoFinal` (ni como NO_CALIFICA ni como CUMPLE fantasma). Cada omisión se loggea
+  - `etapa_aplicable` null/[] o etapa activa desconocida/no normalizable → el criterio aplica (comportamiento histórico intacto; nunca se descarta en silencio por datos ambiguos). Normalización acepta "E1" (UI) y "1" (schema)
+  - La etapa entra por parámetro `etapa_activa` de `buscar`/`buscar_lote` o por el campo nuevo `ConfigRetrieval.etapa_activa` (default None = sin filtro). También acepta `schema_version` 1.0 y 1.1 sin WARNING; `ResultadoRetrieval` ganó el flag `no_aplica`
+  - **⚠️ El filtro aún NO se activa desde la UI**: `pipeline.py` no pasa `etapa_activa` a `buscar_lote` y `app.py` no llena `ConfigRetrieval.etapa_activa` — ambos archivos estaban fuera del límite de esta sesión. Falta 1 línea (en `app.py` `_config_pipeline()` o en `pipeline.py` PASO 2) que requiere autorización → Sesión D
+  - **Validado E2E** (config con `etapa_activa="E1"`, `simulation.jpeg`, focal_show): 116 criterios (antes 123) — desaparecen exactamente los 7 de etapas 2/3, cero fugas como NO_CALIFICA, los de E1 permanecen, GRAVE global por `grafico_etapa_incorrecta` se mantiene; delegaciones al modelo 83→76. Retrocompatibilidad: sin etapa, 122/122 criterios del knowledge se comportan igual que antes; E2 omite 8, E3 omite 9 (conteos verificados contra el mapeo). Tests internos de `retrieval_engine.py` (`__main__`) ampliados con 3 casos de filtro por etapa
 - **Schema v1.1 + capa2 con 101 criterios reales** (`be0baf1`):
   - `schema_conocimiento_v1.md` **creado** en la raíz (no existía como archivo — la regla fija #4 lo referenciaba pero estaba en "pendiente de diseño"). Documenta el schema v1.0 de facto (extraído de los JSONs reales y del contrato de `retrieval_engine.py`) y agrega 3 campos v1.1: `etapa_aplicable` (array o null), `condicion_libre` (texto libre), `referencia_no_resuelta` (bool). Cero cambios a campos existentes
   - `capa2_campana_activa.json` regenerado: los 5 criterios genéricos reemplazados por los **101 criterios reales de Gran Barata** (fuente: `Gran barata 101 criterios · JSON` en la raíz del repo, subido por Gerardo). Mapeo: 15 criterios con `etapa_aplicable`, 11 con `condicion_libre`, 2 con `referencia_no_resuelta: true` (manual de señalización Hardline y Book de impulsos). Generado por script con verificaciones (101 únicos, pesos válidos, guarda anti-condición-de-etapa sin mapear)
@@ -57,7 +63,7 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 - Cola de consenso `pendientes_revision.json`
 
 ## Próximos pasos (orden de prioridad)
-1. **Sesión C: el motor aún NO usa `etapa_aplicable` para filtrar** — hoy los criterios de etapas 2/3 se evalúan igual con E1 activa (quedan NO_CALIFICA vía delegación, no filtrados por código). Implementar filtro por etapa en el motor (requiere autorización para tocar `retrieval_engine.py`/`mandatory_engine.py`). Ídem `condicion_libre` y `referencia_no_resuelta`: solo datos, sin lógica todavía
+1. **Sesión D: conectar el filtro de etapa a la UI** — 1 línea: que `app.py._config_pipeline()` reciba la etapa del selectbox y la ponga en `ConfigRetrieval.etapa_activa` (o que `pipeline.py` PASO 2 pase `metadata.get("etapa_activa")` a `buscar_lote`). El filtro ya está implementado y validado en `retrieval_engine.py`; sin esta línea sigue dormido en producción. `condicion_libre` y `referencia_no_resuelta` siguen siendo solo datos, sin lógica
 2. Resolver las 2 referencias no resueltas de capa2 (`etiquetado_hogar_diversos` → manual señalización Hardline; `exhibicion_book_impulsos` → Book de impulsos) cuando Gerardo consiga esos documentos
 3. Decidir si los campos de proveniencia (`pagina_origen`, `confianza_extraccion`, `referencia_cruzada`) se formalizan en el schema o se eliminan del JSON
 4. Validar `app.py` en navegador (la lógica ya está probada end-to-end por script; falta el click manual en la UI)
