@@ -19,9 +19,15 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 
 ---
 
-## Estado actual (3 Jul 2026 — Sesión F: Motor 2, segmentador de secciones)
+## Estado actual (3 Jul 2026 — Sesión G: Motor 2, normalización de secciones)
 
 ✅ Completado y en repo remoto (verificado con `git log origin/main`, working tree limpio):
+- **Motor 2 — normalizador de secciones** (`motor2/normalizer.py`, 100% código, SIN IA):
+  - Consume los bloques de `segmenter.py` (import directo, no lo toca) y mapea el encabezado crudo de cada bloque a `seccion_aplicable`: uno de `Softline · Hardline · Diversos · Multimedia · Deportes · Niño/Niña · Hogar` o `None` (null). **`seccion_aplicable` es campo NUEVO** — no existe en el knowledge (que solo tiene `etapa_aplicable`); el vocabulario lo definió Gerardo en el brief de sesión
+  - Mapeo por diccionario explícito con precedencia: (1) bloque sin contenido = separador → null; (2) keyword de departamento en el encabezado → su valor (orden fijo, el prefijo gana: `DEPORTES` antes que `NIÑO/NIÑA`); (3) allowlist de genéricos sin depto (portada, materiales, planogramas, exteriores) → null; (4) nada matchea → REPORTA en consola, no fuerza. Umbral duro: >3 sin match → `sys.exit`
+  - `COCINA Y ELECTRO` (p34) → Hardline (sub-depto de línea dura sin valor propio, bajo el separador MONTAJE HARDLINE). `Niño/Niña` queda en el vocabulario pero SIN uso en este PDF: la p44 "DEPORTES - DEPORTES Y DEPORTIVO NIÑO/NIÑA" va a Deportes por prefijo
+  - **Títulos truncados reparados**: págs 24 y 44 (el título del PDF se parte en 2 líneas). Reparación por conjunto explícito `PAGINAS_TITULO_PARTIDO = {24, 44}` — NO por heurística: un detector genérico de "línea corta en mayúsculas" disparaba en 9 páginas (capturaba primeras palabras de contenido como "BARRAS", "ZAPATERÍAS") y corrompía encabezados; se descartó por la regla de no inventar reglas frágiles
+  - **Criterio de éxito cumplido**: 47/47 bloques con `seccion_aplicable` correcta o null explícito, 0 sin match, exactamente 2 títulos reparados (p24, p44), sin encabezados truncados. Reparto: Softline 10 (p20-29), Hardline p31-34+38, Diversos p35, Hogar p36/37/39/40, Multimedia p41/42, Deportes p43/44, resto null. langextract sigue SIN usarse
 - **Motor 2 — segmentador de secciones** (`motor2/segmenter.py`, 100% heurística, SIN IA):
   - Lee el texto por página con pdfplumber (misma lógica de lectura que `test_pdfplumber.py`, replicada porque ese script no expone función importable y el alcance era no tocarlo) y agrupa en bloques por sección hasta el próximo encabezado. Cada `Bloque` conserva: `seccion` (texto crudo del encabezado, SIN normalizar), `pagina_inicio`, `pagina_fin`, `texto`
   - Heurística de encabezado (`es_encabezado`): primera línea de la página, `len ≤ 60` y (`ratio_mayúsculas ≥ 0.6` **o** prefijo en mayúsculas seguido de `:`/`-`, ej. "HOGAR - Muebles", "SOFTLINE: FOCAL SHOW..."). Patrón confirmado inspeccionando el PDF real antes de codificar: la primera línea de CADA página del manual es un encabezado
@@ -77,7 +83,7 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 - Cola de consenso `pendientes_revision.json`
 
 ## Próximos pasos (orden de prioridad)
-1. **Motor 2 — siguiente sesión: normalización de secciones + extracción de criterios** (segmentador ya validado en Sesión F). Normalizar el nombre crudo de cada bloque a Softline/Hardline/etc. (aquí se corrigen de paso los 2 títulos partidos de págs 24/44). Después, primer uso real de langextract para interpretar el contenido de cada bloque. Nota: `condicion_libre` y `referencia_no_resuelta` siguen siendo solo datos, sin lógica en el motor
+1. **Motor 2 — siguiente sesión: extracción de criterios** (segmentador validado en Sesión F, normalización de secciones en Sesión G — cada bloque ya tiene `seccion_aplicable`). Primer uso real de langextract para interpretar el contenido de cada bloque y sacar los criterios. Nota: `condicion_libre` y `referencia_no_resuelta` siguen siendo solo datos, sin lógica en el motor
 2. Resolver las 2 referencias no resueltas de capa2 (`etiquetado_hogar_diversos` → manual señalización Hardline; `exhibicion_book_impulsos` → Book de impulsos) cuando Gerardo consiga esos documentos
 3. Decidir si los campos de proveniencia (`pagina_origen`, `confianza_extraccion`, `referencia_cruzada`) se formalizan en el schema o se eliminan del JSON
 4. Validar `app.py` en navegador (la lógica ya está probada end-to-end por script; falta el click manual en la UI)
@@ -114,7 +120,8 @@ veristack/
 ├── motor2/                 ← extractor de manuales (aislado del pipeline)
 │   ├── venv/               ← git-ignored (pdfplumber + langextract)
 │   ├── test_pdfplumber.py  ← validación de setup (Sesión E)
-│   └── segmenter.py        ← segmentador de secciones por heurística (Sesión F)
+│   ├── segmenter.py        ← segmentador de secciones por heurística (Sesión F)
+│   └── normalizer.py       ← mapea encabezado crudo → seccion_aplicable (Sesión G)
 ├── core/
 │   └── photo_analyzer.py
 ├── brains/
