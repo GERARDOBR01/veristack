@@ -1,0 +1,70 @@
+{
+  "pagina": 10,
+  "pdf": "MECÁNICA MONTAJE GRAN BARATA PV 2026 .pdf",
+  "modelo": "gemini-2.5-flash",
+  "timestamp": "2026-07-03T15:56:15",
+  "render_px_ancho": 1024,
+  "render_kb": 129.0,
+  "texto_crudo_chars": 476,
+  "resultado": {
+    "tipo_layout": "mixto",
+    "titulo": "ETIQUETADO EN TIENDA",
+    "descripcion_general": "Esta página de manual de campaña presenta las directrices para el etiquetado de productos en tienda, dividiendo las instrucciones por tipo de producto (Softline y Hardline) y tipo de exhibición. Incluye ejemplos visuales de etiquetas de descuento.",
+    "secciones": [
+      {
+        "nombre": "Softline",
+        "rol": "categoría principal de productos",
+        "elementos": []
+      },
+      {
+        "nombre": "Etiquetas focales",
+        "rol": "sub-sección de instrucciones para Softline",
+        "elementos": [
+          "Para el caso de los muebles de focal, coloca la etiqueta a la misma altura y del mismo lado."
+        ]
+      },
+      {
+        "nombre": "Etiquetas maniquíes",
+        "rol": "sub-sección de instrucciones para Softline",
+        "elementos": [
+          "Utilizar la siguiente fórmula.",
+          "• 2 maniquíes – 1 etiqueta",
+          "• 3 maniquíes – 2 etiquetas",
+          "• 5 maniquíes – 3 etiquetas"
+        ]
+      },
+      {
+        "nombre": "NOTA",
+        "rol": "nota importante para la sección Softline",
+        "elementos": [
+          "Recuerda que las etiquetas solo van en la cadera del maniquí."
+        ]
+      },
+      {
+        "nombre": "Hardline",
+        "rol": "categoría principal de productos",
+        "elementos": []
+      },
+      {
+        "nombre": "Etiquetas Hogar y Diversos",
+        "rol": "sub-sección de instrucciones para Hardline",
+        "elementos": [
+          "Consulta en la liga el manual de señalización de Barata en piso, para Hardline."
+        ]
+      },
+      {
+        "nombre": "MANUAL ETIQUETADO",
+        "rol": "botón de acción/enlace a manual",
+        "elementos": []
+      }
+    ],
+    "relaciones": [
+      "La sección 'Softline' agrupa las instrucciones para 'Etiquetas focales' y 'Etiquetas maniquíes'.",
+      "La sección 'Hardline' agrupa las instrucciones para 'Etiquetas Hogar y Diversos'.",
+      "La 'NOTA' sobre la colocación de etiquetas en la cadera del maniquí se aplica específicamente a las 'Etiquetas maniquíes' dentro de la categoría 'Softline'.",
+      "El botón 'MANUAL ETIQUETADO' proporciona acceso a un manual más detallado sobre el etiquetado general."
+    ],
+    "texto_no_ubicado": []
+  },
+  "parseo_ok": true
+}

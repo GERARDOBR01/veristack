@@ -1,0 +1,56 @@
+{
+  "pagina": 35,
+  "pdf": "MECÁNICA MONTAJE GRAN BARATA PV 2026 .pdf",
+  "modelo": "gemini-2.5-flash",
+  "timestamp": "2026-07-03T15:58:32",
+  "render_px_ancho": 1024,
+  "render_kb": 83.7,
+  "texto_crudo_chars": 602,
+  "resultado": {
+    "tipo_layout": "lista_prioridades",
+    "titulo": "DIVERSOS",
+    "descripcion_general": "Esta página presenta las directrices de visual merchandising para diversas categorías de productos, detallando los materiales a utilizar y las pautas específicas de exhibición para mascotas y artículos de viaje.",
+    "secciones": [
+      {
+        "nombre": "Materiales",
+        "rol": "lista de materiales generales",
+        "elementos": [
+          "Cartulinas",
+          "Mobiliario de la sección",
+          "Tapetes"
+        ]
+      },
+      {
+        "nombre": "Mascotas",
+        "rol": "pautas de merchandising por categoría de producto",
+        "elementos": [
+          "Agrupa el producto zoopet con descuento en una góndola de la sección a pie de pasillo (hasta 50%)",
+          "Agrupa por tipo de producto",
+          "Dentro de su clasificación, agrupa la marca RIMAX (casas)",
+          "Señaliza con cartulina (30%)"
+        ]
+      },
+      {
+        "nombre": "Artículos de viaje (parte 1)",
+        "rol": "pautas de merchandising por categoría de producto",
+        "elementos": [
+          "Dentro de su clasificación agrupa el producto con descuento",
+          "Prioridad de producto: Mobility y Cloe (40%)"
+        ]
+      },
+      {
+        "nombre": "Artículos de viaje (parte 2)",
+        "rol": "pautas de merchandising por categoría de producto",
+        "elementos": [
+          "Dentro de su clasificación señaliza las exhibición en cubos de hidrolavadoras (20%)",
+          "Señaliza el resto de la sección con la promoción del 25%"
+        ]
+      }
+    ],
+    "relaciones": [
+      "La sección 'Pauta' se divide en categorías de producto. La categoría 'Artículos de viaje' presenta dos conjuntos de instrucciones distintas, posiblemente para diferentes tipos de exhibición o fases de la promoción, que se muestran como bloques de texto separados en la imagen."
+    ],
+    "texto_no_ubicado": []
+  },
+  "parseo_ok": true
+}

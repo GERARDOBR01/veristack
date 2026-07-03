@@ -1,0 +1,62 @@
+{
+  "pagina": 6,
+  "pdf": "MECÁNICA MONTAJE GRAN BARATA PV 2026 .pdf",
+  "modelo": "gemini-2.5-flash",
+  "timestamp": "2026-07-03T15:55:32",
+  "render_px_ancho": 1024,
+  "render_kb": 88.0,
+  "texto_crudo_chars": 466,
+  "resultado": {
+    "tipo_layout": "planograma",
+    "titulo": "GRÁFICOS",
+    "descripcion_general": "Esta página de manual de montaje de campaña detalla las directrices para la configuración de diferentes tipos de displays de retail: torres slim, barras, columnas y atriles. Las instrucciones se organizan por tipo de display y por etapas de campaña.",
+    "secciones": [
+      {
+        "nombre": "TORRE SLIM",
+        "rol": "Tipo de display: torre vertical",
+        "elementos": [
+          "Imprimir una torre slim, mandar parche 50, colocar el +20 sobre el 50"
+        ]
+      },
+      {
+        "nombre": "BARRAS",
+        "rol": "Tipo de display: barras horizontales",
+        "elementos": [
+          "Imprimir primera etapa 40% genérico 60% beneficio",
+          "2da etapa 100% beneficio (Como años pasados)",
+          "3era etapa 100% beneficio (Como años pasados)"
+        ]
+      },
+      {
+        "nombre": "COLUMNAS",
+        "rol": "Tipo de display: columnas horizontales",
+        "elementos": [
+          "Imprimir primera etapa 40% genérico 60% beneficio",
+          "2da etapa 100% beneficio (Como años pasados)",
+          "3ERA etapa solo producir parches +20"
+        ]
+      },
+      {
+        "nombre": "ATRILES",
+        "rol": "Tipo de display: atriles",
+        "elementos": [
+          "Imprimir primera etapa genérico, se usan para ambas secciones"
+        ]
+      },
+      {
+        "nombre": "Nota general",
+        "rol": "Nota al pie de página",
+        "elementos": [
+          "Nada se resguarda"
+        ]
+      }
+    ],
+    "relaciones": [
+      "Las instrucciones de 'Imprimir primera etapa 40% genérico 60% beneficio' aplican tanto a la sección BARRAS como a la sección COLUMNAS.",
+      "Las instrucciones de '2da etapa 100% beneficio (Como años pasados)' aplican tanto a la sección BARRAS como a la sección COLUMNAS.",
+      "La instrucción 'Imprimir primera etapa genérico, se usan para ambas secciones' en ATRILES indica que los atriles son un tipo de display genérico utilizado para las campañas descritas en las secciones BARRAS y COLUMNAS."
+    ],
+    "texto_no_ubicado": []
+  },
+  "parseo_ok": true
+}

@@ -1,0 +1,69 @@
+{
+  "pagina": 44,
+  "pdf": "MECÁNICA MONTAJE GRAN BARATA PV 2026 .pdf",
+  "modelo": "gemini-2.5-flash",
+  "timestamp": "2026-07-03T15:59:10",
+  "render_px_ancho": 1024,
+  "render_kb": 112.8,
+  "texto_crudo_chars": 1054,
+  "resultado": {
+    "tipo_layout": "mixto",
+    "titulo": "DEPORTES - DEPORTES Y DEPORTIVO NIÑO/NIÑA",
+    "descripcion_general": "Esta página de manual de montaje de campaña comunica las directrices de visual merchandising para la sección de deportes infantil, incluyendo materiales necesarios, políticas de producto y estrategias de mercadeo, ilustradas con un planograma de exhibición y una fotografía de implementación en tienda.",
+    "secciones": [
+      {
+        "nombre": "Materiales",
+        "rol": "Lista de elementos físicos requeridos para la exhibición.",
+        "elementos": [
+          "Cartulinas",
+          "Columnas CH o GD",
+          "Barra de Ballet"
+        ]
+      },
+      {
+        "nombre": "Producto",
+        "rol": "Instrucciones sobre la visibilidad del producto.",
+        "elementos": [
+          "Acércate al jefe de la sección para que pueda dar visibilidad del producto de apuestas comerciales participantes con descuento."
+        ]
+      },
+      {
+        "nombre": "Mercadeo",
+        "rol": "Directrices para la exhibición y colocación de productos según disciplina, género y descuento.",
+        "elementos": [
+          "La exhibición por disciplinas se mantiene y dentro de ellos y se separan por género y descuento.",
+          "Exhibe y siembra en el espacio más visible de la disciplina el producto con descuentos más agresivos, en medio los descuentos más bajos y en la parte menos visible los avances de temporada, este último puede ir al fondo del departamento o en perímetro. Coloca en el mueble la cartulina con el descuento correspondiente",
+          "En barra de Ballet exhibe el producto de una sola disciplina con el descuento más agresivo. Recuerda separar por género y por partes bajas ó altas."
+        ]
+      },
+      {
+        "nombre": "Configuraciones de Exhibición (Planograma)",
+        "rol": "Ejemplos visuales de cómo aplicar diferentes niveles de descuento en varias unidades de exhibición.",
+        "elementos": [
+          "Unidad de exhibición horizontal (superior izquierda): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'.",
+          "Unidad de exhibición horizontal (superior centro): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'.",
+          "Unidad de exhibición horizontal (superior derecha): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'.",
+          "Unidad de exhibición horizontal (media izquierda): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'.",
+          "Unidad de exhibición vertical (media derecha): Con áreas de '30%', '50 + 20%' y '10%'.",
+          "Unidad de exhibición vertical (inferior izquierda): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'.",
+          "Unidad de exhibición vertical (inferior centro): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'.",
+          "Unidad de exhibición vertical (inferior derecha): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'."
+        ]
+      },
+      {
+        "nombre": "Ejemplo de Implementación en Tienda",
+        "rol": "Fotografía de una sección de tienda real mostrando la aplicación de las directrices de visual merchandising.",
+        "elementos": [
+          "Exhibición de ropa deportiva en estanterías y maniquíes, con señalización de descuentos visibles."
+        ]
+      }
+    ],
+    "relaciones": [
+      "La sección 'Mercadeo' detalla cómo aplicar los porcentajes de descuento mostrados en las 'Configuraciones de Exhibición (Planograma)', priorizando los descuentos más agresivos en los espacios más visibles.",
+      "La instrucción de 'Mercadeo' sobre la 'Barra de Ballet' se refiere al material listado en la sección 'Materiales' y especifica que debe exhibir el producto con el descuento más agresivo (50+20%).",
+      "Las 'Cartulinas' mencionadas en 'Materiales' deben usarse para indicar el 'descuento correspondiente' en el mueble, según la sección 'Mercadeo'."
+    ],
+    "texto_no_ubicado": []
+  },
+  "parseo_ok": true
+}

@@ -1,0 +1,85 @@
+{
+  "pagina": 4,
+  "pdf": "MECÁNICA MONTAJE GRAN BARATA PV 2026 .pdf",
+  "modelo": "gemini-2.5-flash",
+  "timestamp": "2026-07-03T15:54:45",
+  "render_px_ancho": 1024,
+  "render_kb": 99.0,
+  "texto_crudo_chars": 552,
+  "resultado": {
+    "tipo_layout": "timeline",
+    "titulo": "LÍNEA DE TIEMPO",
+    "descripcion_general": "Este diagrama presenta una línea de tiempo que detalla las fases de montaje de una campaña, diferenciando actividades para exteriores, interiores y elementos de IMO. Muestra fechas clave y los porcentajes de descuento asociados a cada etapa.",
+    "secciones": [
+      {
+        "nombre": "Ejes de Contenido",
+        "rol": "etiquetas de categorías principales en el eje vertical",
+        "elementos": [
+          "EXTERIORES",
+          "Contacto: Lila Navarro",
+          "INTERIORES",
+          "IMO"
+        ]
+      },
+      {
+        "nombre": "Actividades de Exteriores",
+        "rol": "eventos y montajes específicos para el exterior de la tienda",
+        "elementos": [
+          "Montaje Etapa 1 Gráficos sin Beneficios",
+          "Montaje de Gráficos con Beneficios",
+          "Montaje de Gráficos con Beneficios parche",
+          "Montaje de Gráficos con Beneficios Parche"
+        ]
+      },
+      {
+        "nombre": "Eje Temporal Principal",
+        "rol": "fechas y descripciones de las fases de la campaña",
+        "elementos": [
+          "22 al 25 Junio",
+          "Pre Venta",
+          "24 Junio",
+          "26 Junio al 09 Julio",
+          "E1 Inicio 40%",
+          "10 Julio al 23 de Julio",
+          "E2 Inició 50%",
+          "24 Julio al 09 Agosto",
+          "E3 Inicio 50%+20%"
+        ]
+      },
+      {
+        "nombre": "Actividades de Interiores",
+        "rol": "actividades de preparación y montaje para el interior de la tienda",
+        "elementos": [
+          "Calificación, etiquetado Mercadeos",
+          "Campamentos de Mercancía",
+          "Gráficos sin Beneficios en interiores."
+        ]
+      },
+      {
+        "nombre": "Elementos IMO",
+        "rol": "elementos de merchandising y comunicación interna",
+        "elementos": [
+          "AURA 2",
+          "MOOD BOARD BARATA",
+          "AVANCES DE TEMPORADA"
+        ]
+      }
+    ],
+    "relaciones": [
+      "La sección 'Actividades de Exteriores' se alinea con las fechas del 'Eje Temporal Principal' en la parte superior de la línea.",
+      "La sección 'Actividades de Interiores' se alinea con las fechas del 'Eje Temporal Principal' en la parte inferior de la línea.",
+      "La sección 'Elementos IMO' se alinea con las fases de la campaña en la parte más baja del diagrama.",
+      "El contacto 'Lila Navarro' está asociado a las actividades de 'EXTERIORES'.",
+      "El período '22 al 25 Junio' corresponde a la fase de 'Pre Venta', que incluye 'Calificación, etiquetado Mercadeos', 'Campamentos de Mercancía' y 'Gráficos sin Beneficios en interiores'.",
+      "El '24 Junio' marca el 'Montaje Etapa 1 Gráficos sin Beneficios' para exteriores.",
+      "El período '26 Junio al 09 Julio' corresponde a la fase 'E1 Inicio 40%' y al 'Montaje de Gráficos con Beneficios' para exteriores.",
+      "El período '10 Julio al 23 de Julio' corresponde a la fase 'E2 Inició 50%' y al 'Montaje de Gráficos con Beneficios parche' para exteriores.",
+      "El período '24 Julio al 09 Agosto' corresponde a la fase 'E3 Inicio 50%+20%' y al 'Montaje de Gráficos con Beneficios Parche' para exteriores.",
+      "El elemento 'AURA 2' está alineado con la fase inicial de la campaña (22 al 25 Junio / 24 Junio).",
+      "El elemento 'MOOD BOARD BARATA' está alineado con las fases intermedias de la campaña (26 Junio al 09 Julio / 10 Julio al 23 de Julio).",
+      "El elemento 'AVANCES DE TEMPORADA' está alineado con la fase final de la campaña (24 Julio al 09 Agosto)."
+    ],
+    "texto_no_ubicado": []
+  },
+  "parseo_ok": true
+}

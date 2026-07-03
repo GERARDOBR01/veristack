@@ -1,0 +1,53 @@
+{
+  "pagina": 13,
+  "pdf": "MECÁNICA MONTAJE GRAN BARATA PV 2026 .pdf",
+  "modelo": "gemini-2.5-flash",
+  "timestamp": "2026-07-03T15:57:20",
+  "render_px_ancho": 1024,
+  "render_kb": 109.0,
+  "texto_crudo_chars": 748,
+  "resultado": {
+    "tipo_layout": "planograma",
+    "titulo": "PLANOGRAMA ZAPATERÍAS",
+    "descripcion_general": "Esta página detalla el planograma para la exhibición de calzado, priorizando la selección de productos por descuento y estableciendo acciones específicas de merchandising. Está organizada con instrucciones textuales a la izquierda y referencias visuales a la derecha.",
+    "secciones": [
+      {
+        "nombre": "Selección de Producto por Descuento",
+        "rol": "instrucciones de prioridad para la selección de producto",
+        "elementos": [
+          "Selecciona el producto dando prioridad al Descuento:",
+          "1. Descuento 50%, 40%, 30%, 20% u otros."
+        ]
+      },
+      {
+        "nombre": "Acción",
+        "rol": "lista de acciones para el montaje del planograma",
+        "elementos": [
+          "(1) Colocar el producto por descuento de mayor a menor.",
+          "(2) Respetar los mundos sin romper las clasificaciones.",
+          "(3) Exhibir todos los modelos sin repetirlos.",
+          "(4) Identificar con cartulina de descuento.",
+          "(5) Exhibir la liquidación en la zapatera."
+        ]
+      },
+      {
+        "nombre": "Notas Adicionales",
+        "rol": "notas y excepciones sobre la exhibición de producto",
+        "elementos": [
+          "Nota: La exhibición de producto en mesas y perímetros de las secciones de zapatos se mantiene con el movimiento de mercadeo de frente y vuelta.",
+          "En caso de tener todos lo modelos exhibidos en las zapateras o mesas m y cuenten con niveles vacíos es posible realizar repetición de producto, esto solo aplica para zapateras y mesas mmm en exhibiciones fuera de la sección."
+        ]
+      },
+      {
+        "nombre": "REFERENCIA",
+        "rol": "columna de ejemplos visuales de planogramas",
+        "elementos": []
+      }
+    ],
+    "relaciones": [
+      "La sección 'REFERENCIA' en la columna derecha proporciona ejemplos visuales de la configuración del planograma, ilustrando las instrucciones dadas en la columna izquierda, particularmente en lo que respecta a la señalización de descuentos y la colocación de productos."
+    ],
+    "texto_no_ubicado": []
+  },
+  "parseo_ok": true
+}

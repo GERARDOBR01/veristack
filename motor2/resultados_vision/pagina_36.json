@@ -1,0 +1,68 @@
+{
+  "pagina": 36,
+  "pdf": "MECÁNICA MONTAJE GRAN BARATA PV 2026 .pdf",
+  "modelo": "gemini-2.5-flash",
+  "timestamp": "2026-07-03T15:58:52",
+  "render_px_ancho": 1024,
+  "render_kb": 136.6,
+  "texto_crudo_chars": 852,
+  "resultado": {
+    "tipo_layout": "planograma",
+    "titulo": "HOGAR - Muebles",
+    "descripcion_general": "Este documento presenta un planograma para la sección de Muebles, detallando los materiales a utilizar y las pautas de colocación para una campaña específica. Incluye un diagrama de distribución de la sección y un ejemplo visual de la implementación en tienda, junto con instrucciones para la gestión de mercancía de liquidación.",
+    "secciones": [
+      {
+        "nombre": "Materiales",
+        "rol": "lista de materiales gráficos y de señalización a utilizar",
+        "elementos": [
+          "Cartulinas",
+          "Torres slim",
+          "Etiqueta Muebles 8x12"
+        ]
+      },
+      {
+        "nombre": "Pauta",
+        "rol": "instrucciones generales para la colocación de material gráfico y clasificación de productos",
+        "elementos": [
+          "Coloca el material gráfico de forma alternada entre los diferentes sets para evitar la saturación visual de la sección y mantener una exhibición más limpia y atractiva para el cliente.",
+          "La clasificación de la sección de Muebles no se modifica con esta campaña; los productos deberán permanecer dentro de su clasificación correspondiente."
+        ]
+      },
+      {
+        "nombre": "NOTA",
+        "rol": "instrucciones específicas para la gestión de mercancía de liquidación",
+        "elementos": [
+          "Si cuentas con espacio disponible dentro de la sección de Muebles, puedes concentrar la mercancía de liquidación en una exhibición tipo campamento, señalizándo con la cartulina correspondiente.",
+          "En caso de no contar con el espacio necesario, la mercancía de liquidación deberá permanecer dentro de su clasificación actual, señalizando cada mueble con la cartulina correspondiente."
+        ]
+      },
+      {
+        "nombre": "Diagrama de Distribución de Muebles",
+        "rol": "representación gráfica del layout de la sección con flujo principal y pasillos",
+        "elementos": [
+          "FLUJO PRINCIPAL",
+          "PASILLO (lateral izquierdo)",
+          "PASILLO (lateral derecho)",
+          "Mobiliario y sets de exhibición (representados por contornos)"
+        ]
+      },
+      {
+        "nombre": "Ejemplo Visual de Montaje (HAUS)",
+        "rol": "fotografía de referencia de la implementación de la campaña en una tienda",
+        "elementos": [
+          "HAUS (rótulo de la sección)",
+          "Ejemplo de torres slim y cartulinas en exhibición de mobiliario"
+        ]
+      }
+    ],
+    "relaciones": [
+      "Los 'Materiales' listados deben ser utilizados siguiendo las indicaciones de la 'Pauta' y la 'NOTA'.",
+      "La 'Pauta' sobre la colocación de material gráfico se aplica a los puntos señalados en el 'Diagrama de Distribución de Muebles' (indicados por cuadrados rojos/amarillos).",
+      "El 'FLUJO PRINCIPAL' en el diagrama indica la ruta de circulación preferente para el cliente dentro de la sección.",
+      "Los 'PASILLO's en el diagrama delimitan las áreas de exhibición y el acceso a los sets de muebles.",
+      "El 'Ejemplo Visual de Montaje (HAUS)' ilustra la aplicación práctica de las instrucciones de la 'Pauta' y el uso de los 'Materiales' en un entorno real de tienda."
+    ],
+    "texto_no_ubicado": []
+  },
+  "parseo_ok": true
+}

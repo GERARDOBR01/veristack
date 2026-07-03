@@ -1,0 +1,48 @@
+{
+  "pagina": 28,
+  "pdf": "MECÁNICA MONTAJE GRAN BARATA PV 2026 .pdf",
+  "modelo": "gemini-2.5-flash",
+  "timestamp": "2026-07-03T15:57:59",
+  "render_px_ancho": 1024,
+  "render_kb": 72.3,
+  "texto_crudo_chars": 215,
+  "resultado": {
+    "tipo_layout": "mixto",
+    "titulo": "SOFTLINE: JOYERÍA/RELOJES",
+    "descripcion_general": "Esta página presenta directrices de merchandising para la sección de joyería y relojes, mostrando un tipo de expositor específico (Torre Slim) y proporcionando instrucciones clave para la exhibición de productos.",
+    "secciones": [
+      {
+        "nombre": "Título de la Campaña",
+        "rol": "título principal de la página",
+        "elementos": [
+          "SOFTLINE: JOYERÍA/RELOJES"
+        ]
+      },
+      {
+        "nombre": "Descripción de Mueble",
+        "rol": "descripción de un mueble expositor específico",
+        "elementos": [
+          "TORRE SLIM",
+          "ELECTROSTÁTICO",
+          "CAPELO"
+        ]
+      },
+      {
+        "nombre": "Indicaciones de Merchandising",
+        "rol": "lista de instrucciones para la exhibición de productos",
+        "elementos": [
+          "INDICACIONES:",
+          "Coloca producto con mayor descuento para que sea atractivo al cliente.",
+          "Mantén el orden de la exhibición",
+          "Mercadeo por bloqueo de producto"
+        ]
+      }
+    ],
+    "relaciones": [
+      "La descripción 'TORRE SLIM ELECTROSTÁTICO CAPELO' se refiere al mueble expositor vertical mostrado en la parte inferior izquierda de la imagen.",
+      "Las 'INDICACIONES' son pautas generales de merchandising que aplican a la disposición de productos en los expositores, como los que se ven en la imagen principal del interior de la tienda."
+    ],
+    "texto_no_ubicado": []
+  },
+  "parseo_ok": true
+}

@@ -1,0 +1,79 @@
+{
+  "pagina": 18,
+  "pdf": "MECÁNICA MONTAJE GRAN BARATA PV 2026 .pdf",
+  "modelo": "gemini-2.5-flash",
+  "timestamp": "2026-07-03T15:57:37",
+  "render_px_ancho": 1024,
+  "render_kb": 86.2,
+  "texto_crudo_chars": 272,
+  "resultado": {
+    "tipo_layout": "lista_prioridades",
+    "titulo": "PRIORIDAD DE PUNTOS FOCALES",
+    "descripcion_general": "Este diagrama presenta una lista de 5 puntos focales priorizados para la implementación en tienda, cada uno con su categoría y una referencia visual. Incluye una instrucción general sobre la fotografía requerida y una nota con directrices para su ejecución.",
+    "secciones": [
+      {
+        "nombre": "Instrucción Superior",
+        "rol": "instrucción general aplicable a todos los puntos focales",
+        "elementos": [
+          "Se requiere 1 fotografía por focal"
+        ]
+      },
+      {
+        "nombre": "Punto Focal 1",
+        "rol": "categoría de punto focal",
+        "elementos": [
+          "MUJER"
+        ]
+      },
+      {
+        "nombre": "Punto Focal 2",
+        "rol": "categoría de punto focal",
+        "elementos": [
+          "HOMBRES"
+        ]
+      },
+      {
+        "nombre": "Punto Focal 3",
+        "rol": "categoría de punto focal",
+        "elementos": [
+          "INFANTILES"
+        ]
+      },
+      {
+        "nombre": "Punto Focal 4",
+        "rol": "categoría de punto focal",
+        "elementos": [
+          "DEPORTES"
+        ]
+      },
+      {
+        "nombre": "Punto Focal 5",
+        "rol": "categoría de punto focal",
+        "elementos": [
+          "HOGAR"
+        ]
+      },
+      {
+        "nombre": "Nota al Pie",
+        "rol": "directriz general para la implementación",
+        "elementos": [
+          "Nota: Todos los puntos focales de SL que se realicen en tienda deberan seguir esta Guia de atributos y la inspiración colocada en cada sección."
+        ]
+      }
+    ],
+    "relaciones": [
+      "El punto focal 'MUJER' está identificado con el número 1.",
+      "El punto focal 'HOMBRES' está identificado con el número 2.",
+      "El punto focal 'INFANTILES' está identificado con el número 3.",
+      "El punto focal 'DEPORTES' está identificado con el número 4.",
+      "El punto focal 'HOGAR' está identificado con el número 5.",
+      "Cada punto focal (Mujer, Hombres, Infantiles, Deportes, Hogar) está acompañado de una imagen de referencia visual.",
+      "La instrucción 'Se requiere 1 fotografía por focal' aplica a la documentación de cada uno de los 5 puntos focales.",
+      "La 'Nota al Pie' proporciona el marco general para la ejecución de todos los puntos focales en tienda."
+    ],
+    "texto_no_ubicado": [
+      "Vinos y licores"
+    ]
+  },
+  "parseo_ok": true
+}

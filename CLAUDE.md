@@ -19,9 +19,23 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 
 ---
 
-## Estado actual (3 Jul 2026 — Sesión L: Motor 2, clasificador de layout diagrama/matriz)
+## Estado actual (3 Jul 2026 — Sesión M: Motor 2, fallback Gemini Vision para páginas diagrama)
 
-🟡 Trabajo local, aún SIN push (pendiente de confirmación/decisión de Gerardo antes de subir):
+🟡 Trabajo local, aún SIN push (Gerardo confirma push después de revisar a ojo el JSON de 2-3 páginas):
+- **Motor 2 — fallback de Gemini Vision** (`motor2/vision_fallback.py` + `motor2/resultados_vision/pagina_N.json` × 14):
+  - **"Código decide, modelo interpreta" respetado**: el script NO decide qué páginas necesitan visión — importa `clasificar_pdf` de `clasificador_layout.py` y recalcula la lista (no hardcodeada, misma regla que `revisar_multicolumna.py`). Vision solo interpreta las 14 marcadas; las otras 33 siguen por pdfplumber normal, cero gasto extra
+  - **Cómo**: renderiza cada página a JPEG ~1024px (pdfplumber/pypdfium2, ya estaban en el venv — no se instaló nada; 57–137 KB por página) y llama a `gemini-2.5-flash` (temperature 0, `response_mime_type=application/json`) con la imagen + el texto crudo `use_text_flow=True` de esa página como contexto — el modelo no adivina palabras, solo reconstruye la relación espacial que la extracción plana pierde
+  - **Schema consistente en las 14**: `tipo_layout` (planograma/timeline/matriz/lista_prioridades/mixto/otro), `titulo`, `descripcion_general`, `secciones[{nombre, rol, elementos}]`, `relaciones` (las ligas que el texto plano pierde), `texto_no_ubicado` (honestidad: lo que el modelo no pudo ubicar)
+  - **Claves**: el `.env` trae **4** `GEMINI_API_KEY` (mismo nombre, separadas por retorno de carro — un loader dotenv normal solo vería la última); el script las parsea TODAS por regex y rota a la siguiente ante 429/cuota o clave inválida. En esta corrida **no hizo falta rotar**: las 14 páginas salieron con la primera clave
+  - **Nunca pisa una corrida anterior**: si `pagina_N.json` existe, lo renombra a `pagina_N.json.bak-<timestamp>` antes de escribir
+  - **Costo real de la corrida única**: 14 requests, 13,339 tokens de prompt + 41,816 de respuesta(+razonamiento) ≈ 55k tokens totales. En free tier = $0; a precio pagado de 2.5-flash sería ≈ US$0.11
+  - **QA programático**: cobertura 100% en las 14 — cada palabra del texto crudo de la página aparece en su JSON (verificado por script, no a ojo)
+  - **Revisión a ojo rápida (honesta)**: 14/14 parsearon JSON válido. Limpias destacadas: p5 fiel al PDF (la diferencia "26 vs 22 Junio" entre las 2 líneas de tiempo SÍ está en el crudo — no alucinó); p10 reconstruyó exactamente la relación que rompía la extracción plana (NOTA de la cadera del maniquí ligada a Etiquetas maniquíes/Softline); p18 mapeó bien los números 1-5 a los focales pese al crudo revuelto ("1 2 3 / 4 MUJER 5"). **Sospechosas / a verificar contra el slide real**: (a) p18 dejó "Vinos y licores" en `texto_no_ubicado` — el modelo no supo a qué focal pertenece; (b) p11 cita en `relaciones` porcentajes de zonas (10/30/40/50%) que NO están en el texto crudo — los leyó solo de la imagen, verificar que existan en el slide; (c) p10 y p13 tienen secciones-encabezado con `elementos` vacíos (Softline/Hardline/MANUAL ETIQUETADO/REFERENCIA) — coherente porque son rótulos/botones, pero revisar; (d) p8 el banner "GRAN BARATA" visible en la imagen no se capturó como sección (el modelo lo declaró explícitamente en `descripcion_general`, no lo escondió)
+  - pipeline/, core/, `capa2_campana_activa.json` y `schema_conocimiento_v1.md` **intactos** (por brief). El PDF sigue en Downloads, fuera del repo
+
+## Estado previo (3 Jul 2026 — Sesión L: Motor 2, clasificador de layout diagrama/matriz)
+
+✅ Completado y en repo remoto (push `23bda14..8159469` confirmado por Gerardo al inicio de Sesión M):
 - **Motor 2 — clasificador determinista de layout** (`motor2/clasificador_layout.py`, SIN IA, cero costo API):
   - Detecta, por página, si el layout es "prosa multicolumna" (ya se lee bien con `use_text_flow=True`) o "diagrama/matriz" (planogramas, líneas de tiempo, cuadrículas — pdfplumber aplana la relación espacial y rompe el significado, aunque el texto a veces se siga leyendo "bonito" como bullets sueltos, caso p35)
   - Se evaluó DBSCAN/sklearn en la exploración de calibración y **no separaba mejor** que density/dispersión simple — se descartó (misma regla del proyecto que rechazó `layout=True` y el declusterizador por posición X en sesiones previas: no meter maquinaria que no compra nada)
@@ -113,7 +127,7 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 - **`props_decoracion` con ejemplos concretos** (`e07d1ed`) en `capa3_focal_show.json` — el modelo ahora marca la planta y la mochila sobre pedestales (OBSERVACION). Corrida con simulation.jpeg: 6 OBSERVACION (props, materiales ajenos, punto verde, beneficio, mezcla, gráficos)
 
 🟡 Observaciones operativas:
-- Quota free tier (20 req/min) se agota rápido — hay 3 GEMINI_API_KEY en `.env` local, pero las 3 líneas usan el mismo nombre: el loader solo lee la primera. Para rotación automática hay que renombrarlas (`GEMINI_API_KEY_2`...) y agregar lógica de rotación en 429 (no implementada — decidir si vale la pena)
+- Quota free tier (20 req/min) se agota rápido — hay **4** GEMINI_API_KEY en `.env` local con el mismo nombre (separadas por retorno de carro): un loader dotenv normal solo ve una. `motor2/vision_fallback.py` (Sesión M) ya las parsea TODAS por regex y rota en 429/clave inválida; el pipeline principal (`app.py`/`load_dotenv`) sigue leyendo solo una — decidir si se replica la rotación ahí
 
 🔴 Gaps conocidos (sin resolver):
 - Faltan `capa3_tringla.json` y `capa3_mesa_show.json` en `pipeline/knowledge/`
@@ -167,7 +181,9 @@ veristack/
 │   ├── normalizer.py       ← mapea encabezado crudo → seccion_aplicable (Sesión G)
 │   ├── extractor.py        ← langextract: criterios+peso+severidad por bloque (Sesión H piloto; backend GitHub Models Sesión K)
 │   ├── revisar_multicolumna.py ← vuelca texto crudo de páginas multicolumna (Sesión J, sin IA)
-│   └── clasificador_layout.py  ← detecta layout prosa vs diagrama/matriz por página (Sesión L, sin IA)
+│   ├── clasificador_layout.py  ← detecta layout prosa vs diagrama/matriz por página (Sesión L, sin IA)
+│   ├── vision_fallback.py      ← Gemini Vision SOLO para las páginas que el clasificador marcó (Sesión M)
+│   └── resultados_vision/      ← pagina_N.json × 14 (estructura reconstruida por Vision, Sesión M)
 ├── core/
 │   └── photo_analyzer.py
 ├── brains/

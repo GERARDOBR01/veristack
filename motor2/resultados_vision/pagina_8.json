@@ -1,0 +1,28 @@
+{
+  "pagina": 8,
+  "pdf": "MECÁNICA MONTAJE GRAN BARATA PV 2026 .pdf",
+  "modelo": "gemini-2.5-flash",
+  "timestamp": "2026-07-03T15:56:01",
+  "render_px_ancho": 1024,
+  "render_kb": 57.6,
+  "texto_crudo_chars": 85,
+  "resultado": {
+    "tipo_layout": "otro",
+    "titulo": "CARTULINAS",
+    "descripcion_general": "Esta página presenta un título principal y una lista de enlaces. El texto crudo proporcionado solo contiene el título y los enlaces, y no incluye el contenido del banner promocional de 'GRAN BARATA' visible en la imagen.",
+    "secciones": [
+      {
+        "nombre": "Enlaces de Navegación",
+        "rol": "lista de enlaces",
+        "elementos": [
+          "LINK CARTULINAS",
+          "LINK ARTES INTERIORES",
+          "LINK POLÍTICA CALIFICACIÓN MERCANCÍA"
+        ]
+      }
+    ],
+    "relaciones": [],
+    "texto_no_ubicado": []
+  },
+  "parseo_ok": true
+}

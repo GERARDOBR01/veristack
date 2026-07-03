@@ -1,0 +1,72 @@
+{
+  "pagina": 11,
+  "pdf": "MECÁNICA MONTAJE GRAN BARATA PV 2026 .pdf",
+  "modelo": "gemini-2.5-flash",
+  "timestamp": "2026-07-03T15:56:40",
+  "render_px_ancho": 1024,
+  "render_kb": 78.9,
+  "texto_crudo_chars": 224,
+  "resultado": {
+    "tipo_layout": "planograma",
+    "titulo": "PLANOGRAMA SOFTLINE",
+    "descripcion_general": "Este planograma de softline presenta dos vistas (aérea y frontal) de la disposición de la mercancía en una sección de tienda, destacando los avances de temporada y las zonas de descuento. Incluye notas sobre la agrupación y priorización de mercancía calificada.",
+    "secciones": [
+      {
+        "nombre": "Título Principal",
+        "rol": "título principal de la página",
+        "elementos": [
+          "PLANOGRAMA",
+          "SOFTLINE"
+        ]
+      },
+      {
+        "nombre": "Sección de Vistas",
+        "rol": "encabezados de las diferentes perspectivas del planograma",
+        "elementos": [
+          "Vista aérea",
+          "Vista frontal"
+        ]
+      },
+      {
+        "nombre": "Título de Visualización",
+        "rol": "título de la sección de visualización",
+        "elementos": [
+          "VISUALIZACIÓN"
+        ]
+      },
+      {
+        "nombre": "Banner Superior",
+        "rol": "banner de la sección de avances de temporada",
+        "elementos": [
+          "AVANCES DE TEMPORADA"
+        ]
+      },
+      {
+        "nombre": "Eje de Porcentaje",
+        "rol": "eje vertical que indica rangos de descuento",
+        "elementos": [
+          "-%",
+          "+%"
+        ]
+      },
+      {
+        "nombre": "Notas y Prioridades",
+        "rol": "instrucciones para la disposición de la mercancía",
+        "elementos": [
+          "Notas: Agrupar la mercancía calificada con Barata y Liquidación al frente de la sección sin mezclar",
+          "DAR PRIORIDAD A MERCANCÍA CALIFICADA."
+        ]
+      }
+    ],
+    "relaciones": [
+      "La 'Vista aérea' y la 'Vista frontal' muestran diferentes perspectivas del mismo planograma de softline.",
+      "El banner 'AVANCES DE TEMPORADA' se ubica en la parte superior de la sección en ambas vistas.",
+      "El eje vertical con '-%' en la parte superior y '+%' en la parte inferior indica una gradación de descuentos, donde los descuentos menores están arriba y los mayores abajo.",
+      "En la 'Vista aérea', se observan zonas de mercancía con descuentos del 10%, 30%, 40% (en rosa) y 30%, 50% (en verde), distribuidos según el eje de porcentaje.",
+      "En la 'Vista frontal', se observan zonas de mercancía con descuentos del 30%, 40% (en rosa) y 30%, 50% (en verde).",
+      "Las 'Notas' aplican a la organización general de la mercancía mostrada en ambas vistas, enfatizando la agrupación de mercancía calificada con Barata y Liquidación al frente y la prioridad a la mercancía calificada."
+    ],
+    "texto_no_ubicado": []
+  },
+  "parseo_ok": true
+}

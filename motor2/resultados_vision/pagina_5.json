@@ -1,0 +1,53 @@
+{
+  "pagina": 5,
+  "pdf": "MECÁNICA MONTAJE GRAN BARATA PV 2026 .pdf",
+  "modelo": "gemini-2.5-flash",
+  "timestamp": "2026-07-03T15:55:12",
+  "render_px_ancho": 1024,
+  "render_kb": 72.7,
+  "texto_crudo_chars": 283,
+  "resultado": {
+    "tipo_layout": "timeline",
+    "titulo": "LÍNEA DE TIEMPO POR ETAPA",
+    "descripcion_general": "Este diagrama presenta dos líneas de tiempo paralelas que detallan las etapas de una campaña de ventas, mostrando los descuentos y las fechas correspondientes para cada fase. La línea superior está asociada con la exhibición de maniquíes, mientras que la línea inferior muestra la evolución de los displays de tienda.",
+    "secciones": [
+      {
+        "nombre": "Línea de Tiempo Superior",
+        "rol": "eje temporal principal",
+        "elementos": [
+          "Pre Venta",
+          "22 al 25 Junio",
+          "Inicio 40%",
+          "26 Junio al 09 Julio",
+          "Inicio 50%",
+          "10 Julio al 23 de Julio",
+          "Inicio 50%+20%",
+          "24 Julio al 09 Agosto"
+        ]
+      },
+      {
+        "nombre": "Línea de Tiempo Inferior",
+        "rol": "eje temporal secundario",
+        "elementos": [
+          "Pre Venta",
+          "22 al 25 Junio",
+          "Inicio 40%",
+          "22 Junio al 09 Julio",
+          "Inicio 50%",
+          "10 Julio al 23 de Julio",
+          "Inicio 50%+20%",
+          "24 Julio al 09 Agosto"
+        ]
+      }
+    ],
+    "relaciones": [
+      "La etapa 'Pre Venta' con fecha '22 al 25 Junio' aplica a ambas líneas de tiempo.",
+      "La etapa 'Inicio 40%' en la línea de tiempo superior abarca del '26 Junio al 09 Julio' y está visualmente representada con maniquíes.",
+      "La etapa 'Inicio 40%' en la línea de tiempo inferior abarca del '22 Junio al 09 Julio' y está visualmente representada con displays de tienda.",
+      "La etapa 'Inicio 50%' con fecha '10 Julio al 23 de Julio' aplica a ambas líneas de tiempo.",
+      "La etapa 'Inicio 50%+20%' con fecha '24 Julio al 09 Agosto' aplica a ambas líneas de tiempo."
+    ],
+    "texto_no_ubicado": []
+  },
+  "parseo_ok": true
+}

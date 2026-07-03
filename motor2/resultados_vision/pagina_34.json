@@ -1,0 +1,59 @@
+{
+  "pagina": 34,
+  "pdf": "MECÁNICA MONTAJE GRAN BARATA PV 2026 .pdf",
+  "modelo": "gemini-2.5-flash",
+  "timestamp": "2026-07-03T15:58:16",
+  "render_px_ancho": 1024,
+  "render_kb": 99.4,
+  "texto_crudo_chars": 372,
+  "resultado": {
+    "tipo_layout": "lista_prioridades",
+    "titulo": "COCINA Y ELECTRO",
+    "descripcion_general": "Este diagrama presenta las directrices de visual merchandising para la sección de Cocina y Electro, organizadas en materiales, pautas de exhibición, estrategias de mercadeo y una lista de productos prioritarios con sus respectivas condiciones de venta.",
+    "secciones": [
+      {
+        "nombre": "Materiales",
+        "rol": "lista de materiales requeridos para la exhibición",
+        "elementos": [
+          "Cartulinas",
+          "Carrito Italia",
+          "Tapetes"
+        ]
+      },
+      {
+        "nombre": "Pauta",
+        "rol": "instrucciones generales de colocación de productos",
+        "elementos": [
+          "Colocar alternando a lo largo de la sección, los focales en volúmen por marca."
+        ]
+      },
+      {
+        "nombre": "Mercadeo",
+        "rol": "estrategias de mercadeo para la exhibición",
+        "elementos": [
+          "Focal en bloque de marca y tipo de producto",
+          "No mezclar marcas",
+          "Exhibir 1 focal por marca"
+        ]
+      },
+      {
+        "nombre": "Prioridad Producto",
+        "rol": "lista de productos con prioridad de exhibición y sus condiciones",
+        "elementos": [
+          "WESTINGHOUSE",
+          "T-FAL",
+          "JADE COOK",
+          "TRAMONTINA",
+          "CUISINART",
+          "ECOFILTRO"
+        ]
+      }
+    ],
+    "relaciones": [
+      "Los productos WESTINGHOUSE, T-FAL, JADE COOK, TRAMONTINA y CUISINART están agrupados y asociados con la condición '25% + MSI'.",
+      "El producto ECOFILTRO está asociado con la condición '35% + MSI'."
+    ],
+    "texto_no_ubicado": []
+  },
+  "parseo_ok": true
+}

@@ -1,0 +1,70 @@
+{
+  "pagina": 12,
+  "pdf": "MECÁNICA MONTAJE GRAN BARATA PV 2026 .pdf",
+  "modelo": "gemini-2.5-flash",
+  "timestamp": "2026-07-03T15:57:01",
+  "render_px_ancho": 1024,
+  "render_kb": 112.4,
+  "texto_crudo_chars": 431,
+  "resultado": {
+    "tipo_layout": "planograma",
+    "titulo": "PLANOGRAMA SOFTLINE",
+    "descripcion_general": "Este planograma para la línea Softline presenta una visualización del piso de venta junto con instrucciones detalladas sobre los materiales a utilizar, la ubicación de los elementos, la estrategia de mercadeo y las acciones específicas para la implementación en tienda.",
+    "secciones": [
+      {
+        "nombre": "Título Principal",
+        "rol": "título de la página",
+        "elementos": [
+          "PLANOGRAMA SOFTLINE"
+        ]
+      },
+      {
+        "nombre": "Visualización del Piso de Venta",
+        "rol": "rótulo de la imagen principal del planograma",
+        "elementos": [
+          "VISUALIZACIÓN"
+        ]
+      },
+      {
+        "nombre": "Materiales",
+        "rol": "lista de materiales requeridos para la campaña",
+        "elementos": [
+          "Cartulina descuentos",
+          "Visual perímetro"
+        ]
+      },
+      {
+        "nombre": "Ubicación",
+        "rol": "lista de ubicaciones clave en el piso de venta para la campaña",
+        "elementos": [
+          "Sección",
+          "Mesas pv y d.",
+          "Colgadores-Ts-Suasticas"
+        ]
+      },
+      {
+        "nombre": "Mercadeo",
+        "rol": "estrategia de mercadeo principal",
+        "elementos": [
+          "Mercadeo por descuentos.."
+        ]
+      },
+      {
+        "nombre": "Piso de venta",
+        "rol": "instrucciones de ejecución y buenas prácticas en el piso de venta",
+        "elementos": [
+          "Colocar cartulina con descuento específico a mercancía participante.",
+          "Respetar capacidad ideal del mobiliario, que permita tomar el producto.",
+          "Distribuir cartulinas equilibradamente en piso y garantizar vestir cada sección."
+        ]
+      }
+    ],
+    "relaciones": [
+      "La imagen de 'VISUALIZACIÓN' ilustra el piso de venta real donde se aplican las instrucciones de 'Piso de venta'.",
+      "Las cartulinas de descuento mencionadas en 'Materiales' y 'Mercadeo' son visibles en la imagen con porcentajes como 40%, 30% y 10%.",
+      "Las ubicaciones como 'Sección', 'Mesas pv y d.' y 'Colgadores-Ts-Suasticas' descritas en 'Ubicación' corresponden a los elementos del mobiliario y áreas mostradas en la imagen."
+    ],
+    "texto_no_ubicado": []
+  },
+  "parseo_ok": true
+}
