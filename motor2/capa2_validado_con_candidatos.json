@@ -9,7 +9,9 @@
     "candidatos_generados": "2026-07-03T20:48:47",
     "candidatos_nota": "id/aliases/aplica_a son CANDIDATOS deterministas generados por generar_candidatos_ids.py (Sesión S) — NO están aprobados. Cada criterio lleva revisado_por_gerardo=false hasta revisión manual criterio por criterio. Ver candidatos_id_colisiones.json para los slugs duplicados sin resolver.",
     "confirmaciones_sesion_t": "2026-07-03T21:05:34",
-    "confirmaciones_nota": "30 de 156 criterios confirmados por Gerardo y marcados revisado_por_gerardo=true (3 de los 18 grupos de colisión de Sesión S: p6 barras/columnas, Focal Show p20-25 por departamento, 'no mezclar marcas' p31/34/39/40). Quedan 7 grupos de colisión (20 criterios) sin confirmar — ver docstring de aplicar_confirmaciones_sesion_t.py, incluye un falso positivo detectado (maniquies_etiquetas, p10) por limitación del generador de slugs con números de 1 dígito."
+    "confirmaciones_nota": "30 de 156 criterios confirmados por Gerardo y marcados revisado_por_gerardo=true (3 de los 18 grupos de colisión de Sesión S: p6 barras/columnas, Focal Show p20-25 por departamento, 'no mezclar marcas' p31/34/39/40). Quedan 7 grupos de colisión (20 criterios) sin confirmar — ver docstring de aplicar_confirmaciones_sesion_t.py, incluye un falso positivo detectado (maniquies_etiquetas, p10) por limitación del generador de slugs con números de 1 dígito.",
+    "confirmaciones_sesion_u": "2026-07-04T19:07:55",
+    "confirmaciones_sesion_u_nota": "Gerardo resolvió los 7 grupos de colisión real de Sesión T (20 criterios, ahora revisado_por_gerardo=true): colapso de coloca_producto_mayor_descuento_sea -> colocar_producto_mayor_descuento y manten_orden_exhibicion -> mantener_orden_exhibicion; separación del falso positivo maniquies_etiquetas (p10) en maniquies_3_etiquetas_2 y maniquies_5_etiquetas_3; y confirmación del id compartido en acercate_jefe_seccion_pueda_dar, exhibicion_disciplinas_mantiene_dentro_separan, identificar_cartulina_descuento y mercadeo_bloqueo_producto. Solo se modificó el campo id; el texto original del manual no se tocó."
   },
   "criterios": [
     {
@@ -287,12 +289,12 @@
       "fuente_pagina": "gemini_vision",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "maniquies_etiquetas",
+      "id": "maniquies_3_etiquetas_2",
       "aliases": [
         "maniquies etiquetas"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "5 maniquíes – 3 etiquetas",
@@ -306,12 +308,12 @@
       "fuente_pagina": "gemini_vision",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "maniquies_etiquetas",
+      "id": "maniquies_5_etiquetas_3",
       "aliases": [
         "maniquies etiquetas"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "[AMBIGUO] Recuerda que las etiquetas solo van en la cadera del maniquí.",
@@ -551,7 +553,7 @@
         "cartulina descuento"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "(5) Exhibir la liquidación en la zapatera.",
@@ -731,7 +733,7 @@
         "cartulina descuento"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "(6) Se puede colocar etiquetas colgantes en los maniquíes cuidado no saturarlos.",
@@ -1561,13 +1563,13 @@
       "fuente_pagina": "gemini_vision",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "coloca_producto_mayor_descuento_sea",
+      "id": "colocar_producto_mayor_descuento",
       "aliases": [
         "coloca producto",
         "producto mayor"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Mantén el orden de la exhibición",
@@ -1581,13 +1583,13 @@
       "fuente_pagina": "gemini_vision",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "manten_orden_exhibicion",
+      "id": "mantener_orden_exhibicion",
       "aliases": [
         "manten orden",
         "orden exhibicion"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Mercadeo por bloqueo de producto",
@@ -1607,7 +1609,7 @@
         "bloqueo producto"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Coloca producto con mayor descuento para que sea atractivo al cliente.",
@@ -1621,13 +1623,13 @@
       "fuente_pagina": "pdfplumber_text_flow",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "coloca_producto_mayor_descuento_sea",
+      "id": "colocar_producto_mayor_descuento",
       "aliases": [
         "coloca producto",
         "producto mayor"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Mantén el orden de la exhibición.",
@@ -1641,13 +1643,13 @@
       "fuente_pagina": "pdfplumber_text_flow",
       "grounding": "lesser",
       "posible_herencia_fewshot": false,
-      "id": "manten_orden_exhibicion",
+      "id": "mantener_orden_exhibicion",
       "aliases": [
         "manten orden",
         "orden exhibicion"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Mercadeo por bloqueo de producto.",
@@ -1667,7 +1669,7 @@
         "bloqueo producto"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Colocar alternando a lo largo de la sección",
@@ -1944,13 +1946,13 @@
       "fuente_pagina": "pdfplumber_text_flow",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "coloca_producto_mayor_descuento_sea",
+      "id": "colocar_producto_mayor_descuento",
       "aliases": [
         "coloca producto",
         "producto mayor"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Mantén el orden de la exhibición",
@@ -1964,13 +1966,13 @@
       "fuente_pagina": "pdfplumber_text_flow",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "manten_orden_exhibicion",
+      "id": "mantener_orden_exhibicion",
       "aliases": [
         "manten orden",
         "orden exhibicion"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Mercadeo por bloqueo de producto",
@@ -1990,7 +1992,7 @@
         "bloqueo producto"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Exhibe producto de tendencia Oasis Floral y Oasis Tropical de las secciones de Mesa Fina, Mesa Casual, Blancos, Baño, Organización Hogar y Decoración textil. (Evita mezclar las secciones de diferentes mundos).",
@@ -2384,13 +2386,13 @@
       "fuente_pagina": "pdfplumber_text_flow",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "coloca_producto_mayor_descuento_sea",
+      "id": "colocar_producto_mayor_descuento",
       "aliases": [
         "coloca producto",
         "producto mayor"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Mantén el orden de la exhibición.",
@@ -2404,13 +2406,13 @@
       "fuente_pagina": "pdfplumber_text_flow",
       "grounding": "lesser",
       "posible_herencia_fewshot": false,
-      "id": "manten_orden_exhibicion",
+      "id": "mantener_orden_exhibicion",
       "aliases": [
         "manten orden",
         "orden exhibicion"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Mercadeo por bloqueo de producto.",
@@ -2430,7 +2432,7 @@
         "bloqueo producto"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Cajas organizadoras.",
@@ -2848,7 +2850,7 @@
         "jefe seccion"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "La exhibición por disciplinas se mantiene y dentro de ellos y se separan por género y descuento.",
@@ -2868,7 +2870,7 @@
         "disciplinas mantiene"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Exhibe en mesa en la parte más visible los descuentos más agresivos, en medio los descuentos más bajos y en la parte menos visible los avances de temporada.",
@@ -2968,7 +2970,7 @@
         "jefe seccion"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "La exhibición por disciplinas se mantiene y dentro de ellos y se separan por género y descuento.",
@@ -2988,7 +2990,7 @@
         "disciplinas mantiene"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Exhibe y siembra en el espacio más visible de la disciplina el producto con descuentos más agresivos, en medio los descuentos más bajos y en la parte menos visible los avances de temporada, este último puede ir al fondo del departamento o en perímetro. Coloca en el mueble la cartulina con el descuento correspondiente.",

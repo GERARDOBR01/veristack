@@ -19,7 +19,22 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 
 ---
 
-## Estado actual (3 Jul 2026 — Sesión T: ids confirmados aplicados, 3 de 18 grupos resueltos)
+## Estado actual (4 Jul 2026 — Sesión U: los 7 grupos de colisión real resueltos, 50/156 revisados)
+
+**Gerardo resolvió los 7 grupos de colisión real que Sesión T dejó sin confirmar (20 criterios). Aplicado.** `revisado_por_gerardo=true` subió de **30 → 50 de 156**; quedan **106/156 sin revisar** (los candidatos no-colisión de Sesión S, nunca tocados). **Sigue bloqueando el swap a producción.**
+
+- **`motor2/aplicar_confirmaciones_sesion_u.mjs` (nuevo — Node.js nativo, reemplaza el patrón `.py` de sesiones previas)**: esta máquina de trabajo NO tiene Python instalado y Gerardo pidió no instalar nada, así que la herramienta se reescribió en Node (solo `fs`+JSON, sin dependencias). Mismo principio "nunca silencioso": matchea por el `id` candidato actual (los grupos colisionaban BAJO ese id) con guard de conteo exacto por grupo, y **aborta sin escribir nada si el total tocado ≠ 20**. Respaldo `.bak-<timestamp>` antes de reescribir (local, no se commitea). **Solo modifica `id` y `revisado_por_gerardo` — el `texto` original del manual quedó intacto (verificado por `git diff`: 0 líneas de `texto` cambiadas).**
+- **Las 7 decisiones de Gerardo aplicadas**:
+  - **2 colapsos** (id compartido a propósito, `aplica_a` ya era null): `coloca_producto_mayor_descuento_sea` → `colocar_producto_mayor_descuento` (p28/29/33/38, 4 crit); `manten_orden_exhibicion` → `mantener_orden_exhibicion` (p28/29/33/38, 4 crit).
+  - **1 separación de FALSO POSITIVO** del generador de slugs: `maniquies_etiquetas` (p10, 2 crit) → `maniquies_3_etiquetas_2` ("3 maniquíes – 2 etiquetas") y `maniquies_5_etiquetas_3` ("5 maniquíes – 3 etiquetas"). Eran dos reglas de cantidad distinta que colapsaron al mismo id porque `generar_candidatos_ids.py` descarta números de 1 dígito (`MIN_LARGO_TOKEN=3`). La instancia hermana "2 maniquíes – 1 etiqueta" tenía id distinto (`maniquies_etiqueta`, singular) y NO se tocó.
+  - **4 grupos con id compartido CONFIRMADO** (solo se marcó `revisado=true`, id sin cambio): `mercadeo_bloqueo_producto` (p28/29/33/38, 4), `acercate_jefe_seccion_pueda_dar` (p43/44, 2), `exhibicion_disciplinas_mantiene_dentro_separan` (p43/44, 2), `identificar_cartulina_descuento` (p13/14, 2).
+- **`aliases` NO regenerados** (por instrucción "solo el campo id"): los grupos colapsados/separados conservan sus aliases candidatos viejos (ej. las dos entradas de maniquíes siguen con alias `"maniquies etiquetas"`). Pendiente de la revisión de aliases en lenguaje natural de Gerardo (paso ya planeado desde Sesión S).
+- **`candidatos_id_colisiones.json` dejado SIN regenerar A PROPÓSITO** (decisión de Gerardo): queda como registro histórico de qué se resolvió y cuándo; se actualizará en otra sesión si hace falta. OJO: ya está desactualizado — esos 7 grupos ya no son colisiones sin resolver.
+- **NO tocado**: `retrieval_engine.py`, `confidence_engine.py`, `mandatory_engine.py`, `app.py`, `generar_candidatos_ids.py`, ni ningún otro archivo existente de Motor 2.
+
+🔴 **Pendiente — sigue bloqueando el swap**: 106/156 criterios sin revisar (candidatos no-colisión de Sesión S) + regenerar aliases en lenguaje natural. Hasta que Gerardo termine de revisar los 106 restantes y decida aliases reales, `capa2_validado_con_candidatos.json` sigue sin poder reemplazar a `capa2_campana_activa.json` en producción (bloqueo confirmado en Sesión R).
+
+## Estado previo (3 Jul 2026 — Sesión T: ids confirmados aplicados, 3 de 18 grupos resueltos)
 
 **Aplicados los cambios que Gerardo confirmó sobre `capa2_validado_con_candidatos.json`.** OJO: el objetivo de la sesión decía "resolver los 18 grupos de colisión de Sesión S", pero los CAMBIOS CONFIRMADOS solo cubrían 3 clusters — se aplicó exactamente eso, no se inventó resolución para el resto. **30/156 criterios quedaron `revisado_por_gerardo: true`; 126/156 siguen como candidatos sin revisar** (no ~106 como estimaba el brief — la diferencia es que 20 de los 50 criterios flageados en Sesión S quedan sin instrucción confirmada, ver pendientes abajo).
 
