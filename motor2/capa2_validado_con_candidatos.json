@@ -7,7 +7,9 @@
     "validador": "validator.py (Sesión P): schema v1.2 + filtro grounding=failed; posible_herencia_fewshot solo marca; duplicados solo reportados en validator_report.json",
     "nota_formato": "extracción v1.2 validada — AÚN NO es capa de knowledge v1.1 (faltan id/aliases/aplica_a; se asignan en un paso posterior)",
     "candidatos_generados": "2026-07-03T20:48:47",
-    "candidatos_nota": "id/aliases/aplica_a son CANDIDATOS deterministas generados por generar_candidatos_ids.py (Sesión S) — NO están aprobados. Cada criterio lleva revisado_por_gerardo=false hasta revisión manual criterio por criterio. Ver candidatos_id_colisiones.json para los slugs duplicados sin resolver."
+    "candidatos_nota": "id/aliases/aplica_a son CANDIDATOS deterministas generados por generar_candidatos_ids.py (Sesión S) — NO están aprobados. Cada criterio lleva revisado_por_gerardo=false hasta revisión manual criterio por criterio. Ver candidatos_id_colisiones.json para los slugs duplicados sin resolver.",
+    "confirmaciones_sesion_t": "2026-07-03T21:05:34",
+    "confirmaciones_nota": "30 de 156 criterios confirmados por Gerardo y marcados revisado_por_gerardo=true (3 de los 18 grupos de colisión de Sesión S: p6 barras/columnas, Focal Show p20-25 por departamento, 'no mezclar marcas' p31/34/39/40). Quedan 7 grupos de colisión (20 criterios) sin confirmar — ver docstring de aplicar_confirmaciones_sesion_t.py, incluye un falso positivo detectado (maniquies_etiquetas, p10) por limitación del generador de slugs con números de 1 dígito."
   },
   "criterios": [
     {
@@ -44,13 +46,13 @@
       "fuente_pagina": "gemini_vision",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "imprimir_primera_etapa_generico_beneficio",
+      "id": "barras_etapa1_40_60",
       "aliases": [
         "imprimir primera",
         "primera etapa"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "2da etapa 100% beneficio (Como años pasados)",
@@ -64,13 +66,13 @@
       "fuente_pagina": "gemini_vision",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "2da_etapa_100_beneficio_anos",
+      "id": "barras_etapa2_100",
       "aliases": [
         "2da etapa",
         "etapa 100"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "3era etapa 100% beneficio (Como años pasados)",
@@ -84,13 +86,13 @@
       "fuente_pagina": "gemini_vision",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "3era_etapa_100_beneficio_anos",
+      "id": "barras_etapa3_100",
       "aliases": [
         "3era etapa",
         "etapa 100"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Imprimir primera etapa 40% genérico 60% beneficio",
@@ -104,13 +106,13 @@
       "fuente_pagina": "gemini_vision",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "imprimir_primera_etapa_generico_beneficio",
+      "id": "columnas_etapa1_40_60",
       "aliases": [
         "imprimir primera",
         "primera etapa"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "2da etapa 100% beneficio (Como años pasados)",
@@ -124,13 +126,13 @@
       "fuente_pagina": "gemini_vision",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "2da_etapa_100_beneficio_anos",
+      "id": "columnas_etapa2_100",
       "aliases": [
         "2da etapa",
         "etapa 100"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "3ERA etapa solo producir parches +20",
@@ -890,13 +892,13 @@
       "grounding": "exact",
       "posible_herencia_fewshot": true,
       "fewshot_ejemplo": 3,
-      "id": "revisa_producto_focal_sea_mercancia",
+      "id": "focal_show_mujeres_etapa1_2",
       "aliases": [
         "revisa producto",
         "producto focal"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Integra los maniquíes de manera que se logren apreciar bien todos los looks.",
@@ -913,13 +915,13 @@
       "fuente_pagina": "pdfplumber_text_flow",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "integra_maniquies_manera_logren_apreciar",
+      "id": "focal_show_mujeres_etapa1_2",
       "aliases": [
         "integra maniquies",
         "maniquies manera"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "[AMBIGUO] En en los focales solo se colocan los gráficos de torres slim y maniquíes.",
@@ -936,7 +938,7 @@
       "fuente_pagina": "pdfplumber_text_flow",
       "grounding": "lesser",
       "posible_herencia_fewshot": false,
-      "id": "focales_solo_colocan_graficos_torres",
+      "id": "focal_show_mujeres_etapa1_2",
       "aliases": [
         "focales solo",
         "solo colocan"
@@ -944,7 +946,7 @@
       "aplica_a": [
         "torre"
       ],
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Se impulsará IMO con los Avances de Temporada “TENDENCIA …”",
@@ -960,13 +962,13 @@
       "fuente_pagina": "pdfplumber_text_flow",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "impulsara_imo_avances_temporada_tendencia",
+      "id": "focal_show_mujeres_etapa3",
       "aliases": [
         "impulsara imo",
         "imo avances"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "No colocar gráficos de Barata.",
@@ -982,13 +984,13 @@
       "fuente_pagina": "pdfplumber_text_flow",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "colocar_graficos_barata",
+      "id": "focal_show_mujeres_etapa3",
       "aliases": [
         "colocar graficos",
         "graficos barata"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "En estos focales colocar los atriles de marca.",
@@ -1004,7 +1006,7 @@
       "fuente_pagina": "pdfplumber_text_flow",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "focales_colocar_atriles_marca",
+      "id": "focal_show_mujeres_etapa3",
       "aliases": [
         "focales colocar",
         "colocar atriles"
@@ -1012,7 +1014,7 @@
       "aplica_a": [
         "atril"
       ],
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Exhibir producto de la sección de Juveniles o Hombre Contempo.",
@@ -1053,13 +1055,13 @@
       "grounding": "exact",
       "posible_herencia_fewshot": true,
       "fewshot_ejemplo": 3,
-      "id": "revisa_producto_focal_sea_mercancia",
+      "id": "focal_show_hombres_etapa1_2",
       "aliases": [
         "revisa producto",
         "producto focal"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Integra los maniquíes de manera que se logren apreciar bien todos los looks.",
@@ -1076,13 +1078,13 @@
       "fuente_pagina": "pdfplumber_text_flow",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "integra_maniquies_manera_logren_apreciar",
+      "id": "focal_show_hombres_etapa1_2",
       "aliases": [
         "integra maniquies",
         "maniquies manera"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "[AMBIGUO] En en los focales solo se colocan los gráficos de torres slim y maniquíes.",
@@ -1099,7 +1101,7 @@
       "fuente_pagina": "pdfplumber_text_flow",
       "grounding": "lesser",
       "posible_herencia_fewshot": false,
-      "id": "focales_solo_colocan_graficos_torres",
+      "id": "focal_show_hombres_etapa1_2",
       "aliases": [
         "focales solo",
         "solo colocan"
@@ -1107,7 +1109,7 @@
       "aplica_a": [
         "torre"
       ],
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Se impulsará IMO con los Avances de Temporada “TENDENCIA …”",
@@ -1123,13 +1125,13 @@
       "fuente_pagina": "pdfplumber_text_flow",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "impulsara_imo_avances_temporada_tendencia",
+      "id": "focal_show_hombres_etapa3",
       "aliases": [
         "impulsara imo",
         "imo avances"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "No colocar gráficos de Barata.",
@@ -1145,13 +1147,13 @@
       "fuente_pagina": "pdfplumber_text_flow",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "colocar_graficos_barata",
+      "id": "focal_show_hombres_etapa3",
       "aliases": [
         "colocar graficos",
         "graficos barata"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "En estos focales colocar los atriles de marca.",
@@ -1167,7 +1169,7 @@
       "fuente_pagina": "pdfplumber_text_flow",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "focales_colocar_atriles_marca",
+      "id": "focal_show_hombres_etapa3",
       "aliases": [
         "focales colocar",
         "colocar atriles"
@@ -1175,7 +1177,7 @@
       "aplica_a": [
         "atril"
       ],
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Exhibir producto de la sección de niños 8+ y niñas 8+.",
@@ -1216,13 +1218,13 @@
       "grounding": "exact",
       "posible_herencia_fewshot": true,
       "fewshot_ejemplo": 3,
-      "id": "revisa_producto_focal_sea_mercancia",
+      "id": "focal_show_infantiles_etapa1_2",
       "aliases": [
         "revisa producto",
         "producto focal"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Integra los maniquíes de manera que se logren apreciar bien todos los looks.",
@@ -1239,13 +1241,13 @@
       "fuente_pagina": "pdfplumber_text_flow",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "integra_maniquies_manera_logren_apreciar",
+      "id": "focal_show_infantiles_etapa1_2",
       "aliases": [
         "integra maniquies",
         "maniquies manera"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "En en los focales solo se colocan los gráficos de torres slim y maniquíes.",
@@ -1262,7 +1264,7 @@
       "fuente_pagina": "pdfplumber_text_flow",
       "grounding": "lesser",
       "posible_herencia_fewshot": false,
-      "id": "focales_solo_colocan_graficos_torres",
+      "id": "focal_show_infantiles_etapa1_2",
       "aliases": [
         "focales solo",
         "solo colocan"
@@ -1270,7 +1272,7 @@
       "aplica_a": [
         "torre"
       ],
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Se impulsará IMO con los Avances de Temporada “TENDENCIA …”",
@@ -1286,13 +1288,13 @@
       "fuente_pagina": "pdfplumber_text_flow",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "impulsara_imo_avances_temporada_tendencia",
+      "id": "focal_show_infantiles_etapa3",
       "aliases": [
         "impulsara imo",
         "imo avances"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "No colocar gráficos de Barata.",
@@ -1308,13 +1310,13 @@
       "fuente_pagina": "pdfplumber_text_flow",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "colocar_graficos_barata",
+      "id": "focal_show_infantiles_etapa3",
       "aliases": [
         "colocar graficos",
         "graficos barata"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "En estos focales colocar los atriles de marca.",
@@ -1330,7 +1332,7 @@
       "fuente_pagina": "pdfplumber_text_flow",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "focales_colocar_atriles_marca",
+      "id": "focal_show_infantiles_etapa3",
       "aliases": [
         "focales colocar",
         "colocar atriles"
@@ -1338,7 +1340,7 @@
       "aplica_a": [
         "atril"
       ],
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Da visibilidad al producto con el descuento más alto y corridas completas",
@@ -1680,13 +1682,13 @@
       "grounding": "exact",
       "posible_herencia_fewshot": true,
       "fewshot_ejemplo": 2,
-      "id": "colocar_alternando_largo_seccion",
+      "id": "colocar_alternando_seccion",
       "aliases": [
         "colocar alternando",
         "alternando largo"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Masivo en bloque de marca y tipo de producto",
@@ -1721,12 +1723,12 @@
       "grounding": "exact",
       "posible_herencia_fewshot": true,
       "fewshot_ejemplo": 2,
-      "id": "mezclar_marcas",
+      "id": "no_mezclar_marcas",
       "aliases": [
         "mezclar marcas"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Exhibir 1 focal por marca",
@@ -1741,13 +1743,13 @@
       "grounding": "exact",
       "posible_herencia_fewshot": true,
       "fewshot_ejemplo": 2,
-      "id": "exhibir_focal_marca",
+      "id": "exhibir_1_focal_por_marca",
       "aliases": [
         "exhibir focal",
         "focal marca"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "caja de vajilla cerrada Narrative y Kostlich.",
@@ -2083,12 +2085,12 @@
       "grounding": "lesser",
       "posible_herencia_fewshot": true,
       "fewshot_ejemplo": 2,
-      "id": "mezclar_marcas",
+      "id": "no_mezclar_marcas",
       "aliases": [
         "mezclar marcas"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Exhibir 1 focal por marca.",
@@ -2103,13 +2105,13 @@
       "grounding": "lesser",
       "posible_herencia_fewshot": true,
       "fewshot_ejemplo": 2,
-      "id": "exhibir_focal_marca",
+      "id": "exhibir_1_focal_por_marca",
       "aliases": [
         "exhibir focal",
         "focal marca"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Agrupa el producto zoopet con descuento en una góndola de la sección a pie de pasillo (hasta 50%)",
@@ -2500,13 +2502,13 @@
       "grounding": "exact",
       "posible_herencia_fewshot": true,
       "fewshot_ejemplo": 2,
-      "id": "colocar_alternando_largo_seccion",
+      "id": "colocar_alternando_seccion",
       "aliases": [
         "colocar alternando",
         "alternando largo"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Coloca la colección del Mundial en las mesas del frente.",
@@ -2581,13 +2583,13 @@
       "grounding": "exact",
       "posible_herencia_fewshot": true,
       "fewshot_ejemplo": 2,
-      "id": "colocar_alternando_largo_seccion",
+      "id": "colocar_alternando_seccion",
       "aliases": [
         "colocar alternando",
         "alternando largo"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Cuidar señalización y no saturar sección, recuerda mantener producto lujo.",
