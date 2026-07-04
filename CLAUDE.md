@@ -19,7 +19,22 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 
 ---
 
-## Estado actual (3 Jul 2026 — Sesión R: comparación capa2 actual vs validado — NO listo para producción)
+## Estado actual (3 Jul 2026 — Sesión S: candidatos de id/aliases/aplica_a — pendiente revisión manual de Gerardo)
+
+**Candidatos generados, pendiente revisión manual de Gerardo criterio por criterio antes de swap.** Code no decidió el id final de ningún criterio — solo generó propuestas deterministas.
+
+- **`motor2/generar_candidatos_ids.py` (nuevo, sin IA, sin dependencias nuevas)**: 3 funciones puras y testeables sobre `capa2_mecanica_montaje_gran_barata_pv_2026_validado.json` (156 criterios de Sesión P/Q):
+  - `generar_id_candidato`: normaliza el texto (sin acentos/mayúsculas/puntuación, sin el prefijo `[AMBIGUO]` — misma convención que `validator.py`), descarta stopwords y tokens <3 caracteres, toma hasta 5 keywords en orden de aparición, une con `_`. Fallback `criterio_pXX_sin_keywords` si el texto no deja ninguna keyword.
+  - `generar_aliases_candidato`: 1-2 variantes por ventana deslizante sobre las mismas keywords (`keywords[0:2]`, `keywords[1:3]` si difiere) — **no es paráfrasis real**, es un recorte determinista del mismo texto; la paráfrasis en lenguaje natural (como el ejemplo real "fotos de focales" / "fotografía prioridad") queda para la revisión de Gerardo.
+  - `generar_aplica_a_candidato`: `null` salvo que el texto mencione explícitamente `torre`/`atril`/`columna`/`barra` — en ese caso, lista con los elementos encontrados. Determinista, no infiere nada más.
+  - `detectar_colisiones`: agrupa por id candidato, reporta (no resuelve) los grupos con >1 criterio.
+- **Resultado sobre los 156 reales**: `capa2_validado_con_candidatos.json` (mismo contenido + `id`/`aliases`/`aplica_a` candidatos + `revisado_por_gerardo: false` en cada uno) + `candidatos_id_colisiones.json` (**18 grupos en colisión, 50 criterios afectados de 156** — 124 ids únicos). Solo 10/156 criterios tienen `aplica_a` detectado (torre×4, atril×3, torre×3 — ver reporte). 145/156 con 2 aliases, 11/156 con solo 1 (texto corto, <3 keywords disponibles).
+- **Las colisiones NO son ruido — coinciden con hallazgos ya documentados**: el par intra-página p6 (Sesión Q pendiente #1), los tríos hermanos p20/22/24 y p21/23/25 (boilerplate real de focales), el cluster cross-sección p28/29/33/38 ("Coloca producto con mayor descuento…", "Mantén el orden…", "Mercadeo por bloqueo…"), y p31/34/39/40 (los que ganaron el flag `posible_herencia_fewshot` en Sesión Q por el fix de puntuación). Ningún caso nuevo — la colisión de id es la misma señal de duplicado ya vista, vista desde otro ángulo.
+- **NO tocado**: `retrieval_engine.py`, `confidence_engine.py`, `mandatory_engine.py`, `app.py`, ni ningún archivo de Motor 2 existente (`validator.py`, `extractor.py`, etc. — el script solo importa `extractor.MARCA_AMBIGUO` para leer, no para modificar).
+
+🔴 **Pendiente — sigue bloqueando el swap**: `capa2_validado_con_candidatos.json` es propuesta, no capa de knowledge aprobada. Gerardo debe revisar los 156 a mano (probablemente en tandas), resolver los 18 grupos en colisión, y decidir aliases reales en lenguaje natural antes de que cualquier criterio se marque `revisado_por_gerardo: true`. Hasta entonces, sigue sin poder reemplazar a `capa2_campana_activa.json` en producción (ver Sesión R).
+
+## Estado previo (3 Jul 2026 — Sesión R: comparación capa2 actual vs validado — NO listo para producción)
 
 Solo lectura/diagnóstico — nada de código tocado (`retrieval_engine.py`, `confidence_engine.py`, `mandatory_engine.py`, `app.py` sin cambios). Sin push de código; este CLAUDE.md es el único cambio de esta sesión.
 
@@ -213,7 +228,7 @@ Solo lectura/diagnóstico — nada de código tocado (`retrieval_engine.py`, `co
 - Cola de consenso `pendientes_revision.json`
 
 ## Próximos pasos (orden de prioridad)
-1. **Motor 2 — siguiente sesión: de extracción validada a capa de knowledge v1.1**: asignar `id`/`aliases`/`aplica_a` a los 156 validados, decidir qué hacer con los 76 pares duplicados reportados (los clusters de páginas hermanas son repetición real del manual — ¿consolidar con `etapa_aplicable`/`condicion_libre` o conservar por página?), revisar a mano los 11 de `revision_manual.json` (el `[AMBIGUO]` de p20 es falso-failed: su texto sí está en la página), y corregir los 3 casos sub-marcados de `referencia_no_resuelta` (p10 manual de señalización, p39/p40 Book de impulsos). Revisar los 2 pendientes documentados en Sesión Q: duplicados intra-página en p6 (Gerardo revisa el slide a ojo) y scope de criterios descriptivos en páginas Vision (p44)
+1. **Motor 2 — siguiente sesión: revisión manual de Gerardo sobre `capa2_validado_con_candidatos.json`** (Sesión S ya generó los candidatos de `id`/`aliases`/`aplica_a` — falta aprobarlos/editarlos criterio por criterio, probablemente en tandas, y resolver los 18 grupos en colisión de `candidatos_id_colisiones.json` antes de marcar `revisado_por_gerardo: true`). En paralelo: decidir qué hacer con los 76 pares duplicados reportados por `validator.py` (los clusters de páginas hermanas son repetición real del manual — ¿consolidar con `etapa_aplicable`/`condicion_libre` o conservar por página?), revisar a mano los 11 de `revision_manual.json` (el `[AMBIGUO]` de p20 es falso-failed: su texto sí está en la página), y corregir los 3 casos sub-marcados de `referencia_no_resuelta` (p10 manual de señalización, p39/p40 Book de impulsos). Revisar los 2 pendientes documentados en Sesión Q: duplicados intra-página en p6 (Gerardo revisa el slide a ojo) y scope de criterios descriptivos en páginas Vision (p44)
 2. Resolver las 2 referencias no resueltas de capa2 (`etiquetado_hogar_diversos` → manual señalización Hardline; `exhibicion_book_impulsos` → Book de impulsos) cuando Gerardo consiga esos documentos
 3. Decidir si los campos de proveniencia (`pagina_origen`, `confianza_extraccion`, `referencia_cruzada`) se formalizan en el schema o se eliminan del JSON
 4. Validar `app.py` en navegador (la lógica ya está probada end-to-end por script; falta el click manual en la UI)

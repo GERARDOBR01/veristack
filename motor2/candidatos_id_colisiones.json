@@ -1,0 +1,366 @@
+{
+  "total_criterios": 156,
+  "ids_unicos": 124,
+  "grupos_en_colision": 18,
+  "criterios_afectados": 50,
+  "colisiones": [
+    {
+      "id_candidato": "2da_etapa_100_beneficio_anos",
+      "cantidad": 2,
+      "criterios": [
+        {
+          "pagina_origen": 6,
+          "seccion_aplicable": null,
+          "texto": "2da etapa 100% beneficio (Como años pasados)"
+        },
+        {
+          "pagina_origen": 6,
+          "seccion_aplicable": null,
+          "texto": "2da etapa 100% beneficio (Como años pasados)"
+        }
+      ]
+    },
+    {
+      "id_candidato": "acercate_jefe_seccion_pueda_dar",
+      "cantidad": 2,
+      "criterios": [
+        {
+          "pagina_origen": 43,
+          "seccion_aplicable": "Deportes",
+          "texto": "Acércate al jefe de la sección para que pueda dar visibilidad del producto de apuestas comerciales participantes con descuento."
+        },
+        {
+          "pagina_origen": 44,
+          "seccion_aplicable": "Deportes",
+          "texto": "Acércate al jefe de la sección para que pueda dar visibilidad del producto de apuestas comerciales participantes con descuento."
+        }
+      ]
+    },
+    {
+      "id_candidato": "coloca_producto_mayor_descuento_sea",
+      "cantidad": 4,
+      "criterios": [
+        {
+          "pagina_origen": 28,
+          "seccion_aplicable": "Softline",
+          "texto": "Coloca producto con mayor descuento para que sea atractivo al cliente."
+        },
+        {
+          "pagina_origen": 29,
+          "seccion_aplicable": "Softline",
+          "texto": "Coloca producto con mayor descuento para que sea atractivo al cliente."
+        },
+        {
+          "pagina_origen": 33,
+          "seccion_aplicable": "Hardline",
+          "texto": "Coloca producto con mayor descuento para que sea atractivo al cliente."
+        },
+        {
+          "pagina_origen": 38,
+          "seccion_aplicable": "Hardline",
+          "texto": "Coloca producto con mayor descuento para que sea atractivo al cliente."
+        }
+      ]
+    },
+    {
+      "id_candidato": "colocar_alternando_largo_seccion",
+      "cantidad": 3,
+      "criterios": [
+        {
+          "pagina_origen": 31,
+          "seccion_aplicable": "Hardline",
+          "texto": "Colocar alternando a lo largo de la sección"
+        },
+        {
+          "pagina_origen": 39,
+          "seccion_aplicable": "Hogar",
+          "texto": "Colocar alternando a lo largo de la sección."
+        },
+        {
+          "pagina_origen": 40,
+          "seccion_aplicable": "Hogar",
+          "texto": "Colocar alternando a lo largo de la sección."
+        }
+      ]
+    },
+    {
+      "id_candidato": "colocar_graficos_barata",
+      "cantidad": 3,
+      "criterios": [
+        {
+          "pagina_origen": 21,
+          "seccion_aplicable": "Softline",
+          "texto": "No colocar gráficos de Barata."
+        },
+        {
+          "pagina_origen": 23,
+          "seccion_aplicable": "Softline",
+          "texto": "No colocar gráficos de Barata."
+        },
+        {
+          "pagina_origen": 25,
+          "seccion_aplicable": "Softline",
+          "texto": "No colocar gráficos de Barata."
+        }
+      ]
+    },
+    {
+      "id_candidato": "exhibicion_disciplinas_mantiene_dentro_separan",
+      "cantidad": 2,
+      "criterios": [
+        {
+          "pagina_origen": 43,
+          "seccion_aplicable": "Deportes",
+          "texto": "La exhibición por disciplinas se mantiene y dentro de ellos y se separan por género y descuento."
+        },
+        {
+          "pagina_origen": 44,
+          "seccion_aplicable": "Deportes",
+          "texto": "La exhibición por disciplinas se mantiene y dentro de ellos y se separan por género y descuento."
+        }
+      ]
+    },
+    {
+      "id_candidato": "exhibir_focal_marca",
+      "cantidad": 2,
+      "criterios": [
+        {
+          "pagina_origen": 31,
+          "seccion_aplicable": "Hardline",
+          "texto": "Exhibir 1 focal por marca"
+        },
+        {
+          "pagina_origen": 34,
+          "seccion_aplicable": "Hardline",
+          "texto": "Exhibir 1 focal por marca."
+        }
+      ]
+    },
+    {
+      "id_candidato": "focales_colocar_atriles_marca",
+      "cantidad": 3,
+      "criterios": [
+        {
+          "pagina_origen": 21,
+          "seccion_aplicable": "Softline",
+          "texto": "En estos focales colocar los atriles de marca."
+        },
+        {
+          "pagina_origen": 23,
+          "seccion_aplicable": "Softline",
+          "texto": "En estos focales colocar los atriles de marca."
+        },
+        {
+          "pagina_origen": 25,
+          "seccion_aplicable": "Softline",
+          "texto": "En estos focales colocar los atriles de marca."
+        }
+      ]
+    },
+    {
+      "id_candidato": "focales_solo_colocan_graficos_torres",
+      "cantidad": 3,
+      "criterios": [
+        {
+          "pagina_origen": 20,
+          "seccion_aplicable": "Softline",
+          "texto": "[AMBIGUO] En en los focales solo se colocan los gráficos de torres slim y maniquíes."
+        },
+        {
+          "pagina_origen": 22,
+          "seccion_aplicable": "Softline",
+          "texto": "[AMBIGUO] En en los focales solo se colocan los gráficos de torres slim y maniquíes."
+        },
+        {
+          "pagina_origen": 24,
+          "seccion_aplicable": "Softline",
+          "texto": "En en los focales solo se colocan los gráficos de torres slim y maniquíes."
+        }
+      ]
+    },
+    {
+      "id_candidato": "identificar_cartulina_descuento",
+      "cantidad": 2,
+      "criterios": [
+        {
+          "pagina_origen": 13,
+          "seccion_aplicable": null,
+          "texto": "(4) Identificar con cartulina de descuento."
+        },
+        {
+          "pagina_origen": 14,
+          "seccion_aplicable": null,
+          "texto": "(5) Identificar con cartulina de descuento."
+        }
+      ]
+    },
+    {
+      "id_candidato": "imprimir_primera_etapa_generico_beneficio",
+      "cantidad": 2,
+      "criterios": [
+        {
+          "pagina_origen": 6,
+          "seccion_aplicable": null,
+          "texto": "Imprimir primera etapa 40% genérico 60% beneficio"
+        },
+        {
+          "pagina_origen": 6,
+          "seccion_aplicable": null,
+          "texto": "Imprimir primera etapa 40% genérico 60% beneficio"
+        }
+      ]
+    },
+    {
+      "id_candidato": "impulsara_imo_avances_temporada_tendencia",
+      "cantidad": 3,
+      "criterios": [
+        {
+          "pagina_origen": 21,
+          "seccion_aplicable": "Softline",
+          "texto": "Se impulsará IMO con los Avances de Temporada “TENDENCIA …”"
+        },
+        {
+          "pagina_origen": 23,
+          "seccion_aplicable": "Softline",
+          "texto": "Se impulsará IMO con los Avances de Temporada “TENDENCIA …”"
+        },
+        {
+          "pagina_origen": 25,
+          "seccion_aplicable": "Softline",
+          "texto": "Se impulsará IMO con los Avances de Temporada “TENDENCIA …”"
+        }
+      ]
+    },
+    {
+      "id_candidato": "integra_maniquies_manera_logren_apreciar",
+      "cantidad": 3,
+      "criterios": [
+        {
+          "pagina_origen": 20,
+          "seccion_aplicable": "Softline",
+          "texto": "Integra los maniquíes de manera que se logren apreciar bien todos los looks."
+        },
+        {
+          "pagina_origen": 22,
+          "seccion_aplicable": "Softline",
+          "texto": "Integra los maniquíes de manera que se logren apreciar bien todos los looks."
+        },
+        {
+          "pagina_origen": 24,
+          "seccion_aplicable": "Softline",
+          "texto": "Integra los maniquíes de manera que se logren apreciar bien todos los looks."
+        }
+      ]
+    },
+    {
+      "id_candidato": "maniquies_etiquetas",
+      "cantidad": 2,
+      "criterios": [
+        {
+          "pagina_origen": 10,
+          "seccion_aplicable": null,
+          "texto": "3 maniquíes – 2 etiquetas"
+        },
+        {
+          "pagina_origen": 10,
+          "seccion_aplicable": null,
+          "texto": "5 maniquíes – 3 etiquetas"
+        }
+      ]
+    },
+    {
+      "id_candidato": "manten_orden_exhibicion",
+      "cantidad": 4,
+      "criterios": [
+        {
+          "pagina_origen": 28,
+          "seccion_aplicable": "Softline",
+          "texto": "Mantén el orden de la exhibición"
+        },
+        {
+          "pagina_origen": 29,
+          "seccion_aplicable": "Softline",
+          "texto": "Mantén el orden de la exhibición."
+        },
+        {
+          "pagina_origen": 33,
+          "seccion_aplicable": "Hardline",
+          "texto": "Mantén el orden de la exhibición"
+        },
+        {
+          "pagina_origen": 38,
+          "seccion_aplicable": "Hardline",
+          "texto": "Mantén el orden de la exhibición."
+        }
+      ]
+    },
+    {
+      "id_candidato": "mercadeo_bloqueo_producto",
+      "cantidad": 4,
+      "criterios": [
+        {
+          "pagina_origen": 28,
+          "seccion_aplicable": "Softline",
+          "texto": "Mercadeo por bloqueo de producto"
+        },
+        {
+          "pagina_origen": 29,
+          "seccion_aplicable": "Softline",
+          "texto": "Mercadeo por bloqueo de producto."
+        },
+        {
+          "pagina_origen": 33,
+          "seccion_aplicable": "Hardline",
+          "texto": "Mercadeo por bloqueo de producto"
+        },
+        {
+          "pagina_origen": 38,
+          "seccion_aplicable": "Hardline",
+          "texto": "Mercadeo por bloqueo de producto."
+        }
+      ]
+    },
+    {
+      "id_candidato": "mezclar_marcas",
+      "cantidad": 2,
+      "criterios": [
+        {
+          "pagina_origen": 31,
+          "seccion_aplicable": "Hardline",
+          "texto": "No mezclar marcas"
+        },
+        {
+          "pagina_origen": 34,
+          "seccion_aplicable": "Hardline",
+          "texto": "No mezclar marcas."
+        }
+      ]
+    },
+    {
+      "id_candidato": "revisa_producto_focal_sea_mercancia",
+      "cantidad": 4,
+      "criterios": [
+        {
+          "pagina_origen": 16,
+          "seccion_aplicable": null,
+          "texto": "Revisa que el producto para este focal sea mercancía con descuentos."
+        },
+        {
+          "pagina_origen": 20,
+          "seccion_aplicable": "Softline",
+          "texto": "Revisa que el producto para este focal sea mercancía con el mismo descuento."
+        },
+        {
+          "pagina_origen": 22,
+          "seccion_aplicable": "Softline",
+          "texto": "Revisa que el producto para este focal sea mercancía con el mismo descuento."
+        },
+        {
+          "pagina_origen": 24,
+          "seccion_aplicable": "Softline",
+          "texto": "Revisa que el producto para este focal sea mercancía con el mismo descuento."
+        }
+      ]
+    }
+  ]
+}
