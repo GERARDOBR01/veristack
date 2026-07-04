@@ -19,9 +19,24 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 
 ---
 
-## Estado actual (3 Jul 2026 — Sesión N: Motor 2, consolidado de las 48 páginas del manual)
+## Estado actual (3 Jul 2026 — Sesión O: Motor 2, extracción completa de criterios sobre el consolidado)
 
 🟡 Trabajo local, aún SIN push (Gerardo confirma después de ver el reporte):
+- **Motor 2 — `extractor.py` evolucionado de piloto (5 bloques) a corrida completa** sobre `manual_consolidado.json` (NO lee el PDF directo ya):
+  - **Input nuevo**: páginas de texto plano → su `texto` del consolidado; páginas diagrama → la `estructura` de Vision serializada a texto con viñetas (título + secciones/elementos + relaciones + texto_no_ubicado; `descripcion_general` NO se incluye por ser meta del modelo de visión). El grounding de páginas Vision es contra esa estructura reconstruida — no hay fuente literal mejor, el texto plano de esas páginas está roto por diseño
+  - **Schema v1.2 confirmado** (el piloto estaba en v1.1, sin etapa): cada criterio lleva `seccion_aplicable` (normalizer, sin tocar) y **`etapa_aplicable` NUEVO con valores fijos `["E1"|"E2"|"E3"]` o null**, decidido por CÓDIGO (regex sobre el encabezado del bloque: "(1a y 2a ETAPA)", "(3a ETAPA)", "(ETAPA 2 Y 3)"). Detectó etapas en p7 (E2,E3), p20/22/24 (E1,E2), p21/23/25 (E3). Prompt/few-shot/grounding del piloto SIN cambios
+  - **Corrida completa en una pasada**: 40 páginas extraídas, 0 errores de API, 0 rate limits, 40 requests a GitHub Models (`openai/gpt-4o-mini`, free tier). 7 páginas saltadas por ser portadas (<5 palabras) + **p47 EXCLUIDA por decisión de Gerardo** (solo imagen/link, sin criterio verificable — documentado en el código, no bug)
+  - **Resultado: 167 criterios** en `motor2/criterios_extraidos.json` → grounding **142 exact / 14 lesser / 11 failed**. Reanudable: guarda estado página a página; si muere por cuota, reporta en qué página quedó y al relanzar retoma (`--desde-cero` respalda a `.bak-<ts>` y reinicia)
+  - **🔴 Hallazgo principal — contaminación de few-shot (8 criterios)**: en las 3 páginas casi vacías de contenido accionable (p1 portada, p5 timeline, p8 cartulinas) gpt-4o-mini **copió VERBATIM criterios de los ejemplos few-shot** ("No mezclar marcas", "caja de vajilla cerrada Narrative y Kostlich", etc.) que NO existen en esas páginas. **El grounding los atrapó todos** (los 8 salen `failed`) — filtrarlos es trabajo del futuro validator.py (descartar `grounding=failed` sin [AMBIGUO], o comparar contra los textos de EXAMPLES). Ojo: los mismos textos en p20/22/24/26/31 son LEGÍTIMOS (`exact`) — los few-shot se anclaron en texto real de esas páginas. Criterios confiables netos ≈ 159
+  - Los otros 3 `failed` son los `[AMBIGUO]` de p20/22/24 (sin grounding por diseño, igual que el piloto). Los 14 `lesser` son el patrón benigno conocido (punto final agregado, el typo real "En en" del manual)
+  - **🟡 referencia_no_resuelta=true salió en 0 — el modelo sub-marcó 3 casos**: p10 "Consulta en la liga el manual de señalización…" quedó como `[AMBIGUO]`/null (el piloto sí lo marcaba true), y p39/p40 "Book de impulsos" quedaron false. También sobre-marcó `[AMBIGUO]` en p10 "las etiquetas solo van en la cadera del maniquí" (instrucción accionable normal). Corregibles a mano o por validator — se reportan, no se esconden
+  - **🟡 4 páginas con 0 criterios, verosímil pero revisar a ojo**: p2/p3 (info general), p4 (línea de tiempo: fechas informativas), p46 (puntos de puerta: solo materiales). Duplicados exactos entre páginas hermanas (focales show comparten boilerplate) son repetición real del manual — dedup es del validator
+  - **🟡 4 encabezados sin match en normalizer → seccion_aplicable=null**: p1 (huérfana), "GRAN" (p2-3, el flow parte "GRAN BARATA"), "PLANOGRAMA ZAPATERÍAS" (p13), "OUTPOS" (p16). Reportados, no forzados
+  - `validator.py` NO existe aún y NO se corrió nada más — por brief. pipeline/, core/, `capa2_campana_activa.json`, `schema_conocimiento_v1.md`, `clasificador_layout.py`, `vision_fallback.py` y `consolidar_manual.py` **intactos**
+
+## Estado previo (3 Jul 2026 — Sesión N: Motor 2, consolidado de las 48 páginas del manual)
+
+✅ Completado y en repo remoto (push `fae9eb2..0524ce8` autorizado por Gerardo; p47 confirmada por Gerardo como solo imagen/link — exclusión deliberada, no bug):
 - **Motor 2 — consolidado base del manual** (`motor2/consolidar_manual.py` + `motor2/manual_consolidado.json`):
   - **Une TODO el manual en un solo JSON ordenado por página real, sin huecos ni duplicados**: las páginas DIAGRAMA toman el resultado ya generado por `vision_fallback.py` (`resultados_vision/pagina_N.json`); el resto sale por pdfplumber `use_text_flow=True`. **Cero llamadas a API en este paso** — el script NO llama a Gemini, y si falta un JSON de visión o vino con `parseo_ok=false`, ABORTA con error explícito (nunca rellena en silencio)
   - **⚠️ Hallazgo de conteo**: el PDF Gran Barata tiene **48 páginas reales, no 47**. El "47" que circulaba en el proyecto son los **47 BLOQUES de conocimiento** (`extractor.py`), no páginas del PDF. Reparto real: **14 por Gemini Vision + 34 por texto plano = 48**
@@ -190,13 +205,14 @@ veristack/
 │   ├── test_pdfplumber.py  ← validación de setup (Sesión E)
 │   ├── segmenter.py        ← segmentador de secciones por heurística (Sesión F)
 │   ├── normalizer.py       ← mapea encabezado crudo → seccion_aplicable (Sesión G)
-│   ├── extractor.py        ← langextract: criterios+peso+severidad por bloque (Sesión H piloto; backend GitHub Models Sesión K)
+│   ├── extractor.py        ← langextract: criterios+peso+severidad (Sesión H piloto; backend GitHub Models Sesión K; corrida completa sobre el consolidado + etapa_aplicable v1.2 Sesión O)
 │   ├── revisar_multicolumna.py ← vuelca texto crudo de páginas multicolumna (Sesión J, sin IA)
 │   ├── clasificador_layout.py  ← detecta layout prosa vs diagrama/matriz por página (Sesión L, sin IA)
 │   ├── vision_fallback.py      ← Gemini Vision SOLO para las páginas que el clasificador marcó (Sesión M)
 │   ├── resultados_vision/      ← pagina_N.json × 14 (estructura reconstruida por Vision, Sesión M)
 │   ├── consolidar_manual.py    ← une Vision (14) + texto plano (34) en un solo JSON (Sesión N)
-│   └── manual_consolidado.json ← las 48 páginas consolidadas, insumo base para extractor.py (Sesión N)
+│   ├── manual_consolidado.json ← las 48 páginas consolidadas, insumo base para extractor.py (Sesión N)
+│   └── criterios_extraidos.json ← 167 criterios schema v1.2 con grounding por criterio (Sesión O)
 ├── core/
 │   └── photo_analyzer.py
 ├── brains/

@@ -1,54 +1,64 @@
 # -*- coding: utf-8 -*-
-"""Motor 2 — extractor de criterios con langextract (PILOTO).
+"""Motor 2 — extractor de criterios con langextract (corrida COMPLETA, Sesión O).
 
-Primer uso real de IA en Motor 2. Corre SOLO sobre 4-5 bloques de prueba para
-validar el enfoque antes de escalar a los 47.
+Evolución del piloto de Sesión K (5 bloques) a la corrida completa sobre el
+manual consolidado. La lógica de extracción, prompt, few-shot y grounding NO
+cambió respecto al piloto validado — cambió el INPUT y se agregó etapa_aplicable.
+
+INPUT: motor2/manual_consolidado.json (Sesión N) — NO el PDF directo.
+  - Páginas de texto plano → su `texto` (ya use_text_flow, des-intercalado).
+  - Páginas diagrama (Gemini Vision) → la `estructura` reconstruida, serializada
+    a texto legible (título + secciones con elementos + relaciones + texto no
+    ubicado). El texto plano de esas páginas está roto por diseño — ese fue el
+    motivo del fallback de Vision. `descripcion_general` NO se incluye (es meta
+    del modelo de visión, no contenido del manual).
 
 Reparto de responsabilidad ("código decide, modelo interpreta"):
-  - `segmenter.py` + `normalizer.py` ya resolvieron, por CÓDIGO, la página y la
-    `seccion_aplicable` de cada bloque. Eso NO se le pregunta al modelo.
-  - langextract SOLO decide, por bloque: los criterios (texto literal), su `peso`,
-    su `severidad`, la `condicion_libre` y si hay `referencia_no_resuelta`.
-  - La página y la sección se PEGAN al armar el JSON final, tomadas del código.
+  - `segmenter.py` + `normalizer.py` (importados, SIN tocar) resuelven por
+    CÓDIGO los bloques y la `seccion_aplicable`, alimentados con las páginas
+    del consolidado (no con el PDF).
+  - `etapa_aplicable` (NUEVO, schema v1.2 según brief de Gerardo) también la
+    decide CÓDIGO: regex sobre el encabezado del bloque ("(1a y 2a ETAPA)",
+    "(3a ETAPA)", "(ETAPA 2 Y 3)"). Valores fijos: ["E1"|"E2"|"E3"] o null.
+  - langextract SOLO decide, por página: criterios (texto literal), `peso`,
+    `severidad`, `condicion_libre` y `referencia_no_resuelta`.
+  - página + sección + etapa se PEGAN al armar el JSON final, del código.
 
-Texto de entrada: se lee con `use_text_flow=True` (ver leer_texto_flow), que
-des-intercala las columnas usando el orden del stream interno del PDF. La extracción
-por defecto intercala columnas (p10) y rompía el grounding literal; use_text_flow lo
-resuelve. (Sesión I: se descartó `layout=True` — solo agrega padding, no des-intercala.)
+Grounding por criterio (mismo indicador que el piloto de Sesión K):
+  - exact  → el char_interval reproduce el texto extraído (ignorando whitespace)
+  - lesser → hay intervalo pero no alinea exacto (match_lesser/fuzzy) — revisar
+  - failed → sin intervalo — no se confía
+En páginas Vision el grounding es contra la estructura reconstruida (el texto
+plano de esas páginas está roto — no hay fuente literal mejor).
 
-Grounding: cada criterio extraído se verifica contra el `char_interval` que
-devuelve langextract — si el intervalo no reproduce el texto extraído dentro del
-bloque, el criterio se marca SIN GROUNDING (no se confía en él).
+Páginas que NO se extraen (documentado, no silencioso):
+  - p47 (APARADORES): excluida por decisión de Gerardo — solo imagen/link,
+    sin criterio verificable.
+  - Páginas de <5 palabras y sin estructura Vision (portadas de sección:
+    p9, p15, p17, p19, p30, p45, p48) — no hay nada accionable que extraer.
 
-`referencia_no_resuelta` es de 3 estados: true (remite a doc/liga externa nombrada),
-false (criterio normal), null (instrucción vaga sin doc externo — el modelo prefija
-el texto con "[AMBIGUO] " en vez de inventar una referencia).
+Reanudación: el output se guarda página a página en criterios_extraidos.json.
+Si la corrida muere (rate limit agotado), el script reporta en qué página quedó;
+al relanzarlo retoma desde ahí (salta las páginas ya extraídas OK). Con
+--desde-cero se respalda el archivo anterior a .bak-<timestamp> y se reinicia.
 
-Backend (Sesión K): por default usa GitHub Models (endpoint OpenAI-compatible, free
-tier ~150 req/día para gpt-4o-mini — desbloquea la cuota de Gemini de 20 req/día).
-Se elige con la variable de entorno MOTOR2_BACKEND:
-  - "github" (default): openai/gpt-4o-mini vía https://models.github.ai/inference,
-    usando GITHUB_API_KEY del .env.
-  - "gemini" (fallback): gemini-3.5-flash usando GEMINI_API_KEY del .env.
-La lógica de extracción, grounding y prompt NO cambia entre backends: solo el proveedor.
+Backend (sin cambios desde Sesión K): MOTOR2_BACKEND = github (default,
+openai/gpt-4o-mini vía GitHub Models con GITHUB_API_KEY) o gemini (fallback).
 
 Uso:
-    python extractor.py [ruta_al_pdf]
-    MOTOR2_BACKEND=gemini python extractor.py   # forzar el fallback de Gemini
-
-Requiere la API key del backend elegido en el .env de la raíz (NUNCA se imprime):
-GITHUB_API_KEY para github, GEMINI_API_KEY para gemini.
+    python extractor.py [ruta_manual_consolidado.json] [--desde-cero]
 """
+import json
 import logging
 import os
 import re
 import sys
 import time
 import warnings
+from datetime import datetime
 from pathlib import Path
 
 import langextract as lx
-import pdfplumber
 
 # El ejemplo negativo usa el texto "[AMBIGUO] ..." que a propósito NO existe literal
 # en su texto fuente (el prefijo lo agrega el modelo). langextract emite un WARNING
@@ -59,44 +69,35 @@ logging.getLogger("absl").setLevel(logging.ERROR)
 # vía ejemplos (no vía output_schema). Es el comportamiento buscado; se silencia.
 warnings.filterwarnings("ignore", message="With 'config', schema constraints")
 
-from segmenter import PDF_DEFAULT, leer_paginas, segmentar
+from segmenter import segmentar
 from normalizer import normalizar
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
-# --- Backend / proveedor de IA -------------------------------------------------
-# GitHub Models es OpenAI-compatible: mismo endpoint /chat/completions, se autentica
-# con un GitHub PAT (scope models:read). Se enruta al provider OpenAI de langextract
-# fijándolo EXPLÍCITO en ModelConfig (el model_id "openai/gpt-4o-mini" lleva namespace
-# y no matchea el patrón por defecto ^gpt-4 del router; por eso no se deja al auto-routing).
-BACKEND = os.environ.get("MOTOR2_BACKEND", "github").strip().lower()
+CONSOLIDADO_DEFAULT = Path(__file__).resolve().parent / "manual_consolidado.json"
+SALIDA = Path(__file__).resolve().parent / "criterios_extraidos.json"
 
-# github (default): mejor balance calidad/cuota en free tier. gpt-4o-mini = tier "low"
-# (~150 req/día), suficiente para los 47 bloques; vs. Gemini free = 20 req/día.
+# p47 (APARADORES): solo imagen/link de outfits, sin criterio verificable.
+# Decisión de Gerardo (Sesión O) — exclusión deliberada, no bug.
+PAGINAS_EXCLUIDAS = {47: "excluida por decisión: solo imagen/link, sin criterio verificable"}
+
+# Una página de texto con menos palabras que esto y sin estructura Vision es una
+# portada de sección ("MONTAJE SOFTLINE") — no se gasta un request en ella.
+MIN_PALABRAS_PAGINA = 5
+
+PAUSA_ENTRE_PAGINAS_S = 5  # respeta el RPM del free tier de GitHub Models
+
+ETAPAS_VALIDAS = {"E1", "E2", "E3"}
+
+# --- Backend / proveedor de IA (sin cambios desde Sesión K) ---------------------
+BACKEND = os.environ.get("MOTOR2_BACKEND", "github").strip().lower()
 GITHUB_MODEL = os.environ.get("GITHUB_MODEL", "openai/gpt-4o-mini")
 GITHUB_BASE_URL = os.environ.get("GITHUB_BASE_URL", "https://models.github.ai/inference")
-
-# gemini (fallback): se conserva la config previa; solo se usa con MOTOR2_BACKEND=gemini.
 GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.5-flash")
-
-# Etiqueta legible del modelo activo (para el encabezado del reporte).
 MODEL_ID = GITHUB_MODEL if BACKEND == "github" else GEMINI_MODEL
 
-# Bloques de prueba del piloto (por página), elegidos por complejidad distinta:
-#   p29  simple  — 3 indicaciones cortas, sin condición
-#   p20  etapas  — focal show con NOTA/excepción de material
-#   p43  tabla   — zapatos deportivos: tabla de % + lista larga de mercadeo
-#   p10  ref.    — etiquetado: remite a "manual de señalización" (externo)
-#   p35  cond.   — diversos: varias condiciones libres (% por tipo de producto)
-BLOQUES_PRUEBA = [29, 20, 43, 10, 35]
 
-
-# --- Prompt e ejemplos few-shot -------------------------------------------------
-# El peso se infiere de la etiqueta estructural del manual, que es un patrón real
-# y consistente en estos slides (no inventado):
-#   INDICACIONES / Pauta / Mercadeo  -> MANDATORY (obligación de montaje)
-#   SUGERENCIA                        -> RECOMMENDATION
-#   *NOTA / excepción                 -> EXCEPTION
+# --- Prompt e ejemplos few-shot (SIN cambios desde el piloto de Sesión K) --------
 PROMPT_DESCRIPTION = """\
 Extrae los CRITERIOS de montaje de un bloque de un manual de retail (Liverpool).
 Un criterio es una instrucción accionable y verificable sobre cómo debe quedar la
@@ -143,9 +144,6 @@ def _crit(texto, peso, severidad, condicion="", ref="false"):
     )
 
 
-# Ejemplos anclados en texto REAL del manual (bloques que NO están en el piloto:
-# p26 BARRAS Y MANIQUÍES, p31 MASIVOS HARDLINE, p22 FOCAL SHOW HOMBRES) para no
-# filtrar respuestas del piloto.
 EXAMPLES = [
     lx.data.ExampleData(
         text=(
@@ -181,7 +179,6 @@ EXAMPLES = [
     ),
     # Ejemplo NEGATIVO: instrucción vaga sin documento externo. Debe salir con
     # referencia_no_resuelta="null" y el texto prefijado "[AMBIGUO] ", NO "true".
-    # "Revisa que el producto ... con el mismo descuento" sí es criterio normal.
     lx.data.ExampleData(
         text=(
             "INDICACIONES: Focales fuera de la sección (Entradas, Hueco Central)\n"
@@ -197,10 +194,10 @@ EXAMPLES = [
     ),
 ]
 
-# Prefijo que el modelo antepone a un criterio vago (instrucción sin doc externo).
 MARCA_AMBIGUO = "[AMBIGUO] "
 
 
+# --- Utilidades (sin cambios desde el piloto) ------------------------------------
 def _leer_env(nombre: str):
     """Devuelve el valor de una variable, del entorno o del .env raíz. Sin imprimirla."""
     if os.environ.get(nombre):
@@ -215,13 +212,11 @@ def _leer_env(nombre: str):
 
 
 def _cargar_api_key() -> str:
-    """Devuelve la API key del backend activo sin imprimirla (env o .env raíz)."""
     if BACKEND == "github":
         key = _leer_env("GITHUB_API_KEY")
         if key:
             return key
         sys.exit("ERROR: falta GITHUB_API_KEY (env o .env de la raíz). No se ejecuta.")
-    # gemini (fallback)
     key = _leer_env("GEMINI_API_KEY") or _leer_env("LANGEXTRACT_API_KEY")
     if key:
         return key
@@ -229,8 +224,6 @@ def _cargar_api_key() -> str:
 
 
 def _construir_config(api_key: str, temperature: float = 0.0):
-    """ModelConfig del backend activo. El provider OpenAI se fija EXPLÍCITO para
-    GitHub Models (el model_id con namespace no matchea el auto-routing del router)."""
     if BACKEND == "github":
         return lx.factory.ModelConfig(
             model_id=GITHUB_MODEL,
@@ -241,7 +234,6 @@ def _construir_config(api_key: str, temperature: float = 0.0):
                 "temperature": temperature,
             },
         )
-    # gemini (fallback): auto-routing por model_id (^gemini) resuelve el provider.
     return lx.factory.ModelConfig(
         model_id=GEMINI_MODEL,
         provider_kwargs={"api_key": api_key, "temperature": temperature},
@@ -249,50 +241,22 @@ def _construir_config(api_key: str, temperature: float = 0.0):
 
 
 def _norm_ws(s: str) -> str:
-    """Colapsa cualquier corrida de espacios/saltos de línea a un solo espacio.
-
-    El PDF parte líneas a mitad de frase, así que el span de la fuente trae saltos
-    donde el texto extraído trae espacios. Eso NO es una falla de grounding: hay
-    que comparar ignorando el whitespace."""
     return " ".join((s or "").split())
 
 
-def _verificar_grounding(ext, fuente: str):
-    """(ok, span_real) — ¿el char_interval reproduce el texto extraído en la fuente?
-
-    OK sólo si el intervalo alinea EXACTO (ignorando whitespace). Un match_fuzzy /
-    match_lesser (típico cuando el texto se reensambla de columnas interleaved) NO
-    es exacto y se marca para revisión."""
+def _grounding(ext, fuente: str):
+    """('exact'|'lesser'|'failed', span) — mismo indicador que el piloto de Sesión K."""
     ci = ext.char_interval
     if ci is None or ci.start_pos is None or ci.end_pos is None:
-        return False, None
+        return "failed", None
     span = fuente[ci.start_pos:ci.end_pos]
-    # El prefijo [AMBIGUO] lo agrega el modelo, no está en la fuente: se ignora
-    # para comparar el grounding del texto real del criterio.
     texto = ext.extraction_text
-    if texto.startswith(MARCA_AMBIGUO):
+    if texto.startswith(MARCA_AMBIGUO):  # prefijo del modelo, no está en la fuente
         texto = texto[len(MARCA_AMBIGUO):]
-    ok = _norm_ws(span) == _norm_ws(texto)
-    return ok, span
-
-
-def leer_texto_flow(pdf_path: Path):
-    """{numero_pagina: texto} leído con use_text_flow=True (des-intercala columnas).
-
-    `segmenter.leer_paginas` usa la extracción por defecto, que intercala columnas
-    (ver p10). Aquí re-leemos con el orden del stream interno del PDF, que respeta
-    las columnas — es el texto que se le da al modelo para que el grounding literal
-    funcione. La página y la sección siguen viniendo del código (segmenter/normalizer),
-    no de esta lectura."""
-    textos = {}
-    with pdfplumber.open(pdf_path) as pdf:
-        for page in pdf.pages:
-            textos[page.page_number] = page.extract_text(use_text_flow=True) or ""
-    return textos
+    return ("exact" if _norm_ws(span) == _norm_ws(texto) else "lesser"), span
 
 
 def _retry_delay_seg(exc, default=30):
-    """Extrae 'retryDelay' del error 429 de Gemini, o usa el default."""
     m = re.search(r"retry in (\d+(?:\.\d+)?)s", str(exc)) or \
         re.search(r"'retryDelay': '(\d+)s'", str(exc))
     if m:
@@ -300,24 +264,25 @@ def _retry_delay_seg(exc, default=30):
     return default
 
 
-def extraer_bloque(texto: str, config, reintentos=2):
-    """Corre langextract sobre el texto de un bloque y devuelve su AnnotatedDocument.
+def _es_429(exc) -> bool:
+    s = str(exc)
+    return "429" in s or "RESOURCE_EXHAUSTED" in s or "RateLimit" in type(exc).__name__
 
-    `config` fija el proveedor/modelo (ver _construir_config). Reintenta con backoff
-    ante 429 (rate limit). Si se agota la cuota, el 429 persiste y se propaga."""
+
+def extraer_pagina(texto: str, config, reintentos=2):
+    """Corre langextract sobre el texto de UNA página. Reintenta ante 429."""
     for intento in range(reintentos + 1):
         try:
             return lx.extract(
                 text_or_documents=texto,
                 prompt_description=PROMPT_DESCRIPTION,
                 examples=EXAMPLES,
-                config=config,            # backend/modelo (github o gemini)
-                max_char_buffer=1500,     # > el bloque más largo (p43 ~844) -> 1 chunk
+                config=config,
+                max_char_buffer=max(1500, len(texto) + 100),  # 1 página = 1 chunk = 1 request
                 show_progress=False,
             )
         except Exception as exc:  # noqa: BLE001
-            es_429 = "429" in str(exc) or "RESOURCE_EXHAUSTED" in str(exc)
-            if not es_429 or intento == reintentos:
+            if not _es_429(exc) or intento == reintentos:
                 raise
             espera = _retry_delay_seg(exc)
             print(f"  ⏳ 429 rate limit — esperando {espera}s y reintentando "
@@ -325,91 +290,222 @@ def extraer_bloque(texto: str, config, reintentos=2):
             time.sleep(espera)
 
 
+# --- Input: manual consolidado ---------------------------------------------------
+def _texto_pagina_vision(entrada: dict) -> str:
+    """Serializa la estructura reconstruida por Vision a texto extraíble.
+
+    Formato con viñetas ● (mismo patrón que los few-shot). descripcion_general
+    NO se incluye: es prosa meta del modelo de visión, no contenido del manual.
+    Las relaciones SÍ: son exactamente el valor que Vision agregó (condiciones
+    y ligas espaciales que el texto plano perdía)."""
+    est = entrada["estructura"]
+    crudo = entrada.get("texto_crudo", "")
+    titulo = est.get("titulo") or (crudo.splitlines() or ["(sin título)"])[0]
+    lineas = [titulo]
+    for sec in est.get("secciones", []):
+        rol = f" ({sec['rol']})" if sec.get("rol") else ""
+        lineas.append(f"{sec.get('nombre', '(sin nombre)')}{rol}:")
+        for el in sec.get("elementos", []):
+            lineas.append(f"● {el}")
+    if est.get("relaciones"):
+        lineas.append("Relaciones:")
+        lineas.extend(f"● {r}" for r in est["relaciones"])
+    if est.get("texto_no_ubicado"):
+        lineas.append("Texto no ubicado:")
+        lineas.extend(f"● {t}" for t in est["texto_no_ubicado"])
+    return "\n".join(lineas)
+
+
+def cargar_paginas(ruta: Path):
+    """[(num, texto_para_modelo, fuente)] desde manual_consolidado.json."""
+    data = json.loads(ruta.read_text(encoding="utf-8"))
+    paginas = []
+    for e in data["paginas"]:
+        if e["fuente"] == "gemini_vision":
+            texto = _texto_pagina_vision(e)
+        else:
+            texto = e.get("texto", "")
+        paginas.append((e["pagina"], texto, e["fuente"]))
+    return paginas
+
+
+# --- etapa_aplicable (schema v1.2) — decidida por CÓDIGO, no por el modelo -------
+def detectar_etapas(encabezado: str):
+    """["E1".."E3"] desde el encabezado del bloque, o None si no nombra etapas.
+
+    Patrones reales del manual: "(1a y 2a ETAPA)", "(1a y 2da ETAPA)",
+    "(3a ETAPA)", "(ETAPA 2 Y 3)". None = aplica a todas (semántica v1.1)."""
+    up = encabezado.upper()
+    m = re.search(r"ETAPA\s*(\d)\s*Y\s*(\d)", up)
+    if m:
+        etapas = [f"E{m.group(1)}", f"E{m.group(2)}"]
+    else:
+        m = re.search(r"(\d)[AªERA]*\s*Y\s*(\d)[DA]*\s*ETAPA", up)
+        if m:
+            etapas = [f"E{m.group(1)}", f"E{m.group(2)}"]
+        else:
+            m = re.search(r"(\d)[AªERA]*\s*ETAPA", up)
+            etapas = [f"E{m.group(1)}"] if m else None
+    if etapas and not set(etapas) <= ETAPAS_VALIDAS:
+        print(f"  ⚠️ etapa fuera de vocabulario en {encabezado!r}: {etapas} — se deja null")
+        return None
+    return etapas
+
+
+# --- Persistencia con reanudación -------------------------------------------------
+def _cargar_estado(desde_cero: bool) -> dict:
+    if SALIDA.exists():
+        if desde_cero:
+            respaldo = SALIDA.with_suffix(f".json.bak-{datetime.now():%Y%m%d-%H%M%S}")
+            SALIDA.rename(respaldo)
+            print(f"(--desde-cero: corrida anterior respaldada en {respaldo.name})")
+            return {}
+        estado = json.loads(SALIDA.read_text(encoding="utf-8"))
+        hechas = [p for p, v in estado.get("paginas", {}).items() if v.get("estado") == "ok"]
+        print(f"(reanudando: {len(hechas)} páginas ya extraídas OK se saltan; "
+              f"--desde-cero para reiniciar)")
+        return estado
+    return {}
+
+
+def _guardar_estado(estado: dict) -> None:
+    SALIDA.write_text(json.dumps(estado, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+# --- Corrida completa --------------------------------------------------------------
 def main() -> None:
-    pdf_path = Path(sys.argv[1]) if len(sys.argv) > 1 else PDF_DEFAULT
-    if not pdf_path.exists():
-        sys.exit(f"ERROR: no existe el PDF: {pdf_path}")
+    args = [a for a in sys.argv[1:] if a != "--desde-cero"]
+    desde_cero = "--desde-cero" in sys.argv[1:]
+    ruta = Path(args[0]) if args else CONSOLIDADO_DEFAULT
+    if not ruta.exists():
+        sys.exit(f"ERROR: no existe el consolidado: {ruta}")
 
     api_key = _cargar_api_key()
-    config = _construir_config(api_key, temperature=0.0)  # piloto determinista
-    bloques = segmentar(leer_paginas(pdf_path))
-    norm, _ = normalizar(bloques)
-    # Índice por página para pegar página+sección (del código) al output del modelo.
-    por_pagina = {n.pagina_inicio: (b, n) for b, n in zip(bloques, norm)}
-    # Texto des-intercalado (use_text_flow) para dárselo al modelo. Ver leer_texto_flow.
-    flow_por_pagina = leer_texto_flow(pdf_path)
+    config = _construir_config(api_key, temperature=0.0)
 
-    print(f"PDF: {pdf_path.name}")
-    print(f"Backend: {BACKEND}  |  Modelo: {MODEL_ID}  |  Bloques piloto: {BLOQUES_PRUEBA}")
-    print(f"Lectura de texto: use_text_flow=True (des-intercala columnas)")
+    paginas = cargar_paginas(ruta)
+
+    # Bloques y seccion_aplicable por CÓDIGO (segmenter/normalizer, sin tocar),
+    # alimentados con las páginas del consolidado — no con el PDF.
+    bloques = segmentar([(num, texto) for num, texto, _ in paginas])
+    norm, no_matchean = normalizar(bloques)
+    seccion_por_pagina, etapa_por_pagina, encabezado_por_pagina = {}, {}, {}
+    for n in norm:
+        etapas = detectar_etapas(n.seccion)
+        for p in range(n.pagina_inicio, n.pagina_fin + 1):
+            seccion_por_pagina[p] = n.seccion_aplicable
+            etapa_por_pagina[p] = etapas
+            encabezado_por_pagina[p] = n.seccion
+
+    estado = _cargar_estado(desde_cero)
+    estado.setdefault("meta", {})
+    estado["meta"].update({
+        "schema": "v1.2 (v1.1 + seccion_aplicable + etapa_aplicable E1/E2/E3/null)",
+        "consolidado": ruta.name,
+        "backend": BACKEND,
+        "modelo": MODEL_ID,
+        "ultima_corrida": datetime.now().isoformat(timespec="seconds"),
+    })
+    estado.setdefault("paginas", {})
+
+    print(f"Input: {ruta.name} ({len(paginas)} páginas)")
+    print(f"Backend: {BACKEND}  |  Modelo: {MODEL_ID}  |  Schema: v1.2")
+    if no_matchean:
+        print(f"🟡 Encabezados sin match en normalizer ({len(no_matchean)}) — quedan "
+              f"seccion_aplicable=null: {no_matchean}")
     print("=" * 90)
 
-    for pag in BLOQUES_PRUEBA:
-        if pag not in por_pagina:
-            print(f"\n[p{pag}] NO ENCONTRADO en el PDF — se omite.")
-            continue
-        bloque, n = por_pagina[pag]
-        # Texto del bloque: páginas del rango, leídas des-intercaladas.
-        texto_flow = "\n".join(
-            flow_por_pagina.get(p, "")
-            for p in range(n.pagina_inicio, n.pagina_fin + 1)
-        ).strip()
-        print(f"\n{'#' * 90}")
-        print(f"# BLOQUE p{n.pagina_inicio}-{n.pagina_fin}  |  seccion_aplicable={n.seccion_aplicable}"
-              f"  (fijos por código)")
-        print(f"# encabezado: {n.seccion!r}")
-        print("#" * 90)
+    requests_hechos = 0
+    for num, texto, fuente in paginas:
+        clave = str(num)
+        if estado["paginas"].get(clave, {}).get("estado") == "ok":
+            continue  # ya extraída en una corrida anterior — reanudación
 
+        if num in PAGINAS_EXCLUIDAS:
+            estado["paginas"][clave] = {"estado": "excluida",
+                                        "motivo": PAGINAS_EXCLUIDAS[num], "criterios": []}
+            print(f"[pág {num:>2}] EXCLUIDA — {PAGINAS_EXCLUIDAS[num]}")
+            _guardar_estado(estado)
+            continue
+
+        if fuente != "gemini_vision" and len(texto.split()) < MIN_PALABRAS_PAGINA:
+            estado["paginas"][clave] = {"estado": "sin_contenido",
+                                        "motivo": f"portada/separador ({len(texto.split())} palabras)",
+                                        "criterios": []}
+            print(f"[pág {num:>2}] SIN CONTENIDO accionable ({texto.strip()[:40]!r}) — se salta")
+            _guardar_estado(estado)
+            continue
+
+        print(f"[pág {num:>2}] {fuente:<22} seccion={seccion_por_pagina.get(num)!r} "
+              f"etapa={etapa_por_pagina.get(num)!r} ({len(texto)} chars)…")
         try:
-            doc = extraer_bloque(texto_flow, config)
-        except Exception as exc:  # noqa: BLE001 — piloto: reportar y seguir
-            print(f"  ⚠️  ERROR al extraer p{pag}: {type(exc).__name__}: {exc}")
+            doc = extraer_pagina(texto, config)
+            requests_hechos += 1
+        except Exception as exc:  # noqa: BLE001
+            estado["paginas"][clave] = {"estado": "error",
+                                        "error": f"{type(exc).__name__}: {exc}", "criterios": []}
+            _guardar_estado(estado)
+            if _es_429(exc):
+                print(f"  ❌ 429 persistente — cuota agotada. LA CORRIDA QUEDÓ EN LA PÁGINA {num}.")
+                print(f"     Relanza `python extractor.py` para retomar desde aquí (estado guardado).")
+                break
+            print(f"  ⚠️ ERROR en p{num}: {type(exc).__name__}: {exc} — se continúa")
             continue
 
-        extracciones = list(doc.extractions or [])
-        criterios_json = []
-        print(f"\n  {len(extracciones)} criterio(s) extraído(s):")
-        for i, ext in enumerate(extracciones, 1):
+        criterios = []
+        for ext in (doc.extractions or []):
             attrs = ext.attributes or {}
-            ok, span = _verificar_grounding(ext, texto_flow)
-            estado = "OK" if ok else "SIN GROUNDING"
-            align = ext.alignment_status.value if ext.alignment_status else "None"
-            print(f"\n  [{i}] grounding={estado} (align={align})")
-            print(f"      texto: {ext.extraction_text!r}")
-            if not ok and span is not None:
-                print(f"      ⚠️  char_interval devuelve: {span!r}")
-            print(f"      peso={attrs.get('peso')!r}  severidad={attrs.get('severidad')!r}")
-            print(f"      condicion_libre={attrs.get('condicion_libre')!r}"
-                  f"  referencia_no_resuelta={attrs.get('referencia_no_resuelta')!r}")
-
-            # Arma el criterio final: página+sección del CÓDIGO, resto del modelo.
-            # referencia_no_resuelta es de 3 estados: true / false / null (vago/ambiguo).
+            g, _span = _grounding(ext, texto)
             raw_ref = str(attrs.get("referencia_no_resuelta", "false")).strip().lower()
-            if raw_ref == "true":
-                ref = True
-            elif raw_ref in ("null", "none", ""):
-                ref = None
-            else:
-                ref = False
+            ref = True if raw_ref == "true" else (None if raw_ref in ("null", "none", "") else False)
             cond = (attrs.get("condicion_libre") or "").strip() or None
-            criterios_json.append({
+            criterios.append({
                 "texto": ext.extraction_text,
                 "peso": attrs.get("peso"),
                 "severidad": attrs.get("severidad"),
                 "condicion_libre": cond,
                 "referencia_no_resuelta": ref,
                 # Pegados por código (el modelo NUNCA los decide):
-                "pagina_origen": n.pagina_inicio,
-                "seccion_aplicable": n.seccion_aplicable,
-                "grounding_ok": ok,
+                "pagina_origen": num,
+                "seccion_aplicable": seccion_por_pagina.get(num),
+                "etapa_aplicable": etapa_por_pagina.get(num),
+                # Proveniencia/QA (no son schema; el validator los usará):
+                "fuente_pagina": fuente,
+                "grounding": g,
             })
 
-        import json
-        print(f"\n  --- JSON armado (p{pag}) para revisión manual ---")
-        print(json.dumps(criterios_json, ensure_ascii=False, indent=2))
+        estado["paginas"][clave] = {
+            "estado": "ok",
+            "fuente": fuente,
+            "encabezado_bloque": encabezado_por_pagina.get(num),
+            "criterios": criterios,
+        }
+        _guardar_estado(estado)
+        resumen_g = {k: sum(1 for c in criterios if c["grounding"] == k)
+                     for k in ("exact", "lesser", "failed")}
+        print(f"  → {len(criterios)} criterio(s)  grounding: {resumen_g}")
+        time.sleep(PAUSA_ENTRE_PAGINAS_S)
 
+    # --- Reporte final -------------------------------------------------------------
+    todas = [v for v in estado["paginas"].values()]
+    criterios_todos = [c for v in todas for c in v.get("criterios", [])]
     print("\n" + "=" * 90)
-    print("PILOTO terminado. Revisar a mano antes de escalar a los 47 bloques.")
+    print("RESUMEN DE LA CORRIDA:")
+    print(f"  Páginas en estado ok:        {sum(1 for v in todas if v['estado'] == 'ok')}")
+    print(f"  Páginas sin contenido:       {sum(1 for v in todas if v['estado'] == 'sin_contenido')}")
+    print(f"  Páginas excluidas:           {sum(1 for v in todas if v['estado'] == 'excluida')}")
+    print(f"  Páginas con error:           "
+          f"{sorted(int(k) for k, v in estado['paginas'].items() if v['estado'] == 'error')}")
+    print(f"  Requests hechos esta corrida: {requests_hechos}")
+    print(f"  Criterios totales:           {len(criterios_todos)}")
+    for k in ("exact", "lesser", "failed"):
+        n = sum(1 for c in criterios_todos if c["grounding"] == k)
+        print(f"    grounding {k:<7}: {n}")
+    n_amb = sum(1 for c in criterios_todos if c["referencia_no_resuelta"] is None)
+    n_ref = sum(1 for c in criterios_todos if c["referencia_no_resuelta"] is True)
+    print(f"  [AMBIGUO] (ref=null):        {n_amb}")
+    print(f"  referencia_no_resuelta=true: {n_ref}")
+    print(f"  Output: {SALIDA}")
 
 
 if __name__ == "__main__":
