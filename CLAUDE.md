@@ -19,9 +19,22 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 
 ---
 
-## Estado actual (3 Jul 2026 — Sesión O: Motor 2, extracción completa de criterios sobre el consolidado)
+## Estado actual (3 Jul 2026 — Sesión P: Motor 2, validator.py sobre los 167 criterios)
 
-🟡 Trabajo local, aún SIN push (Gerardo confirma después de ver el reporte):
+✅ Completado (commit de esta sesión, push autorizado en el brief de cierre):
+- **Motor 2 — `motor2/validator.py`**: el filtro que decide si un criterio extraído es confiable. 4 funciones separadas y testeables, orden fijo: `validar_schema` → `detectar_contaminacion_fewshot` → `filtrar_failed` → `detectar_duplicados`. Sin IA ni librerías nuevas (solo stdlib: json/re/difflib); importa `extractor.py` únicamente para leer EXAMPLES/MARCA_AMBIGUO (una sola fuente de verdad con el prompt — extractor NO se tocó)
+  - **PASO 0 — autotest obligatorio**: 7 fixtures propios (schema incompleto, severidad fuera de catálogo, peso fuera de rango, duplicado exacto, contaminación few-shot a propósito, grounding=failed, uno 100% limpio) corren SIEMPRE antes de tocar datos reales; si un caso no se detecta → exit(1) sin procesar nada. **Resultado: 7/7 PASS**
+  - **Resultado sobre los 167 reales**: **156 validados** → `capa2_mecanica_montaje_gran_barata_pv_2026_validado.json` | **11 a revisión manual** → `revision_manual.json` | conteos exactos en `validator_report.json`. Conservación verificada por código: 156 + 11 = 167
+  - **Schema: 167/167 válidos, 0 rechazos** (el output de Sesión O está bien formado; peso/severidad/etapa/sección todos en catálogo). `seccion_aplicable=null` se aceptó como válido POR CONTRATO del normalizer (37 en validados, contados en el reporte — decisión documentada en el docstring, no silenciosa)
+  - **Los 11 a revisión = exactamente los 11 `grounding=failed` de Sesión O**: los 8 contaminados de few-shot (p1×2, p5×2, p8×4) + los 3 `[AMBIGUO] Cuida tus básicos de Display.` de p20/22/24. **Los 11 llevan doble evidencia**: failed + flag `posible_herencia_fewshot=true` (el substring-test independiente contra los bloques EXAMPLES los confirma a todos). Ojo: el de p20 es el falso-failed conocido (su texto limpio SÍ está verbatim en la página; el prefijo [AMBIGUO] rompió el alignment de langextract) — va a revisión igual, por brief
+  - **Flag `posible_herencia_fewshot` en 10 validados** (marca, no rechaza): los circulares-por-construcción de p20/22/24 ("Revisa que el producto…") + p26×3 + p31×4 — texto legítimo de esas páginas (los few-shot los citan, auditoría Sesión O), pero sus peso/severidad no son juicio independiente del modelo
+  - **Duplicados (difflib, umbral fijo 0.85, determinista): 76 pares sospechosos reportados, NO borrados** — 33 idénticos (ratio 1.0) + 43 similares (0.85–0.99). 16 textos repetidos verbatim abarcan 39 criterios; los clusters grandes son boilerplate real entre páginas hermanas (ej. "coloca producto con mayor descuento…" ×4 en p28/29/33/38; los tríos de focales show p20/22/24 y p21/23/25). **Hallazgo**: p6 trae 2 duplicados intra-página ("Imprimir primera etapa 40%…" y "2da etapa 100% beneficio…" ×2 cada uno) — revisar si el texto aparece 2 veces en el slide o el modelo lo repitió
+  - **NO se hizo** (por brief): no se resolvieron `referencia_no_resuelta`/[AMBIGUO], no se borraron duplicados, no se tocó el golden set, ni extractor/normalizer/segmenter/clasificador/vision_fallback/consolidar/schema_conocimiento_v1.md ni pipeline/
+  - El `capa2_*_validado.json` **aún NO es capa de knowledge v1.1**: le faltan `id`/`aliases`/`aplica_a` (paso posterior) — declarado en su `meta.nota_formato`
+
+## Estado previo (3 Jul 2026 — Sesión O: Motor 2, extracción completa de criterios sobre el consolidado)
+
+✅ Completado y en repo remoto (push `0524ce8..8168a43` autorizado por Gerardo tras el reporte honesto + la auditoría de contaminación de p20/26/31):
 - **Motor 2 — `extractor.py` evolucionado de piloto (5 bloques) a corrida completa** sobre `manual_consolidado.json` (NO lee el PDF directo ya):
   - **Input nuevo**: páginas de texto plano → su `texto` del consolidado; páginas diagrama → la `estructura` de Vision serializada a texto con viñetas (título + secciones/elementos + relaciones + texto_no_ubicado; `descripcion_general` NO se incluye por ser meta del modelo de visión). El grounding de páginas Vision es contra esa estructura reconstruida — no hay fuente literal mejor, el texto plano de esas páginas está roto por diseño
   - **Schema v1.2 confirmado** (el piloto estaba en v1.1, sin etapa): cada criterio lleva `seccion_aplicable` (normalizer, sin tocar) y **`etapa_aplicable` NUEVO con valores fijos `["E1"|"E2"|"E3"]` o null**, decidido por CÓDIGO (regex sobre el encabezado del bloque: "(1a y 2a ETAPA)", "(3a ETAPA)", "(ETAPA 2 Y 3)"). Detectó etapas en p7 (E2,E3), p20/22/24 (E1,E2), p21/23/25 (E3). Prompt/few-shot/grounding del piloto SIN cambios
@@ -165,7 +178,7 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 - Cola de consenso `pendientes_revision.json`
 
 ## Próximos pasos (orden de prioridad)
-1. **Motor 2 — siguiente sesión: escalar la extracción a los 47 bloques** (piloto validado en Sesiones H–I–K; los 3 bloqueadores —multicolumna, falso positivo de referencia y **cuota**— ya están resueltos: multicolumna+referencia en Sesión I, cuota en Sesión K con GitHub Models ~150 req/día). Pendientes antes/durante el escalado: (a) revisar a ojo el orden de lectura de las 20 páginas multicolumna reportadas por `test_pdfplumber.py` antes de confiar en su extracción; (b) vigilar que 47 bloques no rebasen el límite diario de gpt-4o-mini (~150 req/día) — con 1 chunk por bloque debería sobrar; (c) decidir qué hacer con los 2 detalles de calidad de Sesión K (punto final agregado; over-aplicación puntual de `[AMBIGUO]`). `condicion_libre` y `referencia_no_resuelta` siguen siendo solo datos, sin lógica en el motor
+1. **Motor 2 — siguiente sesión: de extracción validada a capa de knowledge v1.1**: asignar `id`/`aliases`/`aplica_a` a los 156 validados, decidir qué hacer con los 76 pares duplicados reportados (los clusters de páginas hermanas son repetición real del manual — ¿consolidar con `etapa_aplicable`/`condicion_libre` o conservar por página?), revisar a mano los 11 de `revision_manual.json` (el `[AMBIGUO]` de p20 es falso-failed: su texto sí está en la página), y corregir los 3 casos sub-marcados de `referencia_no_resuelta` (p10 manual de señalización, p39/p40 Book de impulsos). Revisar el hallazgo de duplicados intra-página en p6
 2. Resolver las 2 referencias no resueltas de capa2 (`etiquetado_hogar_diversos` → manual señalización Hardline; `exhibicion_book_impulsos` → Book de impulsos) cuando Gerardo consiga esos documentos
 3. Decidir si los campos de proveniencia (`pagina_origen`, `confianza_extraccion`, `referencia_cruzada`) se formalizan en el schema o se eliminan del JSON
 4. Validar `app.py` en navegador (la lógica ya está probada end-to-end por script; falta el click manual en la UI)
@@ -212,7 +225,11 @@ veristack/
 │   ├── resultados_vision/      ← pagina_N.json × 14 (estructura reconstruida por Vision, Sesión M)
 │   ├── consolidar_manual.py    ← une Vision (14) + texto plano (34) en un solo JSON (Sesión N)
 │   ├── manual_consolidado.json ← las 48 páginas consolidadas, insumo base para extractor.py (Sesión N)
-│   └── criterios_extraidos.json ← 167 criterios schema v1.2 con grounding por criterio (Sesión O)
+│   ├── criterios_extraidos.json ← 167 criterios schema v1.2 con grounding por criterio (Sesión O)
+│   ├── validator.py            ← filtro de confiabilidad: schema + contaminación few-shot + failed + duplicados; autotest obligatorio (Sesión P)
+│   ├── capa2_mecanica_montaje_gran_barata_pv_2026_validado.json ← 156 criterios validados (aún sin id/aliases/aplica_a)
+│   ├── validator_report.json   ← conteos exactos + 76 pares duplicados (Sesión P)
+│   └── revision_manual.json    ← 11 criterios para revisión manual, con motivo (Sesión P)
 ├── core/
 │   └── photo_analyzer.py
 ├── brains/

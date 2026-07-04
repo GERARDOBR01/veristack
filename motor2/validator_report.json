@@ -1,0 +1,872 @@
+{
+  "generado": "2026-07-03T20:09:35",
+  "input": "criterios_extraidos.json",
+  "umbral_duplicados": 0.85,
+  "paginas_por_estado": {
+    "ok": 40,
+    "sin_contenido": 7,
+    "excluida": 1
+  },
+  "criterios_entrada": 167,
+  "schema": {
+    "validos": 167,
+    "rechazados": 0,
+    "motivos": {}
+  },
+  "grounding_failed_filtrados": 11,
+  "contaminacion_fewshot": {
+    "flag_en_validados": 10,
+    "flag_en_revision": 11,
+    "nota": "solo marca, no rechaza. En p20/26/31 el match es circular por construcción: los few-shot del prompt citan texto real de esas páginas (Sesión O) — el texto es legítimo pero sus atributos peso/severidad no son juicio independiente del modelo"
+  },
+  "duplicados": {
+    "pares_sospechosos": 76,
+    "detalle": [
+      {
+        "ratio": 1.0,
+        "a": {
+          "pagina": 6,
+          "texto": "Imprimir primera etapa 40% genérico 60% beneficio"
+        },
+        "b": {
+          "pagina": 6,
+          "texto": "Imprimir primera etapa 40% genérico 60% beneficio"
+        }
+      },
+      {
+        "ratio": 0.9438,
+        "a": {
+          "pagina": 6,
+          "texto": "2da etapa 100% beneficio (Como años pasados)"
+        },
+        "b": {
+          "pagina": 6,
+          "texto": "3era etapa 100% beneficio (Como años pasados)"
+        }
+      },
+      {
+        "ratio": 1.0,
+        "a": {
+          "pagina": 6,
+          "texto": "2da etapa 100% beneficio (Como años pasados)"
+        },
+        "b": {
+          "pagina": 6,
+          "texto": "2da etapa 100% beneficio (Como años pasados)"
+        }
+      },
+      {
+        "ratio": 0.9438,
+        "a": {
+          "pagina": 6,
+          "texto": "3era etapa 100% beneficio (Como años pasados)"
+        },
+        "b": {
+          "pagina": 6,
+          "texto": "2da etapa 100% beneficio (Como años pasados)"
+        }
+      },
+      {
+        "ratio": 0.898,
+        "a": {
+          "pagina": 10,
+          "texto": "2 maniquíes – 1 etiqueta"
+        },
+        "b": {
+          "pagina": 10,
+          "texto": "3 maniquíes – 2 etiquetas"
+        }
+      },
+      {
+        "ratio": 0.898,
+        "a": {
+          "pagina": 10,
+          "texto": "2 maniquíes – 1 etiqueta"
+        },
+        "b": {
+          "pagina": 10,
+          "texto": "5 maniquíes – 3 etiquetas"
+        }
+      },
+      {
+        "ratio": 0.92,
+        "a": {
+          "pagina": 10,
+          "texto": "3 maniquíes – 2 etiquetas"
+        },
+        "b": {
+          "pagina": 10,
+          "texto": "5 maniquíes – 3 etiquetas"
+        }
+      },
+      {
+        "ratio": 0.9767,
+        "a": {
+          "pagina": 13,
+          "texto": "(4) Identificar con cartulina de descuento."
+        },
+        "b": {
+          "pagina": 14,
+          "texto": "(5) Identificar con cartulina de descuento."
+        }
+      },
+      {
+        "ratio": 0.9306,
+        "a": {
+          "pagina": 16,
+          "texto": "Revisa que el producto para este focal sea mercancía con descuentos."
+        },
+        "b": {
+          "pagina": 20,
+          "texto": "Revisa que el producto para este focal sea mercancía con el mismo descuento."
+        }
+      },
+      {
+        "ratio": 0.9306,
+        "a": {
+          "pagina": 16,
+          "texto": "Revisa que el producto para este focal sea mercancía con descuentos."
+        },
+        "b": {
+          "pagina": 22,
+          "texto": "Revisa que el producto para este focal sea mercancía con el mismo descuento."
+        }
+      },
+      {
+        "ratio": 0.9306,
+        "a": {
+          "pagina": 16,
+          "texto": "Revisa que el producto para este focal sea mercancía con descuentos."
+        },
+        "b": {
+          "pagina": 24,
+          "texto": "Revisa que el producto para este focal sea mercancía con el mismo descuento."
+        }
+      },
+      {
+        "ratio": 0.8926,
+        "a": {
+          "pagina": 20,
+          "texto": "Exhibir producto de la sección de Juniors o Joven Contempo."
+        },
+        "b": {
+          "pagina": 22,
+          "texto": "Exhibir producto de la sección de Juveniles o Hombre Contempo."
+        }
+      },
+      {
+        "ratio": 1.0,
+        "a": {
+          "pagina": 20,
+          "texto": "Revisa que el producto para este focal sea mercancía con el mismo descuento."
+        },
+        "b": {
+          "pagina": 22,
+          "texto": "Revisa que el producto para este focal sea mercancía con el mismo descuento."
+        }
+      },
+      {
+        "ratio": 1.0,
+        "a": {
+          "pagina": 20,
+          "texto": "Revisa que el producto para este focal sea mercancía con el mismo descuento."
+        },
+        "b": {
+          "pagina": 24,
+          "texto": "Revisa que el producto para este focal sea mercancía con el mismo descuento."
+        }
+      },
+      {
+        "ratio": 1.0,
+        "a": {
+          "pagina": 20,
+          "texto": "Integra los maniquíes de manera que se logren apreciar bien todos los looks."
+        },
+        "b": {
+          "pagina": 22,
+          "texto": "Integra los maniquíes de manera que se logren apreciar bien todos los looks."
+        }
+      },
+      {
+        "ratio": 1.0,
+        "a": {
+          "pagina": 20,
+          "texto": "Integra los maniquíes de manera que se logren apreciar bien todos los looks."
+        },
+        "b": {
+          "pagina": 24,
+          "texto": "Integra los maniquíes de manera que se logren apreciar bien todos los looks."
+        }
+      },
+      {
+        "ratio": 1.0,
+        "a": {
+          "pagina": 20,
+          "texto": "[AMBIGUO] En en los focales solo se colocan los gráficos de torres slim y maniquíes."
+        },
+        "b": {
+          "pagina": 22,
+          "texto": "[AMBIGUO] En en los focales solo se colocan los gráficos de torres slim y maniquíes."
+        }
+      },
+      {
+        "ratio": 1.0,
+        "a": {
+          "pagina": 20,
+          "texto": "[AMBIGUO] En en los focales solo se colocan los gráficos de torres slim y maniquíes."
+        },
+        "b": {
+          "pagina": 24,
+          "texto": "En en los focales solo se colocan los gráficos de torres slim y maniquíes."
+        }
+      },
+      {
+        "ratio": 1.0,
+        "a": {
+          "pagina": 21,
+          "texto": "Se impulsará IMO con los Avances de Temporada “TENDENCIA …”"
+        },
+        "b": {
+          "pagina": 23,
+          "texto": "Se impulsará IMO con los Avances de Temporada “TENDENCIA …”"
+        }
+      },
+      {
+        "ratio": 1.0,
+        "a": {
+          "pagina": 21,
+          "texto": "Se impulsará IMO con los Avances de Temporada “TENDENCIA …”"
+        },
+        "b": {
+          "pagina": 25,
+          "texto": "Se impulsará IMO con los Avances de Temporada “TENDENCIA …”"
+        }
+      },
+      {
+        "ratio": 1.0,
+        "a": {
+          "pagina": 21,
+          "texto": "No colocar gráficos de Barata."
+        },
+        "b": {
+          "pagina": 23,
+          "texto": "No colocar gráficos de Barata."
+        }
+      },
+      {
+        "ratio": 1.0,
+        "a": {
+          "pagina": 21,
+          "texto": "No colocar gráficos de Barata."
+        },
+        "b": {
+          "pagina": 25,
+          "texto": "No colocar gráficos de Barata."
+        }
+      },
+      {
+        "ratio": 1.0,
+        "a": {
+          "pagina": 21,
+          "texto": "En estos focales colocar los atriles de marca."
+        },
+        "b": {
+          "pagina": 23,
+          "texto": "En estos focales colocar los atriles de marca."
+        }
+      },
+      {
+        "ratio": 1.0,
+        "a": {
+          "pagina": 21,
+          "texto": "En estos focales colocar los atriles de marca."
+        },
+        "b": {
+          "pagina": 25,
+          "texto": "En estos focales colocar los atriles de marca."
+        }
+      },
+      {
+        "ratio": 1.0,
+        "a": {
+          "pagina": 22,
+          "texto": "Revisa que el producto para este focal sea mercancía con el mismo descuento."
+        },
+        "b": {
+          "pagina": 24,
+          "texto": "Revisa que el producto para este focal sea mercancía con el mismo descuento."
+        }
+      },
+      {
+        "ratio": 1.0,
+        "a": {
+          "pagina": 22,
+          "texto": "Integra los maniquíes de manera que se logren apreciar bien todos los looks."
+        },
+        "b": {
+          "pagina": 24,
+          "texto": "Integra los maniquíes de manera que se logren apreciar bien todos los looks."
+        }
+      },
+      {
+        "ratio": 1.0,
+        "a": {
+          "pagina": 22,
+          "texto": "[AMBIGUO] En en los focales solo se colocan los gráficos de torres slim y maniquíes."
+        },
+        "b": {
+          "pagina": 24,
+          "texto": "En en los focales solo se colocan los gráficos de torres slim y maniquíes."
+        }
+      },
+      {
+        "ratio": 1.0,
+        "a": {
+          "pagina": 23,
+          "texto": "Se impulsará IMO con los Avances de Temporada “TENDENCIA …”"
+        },
+        "b": {
+          "pagina": 25,
+          "texto": "Se impulsará IMO con los Avances de Temporada “TENDENCIA …”"
+        }
+      },
+      {
+        "ratio": 1.0,
+        "a": {
+          "pagina": 23,
+          "texto": "No colocar gráficos de Barata."
+        },
+        "b": {
+          "pagina": 25,
+          "texto": "No colocar gráficos de Barata."
+        }
+      },
+      {
+        "ratio": 1.0,
+        "a": {
+          "pagina": 23,
+          "texto": "En estos focales colocar los atriles de marca."
+        },
+        "b": {
+          "pagina": 25,
+          "texto": "En estos focales colocar los atriles de marca."
+        }
+      },
+      {
+        "ratio": 1.0,
+        "a": {
+          "pagina": 28,
+          "texto": "Coloca producto con mayor descuento para que sea atractivo al cliente."
+        },
+        "b": {
+          "pagina": 29,
+          "texto": "Coloca producto con mayor descuento para que sea atractivo al cliente."
+        }
+      },
+      {
+        "ratio": 1.0,
+        "a": {
+          "pagina": 28,
+          "texto": "Coloca producto con mayor descuento para que sea atractivo al cliente."
+        },
+        "b": {
+          "pagina": 33,
+          "texto": "Coloca producto con mayor descuento para que sea atractivo al cliente."
+        }
+      },
+      {
+        "ratio": 1.0,
+        "a": {
+          "pagina": 28,
+          "texto": "Coloca producto con mayor descuento para que sea atractivo al cliente."
+        },
+        "b": {
+          "pagina": 38,
+          "texto": "Coloca producto con mayor descuento para que sea atractivo al cliente."
+        }
+      },
+      {
+        "ratio": 0.9846,
+        "a": {
+          "pagina": 28,
+          "texto": "Mantén el orden de la exhibición"
+        },
+        "b": {
+          "pagina": 29,
+          "texto": "Mantén el orden de la exhibición."
+        }
+      },
+      {
+        "ratio": 1.0,
+        "a": {
+          "pagina": 28,
+          "texto": "Mantén el orden de la exhibición"
+        },
+        "b": {
+          "pagina": 33,
+          "texto": "Mantén el orden de la exhibición"
+        }
+      },
+      {
+        "ratio": 0.9846,
+        "a": {
+          "pagina": 28,
+          "texto": "Mantén el orden de la exhibición"
+        },
+        "b": {
+          "pagina": 38,
+          "texto": "Mantén el orden de la exhibición."
+        }
+      },
+      {
+        "ratio": 0.9846,
+        "a": {
+          "pagina": 28,
+          "texto": "Mercadeo por bloqueo de producto"
+        },
+        "b": {
+          "pagina": 29,
+          "texto": "Mercadeo por bloqueo de producto."
+        }
+      },
+      {
+        "ratio": 1.0,
+        "a": {
+          "pagina": 28,
+          "texto": "Mercadeo por bloqueo de producto"
+        },
+        "b": {
+          "pagina": 33,
+          "texto": "Mercadeo por bloqueo de producto"
+        }
+      },
+      {
+        "ratio": 0.9846,
+        "a": {
+          "pagina": 28,
+          "texto": "Mercadeo por bloqueo de producto"
+        },
+        "b": {
+          "pagina": 38,
+          "texto": "Mercadeo por bloqueo de producto."
+        }
+      },
+      {
+        "ratio": 1.0,
+        "a": {
+          "pagina": 29,
+          "texto": "Coloca producto con mayor descuento para que sea atractivo al cliente."
+        },
+        "b": {
+          "pagina": 33,
+          "texto": "Coloca producto con mayor descuento para que sea atractivo al cliente."
+        }
+      },
+      {
+        "ratio": 1.0,
+        "a": {
+          "pagina": 29,
+          "texto": "Coloca producto con mayor descuento para que sea atractivo al cliente."
+        },
+        "b": {
+          "pagina": 38,
+          "texto": "Coloca producto con mayor descuento para que sea atractivo al cliente."
+        }
+      },
+      {
+        "ratio": 0.9846,
+        "a": {
+          "pagina": 29,
+          "texto": "Mantén el orden de la exhibición."
+        },
+        "b": {
+          "pagina": 33,
+          "texto": "Mantén el orden de la exhibición"
+        }
+      },
+      {
+        "ratio": 1.0,
+        "a": {
+          "pagina": 29,
+          "texto": "Mantén el orden de la exhibición."
+        },
+        "b": {
+          "pagina": 38,
+          "texto": "Mantén el orden de la exhibición."
+        }
+      },
+      {
+        "ratio": 0.9846,
+        "a": {
+          "pagina": 29,
+          "texto": "Mercadeo por bloqueo de producto."
+        },
+        "b": {
+          "pagina": 33,
+          "texto": "Mercadeo por bloqueo de producto"
+        }
+      },
+      {
+        "ratio": 1.0,
+        "a": {
+          "pagina": 29,
+          "texto": "Mercadeo por bloqueo de producto."
+        },
+        "b": {
+          "pagina": 38,
+          "texto": "Mercadeo por bloqueo de producto."
+        }
+      },
+      {
+        "ratio": 0.9885,
+        "a": {
+          "pagina": 31,
+          "texto": "Colocar alternando a lo largo de la sección"
+        },
+        "b": {
+          "pagina": 39,
+          "texto": "Colocar alternando a lo largo de la sección."
+        }
+      },
+      {
+        "ratio": 0.9885,
+        "a": {
+          "pagina": 31,
+          "texto": "Colocar alternando a lo largo de la sección"
+        },
+        "b": {
+          "pagina": 40,
+          "texto": "Colocar alternando a lo largo de la sección."
+        }
+      },
+      {
+        "ratio": 0.8864,
+        "a": {
+          "pagina": 31,
+          "texto": "Masivo en bloque de marca y tipo de producto"
+        },
+        "b": {
+          "pagina": 34,
+          "texto": "Focal en bloque de marca y tipo de producto."
+        }
+      },
+      {
+        "ratio": 0.9714,
+        "a": {
+          "pagina": 31,
+          "texto": "No mezclar marcas"
+        },
+        "b": {
+          "pagina": 34,
+          "texto": "No mezclar marcas."
+        }
+      },
+      {
+        "ratio": 0.9804,
+        "a": {
+          "pagina": 31,
+          "texto": "Exhibir 1 focal por marca"
+        },
+        "b": {
+          "pagina": 34,
+          "texto": "Exhibir 1 focal por marca."
+        }
+      },
+      {
+        "ratio": 1.0,
+        "a": {
+          "pagina": 33,
+          "texto": "Coloca producto con mayor descuento para que sea atractivo al cliente."
+        },
+        "b": {
+          "pagina": 38,
+          "texto": "Coloca producto con mayor descuento para que sea atractivo al cliente."
+        }
+      },
+      {
+        "ratio": 0.9846,
+        "a": {
+          "pagina": 33,
+          "texto": "Mantén el orden de la exhibición"
+        },
+        "b": {
+          "pagina": 38,
+          "texto": "Mantén el orden de la exhibición."
+        }
+      },
+      {
+        "ratio": 0.9846,
+        "a": {
+          "pagina": 33,
+          "texto": "Mercadeo por bloqueo de producto"
+        },
+        "b": {
+          "pagina": 38,
+          "texto": "Mercadeo por bloqueo de producto."
+        }
+      },
+      {
+        "ratio": 1.0,
+        "a": {
+          "pagina": 39,
+          "texto": "Colocar alternando a lo largo de la sección."
+        },
+        "b": {
+          "pagina": 40,
+          "texto": "Colocar alternando a lo largo de la sección."
+        }
+      },
+      {
+        "ratio": 1.0,
+        "a": {
+          "pagina": 43,
+          "texto": "Acércate al jefe de la sección para que pueda dar visibilidad del producto de apuestas comerciales participantes con descuento."
+        },
+        "b": {
+          "pagina": 44,
+          "texto": "Acércate al jefe de la sección para que pueda dar visibilidad del producto de apuestas comerciales participantes con descuento."
+        }
+      },
+      {
+        "ratio": 1.0,
+        "a": {
+          "pagina": 43,
+          "texto": "La exhibición por disciplinas se mantiene y dentro de ellos y se separan por género y descuento."
+        },
+        "b": {
+          "pagina": 44,
+          "texto": "La exhibición por disciplinas se mantiene y dentro de ellos y se separan por género y descuento."
+        }
+      },
+      {
+        "ratio": 0.9511,
+        "a": {
+          "pagina": 44,
+          "texto": "Unidad de exhibición horizontal (superior izquierda): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'."
+        },
+        "b": {
+          "pagina": 44,
+          "texto": "Unidad de exhibición horizontal (superior centro): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'."
+        }
+      },
+      {
+        "ratio": 0.9558,
+        "a": {
+          "pagina": 44,
+          "texto": "Unidad de exhibición horizontal (superior izquierda): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'."
+        },
+        "b": {
+          "pagina": 44,
+          "texto": "Unidad de exhibición horizontal (superior derecha): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'."
+        }
+      },
+      {
+        "ratio": 0.96,
+        "a": {
+          "pagina": 44,
+          "texto": "Unidad de exhibición horizontal (superior izquierda): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'."
+        },
+        "b": {
+          "pagina": 44,
+          "texto": "Unidad de exhibición horizontal (media izquierda): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'."
+        }
+      },
+      {
+        "ratio": 0.9292,
+        "a": {
+          "pagina": 44,
+          "texto": "Unidad de exhibición horizontal (superior izquierda): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'."
+        },
+        "b": {
+          "pagina": 44,
+          "texto": "Unidad de exhibición vertical (inferior izquierda): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'."
+        }
+      },
+      {
+        "ratio": 0.8789,
+        "a": {
+          "pagina": 44,
+          "texto": "Unidad de exhibición horizontal (superior izquierda): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'."
+        },
+        "b": {
+          "pagina": 44,
+          "texto": "Unidad de exhibición vertical (inferior centro): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'."
+        }
+      },
+      {
+        "ratio": 0.8839,
+        "a": {
+          "pagina": 44,
+          "texto": "Unidad de exhibición horizontal (superior izquierda): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'."
+        },
+        "b": {
+          "pagina": 44,
+          "texto": "Unidad de exhibición vertical (inferior derecha): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'."
+        }
+      },
+      {
+        "ratio": 0.9507,
+        "a": {
+          "pagina": 44,
+          "texto": "Unidad de exhibición horizontal (superior centro): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'."
+        },
+        "b": {
+          "pagina": 44,
+          "texto": "Unidad de exhibición horizontal (superior derecha): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'."
+        }
+      },
+      {
+        "ratio": 0.8919,
+        "a": {
+          "pagina": 44,
+          "texto": "Unidad de exhibición horizontal (superior centro): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'."
+        },
+        "b": {
+          "pagina": 44,
+          "texto": "Unidad de exhibición horizontal (media izquierda): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'."
+        }
+      },
+      {
+        "ratio": 0.8789,
+        "a": {
+          "pagina": 44,
+          "texto": "Unidad de exhibición horizontal (superior centro): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'."
+        },
+        "b": {
+          "pagina": 44,
+          "texto": "Unidad de exhibición vertical (inferior izquierda): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'."
+        }
+      },
+      {
+        "ratio": 0.9273,
+        "a": {
+          "pagina": 44,
+          "texto": "Unidad de exhibición horizontal (superior centro): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'."
+        },
+        "b": {
+          "pagina": 44,
+          "texto": "Unidad de exhibición vertical (inferior centro): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'."
+        }
+      },
+      {
+        "ratio": 0.8778,
+        "a": {
+          "pagina": 44,
+          "texto": "Unidad de exhibición horizontal (superior centro): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'."
+        },
+        "b": {
+          "pagina": 44,
+          "texto": "Unidad de exhibición vertical (inferior derecha): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'."
+        }
+      },
+      {
+        "ratio": 0.9058,
+        "a": {
+          "pagina": 44,
+          "texto": "Unidad de exhibición horizontal (superior derecha): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'."
+        },
+        "b": {
+          "pagina": 44,
+          "texto": "Unidad de exhibición horizontal (media izquierda): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'."
+        }
+      },
+      {
+        "ratio": 0.8839,
+        "a": {
+          "pagina": 44,
+          "texto": "Unidad de exhibición horizontal (superior derecha): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'."
+        },
+        "b": {
+          "pagina": 44,
+          "texto": "Unidad de exhibición vertical (inferior izquierda): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'."
+        }
+      },
+      {
+        "ratio": 0.8869,
+        "a": {
+          "pagina": 44,
+          "texto": "Unidad de exhibición horizontal (superior derecha): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'."
+        },
+        "b": {
+          "pagina": 44,
+          "texto": "Unidad de exhibición vertical (inferior centro): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'."
+        }
+      },
+      {
+        "ratio": 0.9279,
+        "a": {
+          "pagina": 44,
+          "texto": "Unidad de exhibición horizontal (superior derecha): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'."
+        },
+        "b": {
+          "pagina": 44,
+          "texto": "Unidad de exhibición vertical (inferior derecha): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'."
+        }
+      },
+      {
+        "ratio": 0.9148,
+        "a": {
+          "pagina": 44,
+          "texto": "Unidad de exhibición horizontal (media izquierda): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'."
+        },
+        "b": {
+          "pagina": 44,
+          "texto": "Unidad de exhibición vertical (inferior izquierda): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'."
+        }
+      },
+      {
+        "ratio": 0.8597,
+        "a": {
+          "pagina": 44,
+          "texto": "Unidad de exhibición horizontal (media izquierda): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'."
+        },
+        "b": {
+          "pagina": 44,
+          "texto": "Unidad de exhibición vertical (inferior derecha): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'."
+        }
+      },
+      {
+        "ratio": 0.9502,
+        "a": {
+          "pagina": 44,
+          "texto": "Unidad de exhibición vertical (inferior izquierda): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'."
+        },
+        "b": {
+          "pagina": 44,
+          "texto": "Unidad de exhibición vertical (inferior centro): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'."
+        }
+      },
+      {
+        "ratio": 0.955,
+        "a": {
+          "pagina": 44,
+          "texto": "Unidad de exhibición vertical (inferior izquierda): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'."
+        },
+        "b": {
+          "pagina": 44,
+          "texto": "Unidad de exhibición vertical (inferior derecha): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'."
+        }
+      },
+      {
+        "ratio": 0.9498,
+        "a": {
+          "pagina": 44,
+          "texto": "Unidad de exhibición vertical (inferior centro): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'."
+        },
+        "b": {
+          "pagina": 44,
+          "texto": "Unidad de exhibición vertical (inferior derecha): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'."
+        }
+      }
+    ]
+  },
+  "resultado": {
+    "validados": 156,
+    "a_revision_manual": 11
+  },
+  "advertencias": {
+    "seccion_aplicable_null_en_validados": 37,
+    "campos_fuera_de_contrato": [],
+    "nota_seccion_null": "null es válido por contrato del normalizer (encabezado sin match, reportado en Sesión O) — se cuenta, no se rechaza"
+  }
+}

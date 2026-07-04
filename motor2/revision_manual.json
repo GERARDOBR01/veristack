@@ -1,0 +1,203 @@
+{
+  "generado": "2026-07-03T20:09:35",
+  "input": "criterios_extraidos.json",
+  "total": 11,
+  "criterios": [
+    {
+      "texto": "Revisa que el producto para este focal sea mercancía con el mismo descuento.",
+      "peso": "MANDATORY",
+      "severidad": "GRAVE",
+      "condicion_libre": "Focales fuera de la sección",
+      "referencia_no_resuelta": false,
+      "pagina_origen": 1,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "failed",
+      "posible_herencia_fewshot": true,
+      "fewshot_ejemplo": 3,
+      "motivos_revision": [
+        "grounding=failed — sin span en la fuente, no se confía (los contaminados de few-shot de p1/p5/p8 caen aquí)"
+      ]
+    },
+    {
+      "texto": "[AMBIGUO] Cuida tus básicos de Display.",
+      "peso": "MANDATORY",
+      "severidad": "OBSERVACION",
+      "condicion_libre": null,
+      "referencia_no_resuelta": null,
+      "pagina_origen": 1,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "failed",
+      "posible_herencia_fewshot": true,
+      "fewshot_ejemplo": 3,
+      "motivos_revision": [
+        "grounding=failed — sin span en la fuente, no se confía (los contaminados de few-shot de p1/p5/p8 caen aquí)"
+      ]
+    },
+    {
+      "texto": "Revisa que el producto para este focal sea mercancía con el mismo descuento.",
+      "peso": "MANDATORY",
+      "severidad": "GRAVE",
+      "condicion_libre": "Focales fuera de la sección",
+      "referencia_no_resuelta": false,
+      "pagina_origen": 5,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "gemini_vision",
+      "grounding": "failed",
+      "posible_herencia_fewshot": true,
+      "fewshot_ejemplo": 3,
+      "motivos_revision": [
+        "grounding=failed — sin span en la fuente, no se confía (los contaminados de few-shot de p1/p5/p8 caen aquí)"
+      ]
+    },
+    {
+      "texto": "[AMBIGUO] Cuida tus básicos de Display.",
+      "peso": "MANDATORY",
+      "severidad": "OBSERVACION",
+      "condicion_libre": null,
+      "referencia_no_resuelta": null,
+      "pagina_origen": 5,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "gemini_vision",
+      "grounding": "failed",
+      "posible_herencia_fewshot": true,
+      "fewshot_ejemplo": 3,
+      "motivos_revision": [
+        "grounding=failed — sin span en la fuente, no se confía (los contaminados de few-shot de p1/p5/p8 caen aquí)"
+      ]
+    },
+    {
+      "texto": "Colocar alternando a lo largo de la sección",
+      "peso": "MANDATORY",
+      "severidad": "OBSERVACION",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 8,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "gemini_vision",
+      "grounding": "failed",
+      "posible_herencia_fewshot": true,
+      "fewshot_ejemplo": 2,
+      "motivos_revision": [
+        "grounding=failed — sin span en la fuente, no se confía (los contaminados de few-shot de p1/p5/p8 caen aquí)"
+      ]
+    },
+    {
+      "texto": "No mezclar marcas",
+      "peso": "MANDATORY",
+      "severidad": "GRAVE",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 8,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "gemini_vision",
+      "grounding": "failed",
+      "posible_herencia_fewshot": true,
+      "fewshot_ejemplo": 2,
+      "motivos_revision": [
+        "grounding=failed — sin span en la fuente, no se confía (los contaminados de few-shot de p1/p5/p8 caen aquí)"
+      ]
+    },
+    {
+      "texto": "Exhibir 1 focal por marca",
+      "peso": "MANDATORY",
+      "severidad": "OBSERVACION",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 8,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "gemini_vision",
+      "grounding": "failed",
+      "posible_herencia_fewshot": true,
+      "fewshot_ejemplo": 2,
+      "motivos_revision": [
+        "grounding=failed — sin span en la fuente, no se confía (los contaminados de few-shot de p1/p5/p8 caen aquí)"
+      ]
+    },
+    {
+      "texto": "caja de vajilla cerrada Narrative y Kostlich.",
+      "peso": "RECOMMENDATION",
+      "severidad": "NO_CALIFICA",
+      "condicion_libre": "Mesa Fina",
+      "referencia_no_resuelta": false,
+      "pagina_origen": 8,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "gemini_vision",
+      "grounding": "failed",
+      "posible_herencia_fewshot": true,
+      "fewshot_ejemplo": 2,
+      "motivos_revision": [
+        "grounding=failed — sin span en la fuente, no se confía (los contaminados de few-shot de p1/p5/p8 caen aquí)"
+      ]
+    },
+    {
+      "texto": "[AMBIGUO] Cuida tus básicos de Display.",
+      "peso": "MANDATORY",
+      "severidad": "OBSERVACION",
+      "condicion_libre": null,
+      "referencia_no_resuelta": null,
+      "pagina_origen": 20,
+      "seccion_aplicable": "Softline",
+      "etapa_aplicable": [
+        "E1",
+        "E2"
+      ],
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "failed",
+      "posible_herencia_fewshot": true,
+      "fewshot_ejemplo": 3,
+      "motivos_revision": [
+        "grounding=failed — sin span en la fuente, no se confía (los contaminados de few-shot de p1/p5/p8 caen aquí)"
+      ]
+    },
+    {
+      "texto": "[AMBIGUO] Cuida tus básicos de Display.",
+      "peso": "MANDATORY",
+      "severidad": "OBSERVACION",
+      "condicion_libre": null,
+      "referencia_no_resuelta": null,
+      "pagina_origen": 22,
+      "seccion_aplicable": "Softline",
+      "etapa_aplicable": [
+        "E1",
+        "E2"
+      ],
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "failed",
+      "posible_herencia_fewshot": true,
+      "fewshot_ejemplo": 3,
+      "motivos_revision": [
+        "grounding=failed — sin span en la fuente, no se confía (los contaminados de few-shot de p1/p5/p8 caen aquí)"
+      ]
+    },
+    {
+      "texto": "[AMBIGUO] Cuida tus básicos de Display.",
+      "peso": "MANDATORY",
+      "severidad": "OBSERVACION",
+      "condicion_libre": null,
+      "referencia_no_resuelta": null,
+      "pagina_origen": 24,
+      "seccion_aplicable": "Softline",
+      "etapa_aplicable": [
+        "E1",
+        "E2"
+      ],
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "failed",
+      "posible_herencia_fewshot": true,
+      "fewshot_ejemplo": 3,
+      "motivos_revision": [
+        "grounding=failed — sin span en la fuente, no se confía (los contaminados de few-shot de p1/p5/p8 caen aquí)"
+      ]
+    }
+  ]
+}
