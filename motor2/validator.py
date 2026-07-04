@@ -18,7 +18,10 @@ Qué hace (en orden, cada paso una función separada y testeable):
        quedaron "reportados, no forzados" (p1, GRAN, PLANOGRAMA ZAPATERÍAS,
        OUTPOS). Se cuentan aparte en el reporte, no se esconden.
   2. detectar_contaminacion_fewshot(criterio) → nº de ejemplo o None.
-       Substring-test (verbatim módulo whitespace, porque el PDF parte líneas)
+       Substring-test (verbatim módulo whitespace y puntuación final . , ; : —
+       el PDF parte líneas y el modelo a veces agrega/quita el punto; fix
+       Sesión Q: "No mezclar marcas" p31 y "No mezclar marcas." p34 son el
+       mismo caso y deben flagear igual)
        contra los 3 bloques few-shot del prompt, importados de extractor.py
        (una sola fuente de verdad — extractor.py NO se toca). Los bloques
        vienen de texto real de p26/p31/p20, así que en ESAS páginas el match
@@ -82,12 +85,19 @@ CAMPOS_OBLIGATORIOS = ("texto", "peso", "severidad", "condicion_libre",
 
 UMBRAL_DUPLICADOS = 0.85  # fijo por brief — determinista, sin calibración
 
-# Bloques few-shot literales del prompt real (anclados en texto de p26/p31/p20).
-BLOQUES_FEWSHOT = [(i, " ".join(e.text.split())) for i, e in enumerate(ex.EXAMPLES, 1)]
-
-
 def _norm_ws(s: str) -> str:
     return " ".join((s or "").split())
+
+
+def _norm_fewshot(s: str) -> str:
+    """Normalización del substring-test: whitespace colapsado + sin puntuación
+    final (. , ; :). Fix Sesión Q — el mismo texto con/sin punto final debe dar
+    el mismo resultado. Se aplica IGUAL al criterio y a los bloques EXAMPLES."""
+    return _norm_ws(s).rstrip(".,;:")
+
+
+# Bloques few-shot literales del prompt real (anclados en texto de p26/p31/p20).
+BLOQUES_FEWSHOT = [(i, _norm_fewshot(e.text)) for i, e in enumerate(ex.EXAMPLES, 1)]
 
 
 def _sin_ambiguo(texto: str) -> str:
@@ -163,9 +173,9 @@ def validar_schema(criterio) -> list:
 # --- 2. Contaminación few-shot ---------------------------------------------------
 def detectar_contaminacion_fewshot(criterio):
     """Nº del bloque ejemplo (1-3) si el texto del criterio aparece VERBATIM
-    (módulo whitespace) dentro de un bloque few-shot del prompt; None si no.
-    Solo marca — el rechazo no es asunto de esta función."""
-    t = _norm_ws(_sin_ambiguo(criterio.get("texto")))
+    (módulo whitespace y puntuación final) dentro de un bloque few-shot del
+    prompt; None si no. Solo marca — el rechazo no es asunto de esta función."""
+    t = _norm_fewshot(_sin_ambiguo(criterio.get("texto")))
     if not t:
         return None
     for i, bloque in BLOQUES_FEWSHOT:

@@ -1,5 +1,5 @@
 {
-  "generado": "2026-07-03T20:09:35",
+  "generado": "2026-07-03T20:23:35",
   "input": "criterios_extraidos.json",
   "umbral_duplicados": 0.85,
   "paginas_por_estado": {
@@ -15,7 +15,7 @@
   },
   "grounding_failed_filtrados": 11,
   "contaminacion_fewshot": {
-    "flag_en_validados": 10,
+    "flag_en_validados": 14,
     "flag_en_revision": 11,
     "nota": "solo marca, no rechaza. En p20/26/31 el match es circular por construcción: los few-shot del prompt citan texto real de esas páginas (Sesión O) — el texto es legítimo pero sus atributos peso/severidad no son juicio independiente del modelo"
   },
