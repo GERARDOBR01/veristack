@@ -19,7 +19,28 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 
 ---
 
-## Estado actual (3 Jul 2026 — Sesión Q: verificación de Sesión P + fix puntuación en substring-test)
+## Estado actual (3 Jul 2026 — Sesión R: comparación capa2 actual vs validado — NO listo para producción)
+
+Solo lectura/diagnóstico — nada de código tocado (`retrieval_engine.py`, `confidence_engine.py`, `mandatory_engine.py`, `app.py` sin cambios). Sin push de código; este CLAUDE.md es el único cambio de esta sesión.
+
+**Recomendación: NO swap a producción todavía.** El `capa2_*_validado.json` (156 criterios, Sesión P/Q) no puede reemplazar a `capa2_campana_activa.json` (101, producción) sin una capa de transformación intermedia — no es un problema de calidad de datos, es que le faltan campos que Motor 1 requiere para funcionar en absoluto.
+
+1. **Diff estructural — INCOMPATIBLE, confirmado por ejecución real (no solo lectura de schema)**:
+   - Al `validado` le faltan `id`, `aliases` y `aplica_a` en el 100% de sus 156 criterios (156/156 sin cada campo — esto ya estaba declarado en su propio `meta.nota_formato` desde Sesión P, pero nadie había medido el impacto en Motor 1 hasta ahora).
+   - `retrieval_engine._extraer_criterios_del_knowledge()` arma la lista de criterios a buscar leyendo el campo `id` de cada capa. Sin `id`, **la capa2 no aporta ningún criterio a la lista — no es un fallback degradado, es silencio total**: corrí el pipeline completo apuntando `ruta_capa2` al validado (sin imagen, sin llamar al modelo, metadata sintética "foto bien armada") y comparé contra la misma corrida con el JSON actual:
+     - **Actual**: 101 ids extraídos de capa2 → 115 criterios totales en el resultado (39 código + 76 modelo)
+     - **Validado (swap directo)**: **0 ids extraídos de capa2** → 21 criterios totales (solo lo que aportan Capa1 y Capa3) — **94 criterios de mecánica de campaña desaparecen sin error ni warning visible en la UI**
+   - Campos nuevos en validado que Motor 1 no usa hoy pero no rompen nada: `severidad`, `grounding`, `posible_herencia_fewshot`, `fewshot_ejemplo`, `fuente_pagina`, `seccion_aplicable`. `etapa_aplicable` usa strings `"E1"/"E2"/"E3"` en vez de `"1"/"2"/"3"` (el actual) — esto SÍ es compatible: `retrieval_engine._norm_etapa()` ya normaliza ambas formas por regex, confirmado sin cambios de código.
+2. **Conteo por etapa/sección**:
+   - `etapa_aplicable`: actual 86/101 null (universal) + 15 con etapa específica; validado 134/156 null + 22 con etapa (`E1+E2`×12, `E3`×9, `E2+E3`×1). Proporción similar, sin señal de alarma.
+   - `seccion_aplicable` es campo **nuevo**, no existe en el actual — no hay línea base para comparar distribución; hoy: Softline 42, null 37, Hardline 28, Deportes 19, Hogar 13, Multimedia 9, Diversos 8.
+   - `peso`: MANDATORY sube de 85→125, RECOMMENDATION de 6→24, EXCEPTION baja de 10→7 — esperado, dado que 156>101 y la extracción de Sesión O es más granular que la capa2 actual (curada a mano).
+3. **Spot-check (8 al azar, seed fijo para reproducibilidad)**: entregado abajo con texto completo + página + peso + severidad para revisión de Gerardo contra el manual real. Uno de los 8 cayó en p6 (el pendiente de duplicados intra-página de Sesión Q — "3ERA etapa solo producir parches +20"), y otro en p24 con `posible_herencia_fewshot=true` (el pendiente de pertenencia few-shot ya documentado, no resuelto).
+4. **Corrida de Motor 1**: no existe `simulation.jpeg` ni ninguna foto de prueba en el repo — corrí sin imagen (`imagen_path=None`, metadata sintética equivalente al Caso 2 de `pipeline.py`, sin llamar a Gemini) apuntando a ambos JSONs de capa2. Ambas corridas **terminan sin excepción**, pero el veredicto y la cobertura cambian radicalmente por el punto 1: con el validado, Motor 1 evalúa 21 criterios en vez de 115, todos degradados a NO_CALIFICA por falta de imagen/modelo (comportamiento esperado sin key), pero la causa real de la caída de 115→21 es la ausencia de `id`, no la falta de imagen.
+
+🔴 **Pendiente — bloquea el swap**: 156 criterios validados necesitan asignación de `id`/`aliases`/`aplica_a` (ya era el punto 1 de "Próximos pasos") antes de poder ser candidato a reemplazar `capa2_campana_activa.json`. Swap directo hoy = pérdida silenciosa de cobertura de campaña, no mejora.
+
+## Estado previo (3 Jul 2026 — Sesión Q: verificación de Sesión P + fix puntuación en substring-test)
 
 ✅ Completado (commit de esta sesión, push autorizado en el brief de cierre):
 - **Verificación 1 — la "discrepancia" de páginas NO era discrepancia**: p20/26/31 (Sesión O) son las páginas de ORIGEN del texto few-shot (donde ese texto existe de verdad en el manual — confirmado buscando cada texto de EXAMPLES en el consolidado: bloque 1 → p26, bloque 2 → p31, bloque 3 → p20/22/24 por los tríos hermanos); p1/p5/p8 (Sesión P) son las páginas DESTINO de la contaminación (los 8 copiados verbatim de EXAMPLES que NO existen en su página fuente — confirmado 8/8 contra el consolidado). Los 3 `[AMBIGUO]` de p20/22/24 SÍ existen en sus páginas (3/3) — su failed es solo el prefijo. Ambos reportes eran consistentes entre sí
