@@ -19,7 +19,21 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 
 ---
 
-## Estado actual (3 Jul 2026 — Sesión P: Motor 2, validator.py sobre los 167 criterios)
+## Estado actual (3 Jul 2026 — Sesión Q: verificación de Sesión P + fix puntuación en substring-test)
+
+✅ Completado (commit de esta sesión, push autorizado en el brief de cierre):
+- **Verificación 1 — la "discrepancia" de páginas NO era discrepancia**: p20/26/31 (Sesión O) son las páginas de ORIGEN del texto few-shot (donde ese texto existe de verdad en el manual — confirmado buscando cada texto de EXAMPLES en el consolidado: bloque 1 → p26, bloque 2 → p31, bloque 3 → p20/22/24 por los tríos hermanos); p1/p5/p8 (Sesión P) son las páginas DESTINO de la contaminación (los 8 copiados verbatim de EXAMPLES que NO existen en su página fuente — confirmado 8/8 contra el consolidado). Los 3 `[AMBIGUO]` de p20/22/24 SÍ existen en sus páginas (3/3) — su failed es solo el prefijo. Ambos reportes eran consistentes entre sí
+- **Fix Sesión Q (único cambio de código, en `validator.py`)**: el substring-test de `detectar_contaminacion_fewshot()` normalizaba whitespace pero NO puntuación final — "No mezclar marcas" (p31) flageaba y "No mezclar marcas." (p34, mismo caso con punto) no. Nueva `_norm_fewshot()`: whitespace colapsado + `rstrip(".,;:")`, aplicada IGUAL al criterio y a los bloques EXAMPLES. Autotest 7/7 PASS antes y después
+- **Re-corrida sobre los 167 reales**: 156 validados + 11 a revisión (sin cambio — el flag marca, no rechaza), conservación 156+11=167 ✓, schema 167/167, duplicados 76 pares igual. **Único número que cambió: flag `posible_herencia_fewshot` 10 → 14 en validados** — los 4 nuevos son exactamente los que escapaban por el punto final: p34×2 ("No mezclar marcas.", "Exhibir 1 focal por marca."), p39×1 y p40×1 ("Colocar alternando a lo largo de la sección."). Texto legítimo de esas páginas (verificado contra el consolidado), pero igual que p20/22/24/26/31 sus peso/severidad no son juicio independiente del modelo. `validator_report.json`/`revision_manual.json`/`capa2_*_validado.json` regenerados (anteriores en `.bak-20260703-202335`, locales, no se commitean)
+- **Muestra de duplicados revisada con Gerardo** (Sesión Q parte 1): pares intra-p6, tríos hermanos p20/22/24, cross-sección p29/33 (difieren solo en punto final), y los de p44 (Vision). Ojo: el par p6 "2da etapa…" vs "3era etapa…" (ratio 0.94) NO es duplicado real — etapas distintas que el umbral 0.85 agarra
+
+🔴 **PENDIENTES DOCUMENTADOS (no resueltos a propósito — Sesión Q solo los deja anotados):**
+1. **p6 — duplicados intra-página**: 2 pares idénticos (ratio 1.0) en la misma página 6 ("Imprimir primera etapa 40% genérico 60% beneficio" ×2 y "2da etapa 100% beneficio (Como años pasados)" ×2, sección null). NO es boilerplate de secciones hermanas — puede ser repetición real del slide o duplicación del extractor. **Requiere que Gerardo revise la página 6 del PDF a ojo antes de decidir si es bug**
+2. **p44 (Vision, planograma) — scope de qué cuenta como criterio**: los "criterios" extraídos ahí son descripciones de layout ("Unidad de exhibición horizontal (superior izquierda): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'"), no instrucciones de compliance verificables. Posible problema de scope cuando la fuente es `vision_fallback.py` sobre páginas de diagrama (la estructura serializada entra al extractor como si fuera pauta). **No se tocó código — queda para una revisión de scope futura** (¿filtrar por tipo_layout? ¿marcar criterios de páginas Vision descriptivos?)
+
+- **NO se tocó** (por brief): extractor.py, normalizer.py, segmenter.py, clasificador_layout.py, vision_fallback.py, consolidar_manual.py, schema_conocimiento_v1.md, pipeline/ (Motor 1). En validator.py solo el fix de puntuación
+
+## Estado previo (3 Jul 2026 — Sesión P: Motor 2, validator.py sobre los 167 criterios)
 
 ✅ Completado (commit de esta sesión, push autorizado en el brief de cierre):
 - **Motor 2 — `motor2/validator.py`**: el filtro que decide si un criterio extraído es confiable. 4 funciones separadas y testeables, orden fijo: `validar_schema` → `detectar_contaminacion_fewshot` → `filtrar_failed` → `detectar_duplicados`. Sin IA ni librerías nuevas (solo stdlib: json/re/difflib); importa `extractor.py` únicamente para leer EXAMPLES/MARCA_AMBIGUO (una sola fuente de verdad con el prompt — extractor NO se tocó)
@@ -178,7 +192,7 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 - Cola de consenso `pendientes_revision.json`
 
 ## Próximos pasos (orden de prioridad)
-1. **Motor 2 — siguiente sesión: de extracción validada a capa de knowledge v1.1**: asignar `id`/`aliases`/`aplica_a` a los 156 validados, decidir qué hacer con los 76 pares duplicados reportados (los clusters de páginas hermanas son repetición real del manual — ¿consolidar con `etapa_aplicable`/`condicion_libre` o conservar por página?), revisar a mano los 11 de `revision_manual.json` (el `[AMBIGUO]` de p20 es falso-failed: su texto sí está en la página), y corregir los 3 casos sub-marcados de `referencia_no_resuelta` (p10 manual de señalización, p39/p40 Book de impulsos). Revisar el hallazgo de duplicados intra-página en p6
+1. **Motor 2 — siguiente sesión: de extracción validada a capa de knowledge v1.1**: asignar `id`/`aliases`/`aplica_a` a los 156 validados, decidir qué hacer con los 76 pares duplicados reportados (los clusters de páginas hermanas son repetición real del manual — ¿consolidar con `etapa_aplicable`/`condicion_libre` o conservar por página?), revisar a mano los 11 de `revision_manual.json` (el `[AMBIGUO]` de p20 es falso-failed: su texto sí está en la página), y corregir los 3 casos sub-marcados de `referencia_no_resuelta` (p10 manual de señalización, p39/p40 Book de impulsos). Revisar los 2 pendientes documentados en Sesión Q: duplicados intra-página en p6 (Gerardo revisa el slide a ojo) y scope de criterios descriptivos en páginas Vision (p44)
 2. Resolver las 2 referencias no resueltas de capa2 (`etiquetado_hogar_diversos` → manual señalización Hardline; `exhibicion_book_impulsos` → Book de impulsos) cuando Gerardo consiga esos documentos
 3. Decidir si los campos de proveniencia (`pagina_origen`, `confianza_extraccion`, `referencia_cruzada`) se formalizan en el schema o se eliminan del JSON
 4. Validar `app.py` en navegador (la lógica ya está probada end-to-end por script; falta el click manual en la UI)
@@ -226,7 +240,7 @@ veristack/
 │   ├── consolidar_manual.py    ← une Vision (14) + texto plano (34) en un solo JSON (Sesión N)
 │   ├── manual_consolidado.json ← las 48 páginas consolidadas, insumo base para extractor.py (Sesión N)
 │   ├── criterios_extraidos.json ← 167 criterios schema v1.2 con grounding por criterio (Sesión O)
-│   ├── validator.py            ← filtro de confiabilidad: schema + contaminación few-shot + failed + duplicados; autotest obligatorio (Sesión P)
+│   ├── validator.py            ← filtro de confiabilidad: schema + contaminación few-shot + failed + duplicados; autotest obligatorio (Sesión P; fix puntuación final en substring-test Sesión Q)
 │   ├── capa2_mecanica_montaje_gran_barata_pv_2026_validado.json ← 156 criterios validados (aún sin id/aliases/aplica_a)
 │   ├── validator_report.json   ← conteos exactos + 76 pares duplicados (Sesión P)
 │   └── revision_manual.json    ← 11 criterios para revisión manual, con motivo (Sesión P)
