@@ -99,10 +99,26 @@ def _sin_marca_ambiguo(texto: str) -> str:
     return texto[len(ex.MARCA_AMBIGUO):] if texto.startswith(ex.MARCA_AMBIGUO) else texto
 
 
+_RE_MARCADOR_LISTA = re.compile(r"\(\s*\d+\s*\)")
+
+
+def _sin_marcadores_lista(texto: str) -> str:
+    """Descarta marcadores de lista tipo "(1)", "(2)"... — son numeración de
+    la fuente, no una keyword del contenido. Fix Sesión V (parte 2): el fix
+    anterior (preservar dígitos puros) hizo que estos marcadores empezaran a
+    ocupar un slot del tope de 5 keywords, tapando la última palabra real del
+    criterio (ej. "colocar_producto_descuento_mayor_menor" perdía "menor").
+    Regex acotado a "(dígitos)" exacto — un porcentaje como "(30%)" NO
+    matchea (el "%" rompe el patrón), así que sigue preservándose."""
+    texto = texto or ""
+    return _RE_MARCADOR_LISTA.sub(" ", texto)
+
+
 def _keywords(texto: str) -> list[str]:
     """Tokens normalizados (sin acentos/mayúsculas/puntuación), sin stopwords,
     largo >= MIN_LARGO_TOKEN. Orden de aparición en el texto (determinista)."""
-    limpio = _sin_acentos(_sin_marca_ambiguo(texto)).lower()
+    limpio = _sin_marcadores_lista(_sin_marca_ambiguo(texto))
+    limpio = _sin_acentos(limpio).lower()
     limpio = re.sub(r"[^a-z0-9\s]", " ", limpio)
     tokens = limpio.split()
     return [

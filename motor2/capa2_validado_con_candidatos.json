@@ -12,8 +12,10 @@
     "confirmaciones_nota": "30 de 156 criterios confirmados por Gerardo y marcados revisado_por_gerardo=true (3 de los 18 grupos de colisión de Sesión S: p6 barras/columnas, Focal Show p20-25 por departamento, 'no mezclar marcas' p31/34/39/40). Quedan 7 grupos de colisión (20 criterios) sin confirmar — ver docstring de aplicar_confirmaciones_sesion_t.py, incluye un falso positivo detectado (maniquies_etiquetas, p10) por limitación del generador de slugs con números de 1 dígito.",
     "confirmaciones_sesion_u": "2026-07-04T19:07:55",
     "confirmaciones_sesion_u_nota": "Gerardo resolvió los 7 grupos de colisión real de Sesión T (20 criterios, ahora revisado_por_gerardo=true): colapso de coloca_producto_mayor_descuento_sea -> colocar_producto_mayor_descuento y manten_orden_exhibicion -> mantener_orden_exhibicion; separación del falso positivo maniquies_etiquetas (p10) en maniquies_3_etiquetas_2 y maniquies_5_etiquetas_3; y confirmación del id compartido en acercate_jefe_seccion_pueda_dar, exhibicion_disciplinas_mantiene_dentro_separan, identificar_cartulina_descuento y mercadeo_bloqueo_producto. Solo se modificó el campo id; el texto original del manual no se tocó.",
-    "regenerado_pendientes_sesion_v": "2026-07-05T21:31:57",
-    "regenerado_pendientes_sesion_v_nota": "Fix del generador (Sesión V): los tokens puramente numéricos ya no se descartan por longitud (bug Sesión T: '3'/'2'/'5' se perdían y colapsaban reglas de cantidad distinta al mismo id, ej. p10 maniquíes, resuelto a mano en Sesión U). Se regeneraron id/aliases/aplica_a SOLO para los 106 criterios con revisado_por_gerardo=false; los 50 confirmados en Sesiones T/U no se tocaron. Ningún criterio se marcó revisado_por_gerardo=true en este paso — eso queda para la revisión por lotes de Gerardo."
+    "regenerado_pendientes_sesion_v": "2026-07-05T21:43:02",
+    "regenerado_pendientes_sesion_v_nota": "Fix del generador (Sesión V): los tokens puramente numéricos ya no se descartan por longitud (bug Sesión T: '3'/'2'/'5' se perdían y colapsaban reglas de cantidad distinta al mismo id, ej. p10 maniquíes, resuelto a mano en Sesión U). Se regeneraron id/aliases/aplica_a SOLO para los 106 criterios con revisado_por_gerardo=false; los 50 confirmados en Sesiones T/U no se tocaron. Ningún criterio se marcó revisado_por_gerardo=true en este paso — eso queda para la revisión por lotes de Gerardo.",
+    "lote1_sesion_v": "2026-07-05T21:43:56",
+    "lote1_sesion_v_nota": "Gerardo revisó y confirmó el Lote 1 (18 criterios: p6/7/10/16/18/20/22/24) presentado en Sesión V. 3 renombres manuales aplicados: 3era_etapa_solo_producir_parches -> columnas_etapa3_parches_20 (completa el patrón de sus hermanos barras/columnas etapa1-3, dato que Sesión T daba por inexistente); imprimir_primera_etapa_generico_usan -> atriles_primera_etapa_generico; y los 3 de focal-por-departamento (p20/22/24) renombrados al esquema de cluster focal_show_<genero>_departamento_<depto> para alinearlos con sus hermanos focal_show_X_etapa1_2 ya confirmados en Sesión T. Los otros 13 quedaron con el id tal como lo produjo el generador ya corregido (dígitos preservados, marcadores de lista descartados). Solo se modificó id y revisado_por_gerardo — texto original intacto."
   },
   "criterios": [
     {
@@ -36,7 +38,7 @@
       "aplica_a": [
         "torre"
       ],
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Imprimir primera etapa 40% genérico 60% beneficio",
@@ -150,13 +152,13 @@
       "fuente_pagina": "gemini_vision",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "3era_etapa_solo_producir_parches",
+      "id": "columnas_etapa3_parches_20",
       "aliases": [
         "3era etapa",
         "etapa solo"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Imprimir primera etapa genérico, se usan para ambas secciones",
@@ -170,13 +172,13 @@
       "fuente_pagina": "gemini_vision",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "imprimir_primera_etapa_generico_usan",
+      "id": "atriles_primera_etapa_generico",
       "aliases": [
         "imprimir primera",
         "primera etapa"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Nada se resguarda",
@@ -195,7 +197,7 @@
         "nada resguarda"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Agregar los puntos dependiendo la etapa en la que se encuentre la campaña conforme a la visualización.",
@@ -218,7 +220,7 @@
         "puntos dependiendo"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Para el caso de los muebles de focal, coloca la etiqueta a la misma altura y del mismo lado.",
@@ -238,7 +240,7 @@
         "muebles focal"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Utilizar la siguiente fórmula.",
@@ -258,7 +260,7 @@
         "siguiente formula"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "2 maniquíes – 1 etiqueta",
@@ -278,7 +280,7 @@
         "maniquies 1"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "3 maniquíes – 2 etiquetas",
@@ -336,7 +338,7 @@
         "etiquetas solo"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "[AMBIGUO] Consulta en la liga el manual de señalización de Barata en piso, para Hardline.",
@@ -356,7 +358,7 @@
         "liga manual"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Agrupar la mercancía calificada con Barata y Liquidación al frente de la sección sin mezclar",
@@ -490,10 +492,10 @@
       "fuente_pagina": "gemini_vision",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "1_colocar_producto_descuento_mayor",
+      "id": "colocar_producto_descuento_mayor_menor",
       "aliases": [
-        "1 colocar",
-        "colocar producto"
+        "colocar producto",
+        "producto descuento"
       ],
       "aplica_a": null,
       "revisado_por_gerardo": false
@@ -510,10 +512,10 @@
       "fuente_pagina": "gemini_vision",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "2_respetar_mundos_romper_clasificaciones",
+      "id": "respetar_mundos_romper_clasificaciones",
       "aliases": [
-        "2 respetar",
-        "respetar mundos"
+        "respetar mundos",
+        "mundos romper"
       ],
       "aplica_a": null,
       "revisado_por_gerardo": false
@@ -530,10 +532,10 @@
       "fuente_pagina": "gemini_vision",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "3_exhibir_modelos_repetirlos",
+      "id": "exhibir_modelos_repetirlos",
       "aliases": [
-        "3 exhibir",
-        "exhibir modelos"
+        "exhibir modelos",
+        "modelos repetirlos"
       ],
       "aplica_a": null,
       "revisado_por_gerardo": false
@@ -570,10 +572,10 @@
       "fuente_pagina": "gemini_vision",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "5_exhibir_liquidacion_zapatera",
+      "id": "exhibir_liquidacion_zapatera",
       "aliases": [
-        "5 exhibir",
-        "exhibir liquidacion"
+        "exhibir liquidacion",
+        "liquidacion zapatera"
       ],
       "aplica_a": null,
       "revisado_por_gerardo": false
@@ -650,10 +652,10 @@
       "fuente_pagina": "pdfplumber_text_flow",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "1_ubicar_frente_seccion_sea",
+      "id": "ubicar_frente_seccion_sea_mueble",
       "aliases": [
-        "1 ubicar",
-        "ubicar frente"
+        "ubicar frente",
+        "frente seccion"
       ],
       "aplica_a": null,
       "revisado_por_gerardo": false
@@ -670,10 +672,10 @@
       "fuente_pagina": "pdfplumber_text_flow",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "2_exhibir_producto_descuento_mezclar",
+      "id": "exhibir_producto_descuento_mezclar",
       "aliases": [
-        "2 exhibir",
-        "exhibir producto"
+        "exhibir producto",
+        "producto descuento"
       ],
       "aplica_a": null,
       "revisado_por_gerardo": false
@@ -690,10 +692,10 @@
       "fuente_pagina": "pdfplumber_text_flow",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "3_colocar_etiquetas_cuidando_esten",
+      "id": "colocar_etiquetas_cuidando_esten_misma",
       "aliases": [
-        "3 colocar",
-        "colocar etiquetas"
+        "colocar etiquetas",
+        "etiquetas cuidando"
       ],
       "aplica_a": null,
       "revisado_por_gerardo": false
@@ -710,10 +712,10 @@
       "fuente_pagina": "pdfplumber_text_flow",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "4_cuidar_entallado_variantes_color",
+      "id": "cuidar_entallado_variantes_color_completos",
       "aliases": [
-        "4 cuidar",
-        "cuidar entallado"
+        "cuidar entallado",
+        "entallado variantes"
       ],
       "aplica_a": null,
       "revisado_por_gerardo": false
@@ -750,10 +752,10 @@
       "fuente_pagina": "pdfplumber_text_flow",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "6_puede_colocar_etiquetas_colgantes",
+      "id": "puede_colocar_etiquetas_colgantes_maniquies",
       "aliases": [
-        "6 puede",
-        "puede colocar"
+        "puede colocar",
+        "colocar etiquetas"
       ],
       "aplica_a": null,
       "revisado_por_gerardo": false
@@ -776,7 +778,7 @@
         "puntos focales"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Para la vestimenta de maniquíes revisa las apuestas comerciales.",
@@ -796,7 +798,7 @@
         "maniquies revisa"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Revisa que el producto para este focal sea mercancía con descuentos.",
@@ -816,7 +818,7 @@
         "producto focal"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "El maniquí o maniquíes deben integrarse con los elementos y accesorizar con base al enfoque.",
@@ -836,7 +838,7 @@
         "maniquies deben"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Se requiere 1 fotografía por focal",
@@ -856,7 +858,7 @@
         "1 fotografia"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Exhibir producto de la sección de Juniors o Joven Contempo.",
@@ -873,13 +875,13 @@
       "fuente_pagina": "pdfplumber_text_flow",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "exhibir_producto_seccion_juniors_joven",
+      "id": "focal_show_mujeres_departamento_juniors",
       "aliases": [
         "exhibir producto",
         "producto seccion"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Revisa que el producto para este focal sea mercancía con el mismo descuento.",
@@ -1036,13 +1038,13 @@
       "fuente_pagina": "pdfplumber_text_flow",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "exhibir_producto_seccion_juveniles_hombre",
+      "id": "focal_show_hombres_departamento_juveniles",
       "aliases": [
         "exhibir producto",
         "producto seccion"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Revisa que el producto para este focal sea mercancía con el mismo descuento.",
@@ -1199,13 +1201,13 @@
       "fuente_pagina": "pdfplumber_text_flow",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "exhibir_producto_seccion_ninos_8",
+      "id": "focal_show_infantiles_departamento_ninos8",
       "aliases": [
         "exhibir producto",
         "producto seccion"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Revisa que el producto para este focal sea mercancía con el mismo descuento.",

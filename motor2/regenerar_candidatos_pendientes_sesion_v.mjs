@@ -78,8 +78,20 @@ function esDigito(t) {
   return /^[0-9]+$/.test(t);
 }
 
+// Fix Sesión V (parte 2): marcador de lista "(1)", "(2)"... es numeración de
+// la fuente, no una keyword — se descarta ANTES de tokenizar para que no
+// ocupe un slot del tope de 5 keywords y tape la última palabra real. Regex
+// acotado a "(dígitos)" exacto: "(30%)" no matchea (el "%" rompe el patrón),
+// así que los porcentajes siguen preservándose sin cambios.
+const RE_MARCADOR_LISTA = /\(\s*\d+\s*\)/g;
+
+function sinMarcadoresLista(texto) {
+  return (texto || "").replace(RE_MARCADOR_LISTA, " ");
+}
+
 function keywords(texto) {
-  let limpio = sinAcentos(sinMarcaAmbiguo(texto)).toLowerCase();
+  let limpio = sinMarcadoresLista(sinMarcaAmbiguo(texto));
+  limpio = sinAcentos(limpio).toLowerCase();
   limpio = limpio.replace(/[^a-z0-9\s]/g, " ");
   const tokens = limpio.split(/\s+/).filter(Boolean);
   return tokens.filter((t) => !STOPWORDS.has(t) && (esDigito(t) || t.length >= MIN_LARGO_TOKEN));
@@ -144,13 +156,26 @@ function autotest() {
   //    respetando el orden de aparición en el texto.
   caso("dígito aislado no se descarta", keywords("Repite 3 veces el proceso"), ["repite", "3", "veces", "proceso"]);
 
-  // 3) Marcador de lista numerado "(1)" al inicio del texto: efecto conocido
-  //    del fix — el "1" ahora SÍ entra como keyword. Se documenta como
-  //    comportamiento esperado (no oculto), no se filtra especialmente.
+  // 3) Marcador de lista numerado "(1)"-"(6)" se descarta ANTES de tokenizar
+  //    (fix Sesión V parte 2) — ya NO ocupa un slot del tope de 5 y ya NO tapa
+  //    la última keyword real (regresión detectada por Gerardo tras el primer
+  //    fix: "colocar_producto_descuento_mayor_menor" perdía "menor").
   caso(
-    "marcador de lista (1) entra como keyword (efecto esperado del fix)",
+    "marcador de lista (1) se descarta, no tapa la última keyword",
     keywords("(1) Colocar el producto por descuento de mayor a menor."),
-    ["1", "colocar", "producto", "descuento", "mayor", "menor"]
+    ["colocar", "producto", "descuento", "mayor", "menor"]
+  );
+  caso(
+    "marcador de lista (6) se descarta en medio del texto",
+    keywords("Se puede colocar (6) etiquetas colgantes en los maniquíes."),
+    ["puede", "colocar", "etiquetas", "colgantes", "maniquies"]
+  );
+  // 3b) Un porcentaje entre paréntesis NO es un marcador de lista — el "%"
+  //    rompe el patrón "(dígitos)" exacto, así que se sigue preservando.
+  caso(
+    "porcentaje entre paréntesis NO se confunde con marcador de lista",
+    keywords("Prioridad de producto: Mobility y Cloe (40%)"),
+    ["prioridad", "producto", "mobility", "cloe", "40"]
   );
 
   // 4) Alpha corto no-stopword sigue descartado por longitud (el fix NO
