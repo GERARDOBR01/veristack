@@ -1,0 +1,30 @@
+{
+  "meta": {
+    "manual": "mecanica_montaje_gran_barata_pv_2026",
+    "fuente_pdf": "MECÁNICA_MONTAJE_GRAN_BARATA_PV_2026_.pdf",
+    "metodologia": "Sampling aleatorio, seed=42, 18 de 156 criterios validados (Sesión P), verificados a mano contra el PDF real página por página.",
+    "fecha_sellado": "2026-07-05",
+    "resultado": "18/18 texto verbatim correcto. 3/18 con error de peso/severidad, corregidos abajo. 15/18 sin cambios.",
+    "nota": "Este archivo es el examen de referencia (golden set #1). No se edita a mano después de sellado — solo se usa para medir corridas del extractor."
+  },
+  "criterios": [
+    {"pagina_origen": 6, "texto": "3ERA etapa solo producir parches +20", "condicion_libre": "COLUMNAS", "peso": "MANDATORY", "severidad": "GRAVE", "estado": "correcto"},
+    {"pagina_origen": 6, "texto": "Imprimir primera etapa genérico, se usan para ambas secciones", "condicion_libre": "ATRILES", "peso": "MANDATORY", "severidad": "GRAVE", "estado": "correcto"},
+    {"pagina_origen": 6, "texto": "Nada se resguarda", "peso": "EXCEPTION", "severidad": "OBSERVACION", "estado": "correcto"},
+    {"pagina_origen": 13, "texto": "Selecciona el producto dando prioridad al Descuento:", "peso": "RECOMMENDATION", "severidad": "NO_CALIFICA", "estado": "CORREGIDO", "peso_original": "MANDATORY", "severidad_original": "GRAVE", "razon_correccion": "Es frase introductoria al listado de acciones (1)-(5), no una acción evaluable. Mismo patrón que 'Utilizar la siguiente fórmula.' (p10), que correctamente quedó NO_CALIFICA."},
+    {"pagina_origen": 13, "texto": "(1) Colocar el producto por descuento de mayor a menor.", "peso": "MANDATORY", "severidad": "GRAVE", "estado": "correcto"},
+    {"pagina_origen": 13, "texto": "(4) Identificar con cartulina de descuento.", "peso": "MANDATORY", "severidad": "OBSERVACION", "estado": "correcto"},
+    {"pagina_origen": 13, "texto": "Nota: La exhibición de producto en mesas y perímetros de las secciones de zapatos se mantiene con el movimiento de mercadeo de frente y vuelta.", "peso": "RECOMMENDATION", "severidad": "NO_CALIFICA", "estado": "correcto"},
+    {"pagina_origen": 14, "texto": "(5) Identificar con cartulina de descuento.", "peso": "MANDATORY", "severidad": "OBSERVACION", "estado": "correcto"},
+    {"pagina_origen": 26, "texto": "Da visibilidad al producto con el descuento más alto y corridas completas", "peso": "RECOMMENDATION", "severidad": "OBSERVACION", "estado": "correcto", "nota": "posible_herencia_fewshot=true en validado, verificado como correcto igual"},
+    {"pagina_origen": 27, "texto": "Si cuentas con el espacio suficiente sin que obstruya el paso al cliente o realiza campamentos o focales en espacios principales de tienda. Recuerda no forzar el espacio.", "peso": "RECOMMENDATION", "severidad": "OBSERVACION", "estado": "CORREGIDO", "peso_original": "MANDATORY", "severidad_original": "GRAVE", "razon_correccion": "El manual usa lenguaje condicional/flexible ('si cuentas...', 'recuerda no forzar'). GRAVE no encaja con una guía que explícitamente pide no forzar la regla."},
+    {"pagina_origen": 27, "texto": "Realiza el mercadeo por descuento (mayor a menor) y tipo de producto.", "peso": "MANDATORY", "severidad": "GRAVE", "estado": "correcto"},
+    {"pagina_origen": 27, "texto": "Si el campamento se realiza en la 1° ó 2° etapa de la promoción, realiza focales con propuesta de moda.", "peso": "MANDATORY", "severidad": "OBSERVACION", "estado": "correcto"},
+    {"pagina_origen": 27, "texto": "Campamento: Maniquíes + Tringlas o Barra + Cartulina", "peso": "MANDATORY", "severidad": "NO_CALIFICA", "estado": "correcto"},
+    {"pagina_origen": 28, "texto": "Mercadeo por bloqueo de producto", "peso": "MANDATORY", "severidad": "OBSERVACION", "estado": "correcto"},
+    {"pagina_origen": 32, "texto": "Exhibe por bloque y tipo de producto (marca/modelo)", "peso": "MANDATORY", "severidad": "GRAVE", "estado": "CORREGIDO", "peso_original": "MANDATORY", "severidad_original": "OBSERVACION", "razon_correccion": "Inconsistente con p31 (Masivos Hardline), donde la misma regla de fondo ('Masivo en bloque de marca y tipo de producto') quedó GRAVE. Se alinea a GRAVE para mantener consistencia entre páginas equivalentes."},
+    {"pagina_origen": 40, "texto": "Colocar alternando a lo largo de la sección.", "peso": "MANDATORY", "severidad": "OBSERVACION", "estado": "correcto"},
+    {"pagina_origen": 40, "texto": "Cuidar señalización y no saturar sección, recuerda mantener producto lujo.", "peso": "MANDATORY", "severidad": "GRAVE", "estado": "correcto"},
+    {"pagina_origen": 44, "texto": "En barra de Ballet exhibe el producto de una sola disciplina con el descuento más agresivo. Recuerda separar por género y por partes bajas ó altas.", "peso": "MANDATORY", "severidad": "GRAVE", "estado": "correcto"}
+  ]
+}
