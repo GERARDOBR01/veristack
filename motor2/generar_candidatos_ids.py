@@ -13,8 +13,10 @@ criterio. Cada criterio queda con "revisado_por_gerardo": false.
 Algoritmo (determinista, mismo criterio → mismo resultado siempre):
   id candidato:
     normalizar texto (sin acentos, minúsculas, solo [a-z0-9 ]) → tokenizar →
-    descartar stopwords + tokens < 3 caracteres → tomar hasta 5 keywords →
-    unir con "_". Si no queda ninguna keyword, fallback "criterio_pXX_NN".
+    descartar stopwords + tokens < 3 caracteres (EXCEPTO tokens puramente
+    numéricos, que se preservan sin importar su longitud — fix Sesión V,
+    ver nota junto a MIN_LARGO_TOKEN) → tomar hasta 5 keywords → unir con
+    "_". Si no queda ninguna keyword, fallback "criterio_pXX_NN".
   aliases candidatos (1-2, ventana deslizante sobre las mismas keywords —
     NO es paráfrasis real, es una variante corta derivada del mismo texto;
     la paráfrasis con lenguaje natural queda para la revisión de Gerardo):
@@ -60,6 +62,14 @@ SALIDA_COLISIONES = MOTOR2 / "candidatos_id_colisiones.json"
 
 MAX_KEYWORDS_ID = 5
 MIN_LARGO_TOKEN = 3
+# Fix Sesión V: un token puramente numérico ("3", "5", "20") NUNCA se descarta
+# por longitud — un dígito de 1-2 caracteres suele ser la única diferencia
+# semántica real entre dos criterios (ej. "3 maniquíes" vs "5 maniquíes"),
+# a diferencia de una palabra corta que normalmente ya cae en STOPWORDS.
+# Bug original (Sesión T): MIN_LARGO_TOKEN descartaba "3"/"2"/"5" y colapsó
+# "3 maniquíes – 2 etiquetas" y "5 maniquíes – 3 etiquetas" al mismo id
+# "maniquies_etiquetas" — resuelto a mano en Sesión U; este fix ataca la causa
+# raíz en el generador para que no vuelva a pasar en los 106 pendientes.
 
 STOPWORDS = {
     "a", "al", "algo", "algunas", "algunos", "ante", "antes", "como", "con",
@@ -95,7 +105,10 @@ def _keywords(texto: str) -> list[str]:
     limpio = _sin_acentos(_sin_marca_ambiguo(texto)).lower()
     limpio = re.sub(r"[^a-z0-9\s]", " ", limpio)
     tokens = limpio.split()
-    return [t for t in tokens if len(t) >= MIN_LARGO_TOKEN and t not in STOPWORDS]
+    return [
+        t for t in tokens
+        if t not in STOPWORDS and (t.isdigit() or len(t) >= MIN_LARGO_TOKEN)
+    ]
 
 
 def generar_id_candidato(criterio: dict) -> str:

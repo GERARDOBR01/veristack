@@ -11,7 +11,9 @@
     "confirmaciones_sesion_t": "2026-07-03T21:05:34",
     "confirmaciones_nota": "30 de 156 criterios confirmados por Gerardo y marcados revisado_por_gerardo=true (3 de los 18 grupos de colisión de Sesión S: p6 barras/columnas, Focal Show p20-25 por departamento, 'no mezclar marcas' p31/34/39/40). Quedan 7 grupos de colisión (20 criterios) sin confirmar — ver docstring de aplicar_confirmaciones_sesion_t.py, incluye un falso positivo detectado (maniquies_etiquetas, p10) por limitación del generador de slugs con números de 1 dígito.",
     "confirmaciones_sesion_u": "2026-07-04T19:07:55",
-    "confirmaciones_sesion_u_nota": "Gerardo resolvió los 7 grupos de colisión real de Sesión T (20 criterios, ahora revisado_por_gerardo=true): colapso de coloca_producto_mayor_descuento_sea -> colocar_producto_mayor_descuento y manten_orden_exhibicion -> mantener_orden_exhibicion; separación del falso positivo maniquies_etiquetas (p10) en maniquies_3_etiquetas_2 y maniquies_5_etiquetas_3; y confirmación del id compartido en acercate_jefe_seccion_pueda_dar, exhibicion_disciplinas_mantiene_dentro_separan, identificar_cartulina_descuento y mercadeo_bloqueo_producto. Solo se modificó el campo id; el texto original del manual no se tocó."
+    "confirmaciones_sesion_u_nota": "Gerardo resolvió los 7 grupos de colisión real de Sesión T (20 criterios, ahora revisado_por_gerardo=true): colapso de coloca_producto_mayor_descuento_sea -> colocar_producto_mayor_descuento y manten_orden_exhibicion -> mantener_orden_exhibicion; separación del falso positivo maniquies_etiquetas (p10) en maniquies_3_etiquetas_2 y maniquies_5_etiquetas_3; y confirmación del id compartido en acercate_jefe_seccion_pueda_dar, exhibicion_disciplinas_mantiene_dentro_separan, identificar_cartulina_descuento y mercadeo_bloqueo_producto. Solo se modificó el campo id; el texto original del manual no se tocó.",
+    "regenerado_pendientes_sesion_v": "2026-07-05T21:31:57",
+    "regenerado_pendientes_sesion_v_nota": "Fix del generador (Sesión V): los tokens puramente numéricos ya no se descartan por longitud (bug Sesión T: '3'/'2'/'5' se perdían y colapsaban reglas de cantidad distinta al mismo id, ej. p10 maniquíes, resuelto a mano en Sesión U). Se regeneraron id/aliases/aplica_a SOLO para los 106 criterios con revisado_por_gerardo=false; los 50 confirmados en Sesiones T/U no se tocaron. Ningún criterio se marcó revisado_por_gerardo=true en este paso — eso queda para la revisión por lotes de Gerardo."
   },
   "criterios": [
     {
@@ -270,9 +272,10 @@
       "fuente_pagina": "gemini_vision",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "maniquies_etiqueta",
+      "id": "2_maniquies_1_etiqueta",
       "aliases": [
-        "maniquies etiqueta"
+        "2 maniquies",
+        "maniquies 1"
       ],
       "aplica_a": null,
       "revisado_por_gerardo": false
@@ -487,10 +490,10 @@
       "fuente_pagina": "gemini_vision",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "colocar_producto_descuento_mayor_menor",
+      "id": "1_colocar_producto_descuento_mayor",
       "aliases": [
-        "colocar producto",
-        "producto descuento"
+        "1 colocar",
+        "colocar producto"
       ],
       "aplica_a": null,
       "revisado_por_gerardo": false
@@ -507,10 +510,10 @@
       "fuente_pagina": "gemini_vision",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "respetar_mundos_romper_clasificaciones",
+      "id": "2_respetar_mundos_romper_clasificaciones",
       "aliases": [
-        "respetar mundos",
-        "mundos romper"
+        "2 respetar",
+        "respetar mundos"
       ],
       "aplica_a": null,
       "revisado_por_gerardo": false
@@ -527,10 +530,10 @@
       "fuente_pagina": "gemini_vision",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "exhibir_modelos_repetirlos",
+      "id": "3_exhibir_modelos_repetirlos",
       "aliases": [
-        "exhibir modelos",
-        "modelos repetirlos"
+        "3 exhibir",
+        "exhibir modelos"
       ],
       "aplica_a": null,
       "revisado_por_gerardo": false
@@ -567,10 +570,10 @@
       "fuente_pagina": "gemini_vision",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "exhibir_liquidacion_zapatera",
+      "id": "5_exhibir_liquidacion_zapatera",
       "aliases": [
-        "exhibir liquidacion",
-        "liquidacion zapatera"
+        "5 exhibir",
+        "exhibir liquidacion"
       ],
       "aplica_a": null,
       "revisado_por_gerardo": false
@@ -647,10 +650,10 @@
       "fuente_pagina": "pdfplumber_text_flow",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "ubicar_frente_seccion_sea_mueble",
+      "id": "1_ubicar_frente_seccion_sea",
       "aliases": [
-        "ubicar frente",
-        "frente seccion"
+        "1 ubicar",
+        "ubicar frente"
       ],
       "aplica_a": null,
       "revisado_por_gerardo": false
@@ -667,10 +670,10 @@
       "fuente_pagina": "pdfplumber_text_flow",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "exhibir_producto_descuento_mezclar",
+      "id": "2_exhibir_producto_descuento_mezclar",
       "aliases": [
-        "exhibir producto",
-        "producto descuento"
+        "2 exhibir",
+        "exhibir producto"
       ],
       "aplica_a": null,
       "revisado_por_gerardo": false
@@ -687,10 +690,10 @@
       "fuente_pagina": "pdfplumber_text_flow",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "colocar_etiquetas_cuidando_esten_misma",
+      "id": "3_colocar_etiquetas_cuidando_esten",
       "aliases": [
-        "colocar etiquetas",
-        "etiquetas cuidando"
+        "3 colocar",
+        "colocar etiquetas"
       ],
       "aplica_a": null,
       "revisado_por_gerardo": false
@@ -707,10 +710,10 @@
       "fuente_pagina": "pdfplumber_text_flow",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "cuidar_entallado_variantes_color_completos",
+      "id": "4_cuidar_entallado_variantes_color",
       "aliases": [
-        "cuidar entallado",
-        "entallado variantes"
+        "4 cuidar",
+        "cuidar entallado"
       ],
       "aplica_a": null,
       "revisado_por_gerardo": false
@@ -747,10 +750,10 @@
       "fuente_pagina": "pdfplumber_text_flow",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "puede_colocar_etiquetas_colgantes_maniquies",
+      "id": "6_puede_colocar_etiquetas_colgantes",
       "aliases": [
-        "puede colocar",
-        "colocar etiquetas"
+        "6 puede",
+        "puede colocar"
       ],
       "aplica_a": null,
       "revisado_por_gerardo": false
@@ -847,10 +850,10 @@
       "fuente_pagina": "gemini_vision",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "requiere_fotografia_focal",
+      "id": "requiere_1_fotografia_focal",
       "aliases": [
-        "requiere fotografia",
-        "fotografia focal"
+        "requiere 1",
+        "1 fotografia"
       ],
       "aplica_a": null,
       "revisado_por_gerardo": false
@@ -1196,7 +1199,7 @@
       "fuente_pagina": "pdfplumber_text_flow",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "exhibir_producto_seccion_ninos_ninas",
+      "id": "exhibir_producto_seccion_ninos_8",
       "aliases": [
         "exhibir producto",
         "producto seccion"
@@ -1501,10 +1504,10 @@
       "fuente_pagina": "pdfplumber_text_flow",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "campamento_realiza_etapa_promocion_realiza",
+      "id": "campamento_realiza_1_2_etapa",
       "aliases": [
         "campamento realiza",
-        "realiza etapa"
+        "realiza 1"
       ],
       "aplica_a": null,
       "revisado_por_gerardo": false
@@ -1521,7 +1524,7 @@
       "fuente_pagina": "pdfplumber_text_flow",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "realizar_campamento_punt_roma",
+      "id": "realizar_campamento_punt_roma_98",
       "aliases": [
         "realizar campamento",
         "campamento punt"
@@ -1926,10 +1929,10 @@
       "fuente_pagina": "pdfplumber_text_flow",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "separacion_masivos_metros",
+      "id": "separacion_masivos_3_5_metros",
       "aliases": [
         "separacion masivos",
-        "masivos metros"
+        "masivos 3"
       ],
       "aplica_a": null,
       "revisado_por_gerardo": false
@@ -2187,9 +2190,10 @@
       "fuente_pagina": "gemini_vision",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "senaliza_cartulina",
+      "id": "senaliza_cartulina_30",
       "aliases": [
-        "senaliza cartulina"
+        "senaliza cartulina",
+        "cartulina 30"
       ],
       "aplica_a": null,
       "revisado_por_gerardo": false
@@ -2226,7 +2230,7 @@
       "fuente_pagina": "gemini_vision",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "prioridad_producto_mobility_cloe",
+      "id": "prioridad_producto_mobility_cloe_40",
       "aliases": [
         "prioridad producto",
         "producto mobility"
@@ -2266,7 +2270,7 @@
       "fuente_pagina": "gemini_vision",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "senaliza_resto_seccion_promocion",
+      "id": "senaliza_resto_seccion_promocion_25",
       "aliases": [
         "senaliza resto",
         "resto seccion"
@@ -2645,7 +2649,7 @@
       "fuente_pagina": "pdfplumber_text_flow",
       "grounding": "exact",
       "posible_herencia_fewshot": false,
-      "id": "impulsa_textiles_entran_puedes_apoyarte",
+      "id": "impulsa_textiles_entran_98_puedes",
       "aliases": [
         "impulsa textiles",
         "textiles entran"

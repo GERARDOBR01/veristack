@@ -1,0 +1,128 @@
+{
+  "generado": "2026-07-05T21:31:57",
+  "contexto": "Sesión V: colisiones detectadas tras fix del generador (preserva dígitos) y regeneración de los 106 pendientes. candidatos_id_colisiones.json (Sesión S/T/U) se deja intacto como registro histórico de los 18 grupos originales, ya resueltos en su totalidad (50/50).",
+  "total_pendientes_regenerados": 106,
+  "ids_cambiados_por_el_fix": 19,
+  "colisiones_internas": {
+    "grupos": 0,
+    "criterios_afectados": 0,
+    "detalle": []
+  },
+  "colisiones_cruzadas_contra_ids_confirmados": [],
+  "diffs_id_por_el_fix": [
+    {
+      "pagina_origen": 10,
+      "texto": "2 maniquíes – 1 etiqueta",
+      "id_viejo": "maniquies_etiqueta",
+      "id_nuevo": "2_maniquies_1_etiqueta"
+    },
+    {
+      "pagina_origen": 13,
+      "texto": "(1) Colocar el producto por descuento de mayor a menor.",
+      "id_viejo": "colocar_producto_descuento_mayor_menor",
+      "id_nuevo": "1_colocar_producto_descuento_mayor"
+    },
+    {
+      "pagina_origen": 13,
+      "texto": "(2) Respetar los mundos sin romper las clasificaciones.",
+      "id_viejo": "respetar_mundos_romper_clasificaciones",
+      "id_nuevo": "2_respetar_mundos_romper_clasificaciones"
+    },
+    {
+      "pagina_origen": 13,
+      "texto": "(3) Exhibir todos los modelos sin repetirlos.",
+      "id_viejo": "exhibir_modelos_repetirlos",
+      "id_nuevo": "3_exhibir_modelos_repetirlos"
+    },
+    {
+      "pagina_origen": 13,
+      "texto": "(5) Exhibir la liquidación en la zapatera.",
+      "id_viejo": "exhibir_liquidacion_zapatera",
+      "id_nuevo": "5_exhibir_liquidacion_zapatera"
+    },
+    {
+      "pagina_origen": 14,
+      "texto": "(1) Ubicar al frente de la sección ya sea en mueble genérico de Display o mueble del departamento.",
+      "id_viejo": "ubicar_frente_seccion_sea_mueble",
+      "id_nuevo": "1_ubicar_frente_seccion_sea"
+    },
+    {
+      "pagina_origen": 14,
+      "texto": "(2) Exhibir el producto por descuento sin mezclar.",
+      "id_viejo": "exhibir_producto_descuento_mezclar",
+      "id_nuevo": "2_exhibir_producto_descuento_mezclar"
+    },
+    {
+      "pagina_origen": 14,
+      "texto": "(3) Colocar las etiquetas cuidando que estén a la misma altura de la prenda o en el mismo lado de la caja.",
+      "id_viejo": "colocar_etiquetas_cuidando_esten_misma",
+      "id_nuevo": "3_colocar_etiquetas_cuidando_esten"
+    },
+    {
+      "pagina_origen": 14,
+      "texto": "(4) Cuidar que este el entallado y/o variantes de color completos.",
+      "id_viejo": "cuidar_entallado_variantes_color_completos",
+      "id_nuevo": "4_cuidar_entallado_variantes_color"
+    },
+    {
+      "pagina_origen": 14,
+      "texto": "(6) Se puede colocar etiquetas colgantes en los maniquíes cuidado no saturarlos.",
+      "id_viejo": "puede_colocar_etiquetas_colgantes_maniquies",
+      "id_nuevo": "6_puede_colocar_etiquetas_colgantes"
+    },
+    {
+      "pagina_origen": 18,
+      "texto": "Se requiere 1 fotografía por focal",
+      "id_viejo": "requiere_fotografia_focal",
+      "id_nuevo": "requiere_1_fotografia_focal"
+    },
+    {
+      "pagina_origen": 24,
+      "texto": "Exhibir producto de la sección de niños 8+ y niñas 8+.",
+      "id_viejo": "exhibir_producto_seccion_ninos_ninas",
+      "id_nuevo": "exhibir_producto_seccion_ninos_8"
+    },
+    {
+      "pagina_origen": 27,
+      "texto": "Si el campamento se realiza en la 1° ó 2° etapa de la promoción, realiza focales con propuesta de moda.",
+      "id_viejo": "campamento_realiza_etapa_promocion_realiza",
+      "id_nuevo": "campamento_realiza_1_2_etapa"
+    },
+    {
+      "pagina_origen": 27,
+      "texto": "Realizar campamento de Punt Roma con 98´s",
+      "id_viejo": "realizar_campamento_punt_roma",
+      "id_nuevo": "realizar_campamento_punt_roma_98"
+    },
+    {
+      "pagina_origen": 32,
+      "texto": "Separación entre masivos de 3 a 5 metros",
+      "id_viejo": "separacion_masivos_metros",
+      "id_nuevo": "separacion_masivos_3_5_metros"
+    },
+    {
+      "pagina_origen": 35,
+      "texto": "Señaliza con cartulina (30%)",
+      "id_viejo": "senaliza_cartulina",
+      "id_nuevo": "senaliza_cartulina_30"
+    },
+    {
+      "pagina_origen": 35,
+      "texto": "Prioridad de producto: Mobility y Cloe (40%)",
+      "id_viejo": "prioridad_producto_mobility_cloe",
+      "id_nuevo": "prioridad_producto_mobility_cloe_40"
+    },
+    {
+      "pagina_origen": 35,
+      "texto": "Señaliza el resto de la sección con la promoción del 25%",
+      "id_viejo": "senaliza_resto_seccion_promocion",
+      "id_nuevo": "senaliza_resto_seccion_promocion_25"
+    },
+    {
+      "pagina_origen": 40,
+      "texto": "Impulsa todos los textiles que entran en 98´puedes apoyarte de mesa mmm para sacarlos a pasillo.",
+      "id_viejo": "impulsa_textiles_entran_puedes_apoyarte",
+      "id_nuevo": "impulsa_textiles_entran_98_puedes"
+    }
+  ]
+}
