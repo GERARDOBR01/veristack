@@ -1715,7 +1715,7 @@
         "bloque marca"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "No mezclar marcas",
@@ -1777,7 +1777,7 @@
         "vajilla cerrada"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "coloca caja de vajilla cerrada en general.",
@@ -1797,7 +1797,7 @@
         "caja vajilla"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Coloca exhibiciones masivas de producto participante y shots promocionales.",
@@ -1817,7 +1817,7 @@
         "exhibiciones masivas"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Exhibe por bloque y tipo de producto (marca/modelo)",
@@ -1837,7 +1837,7 @@
         "bloque tipo"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Respetar alturas/estiba máxima",
@@ -1857,7 +1857,7 @@
         "alturas estiba"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Asegura se coloque la cartulina con el beneficio***",
@@ -1877,7 +1877,7 @@
         "coloque cartulina"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Es importante mantener surtido, en caso de vaciarse el modelo, resurtir con otro que tenga suficiente profundidad.",
@@ -1897,7 +1897,7 @@
         "mantener surtido"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Los masivos en pasillo deben contar con espacio que no obstruya la circulación del cliente.",
@@ -1917,7 +1917,7 @@
         "pasillo deben"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Separación entre masivos de 3 a 5 metros",
@@ -1937,7 +1937,7 @@
         "masivos 3"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Coloca producto con mayor descuento para que sea atractivo al cliente.",
@@ -2017,7 +2017,7 @@
         "producto tendencia"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Mochilas, loncheras, lapiceras en concepto.",
@@ -2037,7 +2037,7 @@
         "loncheras lapiceras"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Colocar alternando a lo largo de la sección, los focales en volúmen por marca.",
@@ -2057,7 +2057,7 @@
         "alternando largo"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Focal en bloque de marca y tipo de producto.",
@@ -2077,7 +2077,7 @@
         "bloque marca"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "No mezclar marcas.",
@@ -2457,7 +2457,7 @@
         "cajas organizadoras"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Protectores de sofá.",
@@ -2476,7 +2476,7 @@
         "protectores sofa"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Puff en caja.",
@@ -2495,7 +2495,7 @@
         "puff caja"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Colocar alternando a lo largo de la sección.",
