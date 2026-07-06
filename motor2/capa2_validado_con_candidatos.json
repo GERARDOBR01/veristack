@@ -378,7 +378,7 @@
         "mercancia calificada"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "DAR PRIORIDAD A MERCANCÍA CALIFICADA.",
@@ -398,7 +398,7 @@
         "prioridad mercancia"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Colocar cartulina con descuento específico a mercancía participante.",
@@ -418,7 +418,7 @@
         "cartulina descuento"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Respetar capacidad ideal del mobiliario, que permita tomar el producto.",
@@ -438,7 +438,7 @@
         "capacidad ideal"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Distribuir cartulinas equilibradamente en piso y garantizar vestir cada sección.",
@@ -458,7 +458,7 @@
         "cartulinas equilibradamente"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Selecciona el producto dando prioridad al Descuento:",
@@ -478,7 +478,7 @@
         "producto dando"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "(1) Colocar el producto por descuento de mayor a menor.",
@@ -498,7 +498,7 @@
         "producto descuento"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "(2) Respetar los mundos sin romper las clasificaciones.",
@@ -518,7 +518,7 @@
         "mundos romper"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "(3) Exhibir todos los modelos sin repetirlos.",
@@ -538,7 +538,7 @@
         "modelos repetirlos"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "(4) Identificar con cartulina de descuento.",
@@ -578,7 +578,7 @@
         "liquidacion zapatera"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Nota: La exhibición de producto en mesas y perímetros de las secciones de zapatos se mantiene con el movimiento de mercadeo de frente y vuelta.",
@@ -598,7 +598,7 @@
         "exhibicion producto"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "En caso de tener todos lo modelos exhibidos en las zapateras o mesas m y cuenten con niveles vacíos es posible realizar repetición de producto, esto solo aplica para zapateras y mesas mmm en exhibiciones fuera de la sección.",
@@ -618,7 +618,7 @@
         "tener modelos"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Selecciona el producto sin mezclar descuentos, mundos y/o secciones: 1. Descuento 50%, 40%, 30%, 20% u otros.",
@@ -638,7 +638,7 @@
         "producto mezclar"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "(1) Ubicar al frente de la sección ya sea en mueble genérico de Display o mueble del departamento.",
@@ -658,7 +658,7 @@
         "frente seccion"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "(2) Exhibir el producto por descuento sin mezclar.",
@@ -678,7 +678,7 @@
         "producto descuento"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "(3) Colocar las etiquetas cuidando que estén a la misma altura de la prenda o en el mismo lado de la caja.",
@@ -698,7 +698,7 @@
         "etiquetas cuidando"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "(4) Cuidar que este el entallado y/o variantes de color completos.",
@@ -718,7 +718,7 @@
         "entallado variantes"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "(5) Identificar con cartulina de descuento.",
@@ -758,7 +758,7 @@
         "colocar etiquetas"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Ubica los puntos focales en accesos importantes de la tienda.",
