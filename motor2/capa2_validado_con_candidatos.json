@@ -1368,7 +1368,7 @@
         "producto descuento"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "En la mesa realizar bloques con mercancía doblada, se pueden integrar accesorios en bloques con el mismo descuento.",
@@ -1388,7 +1388,7 @@
         "realizar bloques"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "En la barra prendas con los descuentos más altos, incluyendo prendas altas y prendas bajas, un look por barra.",
@@ -1410,7 +1410,7 @@
       "aplica_a": [
         "barra"
       ],
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Vestir los maniquíes con prendas que estén en la exhibición.",
@@ -1431,7 +1431,7 @@
         "maniquies prendas"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Poner etiquetas de descuento a las prendas, no saturar.",
@@ -1452,7 +1452,7 @@
         "etiquetas descuento"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Si cuentas con el espacio suficiente sin que obstruya el paso al cliente o realiza campamentos o focales en espacios principales de tienda. Recuerda no forzar el espacio.",
@@ -1472,7 +1472,7 @@
         "espacio suficiente"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Realiza el mercadeo por descuento (mayor a menor) y tipo de producto.",
@@ -1492,7 +1492,7 @@
         "mercadeo descuento"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Si el campamento se realiza en la 1° ó 2° etapa de la promoción, realiza focales con propuesta de moda.",
@@ -1512,7 +1512,7 @@
         "realiza 1"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Realizar campamento de Punt Roma con 98´s",
@@ -1532,7 +1532,7 @@
         "campamento punt"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Campamento: Maniquíes + Tringlas o Barra + Cartulina",
@@ -1554,7 +1554,7 @@
       "aplica_a": [
         "barra"
       ],
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Coloca producto con mayor descuento para que sea atractivo al cliente.",
@@ -2138,7 +2138,7 @@
         "producto zoopet"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Agrupa por tipo de producto",
@@ -2158,7 +2158,7 @@
         "tipo producto"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Dentro de su clasificación, agrupa la marca RIMAX (casas)",
@@ -2178,7 +2178,7 @@
         "clasificacion agrupa"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Señaliza con cartulina (30%)",
@@ -2198,7 +2198,7 @@
         "cartulina 30"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Dentro de su clasificación agrupa el producto con descuento",
@@ -2218,7 +2218,7 @@
         "clasificacion agrupa"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Prioridad de producto: Mobility y Cloe (40%)",
@@ -2238,7 +2238,7 @@
         "producto mobility"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Dentro de su clasificación señaliza las exhibición en cubos de hidrolavadoras (20%)",
@@ -2258,7 +2258,7 @@
         "clasificacion senaliza"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Señaliza el resto de la sección con la promoción del 25%",
@@ -2278,7 +2278,7 @@
         "resto seccion"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Coloca el material gráfico de forma alternada entre los diferentes sets para evitar la saturación visual de la sección y mantener una exhibición más limpia y atractiva para el cliente.",
