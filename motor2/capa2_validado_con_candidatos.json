@@ -2298,7 +2298,7 @@
         "material grafico"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "La clasificación de la sección de Muebles no se modifica con esta campaña; los productos deberán permanecer dentro de su clasificación correspondiente.",
@@ -2318,7 +2318,7 @@
         "seccion muebles"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Si cuentas con espacio disponible dentro de la sección de Muebles, puedes concentrar la mercancía de liquidación en una exhibición tipo campamento, señalizándo con la cartulina correspondiente.",
@@ -2338,7 +2338,7 @@
         "espacio disponible"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "En caso de no contar con el espacio necesario, la mercancía de liquidación deberá permanecer dentro de su clasificación actual, señalizando cada mueble con la cartulina correspondiente.",
@@ -2358,7 +2358,7 @@
         "contar espacio"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Colocar de forma alterna el material gráfico al costado de la cama",
@@ -2378,7 +2378,7 @@
         "forma alterna"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Coloca producto con mayor descuento para que sea atractivo al cliente.",
@@ -2536,7 +2536,7 @@
         "coleccion mundial"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Exhibe las colecciones como se indica en el Book de impulsos tomando en cuenta Mayo y Junio.",
@@ -2556,7 +2556,7 @@
         "colecciones indica"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Puedes sacar al pasillo masivos de cajas de vajilla cerrada.",
@@ -2576,7 +2576,7 @@
         "sacar pasillo"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Colocar alternando a lo largo de la sección.",
@@ -2617,7 +2617,7 @@
         "senalizacion saturar"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Mercadea con forme al Book de Impulsos de Mayo y Junio.",
@@ -2637,10 +2637,10 @@
         "forme book"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
-      "texto": "Impulsa todos los textiles que entran en 98´puedes apoyarte de mesa mmm para sacarlos a pasillo.",
+      "texto": "Impulsa todos los textiles que entran en 98´puedes apoyarte de mesa MM para sacarlos a pasillo.",
       "peso": "RECOMMENDATION",
       "severidad": "NO_CALIFICA",
       "condicion_libre": null,
@@ -2657,7 +2657,7 @@
         "textiles entran"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Distribuir material a lo largo del departamento.",
@@ -2677,7 +2677,7 @@
         "material largo"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Identificar con cartulina shots promocionales.",
@@ -2697,7 +2697,7 @@
         "cartulina shots"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "NO está permitido material POP de marcas no autorizadas.",
@@ -2717,7 +2717,7 @@
         "material pop"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Identificar producto con descuento participante.",
@@ -2737,7 +2737,7 @@
         "producto descuento"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Evitar mezclar marcas y respetar clasificación.",
@@ -2757,7 +2757,7 @@
         "mezclar marcas"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Agrupar combos en espacios principales de la sección.",
@@ -2777,7 +2777,7 @@
         "combos espacios"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Colocar producto de apuesta comercial.",
@@ -2797,7 +2797,7 @@
         "producto apuesta"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Impulsar producto especial de acuerdo a matriz.",
@@ -2817,7 +2817,7 @@
         "producto especial"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Colocar cartulinas.",
@@ -2836,7 +2836,7 @@
         "colocar cartulinas"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Acércate al jefe de la sección para que pueda dar visibilidad del producto de apuestas comerciales participantes con descuento.",
