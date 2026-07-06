@@ -19,7 +19,19 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 
 ---
 
-## Estado actual (5 Jul 2026 — Sesión V, bloque autónomo: Lotes 3-6 publicados en candidatos_lotes_3_6.md + hueco "(4)" de p13 resuelto con evidencia + autotest 15/15)
+## Estado actual (6 Jul 2026 — Sesión V, bloque conversacional: Lotes 2 y 3 aprobados por Gerardo → 104/156 revisados; Lote 4 presentado, no aprobado)
+
+**Bloque conversacional, lote por lote. Gerardo aprobó el Lote 2 (p11-14) y el Lote 3 (p26/27+p35). Tracking: `revisado_por_gerardo` subió 68 → 86 → 104/156 (67%), quedan 52 pendientes (Lotes 4-6), 0 colisiones nuevas.**
+
+- **Lote 2 aprobado (18 criterios, p11-14, commit `663611a`, push confirmado)** — `motor2/aplicar_lote2_sesion_v.mjs`: guard de conteo exacto (aborta si tocados≠18) + respaldo `.bak`. Aprobado tal cual, con **1 excepción explícita de Gerardo**: `selecciona_producto_dando_prioridad_descuento` (p13) — se aprueba id/aliases pero su **peso/severidad NO se corrige** aquí (esa es la corrección del golden set, otra sesión). Se respeta por construcción: el script solo toca `revisado_por_gerardo`. `git diff` verificado: 18 registros `false→true`, 0 cambios en id/aliases/texto/peso/severidad.
+- **Lote 3 aprobado (18 criterios, p26/27+p35, commit `897b026`, push confirmado)** — `motor2/aplicar_lote3_sesion_v.mjs`, mismo patrón y guard. Aprobado tal cual, sin excepciones. `git diff` verificado: exactamente 18 `false→true`, 0 cambios de otro tipo. La corrección del golden set de p27 (`cuentas_espacio_suficiente_obstruya_paso`, `MANDATORY→RECOMMENDATION`/`GRAVE→OBSERVACION`) **sigue SIN aplicar** — igual que p13.
+- **Lote 4 presentado, NO aprobado (17 criterios, p31-34+p38, Hardline masivo/marca)**: presentado en conversación en el formato de siempre (p / id / aliases / texto). Trae **1 de las 3 correcciones del golden set** (p32, `exhibe_bloque_tipo_producto_marca`, sev `OBSERVACION→GRAVE`) marcada ⚠️, **sin aplicar** al JSON. Los 17 siguen `revisado_por_gerardo=false`, esperando la decisión de Gerardo.
+- **Las 3 correcciones del golden set (p13/p27/p32) siguen SIN aplicar al JSON validado** — decisión aparte, pendiente para otra sesión. Los 3 criterios están aprobados en id/aliases (o lo estarán, p32); solo su peso/severidad queda para el paso del golden set.
+- **NO tocado**: peso/severidad de cualquier criterio, `candidatos_lotes_3_6.md` (sin cambios desde `f450af1`), `pipeline/`, `core/`, `retrieval_engine.py`, `confidence_engine.py`, `mandatory_engine.py`, `app.py`, `extractor.py`, `validator.py`, y el resto de Motor 2.
+
+🔴 **Pendiente — sigue bloqueando el swap**: 52/156 sin revisar — Gerardo debe revisar el Lote 4 (presentado, en conversación), el Lote 5 (p36/37+p39-42, 20 criterios) y el Lote 6 (p43/44, 15 criterios) de `motor2/candidatos_lotes_3_6.md`. **Próximo paso: Lote 5.** Además: aplicar (o no) las 3 correcciones de peso/severidad del golden set (p13/27/32); corregir los 3 casos sub-marcados de `referencia_no_resuelta` (p10, p39/p40); decidir aliases en lenguaje natural.
+
+## Estado previo (5 Jul 2026 — Sesión V, bloque autónomo: Lotes 3-6 publicados en candidatos_lotes_3_6.md + hueco "(4)" de p13 resuelto con evidencia + autotest 15/15)
 
 **Bloque autónomo de ~90 min autorizado por Gerardo (instrucciones explícitas, límites duros respetados). Tracking: 68/156 revisados (sin cambio — nada se marcó `true`, por regla), 88 pendientes (18 en Lote 2 + 70 en Lotes 3-6), 0 colisiones nuevas.**
 
