@@ -15,7 +15,9 @@
     "regenerado_pendientes_sesion_v": "2026-07-05T21:43:02",
     "regenerado_pendientes_sesion_v_nota": "Fix del generador (Sesión V): los tokens puramente numéricos ya no se descartan por longitud (bug Sesión T: '3'/'2'/'5' se perdían y colapsaban reglas de cantidad distinta al mismo id, ej. p10 maniquíes, resuelto a mano en Sesión U). Se regeneraron id/aliases/aplica_a SOLO para los 106 criterios con revisado_por_gerardo=false; los 50 confirmados en Sesiones T/U no se tocaron. Ningún criterio se marcó revisado_por_gerardo=true en este paso — eso queda para la revisión por lotes de Gerardo.",
     "lote1_sesion_v": "2026-07-05T21:43:56",
-    "lote1_sesion_v_nota": "Gerardo revisó y confirmó el Lote 1 (18 criterios: p6/7/10/16/18/20/22/24) presentado en Sesión V. 3 renombres manuales aplicados: 3era_etapa_solo_producir_parches -> columnas_etapa3_parches_20 (completa el patrón de sus hermanos barras/columnas etapa1-3, dato que Sesión T daba por inexistente); imprimir_primera_etapa_generico_usan -> atriles_primera_etapa_generico; y los 3 de focal-por-departamento (p20/22/24) renombrados al esquema de cluster focal_show_<genero>_departamento_<depto> para alinearlos con sus hermanos focal_show_X_etapa1_2 ya confirmados en Sesión T. Los otros 13 quedaron con el id tal como lo produjo el generador ya corregido (dígitos preservados, marcadores de lista descartados). Solo se modificó id y revisado_por_gerardo — texto original intacto."
+    "lote1_sesion_v_nota": "Gerardo revisó y confirmó el Lote 1 (18 criterios: p6/7/10/16/18/20/22/24) presentado en Sesión V. 3 renombres manuales aplicados: 3era_etapa_solo_producir_parches -> columnas_etapa3_parches_20 (completa el patrón de sus hermanos barras/columnas etapa1-3, dato que Sesión T daba por inexistente); imprimir_primera_etapa_generico_usan -> atriles_primera_etapa_generico; y los 3 de focal-por-departamento (p20/22/24) renombrados al esquema de cluster focal_show_<genero>_departamento_<depto> para alinearlos con sus hermanos focal_show_X_etapa1_2 ya confirmados en Sesión T. Los otros 13 quedaron con el id tal como lo produjo el generador ya corregido (dígitos preservados, marcadores de lista descartados). Solo se modificó id y revisado_por_gerardo — texto original intacto.",
+    "lote6_sesion_x": "2026-07-06T23:57:23",
+    "lote6_sesion_x_nota": "Gerardo cerró el Lote 6 (p43/44): 7 criterios reales revisado_por_gerardo=true. Los 8 unidad_exhibicion_* de p44 (bloque descriptivo de planograma, vision_fallback) se EXCLUYERON como compliance no evaluable — hallazgo 6 Jul 2026: valor 60%+20% (zona azul) ausente en la extracción, mapeo de posición no confiable contra la imagen real; mismo tratamiento que p47 (Sesión N). Documentados en motor2/referencia_no_evaluable.md. Total pasa de 156 a 148 criterios evaluables, todos revisado_por_gerardo=true."
   },
   "criterios": [
     {
@@ -2896,7 +2898,7 @@
         "mesa parte"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Coloca la cartulina con el descuento más agresivo con el que cuentes en la mesa correspondiente.",
@@ -2916,7 +2918,7 @@
         "cartulina descuento"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "En perímetro coloca en la parte superior los descuentos más agresivos, en medio los descuentos más bajos y en la parte inferior los avances de temporada.",
@@ -2936,7 +2938,7 @@
         "coloca parte"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "La mesa de lanzamientos sigue manejando los lanzamientos que tengas por mes.",
@@ -2956,7 +2958,7 @@
         "lanzamientos sigue"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Acércate al jefe de la sección para que pueda dar visibilidad del producto de apuestas comerciales participantes con descuento.",
@@ -3016,7 +3018,7 @@
         "siembra espacio"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "En barra de Ballet exhibe el producto de una sola disciplina con el descuento más agresivo. Recuerda separar por género y por partes bajas ó altas.",
@@ -3038,167 +3040,7 @@
       "aplica_a": [
         "barra"
       ],
-      "revisado_por_gerardo": false
-    },
-    {
-      "texto": "Unidad de exhibición horizontal (superior izquierda): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'.",
-      "peso": "MANDATORY",
-      "severidad": "NO_CALIFICA",
-      "condicion_libre": null,
-      "referencia_no_resuelta": false,
-      "pagina_origen": 44,
-      "seccion_aplicable": "Deportes",
-      "etapa_aplicable": null,
-      "fuente_pagina": "gemini_vision",
-      "grounding": "exact",
-      "posible_herencia_fewshot": false,
-      "id": "unidad_exhibicion_horizontal_superior_izquierda",
-      "aliases": [
-        "unidad exhibicion",
-        "exhibicion horizontal"
-      ],
-      "aplica_a": null,
-      "revisado_por_gerardo": false
-    },
-    {
-      "texto": "Unidad de exhibición horizontal (superior centro): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'.",
-      "peso": "MANDATORY",
-      "severidad": "NO_CALIFICA",
-      "condicion_libre": null,
-      "referencia_no_resuelta": false,
-      "pagina_origen": 44,
-      "seccion_aplicable": "Deportes",
-      "etapa_aplicable": null,
-      "fuente_pagina": "gemini_vision",
-      "grounding": "exact",
-      "posible_herencia_fewshot": false,
-      "id": "unidad_exhibicion_horizontal_superior_centro",
-      "aliases": [
-        "unidad exhibicion",
-        "exhibicion horizontal"
-      ],
-      "aplica_a": null,
-      "revisado_por_gerardo": false
-    },
-    {
-      "texto": "Unidad de exhibición horizontal (superior derecha): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'.",
-      "peso": "MANDATORY",
-      "severidad": "NO_CALIFICA",
-      "condicion_libre": null,
-      "referencia_no_resuelta": false,
-      "pagina_origen": 44,
-      "seccion_aplicable": "Deportes",
-      "etapa_aplicable": null,
-      "fuente_pagina": "gemini_vision",
-      "grounding": "exact",
-      "posible_herencia_fewshot": false,
-      "id": "unidad_exhibicion_horizontal_superior_derecha",
-      "aliases": [
-        "unidad exhibicion",
-        "exhibicion horizontal"
-      ],
-      "aplica_a": null,
-      "revisado_por_gerardo": false
-    },
-    {
-      "texto": "Unidad de exhibición horizontal (media izquierda): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'.",
-      "peso": "MANDATORY",
-      "severidad": "NO_CALIFICA",
-      "condicion_libre": null,
-      "referencia_no_resuelta": false,
-      "pagina_origen": 44,
-      "seccion_aplicable": "Deportes",
-      "etapa_aplicable": null,
-      "fuente_pagina": "gemini_vision",
-      "grounding": "exact",
-      "posible_herencia_fewshot": false,
-      "id": "unidad_exhibicion_horizontal_media_izquierda",
-      "aliases": [
-        "unidad exhibicion",
-        "exhibicion horizontal"
-      ],
-      "aplica_a": null,
-      "revisado_por_gerardo": false
-    },
-    {
-      "texto": "Unidad de exhibición vertical (media derecha): Con áreas de '30%', '50 + 20%' y '10%'.",
-      "peso": "MANDATORY",
-      "severidad": "NO_CALIFICA",
-      "condicion_libre": null,
-      "referencia_no_resuelta": false,
-      "pagina_origen": 44,
-      "seccion_aplicable": "Deportes",
-      "etapa_aplicable": null,
-      "fuente_pagina": "gemini_vision",
-      "grounding": "exact",
-      "posible_herencia_fewshot": false,
-      "id": "unidad_exhibicion_vertical_media_derecha",
-      "aliases": [
-        "unidad exhibicion",
-        "exhibicion vertical"
-      ],
-      "aplica_a": null,
-      "revisado_por_gerardo": false
-    },
-    {
-      "texto": "Unidad de exhibición vertical (inferior izquierda): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'.",
-      "peso": "MANDATORY",
-      "severidad": "NO_CALIFICA",
-      "condicion_libre": null,
-      "referencia_no_resuelta": false,
-      "pagina_origen": 44,
-      "seccion_aplicable": "Deportes",
-      "etapa_aplicable": null,
-      "fuente_pagina": "gemini_vision",
-      "grounding": "exact",
-      "posible_herencia_fewshot": false,
-      "id": "unidad_exhibicion_vertical_inferior_izquierda",
-      "aliases": [
-        "unidad exhibicion",
-        "exhibicion vertical"
-      ],
-      "aplica_a": null,
-      "revisado_por_gerardo": false
-    },
-    {
-      "texto": "Unidad de exhibición vertical (inferior centro): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'.",
-      "peso": "MANDATORY",
-      "severidad": "NO_CALIFICA",
-      "condicion_libre": null,
-      "referencia_no_resuelta": false,
-      "pagina_origen": 44,
-      "seccion_aplicable": "Deportes",
-      "etapa_aplicable": null,
-      "fuente_pagina": "gemini_vision",
-      "grounding": "exact",
-      "posible_herencia_fewshot": false,
-      "id": "unidad_exhibicion_vertical_inferior_centro",
-      "aliases": [
-        "unidad exhibicion",
-        "exhibicion vertical"
-      ],
-      "aplica_a": null,
-      "revisado_por_gerardo": false
-    },
-    {
-      "texto": "Unidad de exhibición vertical (inferior derecha): Etiquetada 'No calificado', con áreas de '10%' y '50 + 20%'.",
-      "peso": "MANDATORY",
-      "severidad": "NO_CALIFICA",
-      "condicion_libre": null,
-      "referencia_no_resuelta": false,
-      "pagina_origen": 44,
-      "seccion_aplicable": "Deportes",
-      "etapa_aplicable": null,
-      "fuente_pagina": "gemini_vision",
-      "grounding": "exact",
-      "posible_herencia_fewshot": false,
-      "id": "unidad_exhibicion_vertical_inferior_derecha",
-      "aliases": [
-        "unidad exhibicion",
-        "exhibicion vertical"
-      ],
-      "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     },
     {
       "texto": "Exhibición de ropa deportiva en estanterías y maniquíes, con señalización de descuentos visibles.",
@@ -3218,7 +3060,7 @@
         "ropa deportiva"
       ],
       "aplica_a": null,
-      "revisado_por_gerardo": false
+      "revisado_por_gerardo": true
     }
   ]
 }
