@@ -19,7 +19,14 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 
 ---
 
-## Estado actual (6 Jul 2026 — Sesión X: Lotes 4/5/6 cerrados — 148/148 criterios evaluables revisados, id/aliases CERRADO; 8 de p44 excluidos a referencia)
+## Estado actual (6 Jul 2026 — Sesión X, cierre: golden set aplicado + `capa2_validado_final.json` SELLADO — gate del swap: VÁLIDO. Solo falta la autorización de Gerardo para el swap real)
+
+**Las 3 correcciones del golden set YA están aplicadas y el final está sellado (commit `e69360c`)**: `motor2/capa2_validado_final.json` — 148 criterios, `schema_version: "1.1"`, metadatos de capa (etapa `gran_barata_pv2026`, vigencias 2026-06-22→2026-08-09, fecha, `hash_contenido` sha256). Verificado con el propio gate: `swap_capa2_produccion.mjs validar` → **VÁLIDO para swap**, solo avisos esperados (15 ids compartidos confirmados, 14 fewshot, 4 [AMBIGUO]). Motor 1 extraería 120 ids únicos. Pesos: 115 MANDATORY / 26 RECOMMENDATION / 7 EXCEPTION.
+
+- **Golden set aplicado por `motor2/aplicar_golden_set_y_sellar_sesion_x.mjs`** (guard por criterio: id+página únicos + valores actuales exactos, aborta si no calzan): p13 `selecciona_producto_dando_prioridad_descuento` peso `MANDATORY→RECOMMENDATION`; p27 `cuentas_espacio_suficiente_obstruya_paso` `MANDATORY→RECOMMENDATION` + `GRAVE→OBSERVACION`; p32 `exhibe_bloque_tipo_producto_marca` severidad `OBSERVACION→GRAVE`. Diff verificado: exactamente esos 3 registros + nota en `meta`, texto/id/aliases intactos.
+- **Comando del swap real (pendiente SOLO de autorización explícita de Gerardo)**: `node motor2/swap_capa2_produccion.mjs swap --candidato motor2/capa2_validado_final.json --activo pipeline/knowledge/capa2_campana_activa.json --confirmar`.
+
+### Sesión X, bloque anterior: Lotes 4/5/6 cerrados — 148/148 criterios evaluables revisados, id/aliases CERRADO; 8 de p44 excluidos a referencia
 
 **Revisión de criterios TERMINADA. El tracking ya NO es /156: son 148 criterios evaluables (todos `revisado_por_gerardo=true`) + 8 excluidos documentados aparte.** Los 8 `unidad_exhibicion_*` de p44 (bloque descriptivo de planograma, Vision) salieron del JSON por decisión de Gerardo — verificación cruzada contra la imagen real encontró un valor real (60%+20%, zona azul) ausente en los 8 candidatos y mapeo de posición no confiable; mismo tratamiento que p47 (Sesión N). Documentados en `motor2/referencia_no_evaluable.md` (registros completos sin editar + motivo). Esto también CIERRA el pendiente de scope de páginas Vision de Sesión Q para este manual.
 
@@ -31,7 +38,7 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 - **Listo-para-mostrar**: pipeline Motor 1 + UI Streamlit corriendo con la capa2 actual; la capa2 nueva (148) queda a 2 pasos del swap (ver pendiente).
 - **NO tocado**: peso/severidad/id/aliases de los 27 aprobados hoy (salvo el fix de texto documentado de p40), las 3 correcciones del golden set (p13/p27/p32, siguen SIN aplicar), `capa2_campana_activa.json`, `swap_capa2_produccion.mjs`, `validator.py`, `pipeline/`, `core/`.
 
-🔴 **Pendiente — camino al swap real (id/aliases ya NO bloquea)**: (1) decidir y aplicar (o no) las 3 correcciones de peso/severidad del golden set (p13/p27/p32); (2) sellar `capa2_validado_final.json` (148 criterios + `schema_version` + metadatos de capa) — ojo: el gate del swap valida `revisado=true` en todos, ya se cumple; (3) ejecutar `node motor2/swap_capa2_produccion.mjs swap --candidato motor2/capa2_validado_final.json --activo pipeline/knowledge/capa2_campana_activa.json --confirmar` con autorización explícita. Además: corregir los 3 sub-marcados de `referencia_no_resuelta` (p10, p39/p40); decidir aliases en lenguaje natural; decidir el espacio en `98´puedes` (p40).
+🔴 **Pendiente**: (1) **swap real — solo falta la autorización explícita de Gerardo** (golden set aplicado ✓, final sellado ✓, gate VÁLIDO ✓); (2) corregir los 3 sub-marcados de `referencia_no_resuelta` (p10, p39/p40 — hoy son 4 avisos [AMBIGUO]/null en el gate, no bloquean); (3) decidir aliases en lenguaje natural (los actuales son recortes deterministas); (4) decidir el espacio en `98´puedes` (p40, fiel al crudo).
 
 ## Estado previo (6 Jul 2026 — Sesión W: script de swap a producción con gate de autotest 19/19 — swap real NO ejecutado)
 
