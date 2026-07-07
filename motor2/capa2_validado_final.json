@@ -1,25 +1,15 @@
 {
+  "schema_version": "1.1",
+  "etapa": "gran_barata_pv2026",
+  "vigencia_inicio": "2026-06-22",
+  "vigencia_fin": "2026-08-09",
+  "fecha_actualizacion": "2026-07-07",
+  "hash_contenido": "4803750f48108c5cbf9829ca199e2dffa490ca3a51cf84a0315b51a1c526e6d2",
   "meta": {
-    "generado": "2026-07-03T20:23:35",
-    "input": "criterios_extraidos.json",
+    "origen": "motor2/capa2_validado_con_candidatos.json (Sesión X: 148/148 revisado_por_gerardo=true + 3 correcciones golden set aplicadas)",
     "manual": "mecanica_montaje_gran_barata_pv_2026",
-    "schema": "v1.2 (v1.1 + seccion_aplicable + etapa_aplicable E1/E2/E3/null)",
-    "validador": "validator.py (Sesión P): schema v1.2 + filtro grounding=failed; posible_herencia_fewshot solo marca; duplicados solo reportados en validator_report.json",
-    "nota_formato": "extracción v1.2 validada — AÚN NO es capa de knowledge v1.1 (faltan id/aliases/aplica_a; se asignan en un paso posterior)",
-    "candidatos_generados": "2026-07-03T20:48:47",
-    "candidatos_nota": "id/aliases/aplica_a son CANDIDATOS deterministas generados por generar_candidatos_ids.py (Sesión S) — NO están aprobados. Cada criterio lleva revisado_por_gerardo=false hasta revisión manual criterio por criterio. Ver candidatos_id_colisiones.json para los slugs duplicados sin resolver.",
-    "confirmaciones_sesion_t": "2026-07-03T21:05:34",
-    "confirmaciones_nota": "30 de 156 criterios confirmados por Gerardo y marcados revisado_por_gerardo=true (3 de los 18 grupos de colisión de Sesión S: p6 barras/columnas, Focal Show p20-25 por departamento, 'no mezclar marcas' p31/34/39/40). Quedan 7 grupos de colisión (20 criterios) sin confirmar — ver docstring de aplicar_confirmaciones_sesion_t.py, incluye un falso positivo detectado (maniquies_etiquetas, p10) por limitación del generador de slugs con números de 1 dígito.",
-    "confirmaciones_sesion_u": "2026-07-04T19:07:55",
-    "confirmaciones_sesion_u_nota": "Gerardo resolvió los 7 grupos de colisión real de Sesión T (20 criterios, ahora revisado_por_gerardo=true): colapso de coloca_producto_mayor_descuento_sea -> colocar_producto_mayor_descuento y manten_orden_exhibicion -> mantener_orden_exhibicion; separación del falso positivo maniquies_etiquetas (p10) en maniquies_3_etiquetas_2 y maniquies_5_etiquetas_3; y confirmación del id compartido en acercate_jefe_seccion_pueda_dar, exhibicion_disciplinas_mantiene_dentro_separan, identificar_cartulina_descuento y mercadeo_bloqueo_producto. Solo se modificó el campo id; el texto original del manual no se tocó.",
-    "regenerado_pendientes_sesion_v": "2026-07-05T21:43:02",
-    "regenerado_pendientes_sesion_v_nota": "Fix del generador (Sesión V): los tokens puramente numéricos ya no se descartan por longitud (bug Sesión T: '3'/'2'/'5' se perdían y colapsaban reglas de cantidad distinta al mismo id, ej. p10 maniquíes, resuelto a mano en Sesión U). Se regeneraron id/aliases/aplica_a SOLO para los 106 criterios con revisado_por_gerardo=false; los 50 confirmados en Sesiones T/U no se tocaron. Ningún criterio se marcó revisado_por_gerardo=true en este paso — eso queda para la revisión por lotes de Gerardo.",
-    "lote1_sesion_v": "2026-07-05T21:43:56",
-    "lote1_sesion_v_nota": "Gerardo revisó y confirmó el Lote 1 (18 criterios: p6/7/10/16/18/20/22/24) presentado en Sesión V. 3 renombres manuales aplicados: 3era_etapa_solo_producir_parches -> columnas_etapa3_parches_20 (completa el patrón de sus hermanos barras/columnas etapa1-3, dato que Sesión T daba por inexistente); imprimir_primera_etapa_generico_usan -> atriles_primera_etapa_generico; y los 3 de focal-por-departamento (p20/22/24) renombrados al esquema de cluster focal_show_<genero>_departamento_<depto> para alinearlos con sus hermanos focal_show_X_etapa1_2 ya confirmados en Sesión T. Los otros 13 quedaron con el id tal como lo produjo el generador ya corregido (dígitos preservados, marcadores de lista descartados). Solo se modificó id y revisado_por_gerardo — texto original intacto.",
-    "lote6_sesion_x": "2026-07-06T23:57:23",
-    "lote6_sesion_x_nota": "Gerardo cerró el Lote 6 (p43/44): 7 criterios reales revisado_por_gerardo=true. Los 8 unidad_exhibicion_* de p44 (bloque descriptivo de planograma, vision_fallback) se EXCLUYERON como compliance no evaluable — hallazgo 6 Jul 2026: valor 60%+20% (zona azul) ausente en la extracción, mapeo de posición no confiable contra la imagen real; mismo tratamiento que p47 (Sesión N). Documentados en motor2/referencia_no_evaluable.md. Total pasa de 156 a 148 criterios evaluables, todos revisado_por_gerardo=true.",
-    "golden_set_sesion_x": "2026-07-07T00:02:02",
-    "golden_set_sesion_x_nota": "Aplicadas las 3 correcciones de peso/severidad del golden set #1 (verificadas por Gerardo contra el PDF real, Sesión V): p13 selecciona_producto_dando_prioridad_descuento peso MANDATORY->RECOMMENDATION; p27 cuentas_espacio_suficiente_obstruya_paso MANDATORY->RECOMMENDATION + GRAVE->OBSERVACION; p32 exhibe_bloque_tipo_producto_marca severidad OBSERVACION->GRAVE. Texto/id/aliases intactos."
+    "sellado": "2026-07-07T00:02:02",
+    "nota": "148 criterios evaluables. Los 8 unidad_exhibicion_* de p44 excluidos (motor2/referencia_no_evaluable.md). Candidato para reemplazar pipeline/knowledge/capa2_campana_activa.json vía swap_capa2_produccion.mjs — swap real pendiente de autorización de Gerardo."
   },
   "criterios": [
     {
