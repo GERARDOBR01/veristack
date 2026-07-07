@@ -19,7 +19,12 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 
 ---
 
-## Estado actual (6 Jul 2026 — Sesión X, cierre: golden set aplicado + `capa2_validado_final.json` SELLADO — gate del swap: VÁLIDO. Solo falta la autorización de Gerardo para el swap real)
+## Estado actual (6 Jul 2026 — Sesión X, final: **SWAP A PRODUCCIÓN EJECUTADO** con autorización de Gerardo — la capa2 activa es el validado final de 148 criterios)
+
+**`pipeline/knowledge/capa2_campana_activa.json` YA ES el manual validado (commit `9c80afe`)**: gate 19/19 PASS → swap byte a byte verificado por sha256 (activo==candidato `e8e471f8…`, backup==activo previo `3a53a9d1…`). Backup `capa2_campana_activa.json.bak-swap-20260706-180515` + manifest en `pipeline/knowledge/` (locales, NO commiteados — auditoría/rollback). Rollback de un comando disponible: `node motor2/swap_capa2_produccion.mjs rollback --activo pipeline/knowledge/capa2_campana_activa.json --confirmar`.
+
+- **Cobertura verificada sin caída silenciosa** (chequeo de Sesión R, réplica exacta de `pipeline._extraer_criterios_del_knowledge`): capa2 **101 → 120 ids únicos** (148 criterios, 15 ids compartidos confirmados con hasta 4 instancias); total del knowledge que Motor 1 extraería **122 → 141** (capa1 6 + capa2 120 + capa3 15). El escenario de falla de Sesión R (swap directo sin id → 0 de capa2) NO ocurre.
+- **⚠️ Validación E2E con foto real NO corrida en esta máquina — límite de entorno, no falla del swap**: aquí no hay Python instalado (regla de Sesión U: no instalar nada) ni existe `simulation.jpeg` en Downloads. La verificación estructural (ids, schema_version 1.1 que retrieval carga sin warning, pesos/severidades en catálogo) está hecha; **falta el click real en la UI Streamlit desde la máquina con Python** — primer paso de la próxima sesión ahí. Si algo sale mal en esa corrida: rollback de un comando (arriba).
 
 **Las 3 correcciones del golden set YA están aplicadas y el final está sellado (commit `e69360c`)**: `motor2/capa2_validado_final.json` — 148 criterios, `schema_version: "1.1"`, metadatos de capa (etapa `gran_barata_pv2026`, vigencias 2026-06-22→2026-08-09, fecha, `hash_contenido` sha256). Verificado con el propio gate: `swap_capa2_produccion.mjs validar` → **VÁLIDO para swap**, solo avisos esperados (15 ids compartidos confirmados, 14 fewshot, 4 [AMBIGUO]). Motor 1 extraería 120 ids únicos. Pesos: 115 MANDATORY / 26 RECOMMENDATION / 7 EXCEPTION.
 
@@ -38,7 +43,7 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 - **Listo-para-mostrar**: pipeline Motor 1 + UI Streamlit corriendo con la capa2 actual; la capa2 nueva (148) queda a 2 pasos del swap (ver pendiente).
 - **NO tocado**: peso/severidad/id/aliases de los 27 aprobados hoy (salvo el fix de texto documentado de p40), las 3 correcciones del golden set (p13/p27/p32, siguen SIN aplicar), `capa2_campana_activa.json`, `swap_capa2_produccion.mjs`, `validator.py`, `pipeline/`, `core/`.
 
-🔴 **Pendiente**: (1) **swap real — solo falta la autorización explícita de Gerardo** (golden set aplicado ✓, final sellado ✓, gate VÁLIDO ✓); (2) corregir los 3 sub-marcados de `referencia_no_resuelta` (p10, p39/p40 — hoy son 4 avisos [AMBIGUO]/null en el gate, no bloquean); (3) decidir aliases en lenguaje natural (los actuales son recortes deterministas); (4) decidir el espacio en `98´puedes` (p40, fiel al crudo).
+🔴 **Pendiente**: (1) **validar el swap en la UI real** — correr `app.py` + foto real (Streamlit) desde la máquina con Python y confirmar conteo de criterios evaluados (~141 del knowledge antes de filtros de etapa) y veredicto coherente; rollback de un comando si falla; (2) corregir los 3 sub-marcados de `referencia_no_resuelta` (p10, p39/p40 — hoy son 4 avisos [AMBIGUO]/null, no bloquean); (3) decidir aliases en lenguaje natural (los actuales son recortes deterministas); (4) decidir el espacio en `98´puedes` (p40, fiel al crudo); (5) decidir si los campos de proveniencia de motor2 (`fuente_pagina`, `grounding`, `posible_herencia_fewshot`, `severidad`, `revisado_por_gerardo`, etc.) se formalizan en el schema o se limpian de la capa activa.
 
 ## Estado previo (6 Jul 2026 — Sesión W: script de swap a producción con gate de autotest 19/19 — swap real NO ejecutado)
 
