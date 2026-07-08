@@ -13,6 +13,10 @@ Input:  metadata JSON de photo_analyzer.py
 Output: lista de resultados ordenados por severidad
 """
 
+import logging
+import re
+import unicodedata
+
 from dataclasses import dataclass, field
 from enum import Enum
 from typing import Callable, Optional
@@ -182,9 +186,70 @@ def _regla_espacio_vacio(meta: dict, config: ConfigEngine) -> ResultadoCriterio:
     )
 
 
+# ── Comparación gráfico vs etapa (fix sesión 7 Jul 2026) ─────────────
+# Visión lee el NOMBRE visible del gráfico ("Gran Barata", "Gran Barata 40%");
+# etapa_activa puede ser el ID de campaña ("gran_barata_pv2026") o solo la
+# etiqueta de etapa ("E1", lo que manda la UI). La comparación estricta !=
+# disparaba GRAVE en toda foto con gráfico (0/5 precisión).
+
+_ETIQUETA_ETAPA_RE = re.compile(r"^e?\d{1,2}$")
+
+
+def _canon_grafico(texto: str) -> str:
+    """Minúsculas, sin acentos, solo [a-z0-9]."""
+    t = unicodedata.normalize("NFKD", texto)
+    t = "".join(ch for ch in t if not unicodedata.combining(ch))
+    return re.sub(r"[^a-z0-9]", "", t.lower())
+
+
+def _tokens_canon(texto: str) -> list[str]:
+    t = unicodedata.normalize("NFKD", texto)
+    t = "".join(ch for ch in t if not unicodedata.combining(ch)).lower()
+    return [tk for tk in re.split(r"[^a-z0-9]+", t) if tk]
+
+
+def _nucleo_campana(etapa: str) -> list[str]:
+    """Tokens que NOMBRAN la campaña en el ID de etapa: alfabéticos puros de
+    ≥3 letras ("gran_barata_pv2026" → [gran, barata]; "E1" → [])."""
+    return [tk for tk in _tokens_canon(etapa) if tk.isalpha() and len(tk) >= 3]
+
+
+def _corresponde_grafico_etapa(grafico: str, etapa: str) -> Optional[bool]:
+    """
+    True  → el gráfico corresponde a la etapa/campaña activa.
+    False → NO corresponde (mismatch real → GRAVE).
+    None  → no comparable por código: etapa_activa no nombra campaña
+            (ej. etiqueta "E1") y el gráfico no es etiqueta de etapa.
+    """
+    g, e = _canon_grafico(grafico), _canon_grafico(etapa)
+    if g == e:
+        return True
+    if _ETIQUETA_ETAPA_RE.match(g) and _ETIQUETA_ETAPA_RE.match(e):
+        return False  # dos etiquetas de etapa distintas (E1 vs E2)
+    nucleo = _nucleo_campana(etapa)
+    if not nucleo:
+        return None
+    if set(nucleo) <= set(_tokens_canon(grafico)):
+        return True  # "Gran Barata 40%" / "Vive la Gran Barata" ⊇ {gran, barata}
+    nucleo_junto = "".join(nucleo)
+    if nucleo_junto in g or g in nucleo_junto:
+        return True  # variantes sin separadores ("granbarata")
+    return False
+
+
 def _regla_grafico_etapa(meta: dict, config: ConfigEngine) -> ResultadoCriterio:
     etapa   = _to_str(meta.get("etapa_activa"))
     grafico = _to_str(meta.get("grafico_detectado"))
+
+    # INSTRUMENTACIÓN DIAGNÓSTICO (sesión bug grafico_etapa_incorrecta):
+    # valores exactos y tipo de dato justo antes de la comparación.
+    logging.getLogger("mandatory_engine").info(
+        "[DIAG grafico_etapa] crudo etapa_activa=%r (%s) | crudo grafico_detectado=%r (%s) "
+        "| comparado etapa=%r (%s) vs grafico=%r (%s)",
+        meta.get("etapa_activa"), type(meta.get("etapa_activa")).__name__,
+        meta.get("grafico_detectado"), type(meta.get("grafico_detectado")).__name__,
+        etapa, type(etapa).__name__, grafico, type(grafico).__name__,
+    )
 
     if not etapa:
         return ResultadoCriterio(
@@ -202,7 +267,19 @@ def _regla_grafico_etapa(meta: dict, config: ConfigEngine) -> ResultadoCriterio:
             descripcion = "No se detectó gráfico en la imagen. Requiere revisión manual.",
             confianza   = Confianza.MEDIO,
         )
-    if grafico != etapa:
+    corresponde = _corresponde_grafico_etapa(grafico, etapa)
+    if corresponde is None:
+        return ResultadoCriterio(
+            criterio    = "grafico_etapa_no_verificable",
+            severidad   = Severidad.NO_CALIFICA,
+            fuente      = Fuente.CODIGO,
+            descripcion = (f"La etapa activa '{etapa}' es una etiqueta de etapa, no un ID "
+                           "de campaña — el código no puede validar que el gráfico "
+                           f"'{grafico}' corresponda. Requiere el ID de campaña o revisión manual."),
+            evidencia   = f"grafico_detectado={grafico}, etapa_activa={etapa}",
+            confianza   = Confianza.MEDIO,
+        )
+    if not corresponde:
         return ResultadoCriterio(
             criterio    = "grafico_etapa_incorrecta",
             severidad   = Severidad.GRAVE,
