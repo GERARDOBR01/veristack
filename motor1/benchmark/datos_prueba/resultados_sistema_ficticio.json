@@ -1,0 +1,31 @@
+{
+  "meta": {
+    "nota": "FIXTURE datos de prueba — 100% ficticio, sin criterios reales de Liverpool",
+    "semantica": "deteccion = criterio con veredicto GRAVE u OBSERVACION"
+  },
+  "fotos": [
+    {
+      "foto_id": "FX1",
+      "tiempo_segundos": 11.2,
+      "veredicto_global": "GRAVE",
+      "detecciones": [
+        {"criterio_id": "criterio_ficticio_a", "criterio": "", "veredicto": "OBSERVACION", "razon": "FIXTURE razon a"},
+        {"criterio_id": "criterio_ficticio_extra", "criterio": "", "veredicto": "GRAVE", "razon": "FIXTURE hallazgo no anotado por humano"}
+      ]
+    },
+    {
+      "foto_id": "FX2",
+      "tiempo_segundos": 9.8,
+      "veredicto_global": "OBSERVACION",
+      "detecciones": [
+        {"criterio_id": "criterio_ficticio_c", "criterio": "", "veredicto": "OBSERVACION", "razon": "FIXTURE razon c"}
+      ]
+    },
+    {
+      "foto_id": "FX3",
+      "tiempo_segundos": 8.5,
+      "veredicto_global": "CUMPLE",
+      "detecciones": []
+    }
+  ]
+}

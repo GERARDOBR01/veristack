@@ -1,0 +1,253 @@
+# -*- coding: utf-8 -*-
+"""
+correr_motor1_benchmark.py — Runner: ejecuta Motor 1 real foto por foto,
+mide el tiempo (segundos) y produce el JSON que consume arnes_benchmark.py.
+
+Input (manifest CSV, rutas explícitas — sin defaults a datos reales):
+  foto_id,archivo,etapa_activa,tipo_foto
+  - archivo: ruta a la imagen real (relativa al manifest o absoluta)
+  - tipo_foto puede ir vacío → detección automática de photo_analyzer
+
+Output (resultados_sistema.json):
+  {"meta": {...}, "fotos": [{"foto_id", "archivo", "tiempo_segundos",
+   "veredicto_global", "detecciones": [{"criterio_id","criterio","veredicto","razon"}]}]}
+
+Semántica de "detección" (documentada, no implícita): un criterio cuenta como
+detección del sistema cuando su veredicto es GRAVE u OBSERVACION. CUMPLE y
+NO_CALIFICA no son detecciones (NO_CALIFICA = el sistema no pudo evaluar,
+que es distinto de detectar un problema).
+
+Uso:
+  python correr_motor1_benchmark.py autotest
+  python correr_motor1_benchmark.py correr --manifest M.csv --salida R.json
+
+El autotest usa un ejecutor FICTICIO inyectado ("FIXTURE AUTOTEST") — verifica
+la mecánica de medición/serialización sin llamar al modelo ni requerir fotos.
+El pipeline real solo se importa en `correr`.
+"""
+
+from __future__ import annotations
+
+import argparse
+import csv
+import json
+import sys
+import time
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Callable
+
+VEREDICTOS_DETECCION = {"GRAVE", "OBSERVACION"}
+COLUMNAS_MANIFEST = ["foto_id", "archivo", "etapa_activa", "tipo_foto"]
+
+RAIZ_REPO = Path(__file__).resolve().parents[2]
+
+
+class ErrorRunner(Exception):
+    """Error de entrada — aborta sin escribir nada."""
+
+
+def cargar_manifest(ruta: Path) -> list[dict]:
+    with open(ruta, encoding="utf-8-sig", newline="") as f:
+        lector = csv.DictReader(f)
+        columnas = [c.strip() for c in (lector.fieldnames or [])]
+        faltantes = [c for c in COLUMNAS_MANIFEST if c not in columnas]
+        if faltantes:
+            raise ErrorRunner(f"Manifest sin columnas requeridas: {faltantes}. "
+                              f"Esperadas: {COLUMNAS_MANIFEST}")
+        filas = [dict(r) for r in lector]
+
+    if not filas:
+        raise ErrorRunner("Manifest vacío — ninguna foto que correr.")
+
+    vistos: set[str] = set()
+    for i, fila in enumerate(filas, start=2):
+        fid = (fila.get("foto_id") or "").strip()
+        if not fid:
+            raise ErrorRunner(f"Manifest línea {i}: foto_id vacío.")
+        if fid.lower() in vistos:
+            raise ErrorRunner(f"Manifest línea {i}: foto_id duplicado '{fid}'.")
+        vistos.add(fid.lower())
+        archivo = (fila.get("archivo") or "").strip()
+        if not archivo:
+            raise ErrorRunner(f"Manifest línea {i}: archivo vacío para foto {fid}.")
+        ruta_img = (ruta.parent / archivo) if not Path(archivo).is_absolute() else Path(archivo)
+        if not ruta_img.exists():
+            raise ErrorRunner(f"Manifest línea {i}: la imagen no existe: {ruta_img} "
+                              f"— no se corre nada con rutas rotas.")
+        fila["_ruta_imagen"] = str(ruta_img)
+    return filas
+
+
+def _extraer_detecciones(resultado) -> list[dict]:
+    """Filtra los criterios del ResultadoFinal a detecciones (GRAVE/OBSERVACION)."""
+    detecciones = []
+    for c in getattr(resultado, "criterios", []) or []:
+        veredicto = getattr(getattr(c, "veredicto", None), "value", None) \
+                    or str(getattr(c, "veredicto", "") or "")
+        if veredicto.upper() in VEREDICTOS_DETECCION:
+            detecciones.append({
+                "criterio_id": str(getattr(c, "criterio", "")),
+                "criterio":    "",
+                "veredicto":   veredicto.upper(),
+                "razon":       str(getattr(c, "razon", "") or ""),
+            })
+    return detecciones
+
+
+def correr(manifest: list[dict], ejecutar_fn: Callable, salida: Path) -> dict:
+    """Corre `ejecutar_fn` por foto midiendo wall time. Escribe y devuelve el JSON."""
+    fotos = []
+    for fila in manifest:
+        fid = fila["foto_id"].strip()
+        t0 = time.perf_counter()
+        resultado = ejecutar_fn(
+            imagen_path  = fila["_ruta_imagen"],
+            etapa_activa = (fila.get("etapa_activa") or "").strip() or None,
+            tipo_foto    = (fila.get("tipo_foto") or "").strip() or None,
+        )
+        segundos = round(time.perf_counter() - t0, 2)
+        veredicto_global = getattr(getattr(resultado, "veredicto_global", None), "value", None) \
+                           or str(getattr(resultado, "veredicto_global", "") or "")
+        fotos.append({
+            "foto_id":          fid,
+            "archivo":          fila["_ruta_imagen"],
+            "tiempo_segundos":  segundos,
+            "veredicto_global": veredicto_global,
+            "detecciones":      _extraer_detecciones(resultado),
+        })
+        print(f"  {fid}: {segundos}s, veredicto={veredicto_global}, "
+              f"{len(fotos[-1]['detecciones'])} detección(es)")
+
+    datos = {
+        "meta": {
+            "generado":  datetime.now(timezone.utc).isoformat(timespec="seconds"),
+            "fotos":     len(fotos),
+            "semantica": "deteccion = criterio con veredicto GRAVE u OBSERVACION",
+        },
+        "fotos": fotos,
+    }
+    salida.parent.mkdir(parents=True, exist_ok=True)
+    with open(salida, "w", encoding="utf-8") as f:
+        json.dump(datos, f, ensure_ascii=False, indent=2)
+    return datos
+
+
+# ── AUTOTEST — ejecutor ficticio inyectado, cero pipeline real ─────
+
+def autotest() -> int:
+    import tempfile
+
+    fallas: list[str] = []
+
+    def check(nombre: str, condicion: bool):
+        print(f"  [{'PASS' if condicion else 'FAIL'}] {nombre}")
+        if not condicion:
+            fallas.append(nombre)
+
+    class _CriterioFicticio:
+        def __init__(self, cid, veredicto, razon="FIXTURE AUTOTEST"):
+            self.criterio, self.veredicto, self.razon = cid, veredicto, razon
+
+    class _ResultadoFicticio:
+        def __init__(self, criterios, veredicto_global="GRAVE"):
+            self.criterios = criterios
+            self.veredicto_global = veredicto_global
+
+    def ejecutar_ficticio(imagen_path, etapa_activa, tipo_foto):
+        time.sleep(0.05)   # tiempo medible pero corto
+        return _ResultadoFicticio([
+            _CriterioFicticio("criterio_ficticio_grave", "GRAVE"),
+            _CriterioFicticio("criterio_ficticio_obs", "OBSERVACION"),
+            _CriterioFicticio("criterio_ficticio_cumple", "CUMPLE"),
+            _CriterioFicticio("criterio_ficticio_nc", "NO_CALIFICA"),
+        ])
+
+    with tempfile.TemporaryDirectory() as tmp:
+        tmp = Path(tmp)
+        img = tmp / "FIXTURE_AUTOTEST.jpg"
+        img.write_bytes(b"FIXTURE AUTOTEST no es una imagen real")
+
+        # manifest válido
+        manifest_csv = tmp / "manifest.csv"
+        manifest_csv.write_text(
+            "foto_id,archivo,etapa_activa,tipo_foto\n"
+            f"FX1,{img.name},etapa_ficticia,\n"
+            f"FX2,{img.name},etapa_ficticia,focal_show\n",
+            encoding="utf-8")
+        manifest = cargar_manifest(manifest_csv)
+        check("manifest válido carga 2 fotos", len(manifest) == 2)
+
+        datos = correr(manifest, ejecutar_ficticio, tmp / "resultados.json")
+        f1 = datos["fotos"][0]
+        check("solo GRAVE/OBSERVACION cuentan como detección",
+              [d["criterio_id"] for d in f1["detecciones"]]
+              == ["criterio_ficticio_grave", "criterio_ficticio_obs"])
+        check("tiempo medido > 0 por foto",
+              all(f["tiempo_segundos"] > 0 for f in datos["fotos"]))
+        check("veredicto global serializado", f1["veredicto_global"] == "GRAVE")
+        relectura = json.loads((tmp / "resultados.json").read_text(encoding="utf-8"))
+        check("JSON relegible e íntegro", relectura["meta"]["fotos"] == 2
+              and len(relectura["fotos"]) == 2)
+
+        # guards que deben abortar
+        def espera_error(nombre, contenido):
+            ruta = tmp / "manifest_malo.csv"
+            ruta.write_text(contenido, encoding="utf-8")
+            try:
+                cargar_manifest(ruta)
+                check(nombre, False)
+            except ErrorRunner:
+                check(nombre, True)
+
+        espera_error("manifest vacío aborta", "foto_id,archivo,etapa_activa,tipo_foto\n")
+        espera_error("imagen inexistente aborta",
+                     "foto_id,archivo,etapa_activa,tipo_foto\nFX1,no_existe.jpg,e,\n")
+        espera_error("foto_id duplicado aborta",
+                     "foto_id,archivo,etapa_activa,tipo_foto\n"
+                     f"FX1,{img.name},e,\nfx1,{img.name},e,\n")
+        espera_error("columnas faltantes aborta", "foto_id,archivo\nFX1,x.jpg\n")
+
+    print(f"\nAUTOTEST RUNNER: {'PASS' if not fallas else 'FAIL'} ({len(fallas)} falla(s))")
+    return len(fallas)
+
+
+# ── CLI ────────────────────────────────────────────────────────────
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[1])
+    sub = parser.add_subparsers(dest="comando", required=True)
+    sub.add_parser("autotest", help="verifica la mecánica con un ejecutor ficticio")
+    p_run = sub.add_parser("correr", help="corre Motor 1 real sobre el manifest")
+    p_run.add_argument("--manifest", required=True, type=Path)
+    p_run.add_argument("--salida",   required=True, type=Path)
+    args = parser.parse_args(argv)
+
+    if args.comando == "autotest":
+        return 1 if autotest() else 0
+
+    # correr: PASO 0 — autotest como gate
+    print("PASO 0 — autotest (gate obligatorio):")
+    if autotest():
+        print("ABORTADO: el autotest falló — no se corre Motor 1.")
+        return 1
+
+    sys.path.insert(0, str(RAIZ_REPO / "pipeline"))
+    sys.path.insert(0, str(RAIZ_REPO / "core"))
+    import pipeline as motor1   # noqa: E402 — import tardío a propósito
+
+    try:
+        manifest = cargar_manifest(args.manifest)
+    except ErrorRunner as e:
+        print(f"ABORTADO: {e}")
+        return 1
+
+    print(f"Corriendo Motor 1 sobre {len(manifest)} foto(s)…")
+    datos = correr(manifest, motor1.ejecutar, args.salida)
+    total = sum(f["tiempo_segundos"] for f in datos["fotos"])
+    print(f"\nListo: {len(datos['fotos'])} fotos en {round(total, 1)}s -> {args.salida}")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
