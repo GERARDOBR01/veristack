@@ -19,7 +19,28 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 
 ---
 
-## Estado actual (6 Jul 2026 — Sesión X, final: **SWAP A PRODUCCIÓN EJECUTADO** con autorización de Gerardo — la capa2 activa es el validado final de 148 criterios)
+## Estado actual (8 Jul 2026 — Sesión Y: benchmark real Motor 1 — **Tarea 1 COMPLETADA, Tareas 2-3 BLOQUEADAS** — no se corrió ninguna foto, por regla)
+
+**El benchmark contra el ground truth de 46 hallazgos NO se corrió. Se detuvo en el gate de la Tarea 2 (regla fija del brief: STOP si las fotos no están localizadas con certeza) y porque el arnés del 7 Jul NO existe en el repo. Nada del sistema se tocó — sesión de solo lectura + este CLAUDE.md.**
+
+**Tarea 1 — los 3 pendientes de capa2 verificados contra `motor2/capa2_validado_final.json` (y capa1/capa3 activos), sin asumir nada:**
+1. **Cartulina de descuento (F03/F15): EXISTE.** Ids en capa2: `identificar_cartulina_descuento` (p13/p14, id compartido confirmado), `colocar_cartulina_descuento_especifico_mercancia` (p11), `coloca_cartulina_descuento_agresivo_cuentes` (p42), `senaliza_cartulina_30`, `asegura_coloque_cartulina_beneficio`, entre otros. OJO: F03 es Gran Barata (cubierto); F15/F16 son **Día del Padre** — el criterio existe pero esa campaña no está cargada en el sistema (el propio ground truth ya lo marca fuera de alcance actual).
+2. **Etiqueta alternada 1-de-cada-2-maniquíes (F05): EXISTE PERO INCOMPLETO.** La proporción exacta existe: `2_maniquies_1_etiqueta` (p10, texto "2 maniquíes – 1 etiqueta", MANDATORY/NO_CALIFICA), con hermanos `maniquies_3_etiquetas_2` y `maniquies_5_etiquetas_3`. El matiz "alternado" (cuál maniquí lleva la etiqueta) NO está expresado en ningún criterio de maniquíes — los `colocar_alternando_*` del JSON son de material gráfico/focales por marca en sección, no de etiquetas de maniquí.
+3. **Etiqueta de campaña en foto tipo Focal Show (F11): NO EXISTE en capa2.** Los 21 criterios `focal_show_*` (p20-25) no mencionan etiqueta de campaña; lo más cercano en capa2 es `caso_muebles_focal_coloca_etiqueta` (p10 — altura/lado de etiqueta en muebles, otra cosa). En **capa3_focal_show.json** SÍ existe `etiqueta_ausente_maniqui` (EXCEPTION, "Etiqueta de precio ausente en maniquí cuando la mecánica la exige") que cubriría el caso **solo si la foto se clasifica como focal_show** — es decir, confirma el gap arquitectónico #13 (`tipo_de_foto`): el conocimiento existe en la capa condicional, lo que falta es la validación de tipo de foto que la activa.
+
+**Tarea 2 — fotos: NO están en el repo (0 imágenes en todo el repo). Hallazgo relevante:** `C:\Users\EEVILLAREALN\Documents\Fotos\` contiene exactamente **30 fotos reales** (12 en `Gran Barata Invierno 2023-2024\`, 6 en `Hardline\Blancos\`, 12 en `Hardline\Haus Junio 2024\`) — el conteo coincide con las "30 fotos procesadas" del ground truth, pero **no existe mapeo F01-F30 → archivo** (nombres WhatsApp/UUID, hay pares duplicados byte-idénticos en Gran Barata). Sin `benchmark_ground_truth.csv` no se puede saber cuál archivo es la Foto 13 del gate. **STOP aplicado — no se corrió nada ni se inventó mapeo.**
+
+**Tarea 3 — el arnés de benchmark "construido en sesión autónoma del 7 Jul" NO existe** ni en el repo, ni en ramas remotas, ni en el disco de esta máquina (barrido completo por `benchmark|arnes|ground_truth`). El ÚNICO commit del 7 Jul es `1217900` (fix `mandatory_engine.py` + `pipeline/autotest_grafico_etapa.py` — "grafico_etapa_incorrecta 0/5 precision"), que sugiere que ALGO de medición corrió en algún lado, pero el arnés nunca llegó al remoto (si existió, violación de la regla fija #2). Tampoco existe `motor1/` como carpeta.
+
+**Dato de entorno NUEVO (corrige a Sesión X):** esta máquina **YA tiene Python 3.14.6** + streamlit/pillow/numpy/python-dotenv instalados + `.env` presente. Motor 1 no requiere SDK de Google (llama la API por urllib). → El pendiente E2E de Sesión X ("validar el swap en la UI real desde la máquina con Python") **ya se puede correr AQUÍ**.
+
+**Ground truth verificado en Notion** (página "🧪 Benchmark manual — 30 fotos reales (8 Jul 2026)"): tabla completa de 46 hallazgos legible, F01-F28. Consistente con lo reportado arriba.
+
+🔴 **Bloqueado — necesita a Gerardo antes de correr el benchmark**: (1) subir/pasar `benchmark_ground_truth.csv` con el mapeo foto_id → archivo (o confirmar que las 30 de `Documents\Fotos\` son las del benchmark y darme el mapeo); (2) decir dónde quedó el arnés del 7 Jul (¿otra máquina sin push?) o autorizar construirlo desde cero; (3) con eso: gate de 2-3 fotos (F13 = ACIERTO en brillo esperado) antes de escalar a las 24.
+
+**Tracking (sin cambio — el benchmark no corrió): Motor 1: 100% | Motor 2: 100% | Listo-para-mostrar: 42%.**
+
+## Estado previo (6 Jul 2026 — Sesión X, final: **SWAP A PRODUCCIÓN EJECUTADO** con autorización de Gerardo — la capa2 activa es el validado final de 148 criterios)
 
 **`pipeline/knowledge/capa2_campana_activa.json` YA ES el manual validado (commit `9c80afe`)**: gate 19/19 PASS → swap byte a byte verificado por sha256 (activo==candidato `e8e471f8…`, backup==activo previo `3a53a9d1…`). Backup `capa2_campana_activa.json.bak-swap-20260706-180515` + manifest en `pipeline/knowledge/` (locales, NO commiteados — auditoría/rollback). Rollback de un comando disponible: `node motor2/swap_capa2_produccion.mjs rollback --activo pipeline/knowledge/capa2_campana_activa.json --confirmar`.
 
