@@ -19,7 +19,29 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 
 ---
 
-## Estado actual (8 Jul 2026 — Sesión AA: ground truth en repo + mapeo de las 30 fotos COMPLETO — **PENDIENTE confirmación de Gerardo antes de renombrar/correr** + ⚠️ hallazgo de validez del benchmark)
+## Estado actual (9 Jul 2026 — Sesión BB: benchmark retomado — **GATE DETENIDO por regla** por 2 bloqueos reales; F28 corregido en el GT del arnés + autotests PASS. El benchmark NO corrió.)
+
+**Decisión de Gerardo al cierre: PARAR aquí, documentar, esperar y reintentar el modelo en otra sesión. El benchmark de 25 fotos NO se ejecutó.**
+
+**Tarea 1 HECHA — verificación de estado + 1 fix.** Confirmado contra el repo real (no contra el reporte previo): `b8242e5` en `origin/main`; `fotos/` con 25 recortadas + 25 `_original` (F28 y F20 ausentes ✓); `mapeo_fotos_PROPUESTA.csv` (30 filas) y `ground_truth_arnes.csv` presentes; `manifest_benchmark.csv` 25 filas. **Discrepancia encontrada y corregida** (commit `a27d5c4`, pusheado): el adaptador `preparar_gt_para_arnes.py` excluía solo `{F02, F06}` pero **NO F28** (que sí está fuera del manifest) → la fila de F28 en `ground_truth_arnes.csv` habría sido un **FALSO_NEGATIVO fantasma** (foto nunca corrida) inflando los FN sobre denom 38 en vez de 37. Fix: F28 agregado a `FOTOS_EXCLUIDAS`, GT regenerado a **37 filas / 23 fotos**. Cross-check: 0 fotos de GT fuera del manifest; las únicas del manifest sin GT son las positivas F29/F30. Cableado verificado: `pipeline.ejecutar(imagen_path, etapa_activa, tipo_foto)` calza con el runner; formato del resumen mandatory (`GRAVES (n): id`) calza con el regex extractor del runner.
+
+**Tarea 2 HECHA — autotests PASS** (no cambian código, son gate): `correr_motor1_benchmark.py autotest` 0 fallas; `arnes_benchmark.py autotest` 32/32.
+
+🔴 **Tarea 3 (gate) DETENIDA por la regla del brief — 2 bloqueos reales, ambos requieren decisión de Gerardo:**
+
+1. **Bloqueo del modelo — `gemini-3.5-flash` da HTTP 503 ("high demand"/UNAVAILABLE) sostenido (~20+ min, 10+ intentos).** Diagnóstico: NO es problema de key ni de quota (429) — es saturación del modelo del lado de Google, misma respuesta para las 3 keys. **Hallazgo de key**: el `.env` tiene **3 `GEMINI_API_KEY` DISTINTAS** (3 sha256 diferentes, prefijo común `AQ.Ab8`, len 53) — la nota de Notion que decía "3 duplicadas" está **desactualizada**. Las 3 dan 503 en `gemini-3.5-flash`, `gemini-2.5-flash` y `gemini-flash-latest`; `gemini-2.0-flash` dio 429 (quota). `gemini-3.5-flash` SÍ es un modelo real y accesible con estas keys (confirmado por ListModels: 54 modelos). No hay keys de otro proyecto en `.env`, Notion, disco ni Google Drive (el "bloc de notas" que Gerardo tenía abierto ES el `.env`). **Decisión de Gerardo: esperar y reintentar** (más keys del mismo proyecto free-tier no ayudan). Correr el benchmark con el modelo caído lo dejaría todo NO_CALIFICA = número no defendible.
+
+2. **⚠️ El gate de F13 FALLA por una razón real e independiente del 503.** F13 se corrió (el brillo es 100% código, no llama al modelo): salió **NO_CALIFICA, no ACIERTO**. Causa raíz medida: **F13.webp brillo promedio = 48.5** (F13_original = 71.2), **por encima del umbral `imagen_oscura` = 40** (`ConfigEngine.brillo_minimo`). `imagen_oscura` es una regla dura de *"demasiado oscura para evaluar"* (near-black <40), NO de *"se ve algo oscura"*; la foto es un piso de tienda normalmente iluminado. **Conclusión: la premisa del ground truth (F13-brillo = `gap=YA_CUBIERTO` por imagen_oscura) es empíricamente FALSA** — el sistema no cubre "foto algo oscura"; eso es un gap de capa1, no un YA_CUBIERTO. En el arnés esto saldría como FALSO_NEGATIVO con `bug_esperado=true`, no ACIERTO. Además, **el recorte de F13.webp todavía tiene las marcas verdes de la corrección humana encima** (cruz/flechas) — el riesgo de validez ya anotado en Sesión AA, aún sin resolver.
+
+**Pendientes para la próxima sesión (decisión de Gerardo sobre el gate F13 — 3 opciones planteadas, ninguna elegida):** (a) reclasificar F13-brillo como gap de capa1 (no YA_CUBIERTO) y usar otra foto como ACIERTO esperado del gate — F03 `identificar_cartulina_descuento` o F11 `etiqueta_ausente_maniqui`, ambas dependientes del modelo; (b) bajar `brillo_minimo` (ej. 40→50) en `mandatory_engine.py` — toca una regla dura de PRODUCCIÓN, afecta TODAS las fotos, no se hizo sin decisión; (c) revisar/rehacer el recorte de F13 (quizás la zona oscura real quedó fuera, y quitar las marcas verdes). **+ reintentar `gemini-3.5-flash` cuando el 503 se despeje, luego re-correr gate y escalar a las 25.**
+
+**Tarea 4 NO ejecutada** (bloqueada por el gate detenido): benchmark de 25 fotos sin correr, sin `benchmark_detalle`/`resumen`.
+
+**NADA de producción tocado**: `capa1_display_basics.json`, `capa2_validado_final.json`, `capa2_campana_activa.json`, `pipeline/`, `core/`, `mandatory_engine.py`, capa1_v2 — intactos. Único cambio commiteado: el fix del adaptador de GT (`a27d5c4`) + este CLAUDE.md.
+
+**Tracking (sin cambio — el benchmark no corrió): Motor 1: 100% | Motor 2: 100% | Listo-para-mostrar: 42%.**
+
+## Estado previo (8 Jul 2026 — Sesión AA: ground truth en repo + mapeo de las 30 fotos COMPLETO — **PENDIENTE confirmación de Gerardo antes de renombrar/correr** + ⚠️ hallazgo de validez del benchmark)
 
 **Tarea 1 HECHA**: `motor1/benchmark/ground_truth/benchmark_ground_truth.csv` guardado tal cual lo entregó Gerardo (sin modificar). Nota fiel: son **42 filas de hallazgo** (las 46 de Notion incluían las 4 de F25/F26, que quedan fuera por no tener imagen descargable — F25: 1, F26: 3).
 
