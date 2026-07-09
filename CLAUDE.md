@@ -19,7 +19,22 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 
 ---
 
-## Estado actual (8 Jul 2026 — Sesión Y: benchmark real Motor 1 — **Tarea 1 COMPLETADA, Tareas 2-3 BLOQUEADAS** — no se corrió ninguna foto, por regla)
+## Estado actual (8 Jul 2026 — Sesión Z: **ARNÉS DE BENCHMARK RECONSTRUIDO** — autotest 32/32 + 9/9 PASS, commit `623c402` pusheado y verificado en remoto)
+
+**El arnés perdido del 7 Jul se reconstruyó desde cero y YA ESTÁ EN REMOTO (regla nueva aplicada: commit + push inmediato al pasar el autotest, antes de seguir iterando). Listo para recibir datos reales en cuanto Gerardo suba las fotos + el CSV.** Dos scripts en `motor1/benchmark/`, Python stdlib puro, mismo patrón de gates que `validator.py`/`swap_capa2_produccion.mjs`:
+
+- **`arnes_benchmark.py`** — comparador de 4 categorías por (foto, criterio): ACIERTO / HALLAZGO (sistema detecta, GT no lo tiene — queda PENDIENTE_REVISION hasta que un humano lo clasifique vía CSV de revisión como HALLAZGO_REAL o FALSO_POSITIVO) / FALSO_POSITIVO / FALSO_NEGATIVO (desglosado por `gap` en el resumen — los FN de capa1 son esperados, no bug). Reglas especiales implementadas y testeadas: `gap=YA_CUBIERTO` detectado → ACIERTO, no detectado → FALSO_NEGATIVO con `bug_esperado=true` y listado aparte en el resumen (caso F13 brillo); severidad `CONDICIONAL` se preserva textual + flag `severidad_condicional` (caso F10 tallaje). Matching determinista por `criterio_id` normalizado con fallback a texto normalizado; guards que ABORTAN (GT vacío, duplicados, clasificación de revisión fuera de catálogo, tiempos inválidos). Salidas: `benchmark_detalle.json/.csv` + `benchmark_resumen.json` (porcentajes con numerador/denominador explícitos; % acierto y % FN sobre GT, % FP sobre detecciones del sistema; tiempo total del sistema vs. humano estimado 6-10 min/foto).
+- **`correr_motor1_benchmark.py`** — runner: manifest CSV (`foto_id,archivo,etapa_activa,tipo_foto`) → llama `pipeline.ejecutar()` real por foto midiendo wall time (`time.perf_counter`) → produce el JSON que consume el comparador. Semántica documentada: detección = criterio con veredicto GRAVE u OBSERVACION (CUMPLE/NO_CALIFICA no lo son). Valida el manifest ANTES de correr (imagen inexistente/duplicados/columnas → aborta). Su autotest usa un ejecutor ficticio inyectado — cero llamadas al modelo, cero fotos requeridas.
+- **AUTOTEST: 32/32 PASS (arnés) + 9/9 PASS (runner)**, casos borde del gate cumplidos: foto con 0 hallazgos en GT, foto donde el sistema no detecta nada, CONDICIONAL, YA_CUBIERTO en ambas ramas, match por texto sin id, revisión humana de hallazgos, porcentajes verificados a mano, y 10 guards de abort. Ambos comandos `comparar`/`correr` corren el autotest completo como PASO 0 obligatorio y abortan si falla. E2E verificado con los datos ficticios de `motor1/benchmark/datos_prueba/` (marcados FIXTURE, cero criterios reales — regla fija #1).
+- **Formato de entrada esperado del CSV real** (documentado en los datos de prueba): `foto_id,criterio_id,criterio,familia,severidad,tipo_evaluacion,gap` — compatible con la tabla de Notion del ground truth; `criterio_id` puede ir vacío si el hallazgo no mapea a un id de capa (matchea por texto).
+- **Nota**: en esta sesión llegaron ~30 `preview*.webp` a `Downloads\` (previsualizaciones de las fotos del benchmark). Por regla del brief NO se tocaron ni se intentó mapearlas — la localización/subida formal de las 30 fotos + CSV es de Gerardo en otra sesión.
+- **NO tocado**: `capa1_display_basics.json`, `capa2_validado_final.json`, `capa2_campana_activa.json`, `pipeline/`, `core/`, capa1_v2, todo Motor 2.
+
+🔴 **Pendiente para correr el benchmark real** (el arnés ya no es el bloqueo): (1) Gerardo sube las 30 fotos + `benchmark_ground_truth.csv` con mapeo foto_id→archivo; (2) armar el manifest y correr el gate de 2-3 fotos (F13 = ACIERTO en brillo esperado) antes de escalar a las 24; (3) sigue pendiente el E2E de la UI del swap (Sesión X) — ya se puede correr aquí (esta máquina tiene Python).
+
+**Tracking: Motor 1: 100% | Motor 2: 100% | Listo-para-mostrar: 42%** — el arnés no mueve el número, lo destraba: lo que lo moverá es la corrida real contra el ground truth.
+
+## Estado previo (8 Jul 2026 — Sesión Y: benchmark real Motor 1 — **Tarea 1 COMPLETADA, Tareas 2-3 BLOQUEADAS** — no se corrió ninguna foto, por regla)
 
 **El benchmark contra el ground truth de 46 hallazgos NO se corrió. Se detuvo en el gate de la Tarea 2 (regla fija del brief: STOP si las fotos no están localizadas con certeza) y porque el arnés del 7 Jul NO existe en el repo. Nada del sistema se tocó — sesión de solo lectura + este CLAUDE.md.**
 
