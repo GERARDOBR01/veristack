@@ -14,8 +14,9 @@ Transformaciones (todas documentadas, cero juicio nuevo):
    El resto queda vacío → matching por texto (fallará contra ids del sistema
    = FALSO_NEGATIVO, que es el resultado esperado para los gaps de capa1).
 3. Se EXCLUYEN las filas de fotos que no corren en el benchmark (F02 categoría
-   c, F06 duda — ver preparar_fotos_benchmark.py) para no inflar los FN con
-   fotos que el sistema nunca vio. Conteo guardado y verificado.
+   c, F06 duda, F28 fuera hasta que Gerardo la verifique — ver
+   preparar_fotos_benchmark.py) para no inflar los FN con fotos que el sistema
+   nunca vio. Conteo guardado y verificado.
 
 Guard: cada equivalencia debe matchear EXACTAMENTE una fila; si no, aborta.
 """
@@ -30,9 +31,13 @@ AQUI    = Path(__file__).resolve().parent
 ENTRADA = AQUI / "ground_truth" / "benchmark_ground_truth.csv"
 SALIDA  = AQUI / "ground_truth" / "ground_truth_arnes.csv"
 
-# Fotos que NO corren (no hay imagen limpia utilizable) — sus filas de GT no
-# entran a la comparación. Ver clasificación a/b/c en preparar_fotos_benchmark.py.
-FOTOS_EXCLUIDAS = {"F02", "F06"}
+# Fotos que NO corren (no hay imagen limpia utilizable, o quedan fuera por
+# decisión de Gerardo) — sus filas de GT no entran a la comparación, si no,
+# quedarían como FALSO_NEGATIVO fantasma (el sistema nunca vio esa foto).
+# F02 categoría c, F06 duda, F28 fuera hasta que Gerardo la verifique. Todas
+# ausentes del manifest — esta lista debe seguir al manifest. Ver
+# clasificación a/b/c en preparar_fotos_benchmark.py.
+FOTOS_EXCLUIDAS = {"F02", "F06", "F28"}
 
 # (foto_id, fragmento único del hallazgo) → criterio_id del sistema.
 # Verificados contra capa2_validado_final.json / capa3_focal_show.json /
