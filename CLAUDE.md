@@ -19,7 +19,21 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 
 ---
 
-## Estado actual (8 Jul 2026 — Sesión Z: **ARNÉS DE BENCHMARK RECONSTRUIDO** — autotest 32/32 + 9/9 PASS, commit `623c402` pusheado y verificado en remoto)
+## Estado actual (8 Jul 2026 — Sesión AA: ground truth en repo + mapeo de las 30 fotos COMPLETO — **PENDIENTE confirmación de Gerardo antes de renombrar/correr** + ⚠️ hallazgo de validez del benchmark)
+
+**Tarea 1 HECHA**: `motor1/benchmark/ground_truth/benchmark_ground_truth.csv` guardado tal cual lo entregó Gerardo (sin modificar). Nota fiel: son **42 filas de hallazgo** (las 46 de Notion incluían las 4 de F25/F26, que quedan fuera por no tener imagen descargable — F25: 1, F26: 3).
+
+**Tarea 2 HECHA — mapeo 30/30 identificado, en `motor1/benchmark/ground_truth/mapeo_fotos_PROPUESTA.csv` (PROPUESTA, nada renombrado ni movido)**: los `preview*.webp` de Downloads se descargaron en orden EXACTAMENTE INVERSO al foto_id — `preview.webp`=F30, `preview (1).webp`=F29, … `preview (29).webp`=F01 (sin F20 ni F25/F26 como fotos). 28/30 con confianza ALTA (casi todas las imágenes traen el chat o la anotación con la cita literal del hallazgo — verificado imagen por imagen contra el CSV); 1 con confianza MEDIA (`preview (2).webp`=F28, única sin texto: saco gris + rack de pantalones negros, coincide con el descriptor pero sin cita que lo selle). Detalles clave:
+- **F20 NO está en Downloads**: el bloque de 6 imágenes positivas nunca se descargó — los 30 webp son 26 fotos de corrección (F01-F19, F21-F24, F27, F28, con F12a/F12b separadas) + 2 capturas solo-chat (F25/F26) + 2 positivas (F29/F30). El manifest no puede incluir F20 hasta que Gerardo suba esas 6.
+- **F25/F26 confirmadas como solo-chat** (la foto de F25 aparece borrosa sin descargar en la propia captura) — fuera del manifest, como decía el brief.
+
+⚠️ **HALLAZGO DE VALIDEZ — decisión de Gerardo requerida ANTES de correr el benchmark**: la mayoría de los webp NO son las fotos originales — son capturas de WhatsApp/slides que **contienen la corrección humana como texto visible y anotaciones** (círculos verdes, flechas, "Rellenar", "hueco de sartenes", "Falta cartulina", etc.). Si Motor 1 (Gemini con visión) evalúa estas capturas, **el modelo puede LEER la respuesta dentro de la imagen** — el % de acierto quedaría inflado y el benchmark no sería defendible comercialmente. Excepción: el check de brillo de F13 es de código (photo_analyzer PASO 0), ese no se contamina. Opciones planteadas: (a) conseguir las fotos originales limpias (ideal), (b) recortar las capturas al área de la foto donde se pueda (varias anotaciones están SOBRE la foto — no siempre separable), (c) correr igual y documentar el sesgo (no recomendado para el caso comercial). **No se corrió el gate por esto + por la regla de confirmación del mapeo.**
+
+**Tarea 3 NO ejecutada (bloqueada a propósito)**: sin renombrar, sin manifest, sin gate — esperando (1) confirmación del mapeo, (2) decisión sobre el hallazgo de validez, (3) las 6 imágenes de F20 si van a entrar.
+
+**Tracking: Motor 1: 100% | Motor 2: 100% | Listo-para-mostrar: 42%** — sin cambio: el benchmark aún no corre; mapeo listo lo deja a una confirmación de distancia.
+
+## Estado previo (8 Jul 2026 — Sesión Z: **ARNÉS DE BENCHMARK RECONSTRUIDO** — autotest 32/32 + 9/9 PASS, commit `623c402` pusheado y verificado en remoto)
 
 **El arnés perdido del 7 Jul se reconstruyó desde cero y YA ESTÁ EN REMOTO (regla nueva aplicada: commit + push inmediato al pasar el autotest, antes de seguir iterando). Listo para recibir datos reales en cuanto Gerardo suba las fotos + el CSV.** Dos scripts en `motor1/benchmark/`, Python stdlib puro, mismo patrón de gates que `validator.py`/`swap_capa2_produccion.mjs`:
 
