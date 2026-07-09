@@ -1,0 +1,39 @@
+foto_id,criterio_id,criterio,familia,severidad,tipo_evaluacion,gap
+F01,,"Etiqueta debe ir en lado izquierdo de la prenda, no en la manga",etiquetado,OBSERVACION,binario,capa1
+F03,,"Muebles tipo T en pares, un pasillo por juego",distribucion_mobiliario,OBSERVACION,binario,capa1
+F03,identificar_cartulina_descuento,Falta cartulina de descuento del lado derecho,senalizacion,GRAVE,binario,capa2
+F04,,Hueco de sartenes (vacío de producto),orden_saturacion,GRAVE,escala,capa1
+F04,,Cajas de mesa Westinhouse desacomodadas (desorden),orden_saturacion,GRAVE,escala,capa1
+F05,,Escalera se asoma en el perímetro (objeto ajeno),orden_saturacion,OBSERVACION,binario,capa1
+F05,2_maniquies_1_etiqueta,Falta etiqueta de descuento 1 de cada 2 maniquíes (alternado),etiquetado_mecanica,GRAVE,binario,capa2
+F07,,Colonizar/colorizar: gradiente cálido a frío por tipo de calzado,colorizacion,OBSERVACION,escala,capa1
+F07,,"Clasificar: agrupar por tipo (sandalia con sandalia, tenis con tenis)",clasificacion,OBSERVACION,binario,capa1
+F08,,Prop sin autorizar (planta) - requiere validar con superior,props_utileria,OBSERVACION,escalamiento,capa1
+F09,,Poco stock por prenda en mesa de carga,orden_saturacion,GRAVE,escala,capa1
+F10,,Cortes de color bruscos en la tringla (colorización),colorizacion,OBSERVACION,escala,capa1
+F10,,"Orden de tallas chico a grande, izquierda a derecha",clasificacion,OBSERVACION,binario,capa1
+F10,,Poco tallaje (huecos por falta de tallas),orden_saturacion,CONDICIONAL (escala con hueco visible = GRAVE),escala,capa1
+F11,,Mesa que no aporta a la foto (recortar/eliminar),composicion_encuadre,OBSERVACION,binario,capa1
+F11,etiqueta_ausente_maniqui,Maniquíes sin etiqueta de campaña en foto tipo Focal Show,etiquetado_mecanica,GRAVE,binario,capa2
+F12a,,Sillas cortadas en el encuadre (o completas o retiradas),composicion_encuadre,OBSERVACION,binario,capa1
+F12b,,Falta parte baja / conjunto de outfit incompleto,orden_saturacion,GRAVE,binario,capa1
+F13,imagen_oscura,"Foto oscura, mal nivel de brillo",tecnico_foto,N/A,N/A,YA_CUBIERTO
+F13,,No se ve pasillo de este lado,distribucion_mobiliario,OBSERVACION,binario,capa1
+F13,,Se ve muy apretado (sobre-saturación),orden_saturacion,OBSERVACION,escala,capa1
+F14,,Doblado a mejorar (calidad de doblez),presentacion_prenda,GRAVE,escala,capa1
+F15,,Cuidar integración de plantas (falta triangulación de alturas),props_utileria,OBSERVACION,escala,capa1
+F15,,Falta cartulina,senalizacion,GRAVE,binario,capa2
+F16,,Falta cartulina (repetición),senalizacion,GRAVE,binario,capa2
+F16,,Cuidar entallado de la barra,presentacion_prenda,OBSERVACION,binario,capa1
+F17,,Accesorizar más el maniquí (se ve muy básico),accesorizacion_maniqui,GRAVE,escala,capa1
+F17,,Variación de color/estilismo entre maniquíes (cambiar gorra),variacion_maniquies,OBSERVACION,binario,capa1
+F17,,Variación de silueta entre maniquíes (agregar chamarra),variacion_maniquies,OBSERVACION,binario,capa1
+F17,,Orientación de zapato (punta hacia la derecha),presentacion_prenda,OBSERVACION,binario,capa1
+F18,,Etiquetas de precio visibles ensucian la foto,limpieza_etiquetado,OBSERVACION,binario,capa1
+F19,,Producto parece que se va a caer (riesgo/estabilidad),riesgo_seguridad,GRAVE,binario,capa1
+F21,,"Agregar accesorios (pañoletas, corbatas) - busto muy básico",accesorizacion_maniqui,OBSERVACION,escala,capa1
+F22,,Agregar accesorio coherente con categoría (calcetas de dormir),accesorizacion_maniqui,OBSERVACION,escala,capa1
+F23,,Integrar props de uvas y otro pan (mesa ya aprobada),props_utileria,NO_CALIFICA / OBS baja,escala,capa1
+F24,,Buscar ángulo donde no salga la tarima al fondo,composicion_encuadre,OBSERVACION,binario,capa1
+F27,,Agregar cinturón azul marino o accesorio a juego,accesorizacion_maniqui,OBSERVACION,escala,capa1
+F28,,Quitar etiquetas visibles,limpieza_etiquetado,OBSERVACION,binario,capa1

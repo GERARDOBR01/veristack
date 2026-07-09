@@ -1,0 +1,6 @@
+foto_id,criterio_id,criterio,familia,severidad,tipo_evaluacion,gap,categoria,subcategoria,severidad_condicional,bug_esperado,detalle,origen
+FX1,criterio_ficticio_a,FIXTURE datos de prueba criterio a,familia_ficticia,OBSERVACION,binario,capa1,ACIERTO,,False,False,FIXTURE razon a,ground_truth
+FX1,criterio_ficticio_b,FIXTURE datos de prueba criterio b,familia_ficticia,GRAVE,binario,capa2,FALSO_NEGATIVO,,False,False,,ground_truth
+FX2,criterio_ficticio_c,FIXTURE datos de prueba criterio c,familia_ficticia,CONDICIONAL (escala con hueco visible = GRAVE),escala,capa1,ACIERTO,,True,False,FIXTURE razon c,ground_truth
+FX3,criterio_ficticio_brillo,FIXTURE datos de prueba brillo bajo,tecnico_foto,N/A,N/A,YA_CUBIERTO,FALSO_NEGATIVO,,False,True,,ground_truth
+FX1,criterio_ficticio_extra,,,GRAVE,,,HALLAZGO,HALLAZGO_REAL,False,False,FIXTURE hallazgo no anotado por humano,sistema
