@@ -31,6 +31,8 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import os
+import re
 import sys
 import time
 from datetime import datetime, timezone
@@ -79,6 +81,50 @@ def cargar_manifest(ruta: Path) -> list[dict]:
     return filas
 
 
+def _cargar_env(raiz: Path) -> None:
+    """Carga KEY=VALUE de <repo>/.env (setdefault, nunca pisa el entorno).
+
+    pipeline.py solo carga .env en su bloque __main__ — al importarlo como
+    módulo la key no estaría; sin esto _llamar_modelo degradaría en silencio
+    a NO_CALIFICA por GEMINI_API_KEY ausente.
+    """
+    ruta = raiz / ".env"
+    if not ruta.exists():
+        return
+    for linea in ruta.read_text(encoding="utf-8").splitlines():
+        linea = linea.strip()
+        if not linea or linea.startswith("#") or "=" not in linea:
+            continue
+        k, v = linea.split("=", 1)
+        os.environ.setdefault(k.strip(), v.strip())
+
+
+def _ids_graves_de_resumen(resumen: str) -> list[str]:
+    """Extrae los ids GRAVES del resumen de mandatory embebido en resumen_ejecutivo.
+
+    Formato de _generar_resumen: secciones e ids se unen ambos con ' | ', pero
+    'GRAVES (n):' declara cuántos ids siguen — eso hace el parseo determinista.
+    """
+    tokens = [t.strip() for t in (resumen or "").split("|")]
+    for i, token in enumerate(tokens):
+        m = re.match(r"GRAVES \((\d+)\): (.*)", token)
+        if m:
+            n = int(m.group(1))
+            ids = [m.group(2).strip()]
+            ids += [tokens[i + j] for j in range(1, n) if i + j < len(tokens)]
+            return [x for x in ids[:n] if x]
+    return []
+
+
+def _detecciones_de_bloqueo(resultado) -> list[dict]:
+    """Caso pipeline detenido en PASO 1: criterios=[] pero el bloqueo ES una
+    detección (ej. imagen_oscura en F13). Los ids salen del resumen."""
+    resumen = str(getattr(resultado, "resumen_ejecutivo", "") or "")
+    ids = _ids_graves_de_resumen(resumen) or ["pipeline_bloqueado_mandatory"]
+    return [{"criterio_id": cid, "criterio": "", "veredicto": "GRAVE",
+             "razon": resumen} for cid in ids]
+
+
 def _extraer_detecciones(resultado) -> list[dict]:
     """Filtra los criterios del ResultadoFinal a detecciones (GRAVE/OBSERVACION)."""
     detecciones = []
@@ -109,12 +155,15 @@ def correr(manifest: list[dict], ejecutar_fn: Callable, salida: Path) -> dict:
         segundos = round(time.perf_counter() - t0, 2)
         veredicto_global = getattr(getattr(resultado, "veredicto_global", None), "value", None) \
                            or str(getattr(resultado, "veredicto_global", "") or "")
+        detecciones = _extraer_detecciones(resultado)
+        if getattr(resultado, "puede_continuar", True) is False and not detecciones:
+            detecciones = _detecciones_de_bloqueo(resultado)
         fotos.append({
             "foto_id":          fid,
             "archivo":          fila["_ruta_imagen"],
             "tiempo_segundos":  segundos,
             "veredicto_global": veredicto_global,
-            "detecciones":      _extraer_detecciones(resultado),
+            "detecciones":      detecciones,
         })
         print(f"  {fid}: {segundos}s, veredicto={veredicto_global}, "
               f"{len(fotos[-1]['detecciones'])} detección(es)")
@@ -208,6 +257,33 @@ def autotest() -> int:
                      f"FX1,{img.name},e,\nfx1,{img.name},e,\n")
         espera_error("columnas faltantes aborta", "foto_id,archivo\nFX1,x.jpg\n")
 
+        # caso bloqueado por mandatory (criterios=[], resumen con ids GRAVES)
+        class _ResultadoBloqueado:
+            criterios = []
+            veredicto_global = "GRAVE"
+            puede_continuar = False
+            resumen_ejecutivo = ("Pipeline detenido en PASO 1 (mandatory). "
+                                 "VEREDICTO MANDATORY: GRAVE | GRAVES (2): "
+                                 "imagen_oscura | espacio_vacio_excesivo | "
+                                 "NO CALIFICA (1): grafico_etapa | "
+                                 "→ Pipeline detenido. Foto no evaluable.")
+
+        def ejecutar_bloqueado(imagen_path, etapa_activa, tipo_foto):
+            return _ResultadoBloqueado()
+
+        datos_b = correr(cargar_manifest(manifest_csv)[:1], ejecutar_bloqueado,
+                         tmp / "resultados_bloqueo.json")
+        dets_b = datos_b["fotos"][0]["detecciones"]
+        check("bloqueo mandatory: ids GRAVES extraídos del resumen",
+              [d["criterio_id"] for d in dets_b] == ["imagen_oscura", "espacio_vacio_excesivo"])
+        check("bloqueo mandatory: no arrastra NO_CALIFICA ni secciones",
+              all("NO CALIFICA" not in d["criterio_id"] and "→" not in d["criterio_id"]
+                  for d in dets_b))
+        check("resumen sin GRAVES cae a id sintético",
+              [d["criterio_id"] for d in _detecciones_de_bloqueo(type("R", (), {
+                  "resumen_ejecutivo": "Pipeline detenido. VEREDICTO MANDATORY: GRAVE"})())]
+              == ["pipeline_bloqueado_mandatory"])
+
     print(f"\nAUTOTEST RUNNER: {'PASS' if not fallas else 'FAIL'} ({len(fallas)} falla(s))")
     return len(fallas)
 
@@ -232,9 +308,14 @@ def main(argv: list[str] | None = None) -> int:
         print("ABORTADO: el autotest falló — no se corre Motor 1.")
         return 1
 
+    _cargar_env(RAIZ_REPO)
     sys.path.insert(0, str(RAIZ_REPO / "pipeline"))
     sys.path.insert(0, str(RAIZ_REPO / "core"))
     import pipeline as motor1   # noqa: E402 — import tardío a propósito
+    if not os.environ.get("GEMINI_API_KEY"):
+        print("ABORTADO: GEMINI_API_KEY ausente — el benchmark con foto real "
+              "necesita el modelo; sin key todo saldría NO_CALIFICA.")
+        return 1
 
     try:
         manifest = cargar_manifest(args.manifest)
