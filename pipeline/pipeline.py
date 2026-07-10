@@ -454,6 +454,126 @@ def _parte_imagen(imagen_path: str) -> Optional[dict]:
     }}
 
 
+# Errores que se resuelven ROTANDO de clave (cuota agotada / clave inválida) —
+# mismo criterio que motor2/vision_fallback.py.
+_HTTP_ROTAR_CLAVE = frozenset({401, 403, 429})
+
+
+def _cargar_claves_api() -> list[str]:
+    """Todas las GEMINI_API_KEY disponibles, en orden y sin duplicados.
+
+    El pipeline usaba una sola clave (os.environ['GEMINI_API_KEY']). El .env de
+    la raíz trae VARIAS con el mismo nombre; un loader dotenv normal solo deja la
+    primera en el entorno. Para poder ROTAR (misma necesidad que
+    motor2/vision_fallback.py) se juntan dos fuentes, sin imprimir ningún valor:
+      1) el entorno (una, o varias separadas por coma/espacio/salto de línea);
+      2) <repo>/.env, todas sus líneas GEMINI_API_KEY.
+    Si no hay .env (deploy con solo env vars) usa el entorno.
+    """
+    claves: list[str] = []
+
+    def _agregar(valor: str) -> None:
+        for k in re.split(r"[,\s]+", valor or ""):
+            k = k.strip()
+            if k and k not in claves:
+                claves.append(k)
+
+    # El entorno es la autoridad: si GEMINI_API_KEY no está en el entorno el
+    # modelo está deshabilitado (ej. tests que hacen os.environ.pop) → sin claves.
+    # Solo cuando SÍ hay clave en el entorno se suplementa con las demás del .env.
+    env_val = os.environ.get("GEMINI_API_KEY", "")
+    if not env_val.strip():
+        return []
+    _agregar(env_val)
+    ruta_env = Path(__file__).resolve().parent.parent / ".env"
+    if ruta_env.exists():
+        try:
+            raw = ruta_env.read_text(encoding="utf-8", errors="replace")
+            for valor in re.findall(r"^\s*GEMINI_API_KEY\s*=\s*(.+)$", raw, re.M):
+                _agregar(valor)
+        except OSError:
+            pass
+    return claves
+
+
+def _post_gemini(cuerpo: dict, timeout_s: int, paso: str,
+                 criterio: str = "-") -> Optional[dict]:
+    """POST a Gemini con ROTACIÓN de claves. Devuelve el payload JSON o None.
+
+    - Cuota agotada / clave inválida (401/403/429 o RESOURCE_EXHAUSTED): rota a
+      la siguiente GEMINI_API_KEY y reintenta (la nueva clave tiene su propia
+      cuota → espera corta, no el backoff largo de 429). Con una sola clave, un
+      429 respeta la ventana del free tier (GEMINI_BACKOFF_429_S), como antes.
+    - Transitorio que rotar NO arregla (503 'high demand', timeout, red):
+      reintenta con backoff creciente (GEMINI_BACKOFF_S) sobre la misma clave.
+    - Determinista (400/404): aborta de inmediato.
+    Nunca lanza — el llamador degrada de forma controlada (NO_CALIFICA / None).
+    """
+    claves = _cargar_claves_api()
+    if not claves:
+        _log_paso(logging.WARNING, paso, criterio,
+                  "modelo no invocado", "GEMINI_API_KEY ausente en el entorno")
+        return None
+
+    data = json.dumps(cuerpo).encode("utf-8")
+    t0   = time.perf_counter()
+    idx  = 0
+    # Al menos GEMINI_MAX_INTENTOS, y al menos una pasada por cada clave.
+    intentos_max = max(GEMINI_MAX_INTENTOS, len(claves))
+
+    for intento in range(1, intentos_max + 1):
+        url = GEMINI_ENDPOINT.format(model=GEMINI_MODEL) + f"?key={claves[idx]}"
+        req = urllib.request.Request(
+            url, data=data, method="POST",
+            headers={"Content-Type": "application/json"},
+        )
+        rotar = False
+        try:
+            with urllib.request.urlopen(req, timeout=timeout_s,
+                                        context=_contexto_ssl()) as resp:
+                return json.loads(resp.read().decode("utf-8"))
+        except urllib.error.HTTPError as exc:
+            detalle = ""
+            try:
+                detalle = exc.read().decode("utf-8", "replace")[:300]
+            except Exception:
+                pass
+            if exc.code in _HTTP_ROTAR_CLAVE or "RESOURCE_EXHAUSTED" in detalle:
+                rotar = True
+                ultimo_error = f"HTTP {exc.code}: {detalle}"
+            elif exc.code in _HTTP_NO_REINTENTABLES:   # 400/404 (401/403 ya arriba)
+                _log_paso(logging.ERROR, paso, criterio,
+                          f"HTTP {exc.code} no reintentable", detalle, ms=_ms(t0))
+                return None
+            else:
+                ultimo_error = f"HTTP {exc.code}: {detalle}"
+        except Exception as exc:
+            ultimo_error = f"{type(exc).__name__}: {exc}"
+
+        if intento >= intentos_max:
+            _log_paso(logging.ERROR, paso, criterio,
+                      f"agotados {intentos_max} intento(s) sobre {len(claves)} clave(s)",
+                      ultimo_error, ms=_ms(t0))
+            return None
+
+        if rotar and len(claves) > 1:
+            idx = (idx + 1) % len(claves)
+            _log_paso(logging.WARNING, paso, criterio,
+                      f"cuota/clave — rotando a clave #{idx + 1}/{len(claves)}",
+                      ultimo_error, ms=_ms(t0))
+            time.sleep(1)
+        else:
+            espera = GEMINI_BACKOFF_S[min(intento - 1, len(GEMINI_BACKOFF_S) - 1)]
+            if rotar:                       # 429 con una sola clave: respeta la ventana
+                espera = max(espera, GEMINI_BACKOFF_429_S)
+            _log_paso(logging.WARNING, paso, criterio,
+                      f"fallo intento {intento}/{intentos_max}, reintenta en {espera}s",
+                      ultimo_error, ms=_ms(t0))
+            time.sleep(espera)
+
+    return None
+
+
 def _llamar_modelo(prompt: str, imagen_path: Optional[str] = None) -> tuple[str, int]:
     """
     Llama a Gemini con el prompt ya construido por _construir_prompt().
@@ -475,8 +595,7 @@ def _llamar_modelo(prompt: str, imagen_path: Optional[str] = None) -> tuple[str,
     if not prompt:
         return "", 0
 
-    api_key = os.environ.get("GEMINI_API_KEY")
-    if not api_key:
+    if not _cargar_claves_api():
         _log_paso(logging.WARNING, "PASO_4", "-",
                   "modelo no invocado", "GEMINI_API_KEY ausente en el entorno")
         return "", 0
@@ -498,7 +617,6 @@ def _llamar_modelo(prompt: str, imagen_path: Optional[str] = None) -> tuple[str,
                   "sin imagen — modelo evalúa solo con texto")
     timeout_s = GEMINI_TIMEOUT_IMG_S if con_imagen else GEMINI_TIMEOUT_S
 
-    url    = GEMINI_ENDPOINT.format(model=GEMINI_MODEL) + f"?key={api_key}"
     cuerpo = {
         "contents": [
             {"role": "user", "parts": partes}
@@ -508,59 +626,20 @@ def _llamar_modelo(prompt: str, imagen_path: Optional[str] = None) -> tuple[str,
             "response_mime_type": "application/json",
         },
     }
-    data = json.dumps(cuerpo).encode("utf-8")
-    t0   = time.perf_counter()
+    t0 = time.perf_counter()
 
-    for intento in range(1, GEMINI_MAX_INTENTOS + 1):
-        req = urllib.request.Request(
-            url, data=data, method="POST",
-            headers={"Content-Type": "application/json"},
-        )
-        try:
-            with urllib.request.urlopen(req, timeout=timeout_s,
-                                        context=_contexto_ssl()) as resp:
-                payload = json.loads(resp.read().decode("utf-8"))
-            tokens      = _extraer_tokens(payload)
-            normalizado = _normalizar_respuesta(_extraer_texto(payload))
-            if normalizado is None:
-                _log_paso(logging.WARNING, "PASO_4", "-",
-                          "respuesta del modelo no es JSON válido; se ignora",
-                          f"intento {intento}", ms=_ms(t0))
-                return "", tokens
-            _log_paso(logging.INFO, "PASO_4", "-", "modelo respondió",
-                      f"tokens={tokens}, intento {intento}", ms=_ms(t0))
-            return normalizado, tokens
-
-        except urllib.error.HTTPError as exc:
-            detalle = ""
-            try:
-                detalle = exc.read().decode("utf-8", "replace")[:300]
-            except Exception:
-                pass
-            if exc.code in _HTTP_NO_REINTENTABLES:
-                _log_paso(logging.ERROR, "PASO_4", "-",
-                          f"HTTP {exc.code} no reintentable", detalle, ms=_ms(t0))
-                return "", 0
-            ultimo_error = f"HTTP {exc.code}: {detalle}"
-            fue_429      = exc.code == 429
-        except Exception as exc:
-            ultimo_error = f"{type(exc).__name__}: {exc}"
-            fue_429      = False
-
-        # Llegamos aquí solo si el intento falló de forma reintentable.
-        if intento < GEMINI_MAX_INTENTOS:
-            espera = GEMINI_BACKOFF_S[min(intento - 1, len(GEMINI_BACKOFF_S) - 1)]
-            if fue_429:
-                espera = max(espera, GEMINI_BACKOFF_429_S)
-            _log_paso(logging.WARNING, "PASO_4", "-",
-                      f"fallo intento {intento}/{GEMINI_MAX_INTENTOS}, "
-                      f"reintenta en {espera}s", ultimo_error, ms=_ms(t0))
-            time.sleep(espera)
-        else:
-            _log_paso(logging.ERROR, "PASO_4", "-",
-                      f"agotados {GEMINI_MAX_INTENTOS} intentos", ultimo_error, ms=_ms(t0))
-
-    return "", 0
+    payload = _post_gemini(cuerpo, timeout_s, "PASO_4")   # rota claves internamente
+    if payload is None:
+        return "", 0
+    tokens      = _extraer_tokens(payload)
+    normalizado = _normalizar_respuesta(_extraer_texto(payload))
+    if normalizado is None:
+        _log_paso(logging.WARNING, "PASO_4", "-",
+                  "respuesta del modelo no es JSON válido; se ignora", "", ms=_ms(t0))
+        return "", tokens
+    _log_paso(logging.INFO, "PASO_4", "-", "modelo respondió",
+              f"tokens={tokens}", ms=_ms(t0))
+    return normalizado, tokens
 
 
 def _merge_veredictos(
@@ -672,8 +751,7 @@ def _detectar_grafico_etapa(imagen_path: str) -> Optional[str]:
     NO_CALIFICA controlado (comportamiento actual, sin cambios).
     Nunca lanza excepción — PASO 0 no debe tumbar el pipeline.
     """
-    api_key = os.environ.get("GEMINI_API_KEY")
-    if not api_key:
+    if not _cargar_claves_api():
         _log_paso(logging.WARNING, "PASO_0", "grafico_detectado",
                   "visión no invocada", "GEMINI_API_KEY ausente en el entorno")
         return None
@@ -688,7 +766,6 @@ def _detectar_grafico_etapa(imagen_path: str) -> Optional[str]:
         return None
 
     mime   = _MIME_POR_EXTENSION.get(path.suffix.lower(), "image/jpeg")
-    url    = GEMINI_ENDPOINT.format(model=GEMINI_MODEL) + f"?key={api_key}"
     cuerpo = {
         "contents": [{
             "role": "user",
@@ -702,61 +779,138 @@ def _detectar_grafico_etapa(imagen_path: str) -> Optional[str]:
         }],
         "generationConfig": {"temperature": 0.0},
     }
-    data = json.dumps(cuerpo).encode("utf-8")
-    t0   = time.perf_counter()
+    t0 = time.perf_counter()
 
-    for intento in range(1, GEMINI_MAX_INTENTOS + 1):
-        req = urllib.request.Request(
-            url, data=data, method="POST",
-            headers={"Content-Type": "application/json"},
-        )
-        try:
-            with urllib.request.urlopen(req, timeout=GEMINI_VISION_TIMEOUT_S,
-                                        context=_contexto_ssl()) as resp:
-                payload = json.loads(resp.read().decode("utf-8"))
-            texto = _extraer_texto(payload).strip()
-            texto = texto.splitlines()[0].strip().strip('"\'`').rstrip(".") if texto else ""
-            if not texto or texto.lower() == "ninguna":
-                _log_paso(logging.INFO, "PASO_0", "grafico_detectado",
-                          "visión respondió — sin gráfico visible",
-                          f"intento {intento}", ms=_ms(t0))
-                return None
-            _log_paso(logging.INFO, "PASO_0", "grafico_detectado",
-                      "visión respondió",
-                      f"grafico='{texto}', intento {intento}", ms=_ms(t0))
-            return texto
+    payload = _post_gemini(cuerpo, GEMINI_VISION_TIMEOUT_S, "PASO_0", "grafico_detectado")
+    if payload is None:
+        return None
+    texto = _extraer_texto(payload).strip()
+    texto = texto.splitlines()[0].strip().strip('"\'`').rstrip(".") if texto else ""
+    if not texto or texto.lower() == "ninguna":
+        _log_paso(logging.INFO, "PASO_0", "grafico_detectado",
+                  "visión respondió — sin gráfico visible", "", ms=_ms(t0))
+        return None
+    _log_paso(logging.INFO, "PASO_0", "grafico_detectado",
+              "visión respondió", f"grafico='{texto}'", ms=_ms(t0))
+    return texto
 
-        except urllib.error.HTTPError as exc:
-            detalle = ""
-            try:
-                detalle = exc.read().decode("utf-8", "replace")[:300]
-            except Exception:
-                pass
-            if exc.code in _HTTP_NO_REINTENTABLES:
-                _log_paso(logging.ERROR, "PASO_0", "grafico_detectado",
-                          f"HTTP {exc.code} no reintentable — visión sin resultado",
-                          detalle, ms=_ms(t0))
-                return None
-            ultimo_error = f"HTTP {exc.code}: {detalle}"
-            fue_429      = exc.code == 429
-        except Exception as exc:
-            ultimo_error = f"{type(exc).__name__}: {exc}"
-            fue_429      = False
 
-        if intento < GEMINI_MAX_INTENTOS:
-            espera = GEMINI_BACKOFF_S[min(intento - 1, len(GEMINI_BACKOFF_S) - 1)]
-            if fue_429:
-                espera = max(espera, GEMINI_BACKOFF_429_S)
-            _log_paso(logging.WARNING, "PASO_0", "grafico_detectado",
-                      f"fallo intento {intento}/{GEMINI_MAX_INTENTOS}, "
-                      f"reintenta en {espera}s", ultimo_error, ms=_ms(t0))
-            time.sleep(espera)
-        else:
-            _log_paso(logging.ERROR, "PASO_0", "grafico_detectado",
-                      f"agotados {GEMINI_MAX_INTENTOS} intentos — visión sin resultado",
-                      ultimo_error, ms=_ms(t0))
+# ──────────────────────────────────────────────
+# AUTOTEST — rotación de claves (100% offline)
+# Simula key1 en 429 y confirma que _post_gemini rota a key2/key3, sin tocar
+# red ni .env: monkeypatchea urlopen y _cargar_claves_api. Gate de Tarea 2.
+# ──────────────────────────────────────────────
 
-    return None
+def _autotest_rotacion_claves() -> int:
+    import io
+
+    fallas: list[str] = []
+
+    def check(nombre: str, cond: bool):
+        print(f"  [{'PASS' if cond else 'FAIL'}] {nombre}")
+        if not cond:
+            fallas.append(nombre)
+
+    modulo       = sys.modules[__name__]
+    orig_claves  = modulo._cargar_claves_api
+    orig_urlopen = urllib.request.urlopen
+    orig_sleep   = time.sleep
+    urls: list[str] = []
+
+    _PAYLOAD_OK = {
+        "candidates": [{"content": {"parts": [
+            {"text": '{"evaluaciones": [{"criterio": "c1", "veredicto": "CUMPLE", '
+                     '"razon": "FIXTURE"}]}'}
+        ]}}],
+        "usageMetadata": {"totalTokenCount": 42},
+    }
+
+    class _FakeResp:
+        def __init__(self, payload): self._b = json.dumps(payload).encode("utf-8")
+        def read(self): return self._b
+        def __enter__(self): return self
+        def __exit__(self, *a): return False
+
+    def _err(url, code, body):
+        return urllib.error.HTTPError(url, code, "fixture", {}, io.BytesIO(body))
+
+    def _clave_de(url: str) -> str:
+        return url.split("key=", 1)[1]
+
+    try:
+        modulo._cargar_claves_api = lambda: ["FAKE1", "FAKE2", "FAKE3"]
+        time.sleep = lambda *_a, **_k: None   # el test no espera de verdad
+
+        # 1) key1 en 429 → rota y responde con key2
+        def _u_429_luego_ok(req, timeout=None, context=None):
+            url = req.full_url
+            urls.append(url)
+            if "FAKE1" in url:
+                raise _err(url, 429, b'{"error":{"status":"RESOURCE_EXHAUSTED"}}')
+            if "FAKE2" in url:
+                return _FakeResp(_PAYLOAD_OK)
+            raise _err(url, 500, b"no deberia llegar aqui")
+        urllib.request.urlopen = _u_429_luego_ok
+        urls.clear()
+        payload = _post_gemini({"contents": []}, 5, "PASO_TEST")
+        check("rota de key1(429) a key2 y devuelve payload", payload == _PAYLOAD_OK)
+        check("primer intento usó key1", bool(urls) and "FAKE1" in urls[0])
+        check("rotó a key2 en el segundo intento",
+              len(urls) >= 2 and "FAKE2" in urls[1])
+
+        # 2) _llamar_modelo end-to-end: tras rotar devuelve JSON parseable + tokens
+        urls.clear()
+        texto, tokens = _llamar_modelo("prompt de prueba", imagen_path=None)
+        check("_llamar_modelo devuelve evaluaciones tras rotar", '"evaluaciones"' in texto)
+        check("_llamar_modelo reporta tokens del payload", tokens == 42)
+
+        # 3) TODAS las claves en 429 → None sin excepción, probó las 3
+        def _u_todo_429(req, timeout=None, context=None):
+            url = req.full_url
+            urls.append(url)
+            raise _err(url, 429, b"RESOURCE_EXHAUSTED")
+        urllib.request.urlopen = _u_todo_429
+        urls.clear()
+        p3 = _post_gemini({"contents": []}, 5, "PASO_TEST")
+        check("todas las claves 429 -> None", p3 is None)
+        check("probó las 3 claves antes de rendirse",
+              len({_clave_de(u) for u in urls}) == 3)
+
+        # 4) 400 determinista: NO rota, aborta al primer intento
+        def _u_400(req, timeout=None, context=None):
+            url = req.full_url
+            urls.append(url)
+            raise _err(url, 400, b"bad request")
+        urllib.request.urlopen = _u_400
+        urls.clear()
+        p4 = _post_gemini({"contents": []}, 5, "PASO_TEST")
+        check("HTTP 400 aborta sin rotar (1 solo intento)",
+              p4 is None and len(urls) == 1)
+
+        # 5) 503 transitorio: reintenta con backoff sobre la MISMA clave, no rota
+        def _u_503(req, timeout=None, context=None):
+            url = req.full_url
+            urls.append(url)
+            raise _err(url, 503, b"high demand")
+        urllib.request.urlopen = _u_503
+        urls.clear()
+        p5 = _post_gemini({"contents": []}, 5, "PASO_TEST")
+        check("HTTP 503 reintenta sin rotar de clave",
+              p5 is None and {_clave_de(u) for u in urls} == {"FAKE1"} and len(urls) >= 2)
+
+        # 6) sin claves → None y no llama a la red
+        modulo._cargar_claves_api = lambda: []
+        urls.clear()
+        p6 = _post_gemini({"contents": []}, 5, "PASO_TEST")
+        check("sin claves -> None sin tocar red", p6 is None and not urls)
+    finally:
+        modulo._cargar_claves_api = orig_claves
+        urllib.request.urlopen    = orig_urlopen
+        time.sleep                = orig_sleep
+
+    print(f"\nAUTOTEST ROTACIÓN DE CLAVES: {'PASS' if not fallas else 'FAIL'} "
+          f"({len(fallas)} falla(s))")
+    return len(fallas)
 
 
 # ──────────────────────────────────────────────
@@ -957,6 +1111,12 @@ if __name__ == "__main__":
         format = "%(levelname)-7s %(name)s | %(message)s",
         stream = sys.stderr,
     )
+
+    # Gate de Tarea 2 (Sesión CC): autotest de rotación de claves, 100% offline.
+    # Aislado para no disparar los tests de integración (que necesitan knowledge/
+    # y API). Uso: python pipeline.py autotest-rotacion
+    if len(sys.argv) > 1 and sys.argv[1] == "autotest-rotacion":
+        sys.exit(1 if _autotest_rotacion_claves() else 0)
 
     def _cargar_env_local() -> None:
         """
