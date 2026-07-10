@@ -1,0 +1,107 @@
+{
+  "meta": {
+    "generado": "2026-07-10T01:46:36+00:00",
+    "fotos": 1,
+    "semantica": "deteccion = criterio con veredicto GRAVE u OBSERVACION"
+  },
+  "fotos": [
+    {
+      "foto_id": "F03",
+      "archivo": "fotos\\F03.webp",
+      "tiempo_segundos": 141.89,
+      "veredicto_global": "OBSERVACION",
+      "detecciones": [
+        {
+          "criterio_id": "coloca_cartulina_descuento_agresivo_cuentes",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] No se observa ninguna cartulina con descuento colocada sobre las mesas de exhibición de la sección."
+        },
+        {
+          "criterio_id": "coloca_coleccion_mundial_mesas_frente",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] No se visualiza la colección del Mundial en la zona frontal; se exhibe ropa casual de temporada (camisas y bermudas)."
+        },
+        {
+          "criterio_id": "coloca_exhibiciones_masivas_producto_participante",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] No se aprecian exhibiciones masivas de producto ni shots promocionales en las mesas de la sección."
+        },
+        {
+          "criterio_id": "coloca_material_grafico_forma_alternada",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] El material gráfico (cartulinas rojas) está concentrado únicamente en el lado izquierdo, sin alternarse para equilibrar la exhibición."
+        },
+        {
+          "criterio_id": "colocar_alternando_largo_seccion_focales",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] No se observa una distribución alternada y clara de los focales en volumen por marca a lo largo de la sección."
+        },
+        {
+          "criterio_id": "colocar_cartulina_descuento_especifico_mercancia",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] Solo el perchero izquierdo cuenta con cartulinas de descuento; el resto de los exhibidores carecen de esta señalización."
+        },
+        {
+          "criterio_id": "colocar_cartulinas",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] Falta colocar cartulinas de precios o promociones en los exhibidores del centro y del lado derecho."
+        },
+        {
+          "criterio_id": "colocar_etiquetas_cuidando_esten_misma",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] No se aprecia una colocación ni alineación uniforme de las etiquetas de precio en las prendas exhibidas."
+        },
+        {
+          "criterio_id": "distribuir_cartulinas_equilibradamente_piso_garantizar",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] Las cartulinas de descuento solo se concentran en el rack del extremo izquierdo, dejando el resto de la exhibición sin material de comunicación."
+        },
+        {
+          "criterio_id": "distribuir_material_largo_departamento",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] El material publicitario no se encuentra distribuido de manera uniforme a lo largo de todo el espacio visible."
+        },
+        {
+          "criterio_id": "exhibir_1_focal_por_marca",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] Se observa orden de color, pero algunas prendas frontales presentan ligeras arrugas."
+        },
+        {
+          "criterio_id": "identificar_cartulina_descuento",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] Falta cartulina de descuento visible en los T-stands del primer plano."
+        },
+        {
+          "criterio_id": "identificar_cartulina_shots_promocionales",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] Poca presencia de elementos gráficos promocionales en los muebles frontales."
+        },
+        {
+          "criterio_id": "triangulacion",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] Los exhibidores frontales (T-stands) se encuentran alineados a una misma altura lineal, sin generar una composición triangular clara que dinamice la visualización del producto."
+        },
+        {
+          "criterio_id": "vestir_maniquies_prendas_esten_exhibicion",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] Se observan los maniquíes al fondo vestidos con prendas de la colección, pero no se visualiza la etiqueta de precio/outfit correspondiente para el grupo de 2 maniquíes."
+        }
+      ]
+    }
+  ]
+}
