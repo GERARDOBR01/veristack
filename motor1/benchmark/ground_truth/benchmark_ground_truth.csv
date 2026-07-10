@@ -21,7 +21,7 @@ F11,"Damas (Focal Show)",Gran Barata,"Mesa que no aporta a la foto (recortar/eli
 F11,"Damas (Focal Show)",Gran Barata,"Maniquíes sin etiqueta de campaña en foto tipo Focal Show",etiquetado_mecanica,capa2,GRAVE,binario,"NO EXISTE en capa2. Existe etiqueta_ausente_maniqui en capa3_focal_show.json pero requiere validación de tipo_de_foto (gap #13) — confirmado por Code 8 Jul"
 F12a,Damas,Gran Barata,"Sillas cortadas en el encuadre (o completas o retiradas)",composicion_encuadre,capa1,OBSERVACION,binario,"Regla maestra: 'las cosas cortadas ensucian la foto'"
 F12b,Damas,Gran Barata,"Falta parte baja / conjunto de outfit incompleto",orden_saturacion,capa1,GRAVE,binario,"Completitud de outfit"
-F13,Damas,Gran Barata,"Foto oscura, mal nivel de brillo",tecnico_foto,YA_CUBIERTO,N/A,N/A,"Debería detectarlo photo_analyzer.py PASO 0 - se espera ACIERTO"
+F13,Damas,Gran Barata,"Foto oscura, mal nivel de brillo",tecnico_foto,CUMPLE_ESPERADO,N/A,N/A,"CORREGIDO Sesion CC: brillo 48.5 >= umbral duro 40 -> imagen_oscura CUMPLE es correcto (no era gap ni bug, fue error de expectativa del GT). Control negativo: no se espera deteccion (ni ACIERTO ni FN); FALSO_POSITIVO solo si el sistema marcara oscura una foto que no lo esta"
 F13,Damas,Gran Barata,"No se ve pasillo de este lado",distribucion_mobiliario,capa1,OBSERVACION,binario,"Repetición de F03"
 F13,Damas,Gran Barata,"Se ve muy apretado (sobre-saturación)",orden_saturacion,capa1,OBSERVACION,escala,"Saturación tiene techo y piso"
 F14,Damas,Gran Barata,"Doblado a mejorar (calidad de doblez)",presentacion_prenda,capa1,GRAVE,escala,"Conecta a venta"

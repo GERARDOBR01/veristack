@@ -17,7 +17,7 @@ F11,,Mesa que no aporta a la foto (recortar/eliminar),composicion_encuadre,OBSER
 F11,etiqueta_ausente_maniqui,Maniquíes sin etiqueta de campaña en foto tipo Focal Show,etiquetado_mecanica,GRAVE,binario,capa2
 F12a,,Sillas cortadas en el encuadre (o completas o retiradas),composicion_encuadre,OBSERVACION,binario,capa1
 F12b,,Falta parte baja / conjunto de outfit incompleto,orden_saturacion,GRAVE,binario,capa1
-F13,imagen_oscura,"Foto oscura, mal nivel de brillo",tecnico_foto,N/A,N/A,YA_CUBIERTO
+F13,imagen_oscura,"Foto oscura, mal nivel de brillo",tecnico_foto,N/A,N/A,CUMPLE_ESPERADO
 F13,,No se ve pasillo de este lado,distribucion_mobiliario,OBSERVACION,binario,capa1
 F13,,Se ve muy apretado (sobre-saturación),orden_saturacion,OBSERVACION,escala,capa1
 F14,,Doblado a mejorar (calidad de doblez),presentacion_prenda,GRAVE,escala,capa1
