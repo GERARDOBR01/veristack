@@ -42,7 +42,8 @@ from typing import Callable
 VEREDICTOS_DETECCION = {"GRAVE", "OBSERVACION"}
 COLUMNAS_MANIFEST = ["foto_id", "archivo", "etapa_activa", "tipo_foto"]
 
-RAIZ_REPO = Path(__file__).resolve().parents[2]
+RAIZ_REPO     = Path(__file__).resolve().parents[2]
+KNOWLEDGE_DIR = RAIZ_REPO / "pipeline" / "knowledge"
 
 
 class ErrorRunner(Exception):
@@ -311,11 +312,46 @@ def main(argv: list[str] | None = None) -> int:
     _cargar_env(RAIZ_REPO)
     sys.path.insert(0, str(RAIZ_REPO / "pipeline"))
     sys.path.insert(0, str(RAIZ_REPO / "core"))
-    import pipeline as motor1   # noqa: E402 — import tardío a propósito
+    import pipeline as motor1                       # noqa: E402 — import tardío a propósito
+    from retrieval_engine import ConfigRetrieval    # noqa: E402
     if not os.environ.get("GEMINI_API_KEY"):
         print("ABORTADO: GEMINI_API_KEY ausente — el benchmark con foto real "
               "necesita el modelo; sin key todo saldría NO_CALIFICA.")
         return 1
+
+    # Knowledge base con rutas ABSOLUTAS — igual que app.py (_config_pipeline).
+    # ConfigRetrieval por defecto apunta a "knowledge/..." RELATIVO al cwd; desde
+    # motor1/benchmark/ ese path no existe → el pipeline extraería 0 criterios y
+    # TODA foto saldría NO_CALIFICA con 0 detecciones (benchmark basura, 0% acierto
+    # sin error visible). Se fija explícito y se verifica que carga antes de gastar
+    # una sola llamada al modelo.
+    ruta_capa1 = KNOWLEDGE_DIR / "capa1_display_basics.json"
+    ruta_capa2 = KNOWLEDGE_DIR / "capa2_campana_activa.json"
+    faltan = [p.name for p in (ruta_capa1, ruta_capa2) if not p.exists()]
+    if faltan:
+        print(f"ABORTADO: knowledge base no encontrado {faltan} en {KNOWLEDGE_DIR}.")
+        return 1
+
+    def _config_bench(etapa_activa):
+        return motor1.ConfigPipeline(
+            config_retrieval=ConfigRetrieval(
+                ruta_capa1          = str(ruta_capa1),
+                ruta_capa2          = str(ruta_capa2),
+                ruta_capa3_template = str(KNOWLEDGE_DIR / "capa3_{tipo_foto}.json"),
+                etapa_activa        = etapa_activa,
+            ))
+
+    n_base = len(motor1._extraer_criterios_del_knowledge(
+        _config_bench("E1").config_retrieval, None, "E1"))
+    if n_base == 0:
+        print("ABORTADO: el knowledge base cargó 0 criterios — no se corre un "
+              "benchmark que saldría todo NO_CALIFICA.")
+        return 1
+    print(f"Knowledge base OK: {n_base} criterios base (E1) desde {KNOWLEDGE_DIR.name}/.")
+
+    def _ejecutar_con_kb(imagen_path, etapa_activa, tipo_foto):
+        return motor1.ejecutar(imagen_path=imagen_path, etapa_activa=etapa_activa,
+                               tipo_foto=tipo_foto, config=_config_bench(etapa_activa))
 
     try:
         manifest = cargar_manifest(args.manifest)
@@ -324,7 +360,7 @@ def main(argv: list[str] | None = None) -> int:
         return 1
 
     print(f"Corriendo Motor 1 sobre {len(manifest)} foto(s)…")
-    datos = correr(manifest, motor1.ejecutar, args.salida)
+    datos = correr(manifest, _ejecutar_con_kb, args.salida)
     total = sum(f["tiempo_segundos"] for f in datos["fotos"])
     print(f"\nListo: {len(datos['fotos'])} fotos en {round(total, 1)}s -> {args.salida}")
     return 0
