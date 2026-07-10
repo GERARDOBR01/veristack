@@ -19,7 +19,32 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 
 ---
 
-## Estado actual (9 Jul 2026 — Sesión DD: gate corregido (F13 reclasificado + rotación de keys en producción). **El gate ya NO falla por diseño ni por código — solo lo bloquea el 503 del modelo en la llamada pesada.** Las 25 fotos NO corrieron.)
+## Estado actual (9 Jul 2026 — Sesión EE: **BATCHING IMPLEMENTADO Y GATE PASADO** — el 503 quedó resuelto; las 25 fotos se intentaron pero cayeron por CUOTA diaria agotada (429 en las 3 keys), no por el batching. Falta re-correrlas con cuota fresca.)
+
+**Resumen honesto: el batching de PASO_4 destrabó el 503 — F03 dio el ACIERTO de cartulina y el GATE COMPLETO PASÓ por primera vez (F03=ACIERTO, F13=CUMPLE_CORRECTO, F01=FN esperado, FP=0). Las 25 fotos se lanzaron pero salieron TODAS NO_CALIFICA porque las 3 GEMINI_API_KEY se agotaron (429 RESOURCE_EXHAUSTED diario, verificado con llamada mínima por key) — el gate + F03 + los ~250 intentos de la corrida quemaron la cuota del día. La corrida degradada se BORRÓ (no es defendible). El runner ahora tiene pre-flight de cuota + logging visible para que esto nunca vuelva a pasar en silencio.**
+
+**Tarea 1+2 HECHAS — batching de criterios en PASO_4 (commit `07cee64`, pusheado).** Diseño documentado:
+- **`_evaluar_delegados_en_lotes()`** en `pipeline.py` (PASO 5/6): divide los delegados en lotes de **`GEMINI_BATCH_CRITERIOS = 15`** (elegido conservador: ~9 llamadas para 122 criterios, prompt ~8x más chico por llamada — el 503 golpeaba payloads multimodales grandes; ajustable por env `GEMINI_BATCH_CRITERIOS` sin tocar código). Cada lote = una llamada independiente con la MISMA imagen + su subconjunto, reutilizando `_construir_prompt`/`_llamar_modelo`/`_post_gemini` (rotación de keys intacta, nada duplicado). Las evaluaciones se juntan en UNA respuesta `{"evaluaciones": [...]}` con el mismo shape que la llamada única — `_merge_veredictos` y el resto del pipeline NO se enteran. Un lote fallido degrada SOLO sus criterios a NO_CALIFICA.
+- **Autotest offline `python pipeline.py autotest-batching`: 16/16 PASS** (sin pérdida ni duplicado entre lotes; merge idéntico a llamada única; lote fallido aislado; todos-fallan → vacío; 0 delegados → 0 llamadas; 122 → 9 lotes). `autotest-rotacion` sigue 10/10.
+
+**Tarea 3 HECHA — F03 real SIN 503 (commit `1231353`).** Primer PASO_4 exitoso E2E del benchmark: `identificar_cartulina_descuento` → OBSERVACION (el ACIERTO), 15 detecciones, 141.9s. **El batching resolvió el 503.**
+
+🟢 **Tarea 4 HECHA — GATE PASADO (commit `c26531f`, artefactos en `motor1/benchmark/gate_salida/`).** Los 3 casos exactamente como se esperaba:
+- **F03 → `identificar_cartulina_descuento` = ACIERTO** ✓ (4 detecciones, 59s)
+- **F13 → `imagen_oscura` = CUMPLE_CORRECTO** ✓ (control negativo; el sistema NO marcó el no-problema)
+- **F01 → FALSO_NEGATIVO** ✓ (capa1 no implementada, esperado)
+- FP=0. 12 HALLAZGOs (detecciones del sistema fuera del GT) quedan PENDIENTE_REVISION para clasificación humana. 3 fotos en 244s.
+
+🔴 **Tarea 5 INTENTADA Y CAÍDA POR CUOTA, no por código:** las 25 fotos corrieron en 621s pero TODAS NO_CALIFICA con 0 detecciones. Causa medida: **las 3 keys en HTTP 429 RESOURCE_EXHAUSTED (cuota DIARIA)** — verificado con 1 llamada mínima por key. La matemática: 25 fotos × 9 lotes + PASO_0 ≈ **250 requests por corrida completa**; el gate (~30) + F03 (~10) + los intentos de la corrida agotaron el free tier del día. NO es el 503 (ese está resuelto); rotar no ayuda cuando las 3 están agotadas. Artefactos degradados borrados.
+- **Fix preventivo (commit `581f58b`)**: el runner ahora (1) enciende `logging.basicConfig(WARNING)` — los 429/503/lotes fallidos del pipeline eran invisibles (NullHandler) y la corrida basura parecía normal; (2) **pre-flight de cuota**: 1 llamada mínima vía `_post_gemini` ANTES de correr; si todas las keys fallan → ABORTA sin quemar nada (verificado en vivo: abortó correcto con las keys agotadas).
+
+**Para la próxima sesión (re-correr las 25):** (a) correr con **cuota fresca** (inicio de día), el pre-flight confirma antes de gastar; (b) presupuesto: ~250 requests/corrida — si el free tier diario por key es menor, opciones: subir `GEMINI_BATCH_CRITERIOS` 15→20-25 (menos llamadas: ~150-125, riesgo 503 no medido a ese tamaño) o correr en 2 días/tandas; (c) el gate ya NO hay que repetirlo — está pasado y commiteado; ir directo a `manifest_benchmark.csv` (25 fotos): `python correr_motor1_benchmark.py correr --manifest manifest_benchmark.csv --salida resultados_benchmark_25.json` + `python arnes_benchmark.py comparar --ground-truth ground_truth/ground_truth_arnes.csv --resultados resultados_benchmark_25.json --salida-dir benchmark_salida`.
+
+**NADA de producción roto**: el batching se probó offline (16/16) + E2E real; rutas sin-modelo intactas; `capa1_display_basics.json`, `capa2_validado_final.json`, `capa2_campana_activa.json`, capa1_v2 — intactos. Commits: `07cee64` (batching), `1231353` (F03), `c26531f` (gate), `581f58b` (pre-flight runner). F28 sigue fuera.
+
+**Tracking: Motor 1: 100% | Motor 2: 100% | Listo-para-mostrar: 45%.** Sube 42→45: el gate pasado con un ACIERTO real del modelo es la primera validación E2E completa del pipeline contra ground truth (diseño + código + modelo). El benchmark de 25 (lo que moverá el número de verdad) queda a UNA corrida con cuota fresca.
+
+## Estado previo (9 Jul 2026 — Sesión DD: gate corregido (F13 reclasificado + rotación de keys en producción). **El gate ya NO falla por diseño ni por código — solo lo bloquea el 503 del modelo en la llamada pesada.** Las 25 fotos NO corrieron.)
 
 **Resumen honesto: las 3 tareas de código se hicieron y están testeadas + pusheadas. El gate se re-corrió: F13 ahora sale CORRECTO (control negativo) y F01 sale FN como se espera — pero el ACIERTO de F03 (cartulina) no se pudo obtener porque PASO_4 (evaluación pesada: imagen + 122 criterios) devuelve HTTP 503 + timeout del lado de Google. Por instrucción del brief: se reporta tal cual, sin iterar en batching hoy. Tarea 4 (25 fotos) NO corrió.**
 
