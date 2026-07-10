@@ -1,0 +1,48 @@
+{
+  "totales": {
+    "hallazgos_ground_truth": 6,
+    "hallazgos_esperan_deteccion": 5,
+    "controles_cumple_esperado": 1,
+    "detecciones_sistema": 13,
+    "fotos_sistema": 3,
+    "ACIERTO": 1,
+    "HALLAZGO": 12,
+    "FALSO_POSITIVO": 0,
+    "FALSO_NEGATIVO": 4,
+    "CUMPLE_CORRECTO": 1,
+    "hallazgos_pendientes_de_revision": 12
+  },
+  "porcentajes": {
+    "acierto": {
+      "valor": 20.0,
+      "numerador": 1,
+      "denominador": 5,
+      "base": "hallazgos del ground truth que esperan detección"
+    },
+    "falso_negativo": {
+      "valor": 80.0,
+      "numerador": 4,
+      "denominador": 5,
+      "base": "hallazgos del ground truth que esperan detección"
+    },
+    "falso_positivo": {
+      "valor": 0.0,
+      "numerador": 0,
+      "denominador": 13,
+      "base": "detecciones del sistema"
+    }
+  },
+  "falsos_negativos_por_gap": {
+    "capa1": 4
+  },
+  "bugs_esperados_no_detectados": [],
+  "tiempo": {
+    "sistema_total_segundos": 244.06,
+    "sistema_promedio_segundos": 81.35,
+    "humano_estimado_minutos": {
+      "min": 18,
+      "max": 30,
+      "supuesto": "6-10 min/foto × 3 fotos"
+    }
+  }
+}

@@ -1,0 +1,110 @@
+{
+  "meta": {
+    "generado": "2026-07-10T01:51:35+00:00",
+    "fotos": 3,
+    "semantica": "deteccion = criterio con veredicto GRAVE u OBSERVACION"
+  },
+  "fotos": [
+    {
+      "foto_id": "F13",
+      "archivo": "fotos\\F13.webp",
+      "tiempo_segundos": 153.29,
+      "veredicto_global": "OBSERVACION",
+      "detecciones": [
+        {
+          "criterio_id": "coloca_cartulina_descuento_agresivo_cuentes",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] La cartulina de descuento en la mesa de exhibición es muy pequeña y no destaca de forma agresiva."
+        },
+        {
+          "criterio_id": "coloca_exhibiciones_masivas_producto_participante",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] La mesa de exhibición presenta pocos productos y no se observa una exhibición masiva o de gran volumen."
+        },
+        {
+          "criterio_id": "colocar_cartulina_descuento_especifico_mercancia",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] Las cartulinas de descuento en los percheros laterales son muy pequeñas y no son legibles para identificar el descuento específico."
+        },
+        {
+          "criterio_id": "exhibe_mesa_parte_visible_descuentos",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] No se puede validar con certeza la jerarquía de los descuentos en la mesa de exhibición debido a la distancia de la toma."
+        },
+        {
+          "criterio_id": "exhibe_siembra_espacio_visible_disciplina",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] La distribucion por niveles de descuento no es claramente visible en la mesa."
+        },
+        {
+          "criterio_id": "exhibicion_disciplinas_mantiene_dentro_separan",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] Falta mayor claridad en la separacion por tipo de descuento en los exhibidores."
+        },
+        {
+          "criterio_id": "exhibir_1_focal_por_marca",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] La coordinacion de color en los racks adyacentes se observa dispersa."
+        },
+        {
+          "criterio_id": "exhibir_producto_descuento_mezclar",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] No se distingue una clara division de productos por porcentaje de descuento."
+        },
+        {
+          "criterio_id": "focal_show_mujeres_departamento_juniors",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] La exhibicion se ubica en el departamento de Mujer Actual."
+        }
+      ]
+    },
+    {
+      "foto_id": "F03",
+      "archivo": "fotos\\F03.webp",
+      "tiempo_segundos": 59.19,
+      "veredicto_global": "OBSERVACION",
+      "detecciones": [
+        {
+          "criterio_id": "distribuir_cartulinas_equilibradamente_piso_garantizar",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] Las cartulinas de descuento solo se concentran en el rack del extremo izquierdo, dejando el resto de la exhibición sin material de comunicación."
+        },
+        {
+          "criterio_id": "distribuir_material_largo_departamento",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] El material publicitario no se encuentra distribuido de manera uniforme a lo largo de todo el espacio visible."
+        },
+        {
+          "criterio_id": "focal_show_hombres_etapa1_2",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] No se observa cartulina de descuento directamente asociada a los focales frontales."
+        },
+        {
+          "criterio_id": "identificar_cartulina_descuento",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] Se observan cartulinas en el lateral izquierdo, pero faltan en los exhibidores del centro y derecha."
+        }
+      ]
+    },
+    {
+      "foto_id": "F01",
+      "archivo": "fotos\\F01.webp",
+      "tiempo_segundos": 31.58,
+      "veredicto_global": "NO_CALIFICA",
+      "detecciones": []
+    }
+  ]
+}

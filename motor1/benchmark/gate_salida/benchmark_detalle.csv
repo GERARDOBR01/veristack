@@ -1,0 +1,19 @@
+foto_id,criterio_id,criterio,familia,severidad,tipo_evaluacion,gap,categoria,subcategoria,severidad_condicional,bug_esperado,detalle,origen
+F01,,"Etiqueta debe ir en lado izquierdo de la prenda, no en la manga",etiquetado,OBSERVACION,binario,capa1,FALSO_NEGATIVO,,False,False,,ground_truth
+F03,,"Muebles tipo T en pares, un pasillo por juego",distribucion_mobiliario,OBSERVACION,binario,capa1,FALSO_NEGATIVO,,False,False,,ground_truth
+F03,identificar_cartulina_descuento,Falta cartulina de descuento del lado derecho,senalizacion,GRAVE,binario,capa2,ACIERTO,,False,False,"[MODELO] Se observan cartulinas en el lateral izquierdo, pero faltan en los exhibidores del centro y derecha.",ground_truth
+F13,imagen_oscura,"Foto oscura, mal nivel de brillo",tecnico_foto,N/A,N/A,CUMPLE_ESPERADO,CUMPLE_CORRECTO,,False,False,,ground_truth
+F13,,No se ve pasillo de este lado,distribucion_mobiliario,OBSERVACION,binario,capa1,FALSO_NEGATIVO,,False,False,,ground_truth
+F13,,Se ve muy apretado (sobre-saturación),orden_saturacion,OBSERVACION,escala,capa1,FALSO_NEGATIVO,,False,False,,ground_truth
+F13,coloca_cartulina_descuento_agresivo_cuentes,,,OBSERVACION,,,HALLAZGO,PENDIENTE_REVISION,False,False,[MODELO] La cartulina de descuento en la mesa de exhibición es muy pequeña y no destaca de forma agresiva.,sistema
+F13,coloca_exhibiciones_masivas_producto_participante,,,OBSERVACION,,,HALLAZGO,PENDIENTE_REVISION,False,False,[MODELO] La mesa de exhibición presenta pocos productos y no se observa una exhibición masiva o de gran volumen.,sistema
+F13,colocar_cartulina_descuento_especifico_mercancia,,,OBSERVACION,,,HALLAZGO,PENDIENTE_REVISION,False,False,[MODELO] Las cartulinas de descuento en los percheros laterales son muy pequeñas y no son legibles para identificar el descuento específico.,sistema
+F13,exhibe_mesa_parte_visible_descuentos,,,OBSERVACION,,,HALLAZGO,PENDIENTE_REVISION,False,False,[MODELO] No se puede validar con certeza la jerarquía de los descuentos en la mesa de exhibición debido a la distancia de la toma.,sistema
+F13,exhibe_siembra_espacio_visible_disciplina,,,OBSERVACION,,,HALLAZGO,PENDIENTE_REVISION,False,False,[MODELO] La distribucion por niveles de descuento no es claramente visible en la mesa.,sistema
+F13,exhibicion_disciplinas_mantiene_dentro_separan,,,OBSERVACION,,,HALLAZGO,PENDIENTE_REVISION,False,False,[MODELO] Falta mayor claridad en la separacion por tipo de descuento en los exhibidores.,sistema
+F13,exhibir_1_focal_por_marca,,,OBSERVACION,,,HALLAZGO,PENDIENTE_REVISION,False,False,[MODELO] La coordinacion de color en los racks adyacentes se observa dispersa.,sistema
+F13,exhibir_producto_descuento_mezclar,,,OBSERVACION,,,HALLAZGO,PENDIENTE_REVISION,False,False,[MODELO] No se distingue una clara division de productos por porcentaje de descuento.,sistema
+F13,focal_show_mujeres_departamento_juniors,,,OBSERVACION,,,HALLAZGO,PENDIENTE_REVISION,False,False,[MODELO] La exhibicion se ubica en el departamento de Mujer Actual.,sistema
+F03,distribuir_cartulinas_equilibradamente_piso_garantizar,,,OBSERVACION,,,HALLAZGO,PENDIENTE_REVISION,False,False,"[MODELO] Las cartulinas de descuento solo se concentran en el rack del extremo izquierdo, dejando el resto de la exhibición sin material de comunicación.",sistema
+F03,distribuir_material_largo_departamento,,,OBSERVACION,,,HALLAZGO,PENDIENTE_REVISION,False,False,[MODELO] El material publicitario no se encuentra distribuido de manera uniforme a lo largo de todo el espacio visible.,sistema
+F03,focal_show_hombres_etapa1_2,,,OBSERVACION,,,HALLAZGO,PENDIENTE_REVISION,False,False,[MODELO] No se observa cartulina de descuento directamente asociada a los focales frontales.,sistema
