@@ -642,6 +642,90 @@ def _llamar_modelo(prompt: str, imagen_path: Optional[str] = None) -> tuple[str,
     return normalizado, tokens
 
 
+# ── Batching de PASO_4 ─────────────────────────────────────────────
+# La llamada única (imagen + ~122 criterios) devuelve HTTP 503 sostenido
+# ("high demand") — límite real del modelo con payloads multimodales grandes,
+# NO cuota (rotar claves no ayuda; se confirmó en 2 sesiones con backoff).
+# Solución: partir los criterios delegados en LOTES chicos; cada lote es una
+# llamada independiente con la MISMA imagen + su subconjunto de criterios.
+# Tamaño elegido: 15 (conservador — ~9 llamadas para 122 criterios, prompt de
+# texto ~8x más chico por llamada). Ajustable por env GEMINI_BATCH_CRITERIOS
+# sin tocar código. Reutiliza _construir_prompt/_llamar_modelo/_post_gemini
+# (rotación de claves incluida) — no duplica ningún mecanismo.
+GEMINI_BATCH_CRITERIOS = 15
+
+
+def _tam_lote_criterios() -> int:
+    """Tamaño de lote efectivo: env GEMINI_BATCH_CRITERIOS o el default."""
+    try:
+        n = int(os.environ.get("GEMINI_BATCH_CRITERIOS", "") or GEMINI_BATCH_CRITERIOS)
+    except ValueError:
+        n = GEMINI_BATCH_CRITERIOS
+    return max(1, n)
+
+
+def _evaluar_delegados_en_lotes(
+    delegados:              list[ResultadoConfianza],
+    retrieval_por_criterio: dict[str, ResultadoRetrieval],
+    metadata:               dict,
+    imagen_path:            Optional[str],
+    tam_lote:               Optional[int] = None,
+) -> tuple[str, int]:
+    """
+    PASO 5/6 con batching: divide los delegados en lotes de tam_lote, construye
+    un prompt por lote (_construir_prompt) y llama al modelo por lote
+    (_llamar_modelo, que ya rota claves y reintenta). Junta las evaluaciones de
+    todos los lotes en UNA sola respuesta {"evaluaciones": [...]} — idéntica en
+    shape a la de una llamada única, así _merge_veredictos y el resto del
+    pipeline no se enteran de que se batcheó.
+
+    Un lote que falla (503 agotado, respuesta no parseable) NO tumba a los
+    demás: sus criterios simplemente no aparecen en la respuesta y
+    _merge_veredictos los degrada a NO_CALIFICA, igual que antes.
+    Retorna (respuesta_json, tokens_totales); ("" , tokens) si ningún lote
+    respondió. Nunca lanza.
+    """
+    if not delegados:
+        _log_paso(logging.INFO, "PASO_4", "-", "modelo no invocado",
+                  "sin criterios delegados")
+        return "", 0
+
+    tam   = tam_lote if (tam_lote and tam_lote > 0) else _tam_lote_criterios()
+    lotes = [delegados[i:i + tam] for i in range(0, len(delegados), tam)]
+    if len(lotes) > 1:
+        _log_paso(logging.INFO, "PASO_4", "-",
+                  f"batching: {len(delegados)} criterio(s) en {len(lotes)} "
+                  f"lote(s) de hasta {tam}")
+
+    evaluaciones: list[dict] = []
+    tokens_total = 0
+    for n, lote in enumerate(lotes, 1):
+        prompt = _construir_prompt(lote, retrieval_por_criterio, metadata,
+                                   con_imagen=bool(imagen_path))
+        respuesta, tokens = _llamar_modelo(prompt, imagen_path)
+        tokens_total += tokens
+        evs: list = []
+        if respuesta:
+            try:
+                evs = json.loads(respuesta).get("evaluaciones", []) or []
+            except (json.JSONDecodeError, TypeError, AttributeError):
+                evs = []
+        if evs:
+            evaluaciones.extend(evs)
+            _log_paso(logging.INFO, "PASO_4", "-",
+                      f"lote {n}/{len(lotes)} OK",
+                      f"{len(lote)} criterio(s), {len(evs)} evaluacion(es)")
+        else:
+            _log_paso(logging.WARNING, "PASO_4", "-",
+                      f"lote {n}/{len(lotes)} sin respuesta — sus criterios "
+                      "degradan a NO_CALIFICA",
+                      f"{len(lote)} criterio(s)")
+
+    if not evaluaciones:
+        return "", tokens_total
+    return json.dumps({"evaluaciones": evaluaciones}, ensure_ascii=False), tokens_total
+
+
 def _merge_veredictos(
     criterios:        list[ResultadoConfianza],
     respuesta_modelo: str,
@@ -914,6 +998,128 @@ def _autotest_rotacion_claves() -> int:
 
 
 # ──────────────────────────────────────────────
+# AUTOTEST — batching de PASO_4 (100% offline)
+# Simula la división en lotes con criterios ficticios: confirma que ningún
+# criterio se pierde ni se duplica entre lotes, y que el merge de resultados
+# produce la misma estructura que una sola llamada. Monkeypatchea
+# _llamar_modelo: cero red, cero .env, cero imagen. Gate de Tarea 2.
+# ──────────────────────────────────────────────
+
+def _autotest_batching() -> int:
+    fallas: list[str] = []
+
+    def check(nombre: str, cond: bool):
+        print(f"  [{'PASS' if cond else 'FAIL'}] {nombre}")
+        if not cond:
+            fallas.append(nombre)
+
+    def _rc(i: int) -> ResultadoConfianza:
+        return ResultadoConfianza(
+            criterio=f"crit_fixture_{i:03d}", veredicto=Severidad.CUMPLE,
+            confianza=Confianza.MEDIO, fuente_dominante="CAPA2",
+            peso_dominante=Peso.MANDATORY, delegar_a_modelo=True,
+            razon="FIXTURE AUTOTEST")
+
+    metadata = {"tipo_foto": "focal_show", "etapa_activa": "E1"}
+    modulo   = sys.modules[__name__]
+    orig     = modulo._llamar_modelo
+
+    # Fake: extrae los ids del prompt (misma marca que _construir_prompt) y
+    # responde una evaluacion CUMPLE por cada uno. Registra cada llamada.
+    llamadas: list[list[str]] = []
+    lotes_fallar: set[int] = set()   # índices de llamada (1-based) que "fallan"
+
+    def _fake(prompt, imagen_path=None):
+        ids = re.findall(r"^Criterio: (\S+)$", prompt, re.M)
+        llamadas.append(ids)
+        if len(llamadas) in lotes_fallar:
+            return "", 0    # lote sin respuesta (503 agotado)
+        evs = [{"criterio": c, "veredicto": "CUMPLE", "razon": "FIXTURE"}
+               for c in ids]
+        return json.dumps({"evaluaciones": evs}), 10
+
+    try:
+        modulo._llamar_modelo = _fake
+
+        # 1) 37 criterios, lote=15 → 3 lotes (15/15/7), sin pérdida ni duplicado
+        delegados = [_rc(i) for i in range(37)]
+        llamadas.clear(); lotes_fallar.clear()
+        resp, tokens = _evaluar_delegados_en_lotes(
+            delegados, {}, metadata, None, tam_lote=15)
+        check("37 criterios con lote=15 -> 3 llamadas", len(llamadas) == 3)
+        check("tamanos de lote 15/15/7",
+              [len(l) for l in llamadas] == [15, 15, 7])
+        planos = [c for l in llamadas for c in l]
+        check("ningun criterio se pierde entre lotes",
+              set(planos) == {c.criterio for c in delegados})
+        check("ningun criterio se duplica entre lotes",
+              len(planos) == len(set(planos)) == 37)
+        check("tokens sumados de todos los lotes", tokens == 30)
+
+        # 2) merge: misma estructura que una sola llamada
+        parsed = json.loads(resp)
+        check("respuesta unificada parsea con clave 'evaluaciones'",
+              isinstance(parsed, dict) and list(parsed.keys()) == ["evaluaciones"])
+        check("evaluaciones totales == criterios delegados",
+              len(parsed["evaluaciones"]) == 37)
+        llamadas.clear()
+        resp_unica, _ = _evaluar_delegados_en_lotes(
+            delegados, {}, metadata, None, tam_lote=100)
+        check("lote grande -> 1 sola llamada", len(llamadas) == 1)
+        check("resultado batcheado identico al de una sola llamada",
+              json.loads(resp) == json.loads(resp_unica))
+
+        # 3) _merge_veredictos consume la respuesta batcheada sin degradar nada
+        merged = _merge_veredictos(
+            [_rc(i) for i in range(37)], resp,
+            {c.criterio for c in delegados})
+        check("merge aplica veredicto del modelo a los 37 (0 degradados)",
+              all(c.veredicto == Severidad.CUMPLE and "[MODELO]" in c.razon
+                  for c in merged))
+
+        # 4) un lote falla → SOLO sus criterios degradan a NO_CALIFICA
+        llamadas.clear(); lotes_fallar.add(2)
+        resp_f, tokens_f = _evaluar_delegados_en_lotes(
+            delegados, {}, metadata, None, tam_lote=15)
+        parsed_f = json.loads(resp_f)
+        check("lote 2 falla -> respuesta trae 22 evaluaciones (15+7)",
+              len(parsed_f["evaluaciones"]) == 22)
+        check("tokens solo de lotes que respondieron", tokens_f == 20)
+        merged_f = _merge_veredictos(
+            [_rc(i) for i in range(37)], resp_f,
+            {c.criterio for c in delegados})
+        degradados = {c.criterio for c in merged_f
+                      if c.veredicto == Severidad.NO_CALIFICA}
+        check("degradan exactamente los 15 del lote fallido",
+              degradados == set(llamadas[1]) and len(degradados) == 15)
+
+        # 5) TODOS los lotes fallan → respuesta vacía, como fallo total previo
+        llamadas.clear(); lotes_fallar.clear(); lotes_fallar.update({1, 2, 3})
+        resp_t, _ = _evaluar_delegados_en_lotes(
+            delegados, {}, metadata, None, tam_lote=15)
+        check("todos los lotes fallan -> respuesta vacia ('')", resp_t == "")
+
+        # 6) sin delegados → sin llamadas, ('' , 0)
+        llamadas.clear(); lotes_fallar.clear()
+        resp_0, tokens_0 = _evaluar_delegados_en_lotes([], {}, metadata, None)
+        check("0 delegados -> 0 llamadas y ('', 0)",
+              resp_0 == "" and tokens_0 == 0 and not llamadas)
+
+        # 7) default de produccion: 122 criterios -> 9 lotes de <=15
+        llamadas.clear()
+        os.environ.pop("GEMINI_BATCH_CRITERIOS", None)
+        _evaluar_delegados_en_lotes([_rc(i) for i in range(122)], {}, metadata, None)
+        check("122 criterios con default(15) -> 9 lotes",
+              len(llamadas) == 9 and sum(len(l) for l in llamadas) == 122)
+    finally:
+        modulo._llamar_modelo = orig
+
+    print(f"\nAUTOTEST BATCHING PASO_4: {'PASS' if not fallas else 'FAIL'} "
+          f"({len(fallas)} falla(s))")
+    return len(fallas)
+
+
+# ──────────────────────────────────────────────
 # HELPERS — RESUMEN
 # ──────────────────────────────────────────────
 
@@ -1053,15 +1259,12 @@ def ejecutar(
     _log_paso(logging.INFO, "PASO_3", "-", "confianza calibrada",
               f"codigo={len(no_delegados)}, modelo={len(delegados)}", ms=_ms(t3))
 
-    # ── PASO 5: construir prompt ───────────────────────────────────
-    prompt = _construir_prompt(delegados, retrieval_por_criterio, metadata,
-                               con_imagen=bool(imagen_path))
-
-    # ── PASO 6: llamar al modelo con la imagen (loggea PASO_4) ─────
-    if not prompt:
-        _log_paso(logging.INFO, "PASO_4", "-", "modelo no invocado",
-                  "sin criterios delegados")
-    respuesta_modelo, tokens_modelo = _llamar_modelo(prompt, imagen_path)
+    # ── PASO 5/6: prompt + modelo, por LOTES (loggea PASO_4) ───────
+    # La llamada única con ~122 criterios daba 503 sostenido; ver nota de
+    # batching junto a GEMINI_BATCH_CRITERIOS. La respuesta unificada tiene
+    # el mismo shape que una llamada única — PASO 7 no se entera.
+    respuesta_modelo, tokens_modelo = _evaluar_delegados_en_lotes(
+        delegados, retrieval_por_criterio, metadata, imagen_path)
 
     # ── PASO 7: merge — código + modelo ───────────────────────────
     criterios_finales = _merge_veredictos(
@@ -1117,6 +1320,11 @@ if __name__ == "__main__":
     # y API). Uso: python pipeline.py autotest-rotacion
     if len(sys.argv) > 1 and sys.argv[1] == "autotest-rotacion":
         sys.exit(1 if _autotest_rotacion_claves() else 0)
+
+    # Gate de Tarea 2 (Sesión EE): autotest del batching de PASO_4, 100%
+    # offline (monkeypatchea _llamar_modelo). Uso: python pipeline.py autotest-batching
+    if len(sys.argv) > 1 and sys.argv[1] == "autotest-batching":
+        sys.exit(1 if _autotest_batching() else 0)
 
     def _cargar_env_local() -> None:
         """
