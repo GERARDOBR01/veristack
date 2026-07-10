@@ -31,6 +31,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import logging
 import os
 import re
 import sys
@@ -348,6 +349,25 @@ def main(argv: list[str] | None = None) -> int:
               "benchmark que saldría todo NO_CALIFICA.")
         return 1
     print(f"Knowledge base OK: {n_base} criterios base (E1) desde {KNOWLEDGE_DIR.name}/.")
+
+    # Logging del pipeline VISIBLE (a stderr). Sin esto, los WARNING/ERROR de
+    # PASO_4 (429 cuota agotada, 503, lotes fallidos) mueren en el NullHandler
+    # y una corrida degradada parece una corrida normal — pasó el 9 Jul: 25
+    # fotos todas NO_CALIFICA con las 3 claves en 429 y cero rastro del porqué.
+    logging.basicConfig(level=logging.WARNING,
+                        format="%(levelname)s %(name)s | %(message)s")
+
+    # Pre-flight de CUOTA: 1 llamada mínima ANTES de gastar la corrida. Va por
+    # _post_gemini (rota las claves solito): si devuelve None es que TODAS las
+    # claves están agotadas/caídas → correr sería quemar intentos para producir
+    # un benchmark basura (todo NO_CALIFICA degradado).
+    cuerpo_min = {"contents": [{"role": "user", "parts": [{"text": "di ok"}]}],
+                  "generationConfig": {"maxOutputTokens": 5}}
+    if motor1._post_gemini(cuerpo_min, 20, "PREFLIGHT") is None:
+        print("ABORTADO: pre-flight de cuota falló — ninguna GEMINI_API_KEY "
+              "responde (429/503 en todas). Reintenta con cuota fresca.")
+        return 1
+    print("Pre-flight de cuota OK: el modelo responde.")
 
     def _ejecutar_con_kb(imagen_path, etapa_activa, tipo_foto):
         return motor1.ejecutar(imagen_path=imagen_path, etapa_activa=etapa_activa,
