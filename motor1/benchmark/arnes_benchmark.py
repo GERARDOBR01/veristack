@@ -20,10 +20,14 @@ Compara las detecciones de Motor 1 contra el ground truth de revisión humana
                     por eso el resumen desglosa por `gap`.)
 
 Reglas especiales del ground truth real:
-  - gap=YA_CUBIERTO (ej. F13 brillo): si el sistema lo detecta es ACIERTO
-    (no "hallazgo nuevo"); si NO lo detecta es FALSO_NEGATIVO con
-    bug_esperado=true (el sistema ya debería cubrirlo — es bug a reportar,
-    no conocimiento faltante).
+  - gap=YA_CUBIERTO: si el sistema lo detecta es ACIERTO (no "hallazgo nuevo");
+    si NO lo detecta es FALSO_NEGATIVO con bug_esperado=true (el sistema ya
+    debería cubrirlo — es bug a reportar, no conocimiento faltante).
+  - gap=CUMPLE_ESPERADO (ej. F13 brillo, corregido Sesión CC): CONTROL NEGATIVO
+    — lo correcto es que el sistema NO detecte nada ahí (el criterio se cumple
+    de verdad). Si NO detecta = CUMPLE_CORRECTO (no cuenta ni como ACIERTO ni
+    como FALSO_NEGATIVO; queda fuera del denominador de ambos %). Si SÍ detecta
+    (marcó un problema donde no lo hay) = FALSO_POSITIVO.
   - severidad CONDICIONAL (ej. F10 tallaje): se preserva el string tal cual
     y se marca severidad_condicional=true en el detalle. No rompe nada.
 
@@ -66,15 +70,17 @@ from pathlib import Path
 
 # ── Constantes de categorías y reglas ──────────────────────────────
 
-CAT_ACIERTO        = "ACIERTO"
-CAT_HALLAZGO       = "HALLAZGO"
-CAT_FALSO_POSITIVO = "FALSO_POSITIVO"
-CAT_FALSO_NEGATIVO = "FALSO_NEGATIVO"
+CAT_ACIERTO         = "ACIERTO"
+CAT_HALLAZGO        = "HALLAZGO"
+CAT_FALSO_POSITIVO  = "FALSO_POSITIVO"
+CAT_FALSO_NEGATIVO  = "FALSO_NEGATIVO"
+CAT_CUMPLE_CORRECTO = "CUMPLE_CORRECTO"   # control negativo: correcto NO detectar
 
 SUB_PENDIENTE     = "PENDIENTE_REVISION"
 SUB_HALLAZGO_REAL = "HALLAZGO_REAL"
 
-GAP_YA_CUBIERTO = "YA_CUBIERTO"
+GAP_YA_CUBIERTO     = "YA_CUBIERTO"
+GAP_CUMPLE_ESPERADO = "CUMPLE_ESPERADO"
 
 CLASIFICACIONES_REVISION = {CAT_FALSO_POSITIVO, SUB_HALLAZGO_REAL}
 
@@ -237,18 +243,29 @@ def comparar(ground_truth: list[dict],
     detalle: list[dict] = []
     claves_matcheadas: set[tuple[str, str]] = set()
 
-    # 1) Recorrer ground truth → ACIERTO o FALSO_NEGATIVO
+    # 1) Recorrer ground truth → ACIERTO / FALSO_NEGATIVO / CUMPLE_CORRECTO / FP
     for fila in ground_truth:
         fid = _normalizar(fila["foto_id"])
         clave = (fid, _clave_match(fila.get("criterio_id", ""), fila.get("criterio", "")))
         gap = (fila.get("gap") or "").strip()
-        ya_cubierto = gap.upper() == GAP_YA_CUBIERTO
+        gap_u = gap.upper()
+        ya_cubierto     = gap_u == GAP_YA_CUBIERTO
+        cumple_esperado = gap_u == GAP_CUMPLE_ESPERADO
         det = det_por_clave.get(clave)
+        bug_esperado = False
 
-        if det is not None:
+        if cumple_esperado:
+            # Control negativo: lo CORRECTO es que el sistema NO detecte nada.
+            # Se matchea la clave en ambas ramas para que una detección aquí no
+            # caiga además a HALLAZGO en el paso 2.
+            claves_matcheadas.add(clave)
+            if det is not None:
+                categoria, subcategoria = CAT_FALSO_POSITIVO, ""   # marcó un no-problema
+            else:
+                categoria, subcategoria = CAT_CUMPLE_CORRECTO, ""  # correcto no detectar
+        elif det is not None:
             claves_matcheadas.add(clave)
             categoria, subcategoria = CAT_ACIERTO, ""
-            bug_esperado = False
         else:
             categoria, subcategoria = CAT_FALSO_NEGATIVO, ""
             # YA_CUBIERTO no detectado = el sistema ya debía cubrirlo → bug, no gap.
@@ -299,7 +316,8 @@ def comparar(ground_truth: list[dict],
         })
 
     # ── Resumen ────────────────────────────────────────────────────
-    conteo = {c: 0 for c in (CAT_ACIERTO, CAT_HALLAZGO, CAT_FALSO_POSITIVO, CAT_FALSO_NEGATIVO)}
+    conteo = {c: 0 for c in (CAT_ACIERTO, CAT_HALLAZGO, CAT_FALSO_POSITIVO,
+                             CAT_FALSO_NEGATIVO, CAT_CUMPLE_CORRECTO)}
     fn_por_gap: dict[str, int] = {}
     bugs_esperados = []
     for fila in detalle:
@@ -311,6 +329,11 @@ def comparar(ground_truth: list[dict],
                 bugs_esperados.append(f"{fila['foto_id']}:{fila['criterio_id'] or fila['criterio']}")
 
     total_gt = len(ground_truth)
+    # Los controles CUMPLE_ESPERADO no esperan detección: quedan fuera del
+    # denominador de acierto y falso_negativo (no son "hallazgos a encontrar").
+    n_cumple_esperado = sum(1 for f in ground_truth
+                            if (f.get("gap") or "").strip().upper() == GAP_CUMPLE_ESPERADO)
+    total_esperan_deteccion = total_gt - n_cumple_esperado
     total_detecciones = len(det_por_clave)
     hallazgos_pendientes = sum(1 for f in detalle
                                if f["categoria"] == CAT_HALLAZGO
@@ -324,19 +347,23 @@ def comparar(ground_truth: list[dict],
 
     resumen = {
         "totales": {
-            "hallazgos_ground_truth": total_gt,
-            "detecciones_sistema":    total_detecciones,
-            "fotos_sistema":          n_fotos,
+            "hallazgos_ground_truth":       total_gt,
+            "hallazgos_esperan_deteccion":  total_esperan_deteccion,
+            "controles_cumple_esperado":    n_cumple_esperado,
+            "detecciones_sistema":          total_detecciones,
+            "fotos_sistema":                n_fotos,
             **conteo,
             "hallazgos_pendientes_de_revision": hallazgos_pendientes,
         },
         "porcentajes": {
-            "acierto":        {"valor": pct(conteo[CAT_ACIERTO], total_gt),
-                               "numerador": conteo[CAT_ACIERTO], "denominador": total_gt,
-                               "base": "hallazgos del ground truth"},
-            "falso_negativo": {"valor": pct(conteo[CAT_FALSO_NEGATIVO], total_gt),
-                               "numerador": conteo[CAT_FALSO_NEGATIVO], "denominador": total_gt,
-                               "base": "hallazgos del ground truth"},
+            "acierto":        {"valor": pct(conteo[CAT_ACIERTO], total_esperan_deteccion),
+                               "numerador": conteo[CAT_ACIERTO],
+                               "denominador": total_esperan_deteccion,
+                               "base": "hallazgos del ground truth que esperan detección"},
+            "falso_negativo": {"valor": pct(conteo[CAT_FALSO_NEGATIVO], total_esperan_deteccion),
+                               "numerador": conteo[CAT_FALSO_NEGATIVO],
+                               "denominador": total_esperan_deteccion,
+                               "base": "hallazgos del ground truth que esperan detección"},
             "falso_positivo": {"valor": pct(conteo[CAT_FALSO_POSITIVO], total_detecciones),
                                "numerador": conteo[CAT_FALSO_POSITIVO],
                                "denominador": total_detecciones,
@@ -550,6 +577,31 @@ def autotest() -> int:
                      [{"foto_id": "FX1", "tiempo_segundos": 1, "detecciones": []},
                       {"foto_id": "fx1", "tiempo_segundos": 1, "detecciones": []}]))
 
+    # 12. gap=CUMPLE_ESPERADO — control negativo (caso F13 brillo, Sesión CC).
+    #     Fixture propio y aislado para no tocar los conteos del fixture principal.
+    gt_ce = [{"foto_id": "FCE", "criterio_id": "imagen_oscura",
+              "criterio": "FIXTURE AUTOTEST brillo aceptable", "familia": "tecnico",
+              "severidad": "N/A", "tipo_evaluacion": "N/A", "gap": "CUMPLE_ESPERADO"}]
+    # 12a. sistema NO detecta → CUMPLE_CORRECTO, no cuenta como acierto ni FN
+    r_ok = comparar(gt_ce, [{"foto_id": "FCE", "tiempo_segundos": 1.0, "detecciones": []}])
+    t_ok = r_ok["resumen"]["totales"]
+    check("cumple_esperado no detectado = CUMPLE_CORRECTO",
+          r_ok["detalle"][0]["categoria"] == CAT_CUMPLE_CORRECTO)
+    check("cumple_esperado no cuenta como acierto ni FN",
+          t_ok[CAT_ACIERTO] == 0 and t_ok[CAT_FALSO_NEGATIVO] == 0)
+    check("cumple_esperado fuera del denominador de acierto/FN",
+          r_ok["resumen"]["porcentajes"]["acierto"]["denominador"] == 0
+          and t_ok["controles_cumple_esperado"] == 1
+          and t_ok["hallazgos_esperan_deteccion"] == 0)
+    # 12b. sistema SÍ detecta (marca un no-problema) → FALSO_POSITIVO, no HALLAZGO
+    r_fp = comparar(gt_ce, [{"foto_id": "FCE", "tiempo_segundos": 1.0, "detecciones": [
+        {"criterio_id": "imagen_oscura", "criterio": "", "veredicto": "GRAVE",
+         "razon": "FIXTURE marcó oscura una foto que no lo está"}]}])
+    check("cumple_esperado detectado = FALSO_POSITIVO",
+          r_fp["detalle"][0]["categoria"] == CAT_FALSO_POSITIVO)
+    check("cumple_esperado detectado no genera HALLAZGO duplicado",
+          r_fp["resumen"]["totales"][CAT_HALLAZGO] == 0)
+
     print(f"\nAUTOTEST: {'PASS' if not fallas else 'FAIL'} "
           f"({len(fallas)} falla(s) de {_contar_checks()} casos)")
     return len(fallas)
@@ -638,7 +690,8 @@ def main(argv: list[str] | None = None) -> int:
     print(f"  ACIERTO={t['ACIERTO']} ({p['acierto']['valor']}%)  "
           f"FN={t['FALSO_NEGATIVO']} ({p['falso_negativo']['valor']}%)  "
           f"FP={t['FALSO_POSITIVO']} ({p['falso_positivo']['valor']}%)  "
-          f"HALLAZGO={t['HALLAZGO']} (pendientes: {t['hallazgos_pendientes_de_revision']})")
+          f"HALLAZGO={t['HALLAZGO']} (pendientes: {t['hallazgos_pendientes_de_revision']})  "
+          f"CUMPLE_CORRECTO={t['CUMPLE_CORRECTO']} (controles: {t['controles_cumple_esperado']})")
     for ruta in rutas:
         print(f"  -> {ruta}")   # ASCII a propósito: consolas Windows cp1252
     return 0
