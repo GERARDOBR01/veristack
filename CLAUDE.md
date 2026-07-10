@@ -19,7 +19,34 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 
 ---
 
-## Estado actual (9 Jul 2026 — Sesión CC: benchmark retomado — **BUG REAL ENCONTRADO Y CORREGIDO** (runner cargaba 0 criterios), pero el GATE sigue **DETENIDO por regla**. El benchmark de 25 fotos NO corrió.)
+## Estado actual (9 Jul 2026 — Sesión DD: gate corregido (F13 reclasificado + rotación de keys en producción). **El gate ya NO falla por diseño ni por código — solo lo bloquea el 503 del modelo en la llamada pesada.** Las 25 fotos NO corrieron.)
+
+**Resumen honesto: las 3 tareas de código se hicieron y están testeadas + pusheadas. El gate se re-corrió: F13 ahora sale CORRECTO (control negativo) y F01 sale FN como se espera — pero el ACIERTO de F03 (cartulina) no se pudo obtener porque PASO_4 (evaluación pesada: imagen + 122 criterios) devuelve HTTP 503 + timeout del lado de Google. Por instrucción del brief: se reporta tal cual, sin iterar en batching hoy. Tarea 4 (25 fotos) NO corrió.**
+
+**Tarea 1 HECHA — F13/brillo reclasificado (commit `830f461`, pusheado).** F13/brillo NO era gap ni bug: brillo=48.5 con umbral duro en 40 → `imagen_oscura` CUMPLE es correcto (fue error de expectativa del GT original, no del código).
+- `ground_truth`: F13/brillo `capa_gap` YA_CUBIERTO → **`CUMPLE_ESPERADO`** (crudo `benchmark_ground_truth.csv` + regenerado `ground_truth_arnes.csv` vía adaptador, que pasa el gap directo).
+- `arnes_benchmark.py`: nuevo manejo de **`gap=CUMPLE_ESPERADO`** (control negativo): sistema NO detecta → **`CUMPLE_CORRECTO`** (nueva categoría; NO cuenta como acierto ni FN; fuera del denominador de ambos %); sistema SÍ detecta (marcó un no-problema) → `FALSO_POSITIVO`, sin HALLAZGO duplicado. Resumen: nuevos totales `hallazgos_esperan_deteccion` / `controles_cumple_esperado`. Autotest **36/36 PASS** (5 casos nuevos; aserciones previas 4/8=50.0 intactas).
+- **F03** (`identificar_cartulina_descuento`, capa2) es ahora el caso ACIERTO del gate. `manifest_gate.csv` = F13 + F03 + F01 (reemplaza F04).
+
+**Tarea 2 HECHA — rotación de GEMINI_API_KEY en el pipeline de PRODUCCIÓN (commit `38394ed`, pusheado, SEPARADO como pidió el brief).** El pipeline usaba una sola key; con esa en 429 todo se ahogaba aunque hubiera keys frescas. Se adaptó el **mismo mecanismo de `motor2/vision_fallback.py`** (no se reinventó):
+- `_cargar_claves_api()`: junta el entorno + todas las líneas `GEMINI_API_KEY` del `.env`, sin duplicados. El **entorno es la autoridad**: si no hay key en el entorno devuelve `[]` (modelo deshabilitado — respeta el `os.environ.pop` de los tests internos). Nunca imprime valores.
+- `_post_gemini()`: POST compartido con rotación; **ambos** sitios lo usan (PASO_0 visión + PASO_4 evaluación). Rota en 401/403/429/RESOURCE_EXHAUSTED; reintenta con backoff en transitorios (503/timeout) sobre la misma clave; con una sola clave un 429 respeta la ventana del free tier como antes; determinista (400/404) aborta; nunca lanza.
+- Autotest offline `python pipeline.py autotest-rotacion`: **10/10 PASS** (key1=429→rota a key2; todas 429→None probando las 3; 400 aborta sin rotar; 503 reintenta sin rotar; sin claves→None). Monkeypatchea `urlopen` y `_cargar_claves_api`: cero red, cero `.env`. Verificado además que las rutas SIN modelo siguen intactas (bloqueo mandatory sigue GRAVE sin key).
+
+🔴 **Tarea 3 (gate re-corrido) — el gate ya NO falla por diseño/código, pero NO pasa por el 503 del modelo:**
+- **F13: 0 detecciones → `imagen_oscura` CUMPLE (código, brillo 48.5) → `CUMPLE_CORRECTO`** ✓. La Tarea 1 quedó **validada E2E**: F13 ya no es un FALSO_NEGATIVO fantasma, es un control correcto (comparación del arnés sobre las 3 fotos: CUMPLE_CORRECTO=1, denominador de acierto=5 lo excluye).
+- **F01: 0 detecciones → `FALSO_NEGATIVO`** ✓ (capa1 no implementada, esperado — el sistema sigue ciego ahí, como debe ser hoy).
+- **F03: `NO_CALIFICA`, 0 detecciones — el ACIERTO de la cartulina NO se pudo obtener.** Causa medida (logs de PASO_4): **`gemini-3.5-flash` devuelve HTTP 503 ("high demand") + TimeoutError (~90s) en la llamada pesada** (imagen + 122 criterios), en los 3 intentos. **NO es 429/cuota** — es saturación del modelo del lado de Google para la generación multimodal grande; la rotación de keys NO ayuda porque 503/timeout no son errores de cuota (rotar da el mismo 503). PASO_0 (visión chica) sí completó tras reintentos. El retry con backoff (3 intentos, espera creciente) que pide el brief **ya está** en `_post_gemini` y aun así falla → **se reporta tal cual, sin iterar en batching hoy** (batching de criterios sería el siguiente paso de diseño, explícitamente fuera de alcance de esta sesión).
+
+**Tarea 4 NO ejecutada** (el gate no pasó: sin el ACIERTO de F03 no se escala). Las 25 fotos NO corrieron; sin `benchmark_detalle`/`resumen`/porcentajes reales. Artefactos degradados por el 503 (todo NO_CALIFICA) borrados para no confundir. `ground_truth/gate_ground_truth.csv` (subset de 3 fotos) queda en repo para re-correr el gate directo.
+
+**Único bloqueo restante para el benchmark: el 503 de la llamada pesada de PASO_4** — model-side (Google), intermitente. Opciones para la próxima sesión (decisión de Gerardo): (a) reintentar cuando el 503 se despeje (las llamadas chicas dan 200; es la generación grande la que se cae); (b) batching de criterios en `_llamar_modelo` (partir los 122 en lotes chicos por llamada → cada llamada más liviana/rápida, menos propensa a 503/timeout) — es el paso de diseño que el brief dejó fuera de hoy; (c) subir `GEMINI_TIMEOUT_IMG_S` no ayuda (ya es 90s y el modelo devuelve 503, no solo timeout).
+
+**NADA de producción roto**: la rotación se probó sin tocar el comportamiento sin-modelo; `capa1_display_basics.json`, `capa2_validado_final.json`, `capa2_campana_activa.json`, capa1_v2 — intactos. Cambios de código: `830f461` (arnés + GT), `38394ed` (rotación en `pipeline.py`). F28 sigue fuera.
+
+**Tracking (sin cambio — el benchmark no corrió completo): Motor 1: 100% | Motor 2: 100% | Listo-para-mostrar: 42%.** El número NO se mueve porque no se produjo un benchmark defendible: el gate quedó a un solo paso (el 503 del modelo). Diseño y código del gate ya están correctos y en remoto; falta solo que el modelo complete la llamada pesada (esperar el 503 o batchear).
+
+## Estado previo (9 Jul 2026 — Sesión CC: benchmark retomado — **BUG REAL ENCONTRADO Y CORREGIDO** (runner cargaba 0 criterios), pero el GATE sigue **DETENIDO por regla**. El benchmark de 25 fotos NO corrió.)
 
 **Resumen honesto: se encontró y arregló un bug que habría hecho que las 25 fotos salieran 0% acierto (basura). El gate de 3 fotos sí se corrió contra el modelo, pero F13 NO sale ACIERTO (premisa del GT falsa, ya probado en Sesión BB) → STOP por regla del brief. Además el modelo sigue flakeando (429/503) para la llamada pesada. Commit del fix pusheado: `fc114f4`.**
 
