@@ -19,7 +19,38 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 
 ---
 
-## Estado actual (9 Jul 2026 — Sesión BB: benchmark retomado — **GATE DETENIDO por regla** por 2 bloqueos reales; F28 corregido en el GT del arnés + autotests PASS. El benchmark NO corrió.)
+## Estado actual (9 Jul 2026 — Sesión CC: benchmark retomado — **BUG REAL ENCONTRADO Y CORREGIDO** (runner cargaba 0 criterios), pero el GATE sigue **DETENIDO por regla**. El benchmark de 25 fotos NO corrió.)
+
+**Resumen honesto: se encontró y arregló un bug que habría hecho que las 25 fotos salieran 0% acierto (basura). El gate de 3 fotos sí se corrió contra el modelo, pero F13 NO sale ACIERTO (premisa del GT falsa, ya probado en Sesión BB) → STOP por regla del brief. Además el modelo sigue flakeando (429/503) para la llamada pesada. Commit del fix pusheado: `fc114f4`.**
+
+**Tarea 1 HECHA — estado verificado contra el repo real:** HEAD==origin/main (`0dc8210` al abrir; `fc114f4` al cerrar). `fotos/` = 25 recortadas + 25 `_original` (F28/F20/F02/F06 ausentes ✓). `ground_truth_arnes.csv` = 37 filas / 23 fotos; `manifest_benchmark.csv` = 25 (23 con GT + F29/F30 positivas). `git status`: nada perdido por el corte anterior — solo untracked pre-existentes (backups `.bak-*` de motor2, `capa1_v2/`, swap-manifest) + `manifest_gate.csv` (F13/F01/F04, era de Sesión BB, ahora commiteado).
+
+**Tarea 2 HECHA — autotests PASS:** runner (`correr_motor1_benchmark.py autotest`) 0 fallas; arnés (`arnes_benchmark.py autotest`) 31/31, 0 fallas. Re-corridos tras el fix, siguen PASS.
+
+**Tarea 3 HECHA — key verificada:** 3 `GEMINI_API_KEY` en `.env`. El runner aborta si la key falta (confirmado en código). Prueba mínima (1 token/key) al abrir: las 3 dieron **HTTP 200 OK** — el 503 sostenido de Sesión BB se despejó para llamadas chicas. **El modelo `gemini-3.5-flash` responde.**
+
+🟢 **BUG REAL ENCONTRADO Y CORREGIDO (`fc114f4`, pusheado) — el runner extraía 0 criterios del knowledge.** Diagnóstico E2E: el runner llamaba `motor1.ejecutar()` **sin pasar `config`**, cayendo al default de `ConfigRetrieval` con rutas **RELATIVAS** (`knowledge/...`). Desde `motor1/benchmark/` ese path no existe → `_leer_capa()` devuelve `[]` → **0 criterios → TODA foto salía NO_CALIFICA con 0 detecciones, sin error visible** (habría dado 0% acierto en las 25 = número basura no defendible). `app.py` ya evita esto fijando rutas absolutas en `_config_pipeline`. **Fix:** el runner ahora fija `ruta_capa1/2/3` absolutas a `pipeline/knowledge/` (igual que app.py) + guard que aborta si los archivos faltan o si el knowledge carga 0 criterios, ANTES de gastar una llamada. Verificado sin API: con el fix retrieval carga **122 criterios para F01** (capas 1/2/3), 126 base E1, capa2=148 entradas. **Nada de producción tocado** — el fix vive solo en el runner del benchmark.
+
+🔴 **Tarea 4 (gate de 3 fotos) — SÍ se corrió contra el modelo, pero FALLA. 3 bloqueos reales:**
+
+1. **F13 NO sale ACIERTO — premisa del GT empíricamente FALSA (probado por código, independiente del modelo).** `F13.webp` brillo promedio = **48.5** (medido con `photo_analyzer`, mismo camino que producción); la regla `imagen_oscura` dispara solo si `brillo < 40` (`ConfigEngine.brillo_minimo`). 48.5 ≥ 40 → **CUMPLE, no GRAVE** → NO hay detección `imagen_oscura` → la fila GT `F13/imagen_oscura/YA_CUBIERTO` sale **FALSO_NEGATIVO con bug_esperado=true, NO ACIERTO**. Idéntico al bloqueo #2 de Sesión BB, sin cambio. En el gate corrido F13 salió `NO_CALIFICA, 0 detecciones`, confirmándolo.
+2. **El gate como está diseñado no tiene NINGÚN caso ACIERTO válido.** Las otras 2 fotos del gate (F01, F04) tienen solo hallazgos de **capa1** (no implementada) → FALSO_NEGATIVO esperado, no bug. Quitada la premisa falsa de F13, el gate no puede dar ni un ACIERTO. Necesita una foto de **capa2** como caso ACIERTO: F03 (`identificar_cartulina_descuento`) o F11 (`etiqueta_ausente_maniqui`) — ambas dependen del modelo.
+3. **El modelo sigue flakeando para la llamada PESADA de evaluación (429 + 503).** El 429 es **por-key, no por-proyecto**: `key1` (la primera del `.env`, la única que usa el pipeline) se agotó (HTTP 429) tras las corridas de esta sesión; `key2`/`key3` siguen frescas (200 en llamadas chicas). PERO con `key2` fresca, la llamada grande de PASO_4 (imagen + 122 criterios) devolvió **HTTP 503** en los 3 reintentos — el 503 "high demand" de Sesión BB **NO está del todo despejado**: golpea la generación multimodal grande aunque las chicas den 200. **El pipeline principal (`_llamar_modelo`) usa UNA sola key sin rotación** (gap ya conocido) — con key1 en 429 y la eval en 503, ningún criterio delegado obtuvo veredicto real (todos degradaron a NO_CALIFICA).
+
+**⚠️ Consecuencia:** nunca se logró una sola respuesta de PASO_4 exitosa este día → **la validación E2E de "el pipeline produce veredictos reales del modelo" sigue SIN confirmarse** (la petición se arma bien y llega al modelo — 429/503 son del lado de Google, no del código; el fix de rutas ya no es el bloqueo).
+
+**Tarea 5 NO ejecutada** (STOP por regla: F13 no dio ACIERTO): las 25 fotos NO corrieron, sin `benchmark_detalle`/`resumen`, sin porcentajes. El `resultados_gate.json` degradado (todo NO_CALIFICA por 429/503) se borró para no confundir a la próxima sesión.
+
+**Decisiones pendientes de Gerardo (ninguna es de Code):**
+- **(A) F13 / caso ACIERTO del gate** — las 3 opciones de Sesión BB siguen abiertas: (a) reclasificar F13-brillo como gap de capa1 (no YA_CUBIERTO) y usar F03/F11 de capa2 como ACIERTO esperado; (b) bajar `brillo_minimo` 40→50 en `mandatory_engine.py` (regla dura de PRODUCCIÓN, afecta TODAS las fotos — no se hizo sin decisión); (c) rehacer el recorte de F13 (¿la zona oscura real quedó fuera? + quitar marcas verdes de corrección humana, riesgo de validez de Sesión AA aún sin resolver).
+- **(B) Rotación de keys en el pipeline** — replicar en `_llamar_modelo` la rotación que ya tiene `motor2/vision_fallback.py`, para que use key2/key3 cuando key1 esté en 429. Toca `pipeline.py` (producción) → requiere autorización.
+- **(C) El 503 de la eval pesada** — es del lado de Google (esperar/reintentar) y/o reducir la carga por llamada (batching de criterios), decisión de diseño mayor.
+
+**NADA de producción tocado**: `pipeline/`, `core/`, `mandatory_engine.py`, `capa1_display_basics.json`, `capa2_campana_activa.json`, `capa2_validado_final.json`, capa1_v2 — intactos. Único cambio de código: el fix del runner del benchmark (`fc114f4`) + este CLAUDE.md. F28 sigue fuera.
+
+**Tracking (sin cambio — el benchmark no corrió completo): Motor 1: 100% | Motor 2: 100% | Listo-para-mostrar: 42%.** El fix del runner destraba mecánicamente el benchmark (ya carga los 122 criterios), pero **el número NO se mueve** porque no se produjo ningún benchmark defendible: falta (A) el caso ACIERTO del gate + (B/C) el modelo estable para las 25.
+
+## Estado previo (9 Jul 2026 — Sesión BB: benchmark retomado — **GATE DETENIDO por regla** por 2 bloqueos reales; F28 corregido en el GT del arnés + autotests PASS. El benchmark NO corrió.)
 
 **Decisión de Gerardo al cierre: PARAR aquí, documentar, esperar y reintentar el modelo en otra sesión. El benchmark de 25 fotos NO se ejecutó.**
 
