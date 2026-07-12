@@ -19,7 +19,25 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 
 ---
 
-## Estado actual (9 Jul 2026 — Sesión EE: **BATCHING IMPLEMENTADO Y GATE PASADO** — el 503 quedó resuelto; las 25 fotos se intentaron pero cayeron por CUOTA diaria agotada (429 en las 3 keys), no por el batching. Falta re-correrlas con cuota fresca.)
+## Estado actual (12 Jul 2026 — Sesión FF: **STRESS TEST DE CÓDIGO (sin modelo) — 3 CRÍTICOS confirmados + 1 bug real + 1 gap de diagnóstico nuevo. Cero tokens gastados, producción intacta.**)
+
+**Resumen honesto: fase 1 de "hacer sangrar" a Motor 1 sin gastar un token — 21 casos de borde contra `mandatory_engine`/`retrieval_engine`/`pipeline`/`photo_analyzer` con fixtures sintéticos y monkeypatch (guard anti-red global verificado: 0 intentos de salida; el único caso con "red" fue el mock de 429). Todo en `motor1/stress_test_codigo/` (nuevo): `EXPECTATIVAS.md` (escrito ANTES de correr), `generar_fixtures.py`, `correr_stress_codigo.py`, `resultados/resultados.json`, `REPORTE_HALLAZGOS.md`. El stress test con IA del 11 Jul (`motor1/stress_test/`) quedó intacto.**
+
+Hallazgos (detalle completo en `motor1/stress_test_codigo/REPORTE_HALLAZGOS.md`):
+- 🔴 **CR-1 CRÍTICO (bug real): excepción en photo_analyzer → foto "perfecta" sin traza.** `pipeline._preparar_metadata` (220-221) traga cualquier excepción con `except: pass` y cae a defaults `brillo=100/nitidez=100` — la foto rota pasa TODAS las reglas duras y se evalúan los 137 criterios; el ResultadoFinal no lleva NINGUNA señal del fallo (verificado programáticamente). El peor fallo silencioso posible.
+- 🔴 **CR-2 CRÍTICO (gap arquitectónico): knowledge JSON corrupto → capa amputada en silencio.** Capa2 corrupta = corrida "normal" con 21 criterios en vez de 137; las 3 capas corruptas = corrida con 0 criterios que emite NO_CALIFICA (matiz honesto: NO dio CUMPLE fantasma). Única señal: un logger.warning invisible en la UI (NullHandler — mismo mecanismo que ocultó los 429 de Sesión EE). El guard de 0-criterios existe en el runner del benchmark pero NO en producción.
+- 🔴 **CR-3 (=H1 re-confirmado): `etapa_activa` vacía/None → `etapa_no_definida` NO_CALIFICA desaparece del resultado final** (solo se exponen GRAVEs extra). Reproducible en ms sin modelo.
+- 🟠 **BR-1 bug real: `etapa_activa` no-string (int 12345) tumba `ejecutar()` con AttributeError** en `pipeline.py:135` (`etapa_activa.strip()` sin coerción; no hay try/except global). Fix de una línea (`_to_str`), pendiente de autorización.
+- 🟡 **GD-1 gap nuevo: todo archivo roto (inexistente / 0 bytes / txt renombrado / JPEG truncado / bomba 256 MP) se diagnostica como "imagen demasiado oscura"** — photo_analyzer conoce la causa real (`facts["error"]`) pero `_preparar_metadata` la descarta; brillo=0.0 → GRAVE `imagen_oscura`. Cero crashes, cero CUMPLE, pero el diagnóstico miente al usuario.
+- 🟢 **Confirmado: la frontera de brillo es exacta** (fixtures calibrados con la `_average_brightness` real: 39.0/39.9 → GRAVE; 40.0/40.1/41.0 → pasa; `<` estricto, sin off-by-one). El doble umbral (photo_analyzer 30 vs mandatory 40) es deuda de claridad, no bug. `tipo_foto` basura → OBSERVACION sin CUMPLE fantasma. Bomba de descompresión rechazada en 8 ms por PIL. 3 keys agotadas (mockeado): termina sin colgar, pero es H3 en código — NO_CALIFICA indistinguible de cuota, y sin circuit breaker quema 33 requests + 22 s de sleeps sabiendo desde el primer lote que las keys están muertas (~800 requests desperdiciados en una corrida de 25 fotos).
+
+**Patrón de fondo (la conclusión de la fase): Motor 1 no se cae y nunca inventa CUMPLE — pero cuando algo falla, degrada SIEMPRE hacia el silencio.** La regla que falta es de honestidad interna: todo fallo debe dejar traza en el resultado que ve el usuario. Los fixes NO se aplicaron (fase de diagnóstico, por brief); decisiones de Gerardo: (a) CR-1 quitar el `except: pass` optimista, (b) CR-2 guard de 0-criterios en producción, (c) BR-1 coerción de una línea, (d) GD-1 regla `archivo_invalido` antes de `imagen_oscura`, (e) CR-3/H3 siguen esperando la decisión de diseño del stress test del 11 Jul.
+
+**NADA de producción tocado**: `pipeline/`, `core/`, `pipeline/knowledge/*.json`, benchmark y stress test del 11 Jul intactos (verificado con `git status`). Cero llamadas a API real.
+
+**Tracking (sin cambio, a propósito — se decide junto con Gerardo tras revisar el reporte): Motor 1: 100% | Motor 2: 100% | Listo-para-mostrar: 45%.**
+
+## Estado previo (9 Jul 2026 — Sesión EE: **BATCHING IMPLEMENTADO Y GATE PASADO** — el 503 quedó resuelto; las 25 fotos se intentaron pero cayeron por CUOTA diaria agotada (429 en las 3 keys), no por el batching. Falta re-correrlas con cuota fresca.)
 
 **Resumen honesto: el batching de PASO_4 destrabó el 503 — F03 dio el ACIERTO de cartulina y el GATE COMPLETO PASÓ por primera vez (F03=ACIERTO, F13=CUMPLE_CORRECTO, F01=FN esperado, FP=0). Las 25 fotos se lanzaron pero salieron TODAS NO_CALIFICA porque las 3 GEMINI_API_KEY se agotaron (429 RESOURCE_EXHAUSTED diario, verificado con llamada mínima por key) — el gate + F03 + los ~250 intentos de la corrida quemaron la cuota del día. La corrida degradada se BORRÓ (no es defendible). El runner ahora tiene pre-flight de cuota + logging visible para que esto nunca vuelva a pasar en silencio.**
 

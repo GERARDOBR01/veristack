@@ -1,0 +1,204 @@
+{
+  "version": "1.0",
+  "tipo_foto": "focal_show",
+  "criterios": [
+    {
+      "id": "beneficio_etapa_incorrecto",
+      "aliases": [
+        "grafico de otra etapa",
+        "promocion equivocada",
+        "descuento que no es"
+      ],
+      "texto": "Gráfico muestra beneficio de etapa incorrecta (cliente puede exigir descuento que no aplica)",
+      "peso": "EXCEPTION",
+      "aplica_a": [
+        "focal_show"
+      ]
+    },
+    {
+      "id": "producto_sin_descuento",
+      "aliases": [
+        "ropa de linea",
+        "mercancia sin promo",
+        "producto no participa"
+      ],
+      "texto": "Producto en focal sin descuento activo de la campaña (engaño visual al cliente)",
+      "peso": "EXCEPTION",
+      "aplica_a": [
+        "focal_show"
+      ]
+    },
+    {
+      "id": "mezcla_descuentos",
+      "aliases": [
+        "descuentos revueltos",
+        "varias promos",
+        "precios mezclados"
+      ],
+      "texto": "Mezcla de descuentos distintos en el mismo focal (el cliente no sabe qué precio aplica)",
+      "peso": "EXCEPTION",
+      "aplica_a": [
+        "focal_show"
+      ]
+    },
+    {
+      "id": "etiqueta_ausente_maniqui",
+      "aliases": [
+        "maniqui sin precio",
+        "falta cartulina en cadera",
+        "sin señalizacion"
+      ],
+      "texto": "Etiqueta de precio ausente en maniquí cuando la mecánica la exige",
+      "peso": "EXCEPTION",
+      "aplica_a": [
+        "focal_show"
+      ]
+    },
+    {
+      "id": "campana_anterior_visible",
+      "aliases": [
+        "grafico viejo",
+        "material de evento pasado",
+        "publicidad caduca"
+      ],
+      "texto": "Gráfico de campaña anterior visible (comunica vigencia falsa)",
+      "peso": "EXCEPTION",
+      "aplica_a": [
+        "focal_show"
+      ]
+    },
+    {
+      "id": "calidad_evidencia_fotografica",
+      "aliases": [
+        "foto borrosa",
+        "no se distingue",
+        "evidencia mala"
+      ],
+      "texto": "Foto ilegible o no enviada (sin evidencia = sin cumplimiento para auditoría)",
+      "peso": "EXCEPTION",
+      "aplica_a": [
+        "focal_show"
+      ]
+    },
+    {
+      "id": "triangulacion_debil",
+      "aliases": [
+        "mal acomodado",
+        "sin forma",
+        "todo al mismo nivel"
+      ],
+      "texto": "Triangulación débil o inexistente",
+      "peso": "RECOMMENDATION",
+      "aplica_a": [
+        "focal_show"
+      ]
+    },
+    {
+      "id": "looks_incompletos",
+      "aliases": [
+        "maniqui a medias",
+        "falta accesorio",
+        "ropa sin planchar"
+      ],
+      "texto": "Maniquíes con looks incompletos (sin accesorio, prenda sin planchar)",
+      "peso": "RECOMMENDATION",
+      "aplica_a": [
+        "focal_show"
+      ]
+    },
+    {
+      "id": "colorizacion_descuidada",
+      "aliases": [
+        "colores revueltos",
+        "no combina",
+        "tonos salteados"
+      ],
+      "texto": "Colorización descuidada en producto exhibido",
+      "peso": "RECOMMENDATION",
+      "aplica_a": [
+        "focal_show"
+      ]
+    },
+    {
+      "id": "angulo_foto_deficiente",
+      "aliases": [
+        "foto mocha",
+        "no sale todo",
+        "mala toma"
+      ],
+      "texto": "Foto legible pero ángulo no muestra todos los maniquíes",
+      "peso": "RECOMMENDATION",
+      "aplica_a": [
+        "focal_show"
+      ]
+    },
+    {
+      "id": "punto_verde_sin_actualizar",
+      "aliases": [
+        "parche viejo",
+        "etiqueta de verde pasada",
+        "no cambiaron parche"
+      ],
+      "texto": "Punto verde de etapa anterior sin actualizar parche",
+      "peso": "RECOMMENDATION",
+      "aplica_a": [
+        "focal_show"
+      ]
+    },
+    {
+      "id": "graficos_requeridos",
+      "aliases": [
+        "material completo",
+        "torres y parche bien",
+        "grafica oficial"
+      ],
+      "texto": "Torres slim con beneficio vigente de la etapa. Punto verde = etapa correcta (50 o 50+20). Sin barras de tringla en focal. Sin atriles de marca. Sin gráficos de otras campañas.",
+      "peso": "MANDATORY",
+      "aplica_a": [
+        "focal_show"
+      ]
+    },
+    {
+      "id": "producto_focal_show",
+      "aliases": [
+        "departamento correcto",
+        "seccion de hombres",
+        "promo pareja"
+      ],
+      "texto": "Sección: Juveniles o Hombre Contempo. Mismo descuento en todos los maniquíes. Descuento = beneficio de etapa vigente. Sin mezcla de descuentos en focal. Sin mercancía sin descuento.",
+      "peso": "MANDATORY",
+      "aplica_a": [
+        "focal_show"
+      ]
+    },
+    {
+      "id": "cantidad_maniquies",
+      "aliases": [
+        "faltan maniquies",
+        "menos muñecos",
+        "no hay inventario"
+      ],
+      "texto": "Cantidad de maniquíes (depende de inventario)",
+      "peso": "EXCEPTION",
+      "aplica_a": [
+        "focal_show"
+      ]
+    },
+    {
+      "id": "props_decoracion",
+      "aliases": [
+        "adornos extra",
+        "cosas de mas",
+        "ambientacion extra"
+      ],
+      "texto": "Props específicos sin contexto de sección. Nivel de decoración más allá de lo que pide la mecánica. NO PERMITIDO en el focal: mobiliario decorativo (espejos, pedestales, plantas), mochilas u objetos no relacionados a la mecánica de campaña, y cualquier elemento que no sea producto en exhibición o gráfico oficial de torres slim y maniquíes.",
+      "peso": "EXCEPTION",
+      "aplica_a": [
+        "focal_show"
+      ]
+    }
+  ],
+  "schema_version": "1.0",
+  "fecha_actualizacion": "2026-07-02",
+  "hash_contenido": "877d1c35cb6846496f3f7124dd711e16"
+}

@@ -1,0 +1,1555 @@
+{
+  "schema_version": "1.1",
+  "etapa": "gran_barata_pv2026",
+  "vigencia_inicio": "2026-06-22",
+  "vigencia_fin": "2026-08-09",
+  "fecha_actualizacion": "2026-07-07",
+  "hash_contenido": "4803750f48108c5cbf9829ca199e2dffa490ca3a51cf84a0315b51a1c526e6d2",
+  "meta": {
+    "origen": "motor2/capa2_validado_con_candidatos.json (Sesión X: 148/148 revisado_por_gerardo=true + 3 correcciones golden set aplicadas)",
+    "manual": "mecanica_montaje_gran_barata_pv_2026",
+    "sellado": "2026-07-07T00:02:02",
+    "nota": "148 criterios evaluables. Los 8 unidad_exhibicion_* de p44 excluidos (motor2/referencia_no_evaluable.md). Candidato para reemplazar pipeline/knowledge/capa2_campana_activa.json vía swap_capa2_produccion.mjs — swap real pendiente de autorización de Gerardo."
+  },
+  "criterios": [
+    {
+      "texto": "Imprimir una torre slim, mandar parche 50, colocar el +20 sobre el 50",
+      "peso": "MANDATORY",
+      "severidad": "GRAVE",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 6,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "gemini_vision",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "imprimir_torre_slim_mandar_parche",
+      "aliases": [
+        "imprimir torre",
+        "torre slim"
+      ],
+      "aplica_a": [
+        "torre"
+      ],
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Imprimir primera etapa 40% genérico 60% beneficio",
+      "peso": "MANDATORY",
+      "severidad": "GRAVE",
+      "condicion_libre": "BARRAS",
+      "referencia_no_resuelta": false,
+      "pagina_origen": 6,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "gemini_vision",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "barras_etapa1_40_60",
+      "aliases": [
+        "imprimir primera",
+        "primera etapa"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "2da etapa 100% beneficio (Como años pasados)",
+      "peso": "MANDATORY",
+      "severidad": "GRAVE",
+      "condicion_libre": "BARRAS",
+      "referencia_no_resuelta": false,
+      "pagina_origen": 6,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "gemini_vision",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "barras_etapa2_100",
+      "aliases": [
+        "2da etapa",
+        "etapa 100"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "3era etapa 100% beneficio (Como años pasados)",
+      "peso": "MANDATORY",
+      "severidad": "GRAVE",
+      "condicion_libre": "BARRAS",
+      "referencia_no_resuelta": false,
+      "pagina_origen": 6,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "gemini_vision",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "barras_etapa3_100",
+      "aliases": [
+        "3era etapa",
+        "etapa 100"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Imprimir primera etapa 40% genérico 60% beneficio",
+      "peso": "MANDATORY",
+      "severidad": "GRAVE",
+      "condicion_libre": "COLUMNAS",
+      "referencia_no_resuelta": false,
+      "pagina_origen": 6,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "gemini_vision",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "columnas_etapa1_40_60",
+      "aliases": [
+        "imprimir primera",
+        "primera etapa"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "2da etapa 100% beneficio (Como años pasados)",
+      "peso": "MANDATORY",
+      "severidad": "GRAVE",
+      "condicion_libre": "COLUMNAS",
+      "referencia_no_resuelta": false,
+      "pagina_origen": 6,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "gemini_vision",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "columnas_etapa2_100",
+      "aliases": [
+        "2da etapa",
+        "etapa 100"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "3ERA etapa solo producir parches +20",
+      "peso": "MANDATORY",
+      "severidad": "GRAVE",
+      "condicion_libre": "COLUMNAS",
+      "referencia_no_resuelta": false,
+      "pagina_origen": 6,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "gemini_vision",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "columnas_etapa3_parches_20",
+      "aliases": [
+        "3era etapa",
+        "etapa solo"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Imprimir primera etapa genérico, se usan para ambas secciones",
+      "peso": "MANDATORY",
+      "severidad": "GRAVE",
+      "condicion_libre": "ATRILES",
+      "referencia_no_resuelta": false,
+      "pagina_origen": 6,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "gemini_vision",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "atriles_primera_etapa_generico",
+      "aliases": [
+        "imprimir primera",
+        "primera etapa"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Nada se resguarda",
+      "peso": "EXCEPTION",
+      "severidad": "OBSERVACION",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 6,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "gemini_vision",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "nada_resguarda",
+      "aliases": [
+        "nada resguarda"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Agregar los puntos dependiendo la etapa en la que se encuentre la campaña conforme a la visualización.",
+      "peso": "MANDATORY",
+      "severidad": "GRAVE",
+      "condicion_libre": "dependiendo la etapa en la que se encuentre la campaña",
+      "referencia_no_resuelta": false,
+      "pagina_origen": 7,
+      "seccion_aplicable": null,
+      "etapa_aplicable": [
+        "E2",
+        "E3"
+      ],
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "lesser",
+      "posible_herencia_fewshot": false,
+      "id": "agregar_puntos_dependiendo_etapa_encuentre",
+      "aliases": [
+        "agregar puntos",
+        "puntos dependiendo"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Para el caso de los muebles de focal, coloca la etiqueta a la misma altura y del mismo lado.",
+      "peso": "MANDATORY",
+      "severidad": "GRAVE",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 10,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "gemini_vision",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "caso_muebles_focal_coloca_etiqueta",
+      "aliases": [
+        "caso muebles",
+        "muebles focal"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Utilizar la siguiente fórmula.",
+      "peso": "MANDATORY",
+      "severidad": "NO_CALIFICA",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 10,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "gemini_vision",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "utilizar_siguiente_formula",
+      "aliases": [
+        "utilizar siguiente",
+        "siguiente formula"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "2 maniquíes – 1 etiqueta",
+      "peso": "MANDATORY",
+      "severidad": "NO_CALIFICA",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 10,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "gemini_vision",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "2_maniquies_1_etiqueta",
+      "aliases": [
+        "2 maniquies",
+        "maniquies 1"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "3 maniquíes – 2 etiquetas",
+      "peso": "MANDATORY",
+      "severidad": "NO_CALIFICA",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 10,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "gemini_vision",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "maniquies_3_etiquetas_2",
+      "aliases": [
+        "maniquies etiquetas"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "5 maniquíes – 3 etiquetas",
+      "peso": "MANDATORY",
+      "severidad": "NO_CALIFICA",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 10,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "gemini_vision",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "maniquies_5_etiquetas_3",
+      "aliases": [
+        "maniquies etiquetas"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "[AMBIGUO] Recuerda que las etiquetas solo van en la cadera del maniquí.",
+      "peso": "MANDATORY",
+      "severidad": "OBSERVACION",
+      "condicion_libre": null,
+      "referencia_no_resuelta": null,
+      "pagina_origen": 10,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "gemini_vision",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "recuerda_etiquetas_solo_van_cadera",
+      "aliases": [
+        "recuerda etiquetas",
+        "etiquetas solo"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "[AMBIGUO] Consulta en la liga el manual de señalización de Barata en piso, para Hardline.",
+      "peso": "MANDATORY",
+      "severidad": "OBSERVACION",
+      "condicion_libre": null,
+      "referencia_no_resuelta": null,
+      "pagina_origen": 10,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "gemini_vision",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "consulta_liga_manual_senalizacion_barata",
+      "aliases": [
+        "consulta liga",
+        "liga manual"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Agrupar la mercancía calificada con Barata y Liquidación al frente de la sección sin mezclar",
+      "peso": "MANDATORY",
+      "severidad": "GRAVE",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 11,
+      "seccion_aplicable": "Softline",
+      "etapa_aplicable": null,
+      "fuente_pagina": "gemini_vision",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "agrupar_mercancia_calificada_barata_liquidacion",
+      "aliases": [
+        "agrupar mercancia",
+        "mercancia calificada"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "DAR PRIORIDAD A MERCANCÍA CALIFICADA.",
+      "peso": "MANDATORY",
+      "severidad": "OBSERVACION",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 11,
+      "seccion_aplicable": "Softline",
+      "etapa_aplicable": null,
+      "fuente_pagina": "gemini_vision",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "dar_prioridad_mercancia_calificada",
+      "aliases": [
+        "dar prioridad",
+        "prioridad mercancia"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Colocar cartulina con descuento específico a mercancía participante.",
+      "peso": "MANDATORY",
+      "severidad": "GRAVE",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 12,
+      "seccion_aplicable": "Softline",
+      "etapa_aplicable": null,
+      "fuente_pagina": "gemini_vision",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "colocar_cartulina_descuento_especifico_mercancia",
+      "aliases": [
+        "colocar cartulina",
+        "cartulina descuento"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Respetar capacidad ideal del mobiliario, que permita tomar el producto.",
+      "peso": "MANDATORY",
+      "severidad": "GRAVE",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 12,
+      "seccion_aplicable": "Softline",
+      "etapa_aplicable": null,
+      "fuente_pagina": "gemini_vision",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "respetar_capacidad_ideal_mobiliario_permita",
+      "aliases": [
+        "respetar capacidad",
+        "capacidad ideal"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Distribuir cartulinas equilibradamente en piso y garantizar vestir cada sección.",
+      "peso": "MANDATORY",
+      "severidad": "OBSERVACION",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 12,
+      "seccion_aplicable": "Softline",
+      "etapa_aplicable": null,
+      "fuente_pagina": "gemini_vision",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "distribuir_cartulinas_equilibradamente_piso_garantizar",
+      "aliases": [
+        "distribuir cartulinas",
+        "cartulinas equilibradamente"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Selecciona el producto dando prioridad al Descuento:",
+      "peso": "RECOMMENDATION",
+      "severidad": "GRAVE",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 13,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "gemini_vision",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "selecciona_producto_dando_prioridad_descuento",
+      "aliases": [
+        "selecciona producto",
+        "producto dando"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "(1) Colocar el producto por descuento de mayor a menor.",
+      "peso": "MANDATORY",
+      "severidad": "GRAVE",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 13,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "gemini_vision",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "colocar_producto_descuento_mayor_menor",
+      "aliases": [
+        "colocar producto",
+        "producto descuento"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "(2) Respetar los mundos sin romper las clasificaciones.",
+      "peso": "MANDATORY",
+      "severidad": "GRAVE",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 13,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "gemini_vision",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "respetar_mundos_romper_clasificaciones",
+      "aliases": [
+        "respetar mundos",
+        "mundos romper"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "(3) Exhibir todos los modelos sin repetirlos.",
+      "peso": "MANDATORY",
+      "severidad": "GRAVE",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 13,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "gemini_vision",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "exhibir_modelos_repetirlos",
+      "aliases": [
+        "exhibir modelos",
+        "modelos repetirlos"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "(4) Identificar con cartulina de descuento.",
+      "peso": "MANDATORY",
+      "severidad": "OBSERVACION",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 13,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "gemini_vision",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "identificar_cartulina_descuento",
+      "aliases": [
+        "identificar cartulina",
+        "cartulina descuento"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "(5) Exhibir la liquidación en la zapatera.",
+      "peso": "MANDATORY",
+      "severidad": "OBSERVACION",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 13,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "gemini_vision",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "exhibir_liquidacion_zapatera",
+      "aliases": [
+        "exhibir liquidacion",
+        "liquidacion zapatera"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Nota: La exhibición de producto en mesas y perímetros de las secciones de zapatos se mantiene con el movimiento de mercadeo de frente y vuelta.",
+      "peso": "RECOMMENDATION",
+      "severidad": "NO_CALIFICA",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 13,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "gemini_vision",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "nota_exhibicion_producto_mesas_perimetros",
+      "aliases": [
+        "nota exhibicion",
+        "exhibicion producto"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "En caso de tener todos lo modelos exhibidos en las zapateras o mesas m y cuenten con niveles vacíos es posible realizar repetición de producto, esto solo aplica para zapateras y mesas mmm en exhibiciones fuera de la sección.",
+      "peso": "EXCEPTION",
+      "severidad": "OBSERVACION",
+      "condicion_libre": "zapateras y mesas mmm en exhibiciones fuera de la sección",
+      "referencia_no_resuelta": false,
+      "pagina_origen": 13,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "gemini_vision",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "caso_tener_modelos_exhibidos_zapateras",
+      "aliases": [
+        "caso tener",
+        "tener modelos"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Selecciona el producto sin mezclar descuentos, mundos y/o secciones: 1. Descuento 50%, 40%, 30%, 20% u otros.",
+      "peso": "MANDATORY",
+      "severidad": "GRAVE",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 14,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "selecciona_producto_mezclar_descuentos_mundos",
+      "aliases": [
+        "selecciona producto",
+        "producto mezclar"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "(1) Ubicar al frente de la sección ya sea en mueble genérico de Display o mueble del departamento.",
+      "peso": "MANDATORY",
+      "severidad": "OBSERVACION",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 14,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "ubicar_frente_seccion_sea_mueble",
+      "aliases": [
+        "ubicar frente",
+        "frente seccion"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "(2) Exhibir el producto por descuento sin mezclar.",
+      "peso": "MANDATORY",
+      "severidad": "GRAVE",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 14,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "exhibir_producto_descuento_mezclar",
+      "aliases": [
+        "exhibir producto",
+        "producto descuento"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "(3) Colocar las etiquetas cuidando que estén a la misma altura de la prenda o en el mismo lado de la caja.",
+      "peso": "MANDATORY",
+      "severidad": "OBSERVACION",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 14,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "colocar_etiquetas_cuidando_esten_misma",
+      "aliases": [
+        "colocar etiquetas",
+        "etiquetas cuidando"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "(4) Cuidar que este el entallado y/o variantes de color completos.",
+      "peso": "MANDATORY",
+      "severidad": "OBSERVACION",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 14,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "cuidar_entallado_variantes_color_completos",
+      "aliases": [
+        "cuidar entallado",
+        "entallado variantes"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "(5) Identificar con cartulina de descuento.",
+      "peso": "MANDATORY",
+      "severidad": "OBSERVACION",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 14,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "identificar_cartulina_descuento",
+      "aliases": [
+        "identificar cartulina",
+        "cartulina descuento"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "(6) Se puede colocar etiquetas colgantes en los maniquíes cuidado no saturarlos.",
+      "peso": "RECOMMENDATION",
+      "severidad": "OBSERVACION",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 14,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "puede_colocar_etiquetas_colgantes_maniquies",
+      "aliases": [
+        "puede colocar",
+        "colocar etiquetas"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Ubica los puntos focales en accesos importantes de la tienda.",
+      "peso": "MANDATORY",
+      "severidad": "OBSERVACION",
+      "condicion_libre": "Focales principales",
+      "referencia_no_resuelta": false,
+      "pagina_origen": 16,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "ubica_puntos_focales_accesos_importantes",
+      "aliases": [
+        "ubica puntos",
+        "puntos focales"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Para la vestimenta de maniquíes revisa las apuestas comerciales.",
+      "peso": "RECOMMENDATION",
+      "severidad": "NO_CALIFICA",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 16,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "lesser",
+      "posible_herencia_fewshot": false,
+      "id": "vestimenta_maniquies_revisa_apuestas_comerciales",
+      "aliases": [
+        "vestimenta maniquies",
+        "maniquies revisa"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Revisa que el producto para este focal sea mercancía con descuentos.",
+      "peso": "MANDATORY",
+      "severidad": "GRAVE",
+      "condicion_libre": "Focales principales",
+      "referencia_no_resuelta": false,
+      "pagina_origen": 16,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "revisa_producto_focal_sea_mercancia",
+      "aliases": [
+        "revisa producto",
+        "producto focal"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "El maniquí o maniquíes deben integrarse con los elementos y accesorizar con base al enfoque.",
+      "peso": "MANDATORY",
+      "severidad": "OBSERVACION",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 16,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "maniqui_maniquies_deben_integrarse_elementos",
+      "aliases": [
+        "maniqui maniquies",
+        "maniquies deben"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Se requiere 1 fotografía por focal",
+      "peso": "MANDATORY",
+      "severidad": "NO_CALIFICA",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 18,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "gemini_vision",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "requiere_1_fotografia_focal",
+      "aliases": [
+        "requiere 1",
+        "1 fotografia"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Exhibir producto de la sección de Juniors o Joven Contempo.",
+      "peso": "MANDATORY",
+      "severidad": "GRAVE",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 20,
+      "seccion_aplicable": "Softline",
+      "etapa_aplicable": [
+        "E1",
+        "E2"
+      ],
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "focal_show_mujeres_departamento_juniors",
+      "aliases": [
+        "exhibir producto",
+        "producto seccion"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Revisa que el producto para este focal sea mercancía con el mismo descuento.",
+      "peso": "MANDATORY",
+      "severidad": "GRAVE",
+      "condicion_libre": "Focales fuera de la sección",
+      "referencia_no_resuelta": false,
+      "pagina_origen": 20,
+      "seccion_aplicable": "Softline",
+      "etapa_aplicable": [
+        "E1",
+        "E2"
+      ],
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "exact",
+      "posible_herencia_fewshot": true,
+      "fewshot_ejemplo": 3,
+      "id": "focal_show_mujeres_etapa1_2",
+      "aliases": [
+        "revisa producto",
+        "producto focal"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Integra los maniquíes de manera que se logren apreciar bien todos los looks.",
+      "peso": "RECOMMENDATION",
+      "severidad": "OBSERVACION",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 20,
+      "seccion_aplicable": "Softline",
+      "etapa_aplicable": [
+        "E1",
+        "E2"
+      ],
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "focal_show_mujeres_etapa1_2",
+      "aliases": [
+        "integra maniquies",
+        "maniquies manera"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "[AMBIGUO] En en los focales solo se colocan los gráficos de torres slim y maniquíes.",
+      "peso": "MANDATORY",
+      "severidad": "OBSERVACION",
+      "condicion_libre": null,
+      "referencia_no_resuelta": null,
+      "pagina_origen": 20,
+      "seccion_aplicable": "Softline",
+      "etapa_aplicable": [
+        "E1",
+        "E2"
+      ],
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "lesser",
+      "posible_herencia_fewshot": false,
+      "id": "focal_show_mujeres_etapa1_2",
+      "aliases": [
+        "focales solo",
+        "solo colocan"
+      ],
+      "aplica_a": [
+        "torre"
+      ],
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Se impulsará IMO con los Avances de Temporada “TENDENCIA …”",
+      "peso": "MANDATORY",
+      "severidad": "OBSERVACION",
+      "condicion_libre": "Focales fuera de la sección",
+      "referencia_no_resuelta": false,
+      "pagina_origen": 21,
+      "seccion_aplicable": "Softline",
+      "etapa_aplicable": [
+        "E3"
+      ],
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "focal_show_mujeres_etapa3",
+      "aliases": [
+        "impulsara imo",
+        "imo avances"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "No colocar gráficos de Barata.",
+      "peso": "MANDATORY",
+      "severidad": "GRAVE",
+      "condicion_libre": "Focales fuera de la sección",
+      "referencia_no_resuelta": false,
+      "pagina_origen": 21,
+      "seccion_aplicable": "Softline",
+      "etapa_aplicable": [
+        "E3"
+      ],
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "focal_show_mujeres_etapa3",
+      "aliases": [
+        "colocar graficos",
+        "graficos barata"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "En estos focales colocar los atriles de marca.",
+      "peso": "EXCEPTION",
+      "severidad": "OBSERVACION",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 21,
+      "seccion_aplicable": "Softline",
+      "etapa_aplicable": [
+        "E3"
+      ],
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "focal_show_mujeres_etapa3",
+      "aliases": [
+        "focales colocar",
+        "colocar atriles"
+      ],
+      "aplica_a": [
+        "atril"
+      ],
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Exhibir producto de la sección de Juveniles o Hombre Contempo.",
+      "peso": "MANDATORY",
+      "severidad": "GRAVE",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 22,
+      "seccion_aplicable": "Softline",
+      "etapa_aplicable": [
+        "E1",
+        "E2"
+      ],
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "focal_show_hombres_departamento_juveniles",
+      "aliases": [
+        "exhibir producto",
+        "producto seccion"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Revisa que el producto para este focal sea mercancía con el mismo descuento.",
+      "peso": "MANDATORY",
+      "severidad": "GRAVE",
+      "condicion_libre": "Focales fuera de la sección",
+      "referencia_no_resuelta": false,
+      "pagina_origen": 22,
+      "seccion_aplicable": "Softline",
+      "etapa_aplicable": [
+        "E1",
+        "E2"
+      ],
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "exact",
+      "posible_herencia_fewshot": true,
+      "fewshot_ejemplo": 3,
+      "id": "focal_show_hombres_etapa1_2",
+      "aliases": [
+        "revisa producto",
+        "producto focal"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Integra los maniquíes de manera que se logren apreciar bien todos los looks.",
+      "peso": "MANDATORY",
+      "severidad": "OBSERVACION",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 22,
+      "seccion_aplicable": "Softline",
+      "etapa_aplicable": [
+        "E1",
+        "E2"
+      ],
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "focal_show_hombres_etapa1_2",
+      "aliases": [
+        "integra maniquies",
+        "maniquies manera"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "[AMBIGUO] En en los focales solo se colocan los gráficos de torres slim y maniquíes.",
+      "peso": "MANDATORY",
+      "severidad": "OBSERVACION",
+      "condicion_libre": null,
+      "referencia_no_resuelta": null,
+      "pagina_origen": 22,
+      "seccion_aplicable": "Softline",
+      "etapa_aplicable": [
+        "E1",
+        "E2"
+      ],
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "lesser",
+      "posible_herencia_fewshot": false,
+      "id": "focal_show_hombres_etapa1_2",
+      "aliases": [
+        "focales solo",
+        "solo colocan"
+      ],
+      "aplica_a": [
+        "torre"
+      ],
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Se impulsará IMO con los Avances de Temporada “TENDENCIA …”",
+      "peso": "MANDATORY",
+      "severidad": "GRAVE",
+      "condicion_libre": "Focales fuera de la sección",
+      "referencia_no_resuelta": false,
+      "pagina_origen": 23,
+      "seccion_aplicable": "Softline",
+      "etapa_aplicable": [
+        "E3"
+      ],
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "focal_show_hombres_etapa3",
+      "aliases": [
+        "impulsara imo",
+        "imo avances"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "No colocar gráficos de Barata.",
+      "peso": "MANDATORY",
+      "severidad": "GRAVE",
+      "condicion_libre": "Focales fuera de la sección",
+      "referencia_no_resuelta": false,
+      "pagina_origen": 23,
+      "seccion_aplicable": "Softline",
+      "etapa_aplicable": [
+        "E3"
+      ],
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "focal_show_hombres_etapa3",
+      "aliases": [
+        "colocar graficos",
+        "graficos barata"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "En estos focales colocar los atriles de marca.",
+      "peso": "EXCEPTION",
+      "severidad": "OBSERVACION",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 23,
+      "seccion_aplicable": "Softline",
+      "etapa_aplicable": [
+        "E3"
+      ],
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "focal_show_hombres_etapa3",
+      "aliases": [
+        "focales colocar",
+        "colocar atriles"
+      ],
+      "aplica_a": [
+        "atril"
+      ],
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Exhibir producto de la sección de niños 8+ y niñas 8+.",
+      "peso": "MANDATORY",
+      "severidad": "GRAVE",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 24,
+      "seccion_aplicable": "Softline",
+      "etapa_aplicable": [
+        "E1",
+        "E2"
+      ],
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "focal_show_infantiles_departamento_ninos8",
+      "aliases": [
+        "exhibir producto",
+        "producto seccion"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Revisa que el producto para este focal sea mercancía con el mismo descuento.",
+      "peso": "MANDATORY",
+      "severidad": "GRAVE",
+      "condicion_libre": "Focales fuera de la sección",
+      "referencia_no_resuelta": false,
+      "pagina_origen": 24,
+      "seccion_aplicable": "Softline",
+      "etapa_aplicable": [
+        "E1",
+        "E2"
+      ],
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "exact",
+      "posible_herencia_fewshot": true,
+      "fewshot_ejemplo": 3,
+      "id": "focal_show_infantiles_etapa1_2",
+      "aliases": [
+        "revisa producto",
+        "producto focal"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Integra los maniquíes de manera que se logren apreciar bien todos los looks.",
+      "peso": "MANDATORY",
+      "severidad": "OBSERVACION",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 24,
+      "seccion_aplicable": "Softline",
+      "etapa_aplicable": [
+        "E1",
+        "E2"
+      ],
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "focal_show_infantiles_etapa1_2",
+      "aliases": [
+        "integra maniquies",
+        "maniquies manera"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "En en los focales solo se colocan los gráficos de torres slim y maniquíes.",
+      "peso": "EXCEPTION",
+      "severidad": "OBSERVACION",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 24,
+      "seccion_aplicable": "Softline",
+      "etapa_aplicable": [
+        "E1",
+        "E2"
+      ],
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "lesser",
+      "posible_herencia_fewshot": false,
+      "id": "focal_show_infantiles_etapa1_2",
+      "aliases": [
+        "focales solo",
+        "solo colocan"
+      ],
+      "aplica_a": [
+        "torre"
+      ],
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Se impulsará IMO con los Avances de Temporada “TENDENCIA …”",
+      "peso": "MANDATORY",
+      "severidad": "OBSERVACION",
+      "condicion_libre": "Focales fuera de la sección",
+      "referencia_no_resuelta": false,
+      "pagina_origen": 25,
+      "seccion_aplicable": "Softline",
+      "etapa_aplicable": [
+        "E3"
+      ],
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "focal_show_infantiles_etapa3",
+      "aliases": [
+        "impulsara imo",
+        "imo avances"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "No colocar gráficos de Barata.",
+      "peso": "MANDATORY",
+      "severidad": "GRAVE",
+      "condicion_libre": "Focales fuera de la sección",
+      "referencia_no_resuelta": false,
+      "pagina_origen": 25,
+      "seccion_aplicable": "Softline",
+      "etapa_aplicable": [
+        "E3"
+      ],
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "focal_show_infantiles_etapa3",
+      "aliases": [
+        "colocar graficos",
+        "graficos barata"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "En estos focales colocar los atriles de marca.",
+      "peso": "EXCEPTION",
+      "severidad": "OBSERVACION",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 25,
+      "seccion_aplicable": "Softline",
+      "etapa_aplicable": [
+        "E3"
+      ],
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "focal_show_infantiles_etapa3",
+      "aliases": [
+        "focales colocar",
+        "colocar atriles"
+      ],
+      "aplica_a": [
+        "atril"
+      ],
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Da visibilidad al producto con el descuento más alto y corridas completas",
+      "peso": "RECOMMENDATION",
+      "severidad": "OBSERVACION",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 26,
+      "seccion_aplicable": "Softline",
+      "etapa_aplicable": null,
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "exact",
+      "posible_herencia_fewshot": true,
+      "fewshot_ejemplo": 1,
+      "id": "visibilidad_producto_descuento_alto_corridas",
+      "aliases": [
+        "visibilidad producto",
+        "producto descuento"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "En la mesa realizar bloques con mercancía doblada, se pueden integrar accesorios en bloques con el mismo descuento.",
+      "peso": "RECOMMENDATION",
+      "severidad": "OBSERVACION",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 26,
+      "seccion_aplicable": "Softline",
+      "etapa_aplicable": null,
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "mesa_realizar_bloques_mercancia_doblada",
+      "aliases": [
+        "mesa realizar",
+        "realizar bloques"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "En la barra prendas con los descuentos más altos, incluyendo prendas altas y prendas bajas, un look por barra.",
+      "peso": "RECOMMENDATION",
+      "severidad": "OBSERVACION",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 26,
+      "seccion_aplicable": "Softline",
+      "etapa_aplicable": null,
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "barra_prendas_descuentos_altos_incluyendo",
+      "aliases": [
+        "barra prendas",
+        "prendas descuentos"
+      ],
+      "aplica_a": [
+        "barra"
+      ],
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Vestir los maniquíes con prendas que estén en la exhibición.",
+      "peso": "RECOMMENDATION",
+      "severidad": "OBSERVACION",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 26,
+      "seccion_aplicable": "Softline",
+      "etapa_aplicable": null,
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "exact",
+      "posible_herencia_fewshot": true,
+      "fewshot_ejemplo": 1,
+      "id": "vestir_maniquies_prendas_esten_exhibicion",
+      "aliases": [
+        "vestir maniquies",
+        "maniquies prendas"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Poner etiquetas de descuento a las prendas, no saturar.",
+      "peso": "EXCEPTION",
+      "severidad": "OBSERVACION",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 26,
+      "seccion_aplicable": "Softline",
+      "etapa_aplicable": null,
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "exact",
+      "posible_herencia_fewshot": true,
+      "fewshot_ejemplo": 1,
+      "id": "poner_etiquetas_descuento_prendas_saturar",
+      "aliases": [
+        "poner etiquetas",
+        "etiquetas descuento"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Si cuentas con el espacio suficiente sin que obstruya el paso al cliente o realiza campamentos o focales en espacios principales de tienda. Recuerda no forzar el espacio.",
+      "peso": "RECOMMENDATION",
+      "severidad": "OBSERVACION",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 27,
+      "seccion_aplicable": "Softline",
+      "etapa_aplicable": null,
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "cuentas_espacio_suficiente_obstruya_paso",
+      "aliases": [
+        "cuentas espacio",
+        "espacio suficiente"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Realiza el mercadeo por descuento (mayor a menor) y tipo de producto.",
+      "peso": "MANDATORY",
+      "severidad": "GRAVE",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 27,
+      "seccion_aplicable": "Softline",
+      "etapa_aplicable": null,
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "realiza_mercadeo_descuento_mayor_menor",
+      "aliases": [
+        "realiza mercadeo",
+        "mercadeo descuento"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Si el campamento se realiza en la 1° ó 2° etapa de la promoción, realiza focales con propuesta de moda.",
+      "peso": "MANDATORY",
+      "severidad": "OBSERVACION",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 27,
+      "seccion_aplicable": "Softline",
+      "etapa_aplicable": null,
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "campamento_realiza_1_2_etapa",
+      "aliases": [
+        "campamento realiza",
+        "realiza 1"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Realizar campamento de Punt Roma con 98´s",
+      "peso": "RECOMMENDATION",
+      "severidad": "NO_CALIFICA",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 27,
+      "seccion_aplicable": "Softline",
+      "etapa_aplicable": null,
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "realizar_campamento_punt_roma_98",
+      "aliases": [
+        "realizar campamento",
+        "campamento punt"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Campamento: Maniquíes + Tringlas o Barra + Cartulina",
+      "peso": "MANDATORY",
+      "severidad": "NO_CALIFICA",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 27,
+      "seccion_aplicable": "Softline",
+      "etapa_aplicable": null,
+      "fuente_pagina": "pdfplumber_text_flow",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "campamento_maniquies_tringlas_barra_cartulina",
+      "aliases": [
+        "campamento maniquies",
+        "maniquies tringlas"
+      ],
+      "aplica_a": [
+        "barra"
+      ],
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Coloca prod
+{{{"sintaxis rota
