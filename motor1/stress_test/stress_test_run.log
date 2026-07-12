@@ -1,0 +1,892 @@
+Knowledge OK: 126 criterios base (E1).
+Pre-flight de cuota OK.
+
+── CORRIDA A: etapa E1 forzada, fotos de otra campana
+WARNING visual_lv.pipeline | [PASO_0][grafico_detectado] fallo intento 1/3, reintenta en 1s — TimeoutError: The read operation timed out (20334ms)
+WARNING visual_lv.pipeline | [PASO_4][-] respuesta del modelo no es JSON válido; se ignora (19307ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 5/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)
+WARNING visual_lv.pipeline | [PASO_4][-] respuesta del modelo no es JSON válido; se ignora (30417ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 7/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)
+WARNING visual_lv.pipeline | [PASO_4][-] fallo intento 1/3, reintenta en 1s — HTTP 503: {
+  "error": {
+    "code": 503,
+    "message": "This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+    "status": "UNAVAILABLE"
+  }
+}
+ (21560ms)
+  SF01.png [etapa=E1 tipo=None]: 247.31s, veredicto=Severidad.GRAVE, criterios=137, excepcion=no
+WARNING visual_lv.pipeline | [PASO_0][grafico_detectado] fallo intento 1/3, reintenta en 1s — HTTP 503: {
+  "error": {
+    "code": 503,
+    "message": "This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+    "status": "UNAVAILABLE"
+  }
+}
+ (1576ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (466ms)
+WARNING visual_lv.pipeline | [PASO_4][-] respuesta del modelo no es JSON válido; se ignora (20762ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 4/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (521ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (508ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (481ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (489ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (485ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (513ms)
+  SF02.png [etapa=E1 tipo=None]: 212.43s, veredicto=Severidad.NO_CALIFICA, criterios=137, excepcion=no
+WARNING visual_lv.pipeline | [PASO_0][grafico_detectado] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (492ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (563ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (541ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (513ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (546ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (575ms)
+WARNING visual_lv.pipeline | [PASO_4][-] fallo intento 2/3, reintenta en 2s — HTTP 503: {
+  "error": {
+    "code": 503,
+    "message": "This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+    "status": "UNAVAILABLE"
+  }
+}
+ (3028ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (578ms)
+WARNING visual_lv.pipeline | [PASO_4][-] respuesta del modelo no es JSON válido; se ignora (25462ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 7/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (541ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (677ms)
+  SF03.png [etapa=E1 tipo=None]: 250.06s, veredicto=Severidad.GRAVE, criterios=137, excepcion=no
+WARNING visual_lv.pipeline | [PASO_0][grafico_detectado] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (521ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (534ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (549ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (2086ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (526ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (2061ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (517ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (2045ms)
+WARNING visual_lv.pipeline | [PASO_4][-] respuesta del modelo no es JSON válido; se ignora (30096ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 4/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (536ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (2073ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (548ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (566ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (2168ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (512ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (2036ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (553ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (2076ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (553ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (2097ms)
+WARNING visual_lv.pipeline | [PASO_4][-] respuesta del modelo no es JSON válido; se ignora (15672ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 10/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 2 criterio(s)
+  SF04.png [etapa=E1 tipo=None]: 257.73s, veredicto=Severidad.GRAVE, criterios=137, excepcion=no
+WARNING visual_lv.pipeline | [PASO_0][grafico_detectado] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (345ms)
+WARNING visual_lv.pipeline | [PASO_0][grafico_detectado] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (1632ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (317ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (1730ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (323ms)
+WARNING visual_lv.pipeline | [PASO_4][-] fallo intento 2/3, reintenta en 2s — HTTP 503: {
+  "error": {
+    "code": 503,
+    "message": "This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+    "status": "UNAVAILABLE"
+  }
+}
+ (2706ms)
+ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (5081ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 3/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (417ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (1796ms)
+WARNING visual_lv.pipeline | [PASO_4][-] respuesta del modelo no es JSON válido; se ignora (21859ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 4/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (316ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (1663ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (324ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (1653ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (306ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (1598ms)
+ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 503: {
+  "error": {
+    "code": 503,
+    "message": "This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+    "status": "UNAVAILABLE"
+  }
+}
+ (3850ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 7/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (309ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (308ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (1627ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (282ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (1583ms)
+  SF05.jpeg [etapa=E1 tipo=None]: 191.38s, veredicto=Severidad.NO_CALIFICA, criterios=137, excepcion=no
+  → C:\Users\jesus\veristack\motor1\stress_test\resultados\corrida_A.json
+
+── CORRIDA B: etapa None (sin forzar)
+WARNING visual_lv.pipeline | [PASO_0][grafico_detectado] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (488ms)
+WARNING visual_lv.pipeline | [PASO_0][grafico_detectado] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (1921ms)
+WARNING visual_lv.pipeline | [PASO_4][-] fallo intento 1/3, reintenta en 1s — HTTP 503: {
+  "error": {
+    "code": 503,
+    "message": "This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+    "status": "UNAVAILABLE"
+  }
+}
+ (15612ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (17091ms)
+ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (18631ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 1/2 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (458ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (1999ms)
+  SF01.png [etapa=None tipo=None]: 52.82s, veredicto=Severidad.NO_CALIFICA, criterios=21, excepcion=no
+WARNING visual_lv.pipeline | [PASO_0][grafico_detectado] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (668ms)
+WARNING visual_lv.pipeline | [PASO_0][grafico_detectado] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (2259ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (497ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (2008ms)
+ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (3488ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 1/2 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (533ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (2098ms)
+ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (3595ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 2/2 sin respuesta — sus criterios degradan a NO_CALIFICA — 6 criterio(s)
+  SF02.png [etapa=None tipo=None]: 16.08s, veredicto=Severidad.NO_CALIFICA, criterios=21, excepcion=no
+WARNING visual_lv.pipeline | [PASO_0][grafico_detectado] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (571ms)
+WARNING visual_lv.pipeline | [PASO_0][grafico_detectado] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (2201ms)
+ERROR visual_lv.pipeline | [PASO_0][grafico_detectado] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (3760ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (559ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (2114ms)
+ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (3668ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 1/2 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (540ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (2091ms)
+ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (3662ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 2/2 sin respuesta — sus criterios degradan a NO_CALIFICA — 6 criterio(s)
+  SF03.png [etapa=None tipo=None]: 11.2s, veredicto=Severidad.NO_CALIFICA, criterios=21, excepcion=no
+WARNING visual_lv.pipeline | [PASO_0][grafico_detectado] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (614ms)
+WARNING visual_lv.pipeline | [PASO_0][grafico_detectado] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (2185ms)
+ERROR visual_lv.pipeline | [PASO_0][grafico_detectado] agotados 3 intento(s) sobre 3 clave(s) — HTTP 503: {
+  "error": {
+    "code": 503,
+    "message": "This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+    "status": "UNAVAILABLE"
+  }
+}
+ (4565ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (564ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (2162ms)
+ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (3745ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 1/2 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (574ms)
+  SF04.png [etapa=None tipo=None]: 25.27s, veredicto=Severidad.NO_CALIFICA, criterios=21, excepcion=no
+WARNING visual_lv.pipeline | [PASO_0][grafico_detectado] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (612ms)
+WARNING visual_lv.pipeline | [PASO_0][grafico_detectado] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (2151ms)
+ERROR visual_lv.pipeline | [PASO_0][grafico_detectado] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (3561ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (490ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (1900ms)
+ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (3389ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 1/2 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (434ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (1795ms)
+ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (3066ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 2/2 sin respuesta — sus criterios degradan a NO_CALIFICA — 6 criterio(s)
+  SF05.jpeg [etapa=None tipo=None]: 10.15s, veredicto=Severidad.NO_CALIFICA, criterios=21, excepcion=no
+  → C:\Users\jesus\veristack\motor1\stress_test\resultados\corrida_B.json
+
+── CORRIDA C: determinismo: misma foto+config 2 veces
+WARNING visual_lv.pipeline | [PASO_0][grafico_detectado] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (611ms)
+WARNING visual_lv.pipeline | [PASO_0][grafico_detectado] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (2136ms)
+ERROR visual_lv.pipeline | [PASO_0][grafico_detectado] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (3803ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (813ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (2353ms)
+ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (3920ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 1/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (681ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (2246ms)
+ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (4041ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 2/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (905ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (2463ms)
+ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (4024ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 3/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (576ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (2151ms)
+ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (6490ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 4/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (538ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (2094ms)
+ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (3655ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 5/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (569ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (4589ms)
+ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (6199ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 6/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (617ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (2242ms)
+WARNING visual_lv.pipeline | [PASO_4][-] respuesta del modelo no es JSON válido; se ignora (26345ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 7/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (840ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (2448ms)
+ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (4027ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 8/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (685ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (2254ms)
+ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (3823ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 9/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (612ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (2399ms)
+ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (4009ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 10/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 2 criterio(s)
+  SF03.png [etapa=E1 tipo=None]: 70.7s, veredicto=Severidad.NO_CALIFICA, criterios=137, excepcion=no
+WARNING visual_lv.pipeline | [PASO_0][grafico_detectado] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (581ms)
+WARNING visual_lv.pipeline | [PASO_0][grafico_detectado] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (2222ms)
+ERROR visual_lv.pipeline | [PASO_0][grafico_detectado] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (3820ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (971ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (2724ms)
+ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (4306ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 1/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (608ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (2174ms)
+ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (3748ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 2/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (616ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (2482ms)
+ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (4152ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 3/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (569ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (2112ms)
+ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (3702ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 4/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (743ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (2433ms)
+ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (4045ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 5/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (560ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (2134ms)
+ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (3755ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 6/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (619ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (2377ms)
+ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (4064ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 7/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (555ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (2160ms)
+ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (3743ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 8/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (550ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (2426ms)
+ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (4405ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 9/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (978ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (2735ms)
+ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (4429ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 10/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 2 criterio(s)
+  SF03.png [etapa=E1 tipo=None]: 44.54s, veredicto=Severidad.NO_CALIFICA, criterios=137, excepcion=no
+  → C:\Users\jesus\veristack\motor1\stress_test\resultados\corrida_C.json
+
+── CORRIDA D: tipo_foto=focal_show forzado mal
+WARNING visual_lv.pipeline | [PASO_0][grafico_detectado] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (729ms)
+WARNING visual_lv.pipeline | [PASO_0][grafico_detectado] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (2139ms)
+ERROR visual_lv.pipeline | [PASO_0][grafico_detectado] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (3615ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (527ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (1941ms)
+ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (3324ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 1/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (383ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (1664ms)
+ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (2988ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 2/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (332ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (1657ms)
+ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (2968ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 3/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (299ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (1604ms)
+ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (3033ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 4/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (399ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (335ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (1669ms)
+ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (2978ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 6/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (311ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (1622ms)
+ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (2932ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 7/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (303ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (1670ms)
+ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (3070ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 8/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (429ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (1712ms)
+ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (3021ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 9/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (296ms)
+WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (1597ms)
+ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota ex (2886ms)
+WARNING visual_lv.pipeline | [PASO_4][-] lote 10/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 2 criterio(s)
+  SF05.jpeg [etapa=E1 tipo=focal_show]: 53.5s, veredicto=Severidad.NO_CALIFICA, criterios=137, excepcion=no
+  → C:\Users\jesus\veristack\motor1\stress_test\resultados\corrida_D.json
+
+Stress test completado.

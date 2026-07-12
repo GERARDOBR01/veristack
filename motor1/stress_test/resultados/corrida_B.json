@@ -1,0 +1,1080 @@
+{
+  "meta": {
+    "corrida": "B",
+    "descripcion": "etapa None (sin forzar)",
+    "generado": "2026-07-12T05:09:00+00:00",
+    "nota": "STRESS TEST EXPLORATORIO — sin ground truth, no es benchmark"
+  },
+  "corridas": [
+    {
+      "archivo": "SF01.png",
+      "etapa_activa": null,
+      "tipo_foto_forzado": null,
+      "excepcion": null,
+      "resultado": {
+        "veredicto_global": "NO_CALIFICA",
+        "criterios": [
+          {
+            "criterio": "alineacion",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA1",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia MANDATORY con confianza ALTO en Capa1. Criterio de juicio visual — evaluación delegada al modelo con la imagen. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "graficos_requeridos",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia MANDATORY con confianza ALTO en Capa3. Criterio de juicio visual — evaluación delegada al modelo con la imagen. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "limpieza",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA1",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia MANDATORY con confianza ALTO en Capa1. Criterio de juicio visual — evaluación delegada al modelo con la imagen. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "planchado",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA1",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia MANDATORY con confianza ALTO en Capa1. Criterio de juicio visual — evaluación delegada al modelo con la imagen. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "producto_focal_show",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia MANDATORY con confianza ALTO en Capa3. Criterio de juicio visual — evaluación delegada al modelo con la imagen. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "surtido",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA1",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia MANDATORY con confianza ALTO en Capa1. Criterio de juicio visual — evaluación delegada al modelo con la imagen. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "angulo_foto_deficiente",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "RECOMMENDATION",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia RECOMMENDATION con confianza ALTO en Capa3. Evaluación final delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "colorizacion",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA1",
+            "peso_dominante": "RECOMMENDATION",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia RECOMMENDATION con confianza ALTO en Capa1. Evaluación final delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "colorizacion_descuidada",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "RECOMMENDATION",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia RECOMMENDATION con confianza ALTO en Capa3. Evaluación final delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "looks_incompletos",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "RECOMMENDATION",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia RECOMMENDATION con confianza ALTO en Capa3. Evaluación final delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "punto_verde_sin_actualizar",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "RECOMMENDATION",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia RECOMMENDATION con confianza ALTO en Capa3. Evaluación final delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "triangulacion",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA1",
+            "peso_dominante": "RECOMMENDATION",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia RECOMMENDATION con confianza ALTO en Capa1. Evaluación final delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "triangulacion_debil",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "RECOMMENDATION",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia RECOMMENDATION con confianza ALTO en Capa3. Evaluación final delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "beneficio_etapa_incorrecto",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "Mejor evidencia disponible: MANDATORY con confianza BAJO en Capa3. Alta incertidumbre — evaluación delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "calidad_evidencia_fotografica",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "EXCEPTION",
+            "delegar_a_modelo": true,
+            "razon": "Mejor evidencia disponible: EXCEPTION con confianza ALTO en Capa3. Alta incertidumbre — evaluación delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "campana_anterior_visible",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "EXCEPTION",
+            "delegar_a_modelo": true,
+            "razon": "[MODELO] No se observa ningún tipo de material gráfico o cartelería de campaña en la imagen para poder evaluar este criterio."
+          },
+          {
+            "criterio": "cantidad_maniquies",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "EXCEPTION",
+            "delegar_a_modelo": true,
+            "razon": "[MODELO] La imagen corresponde a una exhibición de mesa y hogar, por lo que no aplica la presencia de maniquíes."
+          },
+          {
+            "criterio": "etiqueta_ausente_maniqui",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "RECOMMENDATION",
+            "delegar_a_modelo": true,
+            "razon": "[MODELO] No hay maniquíes presentes en esta exhibición de hogar."
+          },
+          {
+            "criterio": "mezcla_descuentos",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "[MODELO] No se visualizan etiquetas de precio, promociones o carteles de descuento en la exhibición."
+          },
+          {
+            "criterio": "producto_sin_descuento",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "[MODELO] No se muestra cartelería de descuento ni precios para verificar la vigencia o mezcla de los mismos."
+          },
+          {
+            "criterio": "props_decoracion",
+            "veredicto": "CUMPLE",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "EXCEPTION",
+            "delegar_a_modelo": true,
+            "razon": "[MODELO] Todos los elementos sobre la mesa (vajilla, vasos, jarra) corresponden a productos en exhibición de la categoría de hogar y mesa, sin identificarse props ajenos o no permitidos."
+          }
+        ],
+        "resumen_ejecutivo": "VEREDICTO GLOBAL: NO_CALIFICA | NO CALIFICA (20): alineacion | graficos_requeridos | limpieza | planchado | producto_focal_show | surtido | angulo_foto_deficiente | colorizacion | colorizacion_descuidada | looks_incompletos | punto_verde_sin_actualizar | triangulacion | triangulacion_debil | beneficio_etapa_incorrecto | calidad_evidencia_fotografica | campana_anterior_visible | cantidad_maniquies | etiqueta_ausente_maniqui | mezcla_descuentos | producto_sin_descuento | código=0 | modelo=21",
+        "puede_continuar": true,
+        "tokens_modelo_usados": 3424,
+        "criterios_decididos_por_codigo": 0,
+        "criterios_delegados_a_modelo": 21,
+        "schema_version": "1.0",
+        "timestamp_evaluacion": "2026-07-12T05:07:04.794857+00:00",
+        "duracion_ms": 52818,
+        "versiones_capas": {
+          "capa1": "1.0",
+          "capa2": "1.1",
+          "capa3": "1.0"
+        }
+      },
+      "tiempo_segundos": 52.82
+    },
+    {
+      "archivo": "SF02.png",
+      "etapa_activa": null,
+      "tipo_foto_forzado": null,
+      "excepcion": null,
+      "resultado": {
+        "veredicto_global": "NO_CALIFICA",
+        "criterios": [
+          {
+            "criterio": "alineacion",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA1",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia MANDATORY con confianza ALTO en Capa1. Criterio de juicio visual — evaluación delegada al modelo con la imagen. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "graficos_requeridos",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia MANDATORY con confianza ALTO en Capa3. Criterio de juicio visual — evaluación delegada al modelo con la imagen. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "limpieza",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA1",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia MANDATORY con confianza ALTO en Capa1. Criterio de juicio visual — evaluación delegada al modelo con la imagen. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "planchado",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA1",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia MANDATORY con confianza ALTO en Capa1. Criterio de juicio visual — evaluación delegada al modelo con la imagen. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "producto_focal_show",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia MANDATORY con confianza ALTO en Capa3. Criterio de juicio visual — evaluación delegada al modelo con la imagen. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "surtido",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA1",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia MANDATORY con confianza ALTO en Capa1. Criterio de juicio visual — evaluación delegada al modelo con la imagen. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "angulo_foto_deficiente",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "RECOMMENDATION",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia RECOMMENDATION con confianza ALTO en Capa3. Evaluación final delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "colorizacion",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA1",
+            "peso_dominante": "RECOMMENDATION",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia RECOMMENDATION con confianza ALTO en Capa1. Evaluación final delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "colorizacion_descuidada",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "RECOMMENDATION",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia RECOMMENDATION con confianza ALTO en Capa3. Evaluación final delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "looks_incompletos",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "RECOMMENDATION",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia RECOMMENDATION con confianza ALTO en Capa3. Evaluación final delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "punto_verde_sin_actualizar",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "RECOMMENDATION",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia RECOMMENDATION con confianza ALTO en Capa3. Evaluación final delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "triangulacion",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA1",
+            "peso_dominante": "RECOMMENDATION",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia RECOMMENDATION con confianza ALTO en Capa1. Evaluación final delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "triangulacion_debil",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "RECOMMENDATION",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia RECOMMENDATION con confianza ALTO en Capa3. Evaluación final delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "beneficio_etapa_incorrecto",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "Mejor evidencia disponible: MANDATORY con confianza BAJO en Capa3. Alta incertidumbre — evaluación delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "calidad_evidencia_fotografica",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "EXCEPTION",
+            "delegar_a_modelo": true,
+            "razon": "Mejor evidencia disponible: EXCEPTION con confianza ALTO en Capa3. Alta incertidumbre — evaluación delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "campana_anterior_visible",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "EXCEPTION",
+            "delegar_a_modelo": true,
+            "razon": "Mejor evidencia disponible: EXCEPTION con confianza ALTO en Capa3. Alta incertidumbre — evaluación delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "cantidad_maniquies",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "EXCEPTION",
+            "delegar_a_modelo": true,
+            "razon": "Mejor evidencia disponible: EXCEPTION con confianza ALTO en Capa3. Alta incertidumbre — evaluación delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "etiqueta_ausente_maniqui",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "RECOMMENDATION",
+            "delegar_a_modelo": true,
+            "razon": "Mejor evidencia disponible: RECOMMENDATION con confianza MEDIO en Capa3. Alta incertidumbre — evaluación delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "mezcla_descuentos",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "Mejor evidencia disponible: MANDATORY con confianza BAJO en Capa3. Alta incertidumbre — evaluación delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "producto_sin_descuento",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "Mejor evidencia disponible: MANDATORY con confianza MEDIO en Capa3. Alta incertidumbre — evaluación delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "props_decoracion",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "EXCEPTION",
+            "delegar_a_modelo": true,
+            "razon": "Mejor evidencia disponible: EXCEPTION con confianza ALTO en Capa3. Alta incertidumbre — evaluación delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          }
+        ],
+        "resumen_ejecutivo": "VEREDICTO GLOBAL: NO_CALIFICA | NO CALIFICA (21): alineacion | graficos_requeridos | limpieza | planchado | producto_focal_show | surtido | angulo_foto_deficiente | colorizacion | colorizacion_descuidada | looks_incompletos | punto_verde_sin_actualizar | triangulacion | triangulacion_debil | beneficio_etapa_incorrecto | calidad_evidencia_fotografica | campana_anterior_visible | cantidad_maniquies | etiqueta_ausente_maniqui | mezcla_descuentos | producto_sin_descuento | props_decoracion | código=0 | modelo=21",
+        "puede_continuar": true,
+        "tokens_modelo_usados": 0,
+        "criterios_decididos_por_codigo": 0,
+        "criterios_delegados_a_modelo": 21,
+        "schema_version": "1.0",
+        "timestamp_evaluacion": "2026-07-12T05:07:57.613774+00:00",
+        "duracion_ms": 16082,
+        "versiones_capas": {
+          "capa1": "1.0",
+          "capa2": "1.1",
+          "capa3": "1.0"
+        }
+      },
+      "tiempo_segundos": 16.08
+    },
+    {
+      "archivo": "SF03.png",
+      "etapa_activa": null,
+      "tipo_foto_forzado": null,
+      "excepcion": null,
+      "resultado": {
+        "veredicto_global": "NO_CALIFICA",
+        "criterios": [
+          {
+            "criterio": "alineacion",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA1",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia MANDATORY con confianza ALTO en Capa1. Criterio de juicio visual — evaluación delegada al modelo con la imagen. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "graficos_requeridos",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia MANDATORY con confianza ALTO en Capa3. Criterio de juicio visual — evaluación delegada al modelo con la imagen. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "limpieza",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA1",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia MANDATORY con confianza ALTO en Capa1. Criterio de juicio visual — evaluación delegada al modelo con la imagen. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "planchado",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA1",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia MANDATORY con confianza ALTO en Capa1. Criterio de juicio visual — evaluación delegada al modelo con la imagen. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "producto_focal_show",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia MANDATORY con confianza ALTO en Capa3. Criterio de juicio visual — evaluación delegada al modelo con la imagen. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "surtido",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA1",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia MANDATORY con confianza ALTO en Capa1. Criterio de juicio visual — evaluación delegada al modelo con la imagen. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "angulo_foto_deficiente",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "RECOMMENDATION",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia RECOMMENDATION con confianza ALTO en Capa3. Evaluación final delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "colorizacion",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA1",
+            "peso_dominante": "RECOMMENDATION",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia RECOMMENDATION con confianza ALTO en Capa1. Evaluación final delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "colorizacion_descuidada",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "RECOMMENDATION",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia RECOMMENDATION con confianza ALTO en Capa3. Evaluación final delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "looks_incompletos",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "RECOMMENDATION",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia RECOMMENDATION con confianza ALTO en Capa3. Evaluación final delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "punto_verde_sin_actualizar",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "RECOMMENDATION",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia RECOMMENDATION con confianza ALTO en Capa3. Evaluación final delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "triangulacion",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA1",
+            "peso_dominante": "RECOMMENDATION",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia RECOMMENDATION con confianza ALTO en Capa1. Evaluación final delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "triangulacion_debil",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "RECOMMENDATION",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia RECOMMENDATION con confianza ALTO en Capa3. Evaluación final delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "beneficio_etapa_incorrecto",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "Mejor evidencia disponible: MANDATORY con confianza BAJO en Capa3. Alta incertidumbre — evaluación delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "calidad_evidencia_fotografica",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "EXCEPTION",
+            "delegar_a_modelo": true,
+            "razon": "Mejor evidencia disponible: EXCEPTION con confianza ALTO en Capa3. Alta incertidumbre — evaluación delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "campana_anterior_visible",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "EXCEPTION",
+            "delegar_a_modelo": true,
+            "razon": "Mejor evidencia disponible: EXCEPTION con confianza ALTO en Capa3. Alta incertidumbre — evaluación delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "cantidad_maniquies",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "EXCEPTION",
+            "delegar_a_modelo": true,
+            "razon": "Mejor evidencia disponible: EXCEPTION con confianza ALTO en Capa3. Alta incertidumbre — evaluación delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "etiqueta_ausente_maniqui",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "RECOMMENDATION",
+            "delegar_a_modelo": true,
+            "razon": "Mejor evidencia disponible: RECOMMENDATION con confianza MEDIO en Capa3. Alta incertidumbre — evaluación delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "mezcla_descuentos",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "Mejor evidencia disponible: MANDATORY con confianza BAJO en Capa3. Alta incertidumbre — evaluación delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "producto_sin_descuento",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "Mejor evidencia disponible: MANDATORY con confianza MEDIO en Capa3. Alta incertidumbre — evaluación delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "props_decoracion",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "EXCEPTION",
+            "delegar_a_modelo": true,
+            "razon": "Mejor evidencia disponible: EXCEPTION con confianza ALTO en Capa3. Alta incertidumbre — evaluación delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          }
+        ],
+        "resumen_ejecutivo": "VEREDICTO GLOBAL: NO_CALIFICA | NO CALIFICA (21): alineacion | graficos_requeridos | limpieza | planchado | producto_focal_show | surtido | angulo_foto_deficiente | colorizacion | colorizacion_descuidada | looks_incompletos | punto_verde_sin_actualizar | triangulacion | triangulacion_debil | beneficio_etapa_incorrecto | calidad_evidencia_fotografica | campana_anterior_visible | cantidad_maniquies | etiqueta_ausente_maniqui | mezcla_descuentos | producto_sin_descuento | props_decoracion | código=0 | modelo=21",
+        "puede_continuar": true,
+        "tokens_modelo_usados": 0,
+        "criterios_decididos_por_codigo": 0,
+        "criterios_delegados_a_modelo": 21,
+        "schema_version": "1.0",
+        "timestamp_evaluacion": "2026-07-12T05:08:13.696507+00:00",
+        "duracion_ms": 11195,
+        "versiones_capas": {
+          "capa1": "1.0",
+          "capa2": "1.1",
+          "capa3": "1.0"
+        }
+      },
+      "tiempo_segundos": 11.2
+    },
+    {
+      "archivo": "SF04.png",
+      "etapa_activa": null,
+      "tipo_foto_forzado": null,
+      "excepcion": null,
+      "resultado": {
+        "veredicto_global": "NO_CALIFICA",
+        "criterios": [
+          {
+            "criterio": "alineacion",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA1",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia MANDATORY con confianza ALTO en Capa1. Criterio de juicio visual — evaluación delegada al modelo con la imagen. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "graficos_requeridos",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia MANDATORY con confianza ALTO en Capa3. Criterio de juicio visual — evaluación delegada al modelo con la imagen. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "limpieza",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA1",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia MANDATORY con confianza ALTO en Capa1. Criterio de juicio visual — evaluación delegada al modelo con la imagen. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "planchado",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA1",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia MANDATORY con confianza ALTO en Capa1. Criterio de juicio visual — evaluación delegada al modelo con la imagen. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "producto_focal_show",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia MANDATORY con confianza ALTO en Capa3. Criterio de juicio visual — evaluación delegada al modelo con la imagen. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "surtido",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA1",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia MANDATORY con confianza ALTO en Capa1. Criterio de juicio visual — evaluación delegada al modelo con la imagen. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "angulo_foto_deficiente",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "RECOMMENDATION",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia RECOMMENDATION con confianza ALTO en Capa3. Evaluación final delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "colorizacion",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA1",
+            "peso_dominante": "RECOMMENDATION",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia RECOMMENDATION con confianza ALTO en Capa1. Evaluación final delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "colorizacion_descuidada",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "RECOMMENDATION",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia RECOMMENDATION con confianza ALTO en Capa3. Evaluación final delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "looks_incompletos",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "RECOMMENDATION",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia RECOMMENDATION con confianza ALTO en Capa3. Evaluación final delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "punto_verde_sin_actualizar",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "RECOMMENDATION",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia RECOMMENDATION con confianza ALTO en Capa3. Evaluación final delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "triangulacion",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA1",
+            "peso_dominante": "RECOMMENDATION",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia RECOMMENDATION con confianza ALTO en Capa1. Evaluación final delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "triangulacion_debil",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "RECOMMENDATION",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia RECOMMENDATION con confianza ALTO en Capa3. Evaluación final delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "beneficio_etapa_incorrecto",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "Mejor evidencia disponible: MANDATORY con confianza BAJO en Capa3. Alta incertidumbre — evaluación delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "calidad_evidencia_fotografica",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "EXCEPTION",
+            "delegar_a_modelo": true,
+            "razon": "Mejor evidencia disponible: EXCEPTION con confianza ALTO en Capa3. Alta incertidumbre — evaluación delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "campana_anterior_visible",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "EXCEPTION",
+            "delegar_a_modelo": true,
+            "razon": "[MODELO] No se observan gráficos ni elementos de comunicación visual de campañas en la escena."
+          },
+          {
+            "criterio": "cantidad_maniquies",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "EXCEPTION",
+            "delegar_a_modelo": true,
+            "razon": "[MODELO] La escena corresponde al departamento de muebles y no presenta maniquíes."
+          },
+          {
+            "criterio": "etiqueta_ausente_maniqui",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "RECOMMENDATION",
+            "delegar_a_modelo": true,
+            "razon": "[MODELO] No hay maniquíes presentes en esta exhibición de muebles."
+          },
+          {
+            "criterio": "mezcla_descuentos",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "[MODELO] No se muestran etiquetas de precio ni material promocional de descuentos en la imagen."
+          },
+          {
+            "criterio": "producto_sin_descuento",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "[MODELO] No es posible verificar la presencia o ausencia de etiquetas de descuento en los productos exhibidos."
+          },
+          {
+            "criterio": "props_decoracion",
+            "veredicto": "CUMPLE",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "EXCEPTION",
+            "delegar_a_modelo": true,
+            "razon": "[MODELO] Los elementos decorativos utilizados (vajilla, cojines, planta en florero) son complementos lógicos y contextuales para la exhibición de muebles de comedor y recámara."
+          }
+        ],
+        "resumen_ejecutivo": "VEREDICTO GLOBAL: NO_CALIFICA | NO CALIFICA (20): alineacion | graficos_requeridos | limpieza | planchado | producto_focal_show | surtido | angulo_foto_deficiente | colorizacion | colorizacion_descuidada | looks_incompletos | punto_verde_sin_actualizar | triangulacion | triangulacion_debil | beneficio_etapa_incorrecto | calidad_evidencia_fotografica | campana_anterior_visible | cantidad_maniquies | etiqueta_ausente_maniqui | mezcla_descuentos | producto_sin_descuento | código=0 | modelo=21",
+        "puede_continuar": true,
+        "tokens_modelo_usados": 3469,
+        "criterios_decididos_por_codigo": 0,
+        "criterios_delegados_a_modelo": 21,
+        "schema_version": "1.0",
+        "timestamp_evaluacion": "2026-07-12T05:08:24.892310+00:00",
+        "duracion_ms": 25272,
+        "versiones_capas": {
+          "capa1": "1.0",
+          "capa2": "1.1",
+          "capa3": "1.0"
+        }
+      },
+      "tiempo_segundos": 25.27
+    },
+    {
+      "archivo": "SF05.jpeg",
+      "etapa_activa": null,
+      "tipo_foto_forzado": null,
+      "excepcion": null,
+      "resultado": {
+        "veredicto_global": "NO_CALIFICA",
+        "criterios": [
+          {
+            "criterio": "alineacion",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA1",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia MANDATORY con confianza ALTO en Capa1. Criterio de juicio visual — evaluación delegada al modelo con la imagen. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "graficos_requeridos",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia MANDATORY con confianza ALTO en Capa3. Criterio de juicio visual — evaluación delegada al modelo con la imagen. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "limpieza",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA1",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia MANDATORY con confianza ALTO en Capa1. Criterio de juicio visual — evaluación delegada al modelo con la imagen. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "planchado",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA1",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia MANDATORY con confianza ALTO en Capa1. Criterio de juicio visual — evaluación delegada al modelo con la imagen. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "producto_focal_show",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia MANDATORY con confianza ALTO en Capa3. Criterio de juicio visual — evaluación delegada al modelo con la imagen. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "surtido",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA1",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia MANDATORY con confianza ALTO en Capa1. Criterio de juicio visual — evaluación delegada al modelo con la imagen. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "angulo_foto_deficiente",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "RECOMMENDATION",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia RECOMMENDATION con confianza ALTO en Capa3. Evaluación final delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "colorizacion",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA1",
+            "peso_dominante": "RECOMMENDATION",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia RECOMMENDATION con confianza ALTO en Capa1. Evaluación final delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "colorizacion_descuidada",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "RECOMMENDATION",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia RECOMMENDATION con confianza ALTO en Capa3. Evaluación final delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "looks_incompletos",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "RECOMMENDATION",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia RECOMMENDATION con confianza ALTO en Capa3. Evaluación final delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "punto_verde_sin_actualizar",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "RECOMMENDATION",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia RECOMMENDATION con confianza ALTO en Capa3. Evaluación final delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "triangulacion",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA1",
+            "peso_dominante": "RECOMMENDATION",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia RECOMMENDATION con confianza ALTO en Capa1. Evaluación final delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "triangulacion_debil",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "RECOMMENDATION",
+            "delegar_a_modelo": true,
+            "razon": "Evidencia RECOMMENDATION con confianza ALTO en Capa3. Evaluación final delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "beneficio_etapa_incorrecto",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "Mejor evidencia disponible: MANDATORY con confianza BAJO en Capa3. Alta incertidumbre — evaluación delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "calidad_evidencia_fotografica",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "EXCEPTION",
+            "delegar_a_modelo": true,
+            "razon": "Mejor evidencia disponible: EXCEPTION con confianza ALTO en Capa3. Alta incertidumbre — evaluación delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "campana_anterior_visible",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "EXCEPTION",
+            "delegar_a_modelo": true,
+            "razon": "Mejor evidencia disponible: EXCEPTION con confianza ALTO en Capa3. Alta incertidumbre — evaluación delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "cantidad_maniquies",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "EXCEPTION",
+            "delegar_a_modelo": true,
+            "razon": "Mejor evidencia disponible: EXCEPTION con confianza ALTO en Capa3. Alta incertidumbre — evaluación delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "etiqueta_ausente_maniqui",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "RECOMMENDATION",
+            "delegar_a_modelo": true,
+            "razon": "Mejor evidencia disponible: RECOMMENDATION con confianza MEDIO en Capa3. Alta incertidumbre — evaluación delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "mezcla_descuentos",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "Mejor evidencia disponible: MANDATORY con confianza BAJO en Capa3. Alta incertidumbre — evaluación delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "producto_sin_descuento",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "MANDATORY",
+            "delegar_a_modelo": true,
+            "razon": "Mejor evidencia disponible: MANDATORY con confianza MEDIO en Capa3. Alta incertidumbre — evaluación delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          },
+          {
+            "criterio": "props_decoracion",
+            "veredicto": "NO_CALIFICA",
+            "confianza": "BAJO",
+            "fuente_dominante": "CAPA3",
+            "peso_dominante": "EXCEPTION",
+            "delegar_a_modelo": true,
+            "razon": "Mejor evidencia disponible: EXCEPTION con confianza ALTO en Capa3. Alta incertidumbre — evaluación delegada al modelo. | [MODELO] Sin respuesta para este criterio — juicio visual no verificado."
+          }
+        ],
+        "resumen_ejecutivo": "VEREDICTO GLOBAL: NO_CALIFICA | NO CALIFICA (21): alineacion | graficos_requeridos | limpieza | planchado | producto_focal_show | surtido | angulo_foto_deficiente | colorizacion | colorizacion_descuidada | looks_incompletos | punto_verde_sin_actualizar | triangulacion | triangulacion_debil | beneficio_etapa_incorrecto | calidad_evidencia_fotografica | campana_anterior_visible | cantidad_maniquies | etiqueta_ausente_maniqui | mezcla_descuentos | producto_sin_descuento | props_decoracion | código=0 | modelo=21",
+        "puede_continuar": true,
+        "tokens_modelo_usados": 0,
+        "criterios_decididos_por_codigo": 0,
+        "criterios_delegados_a_modelo": 21,
+        "schema_version": "1.0",
+        "timestamp_evaluacion": "2026-07-12T05:08:50.165045+00:00",
+        "duracion_ms": 10154,
+        "versiones_capas": {
+          "capa1": "1.0",
+          "capa2": "1.1",
+          "capa3": "1.0"
+        }
+      },
+      "tiempo_segundos": 10.15
+    }
+  ]
+}
