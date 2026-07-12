@@ -127,6 +127,11 @@ def _extraer_criterios_del_knowledge(
     """
     ids: set[str] = set()
 
+    # Fix BR-1: la UI manda string, pero una integración puede mandar
+    # int/None — sin coerción, .strip() tumbaba el pipeline entero.
+    if etapa_activa is not None and not isinstance(etapa_activa, str):
+        etapa_activa = str(etapa_activa)
+
     for entry in _leer_capa(config.ruta_capa1):
         id_ = entry.get("id")
         if isinstance(id_, str) and id_.strip():
@@ -188,7 +193,9 @@ def _preparar_metadata(
 ) -> dict:
     """
     Combina salida de photo_analyzer con los metadatos del usuario.
-    Si photo_analyzer no está disponible o falla, usa defaults seguros.
+    Si photo_analyzer falla o el archivo es inválido, marca
+    analisis_fallido=True + causa_analisis (regla mandatory archivo_invalido
+    bloquea) — nunca defaults optimistas (fix CR-1, Sesión GG).
     metadata_extra sobreescribe cualquier campo (útil en tests y overrides).
 
     Mapeo de nombres photo_analyzer → mandatory_engine:
@@ -204,28 +211,52 @@ def _preparar_metadata(
         "tipo_foto":         tipo_foto,
         "etapa_activa":      etapa_activa,
         "grafico_detectado": None,
+        # v2 (fix CR-1): si el pre-análisis falla se marca EXPLÍCITO y la
+        # regla mandatory archivo_invalido bloquea con la causa real. Nunca
+        # más defaults optimistas para una foto que no se pudo analizar.
+        "analisis_fallido":  False,
+        "causa_analisis":    None,
     }
 
     if imagen_path:
         try:
             from photo_analyzer import classify_photo_type, extract_basic_facts
-            facts    = extract_basic_facts(imagen_path)
-            detected = classify_photo_type(imagen_path)
-            base.update({
-                "brillo":            facts.get("brightness", 100.0),
-                "nitidez":           facts.get("sharpness_score", 100.0),
-                "espacio_vacio_pct": round(facts.get("empty_space_ratio", 0.0) * 100, 1),
-                "tipo_foto":         tipo_foto or detected,
-            })
-        except Exception:
-            pass  # photo_analyzer no disponible o imagen inválida — defaults ya aplicados
+            facts = extract_basic_facts(imagen_path)
+            if facts.get("estado") == "archivo_invalido":
+                base["analisis_fallido"] = True
+                base["causa_analisis"]   = facts.get("causa") or "archivo de imagen inválido"
+                _log_paso(logging.WARNING, "PASO_0", "archivo_invalido",
+                          "pre-análisis falló", base["causa_analisis"])
+            else:
+                detected = classify_photo_type(imagen_path)
+                base.update({
+                    "brillo":              facts.get("brightness", 100.0),
+                    "nitidez":             facts.get("sharpness_score", 100.0),
+                    "espacio_vacio_pct":   round(facts.get("empty_space_ratio", 0.0) * 100, 1),
+                    "tipo_foto":           tipo_foto or detected,
+                    "quemado_pct":         facts.get("quemado_pct", 0.0),
+                    "aplastado_pct":       facts.get("aplastado_pct", 0.0),
+                    "contraste":           facts.get("contraste", 0.0),
+                    "resolucion_menor_px": min(facts.get("ancho_px", 0), facts.get("alto_px", 0)),
+                })
+                if facts.get("estado") == "analisis_parcial":
+                    base["causa_analisis"] = facts.get("causa")
+                    _log_paso(logging.WARNING, "PASO_0", "-",
+                              "pre-análisis parcial", str(facts.get("causa")))
+        except Exception as exc:
+            base["analisis_fallido"] = True
+            base["causa_analisis"]   = f"excepción en photo_analyzer: {type(exc).__name__}: {exc}"
+            _log_paso(logging.ERROR, "PASO_0", "archivo_invalido",
+                      "pre-análisis reventó", base["causa_analisis"])
 
         # Visión (PASO 0): detecta el gráfico de etapa en la imagen, salvo
         # que el llamador ya lo haya inyectado vía metadata_extra (tests y
         # overrides mandan — evita llamadas al modelo innecesarias).
         # El nombre visible se normaliza al ID técnico de etapa cuando
         # coinciden canónicamente ("Gran Barata" → gran_barata_pv2026).
-        if not (metadata_extra and "grafico_detectado" in metadata_extra):
+        # Con archivo inválido no se gasta una llamada de visión en él.
+        if not base["analisis_fallido"] and \
+           not (metadata_extra and "grafico_detectado" in metadata_extra):
             base["grafico_detectado"] = _normalizar_grafico_a_etapa(
                 _detectar_grafico_etapa(imagen_path), etapa_activa)
 
@@ -1185,6 +1216,14 @@ def ejecutar(
     """
     if config is None:
         config = ConfigPipeline()
+
+    # Fix BR-1: la UI manda string, pero una integración puede mandar
+    # int/None — sin coerción aquí, los .strip() internos tumbaban el
+    # pipeline entero con AttributeError.
+    if etapa_activa is not None and not isinstance(etapa_activa, str):
+        etapa_activa = str(etapa_activa)
+    if tipo_foto is not None and not isinstance(tipo_foto, str):
+        tipo_foto = str(tipo_foto)
 
     t_total   = time.perf_counter()
     timestamp = _ahora_iso()

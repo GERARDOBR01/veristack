@@ -86,3 +86,19 @@ Dato nuevo de eficiencia: sin circuit breaker, la corrida quemó **33 requests**
 | OK | B1–B5, T1, G1-terminación, A5-bomba | diseño confirmado | — |
 
 **Balance honesto:** el motor NO se cae (0 crashes salvo el buscado C4) y nunca inventa CUMPLE — eso es real y es la mitad buena. La mitad mala es sistemática: **cuando algo falla, Motor 1 degrada siempre hacia el silencio** (foto rota → "perfecta", knowledge roto → corrida "normal" con menos criterios, cuota muerta → NO_CALIFICA anónimo, causa real del archivo → diagnóstico falso). Para ser "la herramienta" del retail, la regla que falta no es de robustez sino de honestidad interna: *todo fallo debe dejar traza en el resultado que ve el usuario.*
+
+---
+
+## ADDENDUM — Re-corrida post-fix (12 Jul, Sesión GG: photo_analyzer v2)
+
+Tras el endurecimiento de contrato (photo_analyzer v2 + `_preparar_metadata` + reglas mandatory nuevas), los 21 casos se re-corrieron. Cambios verificados:
+
+| ID | Antes | Después |
+|----|-------|---------|
+| CR-1 (P0) | foto "perfecta" brillo=100, sin traza | **GRAVE `archivo_invalido`**, `traza_del_fallo_en_resultado=True`, causa en log ERROR → **CERRADO** |
+| GD-1 (A1–A5) | GRAVE `imagen_oscura` (diagnóstico falso) | **GRAVE `archivo_invalido`** con la causa real en evidencia/log (FileNotFound / UnidentifiedImage / truncated / DecompressionBomb) → **CERRADO** |
+| BR-1 (C4) | AttributeError, pipeline muerto | coerción en la entrada de `ejecutar()`; corre y evalúa (etapa "12345" = no normalizable → no filtra) → **CERRADO** |
+| B1–B5 | frontera exacta | intacta (39.9 GRAVE / 40.0 pasa) ✓ |
+| C2/C3 (CR-3=H1), K1–K3 (CR-2), G1 (H3) | fallos silenciosos | **sin cambio — siguen ABIERTOS** (fuera del alcance de photo_analyzer v2) |
+
+Hallazgo colateral de la re-corrida: la regla nueva `imagen_sobreexpuesta` (quemado_pct>50) bloqueó el fixture `base_valida` original (55% píxeles blancos PUROS = foto quemada de verdad) — la regla hizo su trabajo; el fixture se regeneró con grises realistas 40/210. Las 5 fotos reales del stress del 11 Jul pasan todas las reglas nuevas sin falsos positivos (quemado 0–0.1%, ver `motor1/calibracion_photo_v2/`).

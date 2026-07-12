@@ -19,7 +19,33 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 
 ---
 
-## Estado actual (12 Jul 2026 — Sesión FF: **STRESS TEST DE CÓDIGO (sin modelo) — 3 CRÍTICOS confirmados + 1 bug real + 1 gap de diagnóstico nuevo. Cero tokens gastados, producción intacta.**)
+## Estado actual (12 Jul 2026 — Sesión GG: **PHOTO_ANALYZER v2 (all-code) + 4 bugs CERRADOS y verificados con re-corrida del stress + Registro de bugs vivo en este archivo. Cero tokens.**)
+
+**Resumen honesto: se atacó el talón de Aquiles diagnosticado en Sesión FF — el contrato deshonesto pipeline↔photo_analyzer — y se cerraron CR-1, GD-1, BR-1 y GC-umbral, verificados re-corriendo los 21 casos del stress de código (los 3 autotests existentes siguen PASS: photo_analyzer 16/16 nuevo, rotación 10/10, batching 16/16). CR-2, CR-3(=H1), H2-H5 siguen ABIERTOS a propósito (son del pipeline/retrieval, no de photo_analyzer). Nueva sección "Registro de bugs y gaps abiertos" en este archivo — tabla viva que toda sesión actualiza.**
+
+**Photo_analyzer v2 (`core/photo_analyzer.py`) — contrato honesto + capacidades nuevas, 100% código (PIL+NumPy, cero IA):**
+- **Contrato `estado/causa`**: `extract_basic_facts` ahora declara `estado: ok | archivo_invalido | analisis_parcial` + `causa` con el error real (inexistente, truncada, no-imagen, bomba de descompresión). Retrocompatible (campos previos intactos, `error` se conserva).
+- **Métricas nuevas**: exposición por histograma (`quemado_pct` >250, `aplastado_pct` <5, percentiles p5/p95 — detecta la foto mitad quemada/mitad negra que engaña a la media), `contraste` (std de luminancia), resolución (`ancho_px/alto_px`), **EXIF orientation** (`_load` endereza con `exif_transpose` — antes una foto de celular rotada por metadato mentía en ratio y clasificaba mal), y `classify_photo_type_detallado()` con **confianza alta/baja** según cercanía a las fronteras de ratio (wrapper retrocompatible mantiene la firma vieja).
+- **Autotest nuevo: `python core/photo_analyzer.py autotest` → 16/16 PASS** (contrato ok/inválido/parcial, exposición engañosa, EXIF, confianza de clasificador, analyze_photo nunca lanza).
+
+**Fixes de contrato en pipeline/mandatory (los 4 CERRADOS):**
+- **CR-1**: `_preparar_metadata` ya NO traga excepciones con `pass` — marca `analisis_fallido=True` + `causa_analisis` y loggea ERROR. Nunca más defaults brillo=100 para una foto que no se pudo analizar. Además, con archivo inválido NO se gasta la llamada de visión de PASO_0.
+- **GD-1**: nueva regla mandatory **`archivo_invalido` (bloqueante, primera)** — archivo roto ahora da GRAVE "vuelve a subir la foto" con la causa real, no el falso "imagen oscura".
+- **BR-1**: coerción a str en la entrada de `ejecutar()` — el stress reveló que había DOS `.strip()` frágiles (`pipeline.py:135` y `:293`), por eso el fix vive en la entrada, no por sitio.
+- **GC-umbral**: documentado en el código — `BRIGHTNESS_MIN/MAX` de photo_analyzer solo alimentan `quality`/CLI; el veredicto lo decide únicamente `ConfigEngine`.
+- **Reglas v2 nuevas en mandatory** (bloqueantes): `imagen_sobreexpuesta` (`quemado_pct > 50`, config `quemado_maximo_pct`) y `resolucion_minima` (**deshabilitada por default**, `resolucion_minima_px=0` — el umbral se fija tras calibrar; la calibración propone, no aplica).
+
+**Verificación (todo offline, cero red — guard anti-red re-verificado):**
+- Re-corrida completa del stress de código: A1–A5 → GRAVE `archivo_invalido` con causa real ✓; P0 → traza presente ✓; C4 → ya no crashea ✓; frontera de brillo intacta (39.9 GRAVE / 40.0 pasa) ✓; C2/C3/K1-K3/G1 sin cambio (ABIERTOS, esperado). Addendum en `motor1/stress_test_codigo/REPORTE_HALLAZGOS.md`.
+- Hallazgo colateral que valida la regla nueva: `imagen_sobreexpuesta` bloqueó el fixture base original (55% blancos PUROS = foto quemada real) — el fixture se regeneró con grises realistas; las reglas hicieron su trabajo.
+- **Calibración contra fotos reales** (`motor1/calibracion_photo_v2/calibrar.py` + resultados): las 5 fotos reales del stress del 11 Jul pasan TODAS las reglas nuevas sin falsos positivos (quemado 0–0.1%, brillo 43–58, nitidez 188–2435, lado menor ≥507px). ⚠️ Las 25 del benchmark NO están en esta máquina (imágenes git-ignored) — la calibración completa queda pendiente de tenerlas; el script ya acepta el directorio por argumento.
+- E2E con foto real SF01 por el pipeline completo: idéntico a antes (137 criterios, sin key → NO_CALIFICA). Producción no rota.
+
+**Pendientes que siguen ABIERTOS (ver Registro de bugs):** CR-2 (guard de 0-criterios en producción), CR-3/H1 (NO_CALIFICA invisibles), H2/H3/H5 (campaña en falso, cuota indistinguible + circuit breaker, pre-flight), umbral real de `resolucion_minima_px` (decidir con las 25 fotos), y decidir si la UI muestra `tipo_confianza=baja` para pedir confirmación del usuario.
+
+**Tracking (sin cambio — se decide junto con Gerardo): Motor 1: 100% | Motor 2: 100% | Listo-para-mostrar: 45%.**
+
+## Estado previo (12 Jul 2026 — Sesión FF: **STRESS TEST DE CÓDIGO (sin modelo) — 3 CRÍTICOS confirmados + 1 bug real + 1 gap de diagnóstico nuevo. Cero tokens gastados, producción intacta.**)
 
 **Resumen honesto: fase 1 de "hacer sangrar" a Motor 1 sin gastar un token — 21 casos de borde contra `mandatory_engine`/`retrieval_engine`/`pipeline`/`photo_analyzer` con fixtures sintéticos y monkeypatch (guard anti-red global verificado: 0 intentos de salida; el único caso con "red" fue el mock de 429). Todo en `motor1/stress_test_codigo/` (nuevo): `EXPECTATIVAS.md` (escrito ANTES de correr), `generar_fixtures.py`, `correr_stress_codigo.py`, `resultados/resultados.json`, `REPORTE_HALLAZGOS.md`. El stress test con IA del 11 Jul (`motor1/stress_test/`) quedó intacto.**
 
@@ -509,6 +535,25 @@ Solo lectura/diagnóstico — nada de código tocado (`retrieval_engine.py`, `co
 - Schema versionado de conocimiento v1.0
 - Extractor híbrido de PDFs (código extrae texto/tablas, modelo solo interpreta zonas visuales)
 - Cola de consenso `pendientes_revision.json`
+
+## Registro de bugs y gaps abiertos
+> Tabla viva. Toda sesión que encuentre o cierre un bug la actualiza (además de su sección de sesión).
+> Estados: `ABIERTO` / `EN_FIX` / `CERRADO(commit)`.
+
+| ID | Descripción corta | Dónde | Clasificación | Estado | Origen |
+|----|-------------------|-------|---------------|--------|--------|
+| CR-1 | Excepción en photo_analyzer → foto evaluada como "perfecta" (brillo=100) sin traza | `pipeline._preparar_metadata` | CRÍTICO / fallo silencioso | CERRADO (Sesión GG: `analisis_fallido` + regla `archivo_invalido` bloqueante; verificado con re-corrida del stress) | Stress código 12 Jul |
+| CR-2 | Knowledge JSON corrupto → capa amputada en silencio; 3 capas rotas → corrida con 0 criterios | `retrieval_engine._cargar_capa_full` + `pipeline._leer_capa` (sin guard de 0-criterios en producción) | CRÍTICO / gap arquitectónico | ABIERTO | Stress código 12 Jul |
+| CR-3 / H1 | `etapa_no_definida` y todo NO_CALIFICA de mandatory desaparece del resultado final (solo se exponen GRAVEs) — mismatch de campaña indetectable | `pipeline._criterios_mandatory_solo_codigo` | CRÍTICO / gap arquitectónico | ABIERTO | Stress IA 11 Jul + código 12 Jul |
+| BR-1 | `etapa_activa` no-string (int) tumba `ejecutar()` con AttributeError | `pipeline.py:135` y `:293` | Bug real | CERRADO (Sesión GG: coerción a str en la entrada de `ejecutar()`; había DOS `.strip()` frágiles, no uno) | Stress código 12 Jul |
+| GD-1 | Todo archivo roto (inexistente/0 bytes/truncado/no-imagen) se diagnostica como "imagen oscura" — la causa real se descarta | `photo_analyzer` (la sabe) → `_preparar_metadata` (la tira) | Gap de diagnóstico | CERRADO (Sesión GG: contrato `estado/causa` en photo_analyzer + GRAVE `archivo_invalido` con causa real) | Stress código 12 Jul |
+| H2 | Con etapa etiqueta ("E1") el sistema evalúa capa2 de una campaña que no puede confirmar (evaluación en falso) | pipeline PASO 2 + knowledge | Gap arquitectónico | ABIERTO | Stress IA 11 Jul |
+| H3 | Cuota agotada (429 en todas las keys) indistinguible de NO_CALIFICA real; sin circuit breaker quema todos los lotes contra keys muertas | `_post_gemini` / `_evaluar_delegados_en_lotes` | Gap arquitectónico | ABIERTO | Stress IA 11 Jul + código 12 Jul |
+| H4 | Inconsistencia del modelo entre corridas idénticas | PASO_4 (modelo) | Gap conocido (inherente al modelo) | ABIERTO | Stress IA 11 Jul |
+| H5 | Pre-flight de cuota protege el arranque, no la corrida | runner benchmark | Gap conocido | ABIERTO | Stress IA 11 Jul |
+| GC-umbral | Doble umbral de brillo (photo_analyzer 30 vs ConfigEngine 40) — dos verdades sobre el mismo número | `photo_analyzer.BRIGHTNESS_MIN` vs `ConfigEngine.brillo_minimo` | Deuda de claridad | CERRADO (Sesión GG: documentado en el código — BRIGHTNESS_MIN/MAX solo alimentan `quality`/CLI; el veredicto lo decide únicamente ConfigEngine) | Sesión BB + stress código 12 Jul |
+| GC-capa3 | Faltan `capa3_tringla.json` y `capa3_mesa_show.json` | `pipeline/knowledge/` | Gap conocido | ABIERTO | Histórico |
+| GC-readme | README desactualizado (dice v0.1) | `README.md` | Deuda documental | ABIERTO | Histórico |
 
 ## Próximos pasos (orden de prioridad)
 1. **Motor 2 — siguiente sesión: revisión manual de Gerardo sobre `capa2_validado_con_candidatos.json`** (Sesión S ya generó los candidatos de `id`/`aliases`/`aplica_a` — falta aprobarlos/editarlos criterio por criterio, probablemente en tandas, y resolver los 18 grupos en colisión de `candidatos_id_colisiones.json` antes de marcar `revisado_por_gerardo: true`). En paralelo: decidir qué hacer con los 76 pares duplicados reportados por `validator.py` (los clusters de páginas hermanas son repetición real del manual — ¿consolidar con `etapa_aplicable`/`condicion_libre` o conservar por página?), revisar a mano los 11 de `revision_manual.json` (el `[AMBIGUO]` de p20 es falso-failed: su texto sí está en la página), y corregir los 3 casos sub-marcados de `referencia_no_resuelta` (p10 manual de señalización, p39/p40 Book de impulsos). Revisar los 2 pendientes documentados en Sesión Q: duplicados intra-página en p6 (Gerardo revisa el slide a ojo) y scope de criterios descriptivos en páginas Vision (p44)

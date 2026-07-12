@@ -64,15 +64,18 @@ def _fixture_brillo(target: float) -> Path:
 
 
 def _fixture_base_valida() -> Path:
-    """Foto sintética 'sana' (brillo ~55, nítida) para los casos que necesitan
-    pasar mandatory (G1, C*, K*, T1, P0)."""
+    """Foto sintética 'sana' (brillo ~55, nítida, SIN píxeles quemados ni
+    aplastados — grises 40/210, como una foto real de tienda) para los casos
+    que necesitan pasar mandatory (G1, C*, K*, T1, P0). Con blancos puros la
+    regla v2 imagen_sobreexpuesta (quemado_pct>50) la bloquearía, correcto
+    para una foto quemada pero inútil como base."""
     n = LADO * LADO
     rng = random.Random(7)
     posiciones = list(range(n))
     rng.shuffle(posiciones)
-    pixeles = bytearray(n)
-    for p in posiciones[:5500]:
-        pixeles[p] = 255
+    pixeles = bytearray([40] * n)
+    for p in posiciones[: int(n * 0.588)]:   # mezcla 40/210 → media ~140 (~55)
+        pixeles[p] = 210
     img = Image.frombytes("L", (LADO, LADO), bytes(pixeles))
     ruta = FIXTURES / "base_valida.png"
     img.save(ruta, format="PNG")

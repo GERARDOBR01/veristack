@@ -231,7 +231,8 @@ if __name__ == "__main__":
             photo_analyzer.extract_basic_facts = original
         blob = json.dumps([res["resumen_ejecutivo"]] + res["ids_criterios"]).lower()
         res["traza_del_fallo_en_resultado"] = ("paso_0" in blob or "error" in blob
-                                               or "photo_analyzer" in blob)
+                                               or "photo_analyzer" in blob
+                                               or "archivo_invalido" in blob)
         return res
     correr_caso("P0_excepcion", "extract_basic_facts lanza RuntimeError — ¿queda traza?",
                 _caso_paso0)

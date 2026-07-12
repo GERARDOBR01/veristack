@@ -73,6 +73,13 @@ class ConfigEngine:
     nitidez_minima:            float     = 30.0
     espacio_vacio_grave:       float     = 60.0
     espacio_vacio_observacion: float     = 40.0
+    # v2 (Sesión GG): % de píxeles quemados (>250) tolerable — arriba, la foto
+    # perdió el detalle aunque el brillo MEDIO parezca aceptable.
+    quemado_maximo_pct:        float     = 50.0
+    # v2: lado menor mínimo en píxeles. 0 = regla deshabilitada (el umbral
+    # real se fija tras calibrar contra fotos reales — la calibración
+    # propone, no aplica).
+    resolucion_minima_px:      float     = 0.0
     tipos_foto_validos:        frozenset = field(
         default_factory=lambda: frozenset({"focal_show", "tringla", "mesa_show", "panoramica"})
     )
@@ -116,6 +123,83 @@ class Regla:
 # Orden = prioridad de ejecución
 # Todas retornan ResultadoCriterio — CUMPLE incluido.
 # ──────────────────────────────────────────────
+
+def _regla_archivo_invalido(meta: dict, config: ConfigEngine) -> ResultadoCriterio:
+    """
+    v2 (fix CR-1/GD-1): si photo_analyzer no pudo analizar la imagen
+    (archivo inexistente, corrupto, truncado, no-imagen, bomba de
+    descompresión) o el pre-análisis reventó, el veredicto debe decir la
+    CAUSA REAL — no el falso "imagen oscura" (brillo 0.0 por defecto) ni la
+    foto fantasma "perfecta" (defaults brillo=100).
+    """
+    if not meta.get("analisis_fallido"):
+        return ResultadoCriterio(
+            criterio    = "archivo_invalido",
+            severidad   = Severidad.CUMPLE,
+            fuente      = Fuente.CODIGO,
+            descripcion = "El archivo de imagen se cargó y analizó correctamente.",
+            confianza   = Confianza.ALTO,
+        )
+    causa = _to_str(meta.get("causa_analisis")) or "causa desconocida"
+    return ResultadoCriterio(
+        criterio    = "archivo_invalido",
+        severidad   = Severidad.GRAVE,
+        fuente      = Fuente.CODIGO,
+        descripcion = "El archivo de imagen no pudo analizarse. Vuelve a subir la foto original.",
+        evidencia   = f"causa={causa}",
+        confianza   = Confianza.ALTO,
+    )
+
+
+def _regla_imagen_sobreexpuesta(meta: dict, config: ConfigEngine) -> ResultadoCriterio:
+    """v2: exposición por histograma — % de píxeles quemados (>250), no la media."""
+    quemado = _to_float(meta.get("quemado_pct"), default=0.0)
+    if quemado > config.quemado_maximo_pct:
+        return ResultadoCriterio(
+            criterio    = "imagen_sobreexpuesta",
+            severidad   = Severidad.GRAVE,
+            fuente      = Fuente.CODIGO,
+            descripcion = "La imagen está sobreexpuesta: el detalle se perdió en las zonas quemadas.",
+            evidencia   = f"quemado_pct={quemado} (máximo aceptable: {config.quemado_maximo_pct})",
+            confianza   = Confianza.ALTO,
+        )
+    return ResultadoCriterio(
+        criterio    = "imagen_sobreexpuesta",
+        severidad   = Severidad.CUMPLE,
+        fuente      = Fuente.CODIGO,
+        descripcion = f"Exposición aceptable (quemado_pct={quemado}).",
+        confianza   = Confianza.ALTO,
+    )
+
+
+def _regla_resolucion_minima(meta: dict, config: ConfigEngine) -> ResultadoCriterio:
+    """v2: deshabilitada con resolucion_minima_px=0 (default) hasta calibrar."""
+    if config.resolucion_minima_px <= 0:
+        return ResultadoCriterio(
+            criterio    = "resolucion_minima",
+            severidad   = Severidad.CUMPLE,
+            fuente      = Fuente.CODIGO,
+            descripcion = "Regla de resolución mínima deshabilitada (umbral 0).",
+            confianza   = Confianza.ALTO,
+        )
+    lado_menor = _to_float(meta.get("resolucion_menor_px"), default=0.0)
+    if 0 < lado_menor < config.resolucion_minima_px:
+        return ResultadoCriterio(
+            criterio    = "resolucion_insuficiente",
+            severidad   = Severidad.GRAVE,
+            fuente      = Fuente.CODIGO,
+            descripcion = "La resolución de la imagen es insuficiente para verificar detalle.",
+            evidencia   = f"lado_menor={lado_menor}px (mínimo: {config.resolucion_minima_px}px)",
+            confianza   = Confianza.ALTO,
+        )
+    return ResultadoCriterio(
+        criterio    = "resolucion_minima",
+        severidad   = Severidad.CUMPLE,
+        fuente      = Fuente.CODIGO,
+        descripcion = f"Resolución aceptable (lado menor {lado_menor}px).",
+        confianza   = Confianza.ALTO,
+    )
+
 
 def _regla_imagen_oscura(meta: dict, config: ConfigEngine) -> ResultadoCriterio:
     brillo = _to_float(meta.get("brillo"), default=100.0)
@@ -331,11 +415,14 @@ def _regla_tipo_foto_valido(meta: dict, config: ConfigEngine) -> ResultadoCriter
 # ──────────────────────────────────────────────
 
 REGLAS_MANDATORY: list[Regla] = [
-    Regla(_regla_imagen_oscura,    bloqueante=True),   # 1. ¿Se puede ver algo?
-    Regla(_regla_imagen_borrosa,   bloqueante=True),   # 2. ¿Se puede leer detalle?
-    Regla(_regla_tipo_foto_valido, bloqueante=False),  # 3. ¿Sabemos qué tipo de foto es?
-    Regla(_regla_espacio_vacio,    bloqueante=False),  # 4. ¿Hay producto en el focal?
-    Regla(_regla_grafico_etapa,    bloqueante=False),  # 5. ¿El gráfico de campaña es correcto?
+    Regla(_regla_archivo_invalido,     bloqueante=True),   # 0. ¿El archivo es una imagen analizable?
+    Regla(_regla_imagen_oscura,        bloqueante=True),   # 1. ¿Se puede ver algo?
+    Regla(_regla_imagen_sobreexpuesta, bloqueante=True),   # 2. ¿Se quemó el detalle?
+    Regla(_regla_imagen_borrosa,       bloqueante=True),   # 3. ¿Se puede leer detalle?
+    Regla(_regla_resolucion_minima,    bloqueante=True),   # 4. ¿Alcanza la resolución? (off por default)
+    Regla(_regla_tipo_foto_valido,     bloqueante=False),  # 5. ¿Sabemos qué tipo de foto es?
+    Regla(_regla_espacio_vacio,        bloqueante=False),  # 6. ¿Hay producto en el focal?
+    Regla(_regla_grafico_etapa,        bloqueante=False),  # 7. ¿El gráfico de campaña es correcto?
 ]
 
 
