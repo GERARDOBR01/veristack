@@ -8,14 +8,19 @@ import json
 from pathlib import Path
 
 import numpy as np
-from PIL import Image, ImageFilter, ImageStat
+from PIL import Image, ImageFilter, ImageOps, ImageStat
 
 # ──────────────────────────────────────────────────────────────
 # Umbrales configurables
+#
+# OJO (fix doble umbral, Sesión GG): estos valores solo alimentan el campo
+# informativo `quality` y los flags del CLI (`analyze_photo`). El VEREDICTO
+# de compliance lo decide únicamente `mandatory_engine.ConfigEngine`
+# (brillo_minimo=40, etc.) — una sola fuente de verdad para bloquear.
 # ──────────────────────────────────────────────────────────────
 
-BRIGHTNESS_MIN = 30          # debajo → imagen muy oscura
-BRIGHTNESS_MAX = 92          # arriba → sobreexpuesta
+BRIGHTNESS_MIN = 30          # debajo → imagen muy oscura (solo quality/CLI)
+BRIGHTNESS_MAX = 92          # arriba → sobreexpuesta (solo quality/CLI)
 EMPTY_SPACE_GRAVE = 0.60     # ratio espacio vacío → GRAVE
 SHARPNESS_BUENA = 100        # varianza Laplaciana
 SHARPNESS_REGULAR = 30
@@ -44,9 +49,13 @@ _HUE_TABLE = [
 
 def _load(image) -> Image.Image:
     if isinstance(image, (str, Path)):
-        return Image.open(image).convert("RGB")
+        img = Image.open(image)
+        # EXIF: fotos de celular vienen rotadas por metadato; sin esto el
+        # ratio ancho/alto miente y classify_photo_type clasifica mal.
+        img = ImageOps.exif_transpose(img)
+        return img.convert("RGB")
     if isinstance(image, Image.Image):
-        return image.convert("RGB")
+        return ImageOps.exif_transpose(image).convert("RGB")
     raise TypeError(f"Se esperaba path o PIL.Image, recibido: {type(image)}")
 
 
@@ -162,6 +171,28 @@ def _detect_graphics(img: Image.Image) -> dict:
     }
 
 
+def _exposicion(img: Image.Image) -> dict:
+    """
+    Exposición por histograma, no solo media: una foto mitad quemada y mitad
+    negra da brillo medio "aceptable" pero es inevaluable. Porcentajes de
+    píxeles quemados (>250) y aplastados (<5) + percentiles de luminancia.
+    """
+    arr = np.array(img.convert("L"), dtype=np.uint8)
+    total = arr.size
+    return {
+        "quemado_pct":   round(float((arr > 250).sum() / total * 100), 1),
+        "aplastado_pct": round(float((arr < 5).sum() / total * 100), 1),
+        "luminancia_p5":  round(float(np.percentile(arr, 5)) / 255 * 100, 1),
+        "luminancia_p95": round(float(np.percentile(arr, 95)) / 255 * 100, 1),
+    }
+
+
+def _contraste(img: Image.Image) -> float:
+    """Desviación estándar de luminancia en escala 0-100. Bajo = foto lavada/velada."""
+    arr = np.array(img.convert("L"), dtype=float)
+    return round(float(arr.std()) / 255 * 100, 1)
+
+
 def _brightness_to_quality(brightness: float, sharpness: float) -> str:
     too_dark = brightness < BRIGHTNESS_MIN
     too_bright = brightness > BRIGHTNESS_MAX
@@ -182,47 +213,78 @@ def classify_photo_type(image) -> str:
     """
     Clasifica el tipo de foto de visual merchandising.
     Retorna: "focal_show" | "tringla" | "mesa_show" | "panoramica" | "desconocido"
-    Heurística basada en proporción y densidad visual.
+    Wrapper retrocompatible de classify_photo_type_detallado.
+    """
+    return classify_photo_type_detallado(image)["tipo"]
+
+
+# Fronteras de ratio de la heurística. Un ratio pegado a la frontera
+# (±10%) clasifica igual, pero con confianza "baja" — el llamador decide
+# si se fía o pide el tipo al usuario.
+_RATIO_FRONTERAS = (0.75, 1.4, 2.2)
+_EMPTY_FRONTERA = 0.35
+
+
+def classify_photo_type_detallado(image) -> dict:
+    """
+    {"tipo": str, "confianza": "alta"|"baja", "ratio": float|None}
+    Heurística por proporción y densidad visual. confianza=baja cuando el
+    ratio cae a menos de 10% de una frontera de decisión (o el empty_ratio
+    a menos de 0.05 de la suya en el caso cuadrado).
     """
     try:
         img = _load(image)
         w, h = img.size
         ratio = w / h  # > 1 landscape, < 1 portrait
-
         empty = _empty_space_ratio(img)
 
+        cerca_frontera = any(abs(ratio - f) / f < 0.10 for f in _RATIO_FRONTERAS)
+
         if ratio > 2.2:
-            return "panoramica"
-
-        if ratio < 0.75:
-            return "focal_show"
-
-        if 0.75 <= ratio <= 1.4:
+            tipo = "panoramica"
+        elif ratio < 0.75:
+            tipo = "focal_show"
+        elif ratio <= 1.4:
             # Cuadrado/casi cuadrado: tringla (3 focos, más aire) o focal_show
-            return "tringla" if empty > 0.35 else "focal_show"
+            tipo = "tringla" if empty > _EMPTY_FRONTERA else "focal_show"
+            if abs(empty - _EMPTY_FRONTERA) < 0.05:
+                cerca_frontera = True
+        else:
+            tipo = "mesa_show"
 
-        if 1.4 < ratio <= 2.2:
-            return "mesa_show"
-
-        return "desconocido"
+        return {"tipo": tipo,
+                "confianza": "baja" if cerca_frontera else "alta",
+                "ratio": round(ratio, 3)}
 
     except Exception:
-        return "desconocido"
+        return {"tipo": "desconocido", "confianza": "baja", "ratio": None}
 
 
 def extract_basic_facts(image) -> dict:
     """
     Extrae hechos objetivos medibles de la imagen.
     Cada sub-extracción tiene su propio try/except para no fallar en bloque.
+
+    Contrato honesto (v2, Sesión GG):
+      estado = "ok"               → todas las métricas son confiables
+      estado = "archivo_invalido" → la imagen no se pudo cargar; `causa` trae
+                                    el error real (inexistente, truncada, no
+                                    es imagen, bomba de descompresión...).
+                                    Las métricas quedan en su valor nulo y NO
+                                    deben usarse para veredicto.
+      estado = "analisis_parcial" → cargó, pero alguna métrica falló; `causa`
+                                    lista cuáles.
     """
     img = None
     load_error = None
     try:
         img = _load(image)
     except Exception as e:
-        load_error = str(e)
+        load_error = f"{type(e).__name__}: {e}"
 
     facts = {
+        "estado": "ok",
+        "causa": None,
         "dominant_colors": [],
         "brightness": 0.0,
         "quality": "mala",
@@ -230,40 +292,67 @@ def extract_basic_facts(image) -> dict:
         "empty_space_ratio": 0.0,
         "graphics_detected": False,
         "graphics_location": [],
+        "quemado_pct": 0.0,
+        "aplastado_pct": 0.0,
+        "luminancia_p5": 0.0,
+        "luminancia_p95": 0.0,
+        "contraste": 0.0,
+        "ancho_px": 0,
+        "alto_px": 0,
     }
 
     if load_error:
-        facts["error"] = load_error
+        facts["estado"] = "archivo_invalido"
+        facts["causa"] = load_error
+        facts["error"] = load_error  # retrocompatibilidad con consumidores previos
         return facts
+
+    fallidas: list[str] = []
+
+    facts["ancho_px"], facts["alto_px"] = img.size
 
     try:
         facts["dominant_colors"] = _dominant_colors(img, n=3)
     except Exception:
-        pass
+        fallidas.append("dominant_colors")
 
     try:
         facts["brightness"] = round(_average_brightness(img), 1)
     except Exception:
-        pass
+        fallidas.append("brightness")
 
     try:
         facts["sharpness_score"] = round(_laplacian_variance(img), 2)
     except Exception:
-        pass
+        fallidas.append("sharpness_score")
 
     try:
         facts["empty_space_ratio"] = round(_empty_space_ratio(img), 3)
     except Exception:
-        pass
+        fallidas.append("empty_space_ratio")
 
     try:
         g = _detect_graphics(img)
         facts["graphics_detected"] = g["detectado"]
         facts["graphics_location"] = g["ubicacion"]
     except Exception:
-        pass
+        fallidas.append("graphics")
+
+    try:
+        facts.update(_exposicion(img))
+    except Exception:
+        fallidas.append("exposicion")
+
+    try:
+        facts["contraste"] = _contraste(img)
+    except Exception:
+        fallidas.append("contraste")
 
     facts["quality"] = _brightness_to_quality(facts["brightness"], facts["sharpness_score"])
+
+    if fallidas:
+        facts["estado"] = "analisis_parcial"
+        facts["causa"] = "métricas fallidas: " + ", ".join(fallidas)
 
     return facts
 
@@ -394,14 +483,116 @@ def analyze_photo(image_path: str) -> str:
 
 
 # ──────────────────────────────────────────────────────────────
+# AUTOTEST — 100% offline, fixtures sintéticos en tmp, cero red.
+#   python photo_analyzer.py autotest
+# ──────────────────────────────────────────────────────────────
+
+def _autotest() -> int:
+    import shutil
+    import tempfile
+
+    tmp = Path(tempfile.mkdtemp(prefix="photo_analyzer_autotest_"))
+    fallas: list[str] = []
+
+    def check(nombre: str, cond: bool, detalle: str = ""):
+        estado = "PASS" if cond else "FAIL"
+        print(f"  [{estado}] {nombre}" + (f" — {detalle}" if detalle and not cond else ""))
+        if not cond:
+            fallas.append(nombre)
+
+    def img_binaria(blancos_de_10000: int, lado: int = 100) -> Image.Image:
+        """Píxeles 0/255 dispersos: brillo EXACTO = blancos/100, nítida."""
+        import random
+        n = lado * lado
+        rng = random.Random(42)
+        pos = list(range(n))
+        rng.shuffle(pos)
+        px = bytearray(n)
+        for p in pos[:blancos_de_10000]:
+            px[p] = 255
+        return Image.frombytes("L", (lado, lado), bytes(px))
+
+    print("== photo_analyzer autotest ==")
+
+    # 1. Contrato ok: imagen sana → estado ok, métricas presentes
+    sana = tmp / "sana.png"
+    img_binaria(5500).save(sana)
+    f = extract_basic_facts(str(sana))
+    check("imagen sana → estado=ok", f["estado"] == "ok", f["estado"])
+    check("brillo exacto 55.0", f["brightness"] == 55.0, str(f["brightness"]))
+    check("resolución reportada", f["ancho_px"] == 100 and f["alto_px"] == 100)
+    check("contraste > 0", f["contraste"] > 0)
+
+    # 2. Contrato archivo_invalido: causas reales, no genéricas
+    f = extract_basic_facts(str(tmp / "no_existe.webp"))
+    check("inexistente → archivo_invalido", f["estado"] == "archivo_invalido")
+    check("inexistente → causa con error real", "FileNotFoundError" in (f["causa"] or ""), f["causa"])
+
+    vacio = tmp / "vacio.webp"
+    vacio.write_bytes(b"")
+    f = extract_basic_facts(str(vacio))
+    check("0 bytes → archivo_invalido", f["estado"] == "archivo_invalido")
+
+    texto = tmp / "texto.webp"
+    texto.write_text("no soy imagen", encoding="utf-8")
+    f = extract_basic_facts(str(texto))
+    check("txt renombrado → archivo_invalido", f["estado"] == "archivo_invalido")
+    check("txt → brillo queda 0.0 (no confiable)", f["brightness"] == 0.0)
+
+    # 3. Exposición por histograma: la media miente, el histograma no
+    quemada = tmp / "quemada.png"
+    Image.new("L", (100, 100), 255).save(quemada)
+    f = extract_basic_facts(str(quemada))
+    check("100% blanca → quemado_pct=100", f["quemado_pct"] == 100.0, str(f["quemado_pct"]))
+
+    mitades = tmp / "mitades.png"
+    m = Image.new("L", (100, 100), 0)
+    m.paste(255, (0, 0, 100, 50))
+    m.save(mitades)
+    f = extract_basic_facts(str(mitades))
+    check("mitad quemada/mitad negra → brillo medio ~50 PERO quemado ~50 y aplastado ~50",
+          abs(f["brightness"] - 50.0) < 1 and f["quemado_pct"] == 50.0 and f["aplastado_pct"] == 50.0,
+          f"brillo={f['brightness']} quemado={f['quemado_pct']} aplastado={f['aplastado_pct']}")
+
+    # 4. EXIF: foto rotada por metadato se endereza antes de medir
+    exif_img = tmp / "rotada.jpg"
+    base = Image.new("RGB", (100, 50), (128, 128, 128))
+    exif = Image.Exif()
+    exif[274] = 6  # Orientation: Rotate 90 CW
+    base.save(exif_img, format="JPEG", exif=exif)
+    img_cargada = _load(str(exif_img))
+    check("EXIF orientation 6 → 100x50 se carga como 50x100",
+          img_cargada.size == (50, 100), str(img_cargada.size))
+
+    # 5. Clasificador con confianza
+    d = classify_photo_type_detallado(Image.new("RGB", (250, 100)))  # ratio 2.5
+    check("ratio 2.5 → panoramica/alta", d["tipo"] == "panoramica" and d["confianza"] == "alta", str(d))
+    d = classify_photo_type_detallado(Image.new("RGB", (145, 100)))  # ratio 1.45, frontera 1.4
+    check("ratio 1.45 → mesa_show/BAJA (frontera)", d["tipo"] == "mesa_show" and d["confianza"] == "baja", str(d))
+    check("classify_photo_type retrocompatible (str)",
+          classify_photo_type(Image.new("RGB", (250, 100))) == "panoramica")
+
+    # 6. analyze_photo nunca lanza y siempre es JSON válido
+    r = json.loads(analyze_photo(str(texto)))
+    check("analyze_photo con archivo roto → JSON con RECHAZAR", r["pre_verdict"] == "RECHAZAR")
+
+    shutil.rmtree(tmp, ignore_errors=True)
+    print(f"\nAUTOTEST PHOTO_ANALYZER: {'PASS' if not fallas else 'FAIL'} ({len(fallas)} falla(s))")
+    return 1 if fallas else 0
+
+
+# ──────────────────────────────────────────────────────────────
 # CLI mínimo
 # ──────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
     import sys
 
+    if len(sys.argv) >= 2 and sys.argv[1] == "autotest":
+        sys.exit(_autotest())
+
     if len(sys.argv) < 2:
-        print("Uso: python photo_analyzer.py <ruta_imagen>")
+        print("Uso: python photo_analyzer.py <ruta_imagen> | autotest")
         sys.exit(1)
 
     result = analyze_photo(sys.argv[1])
