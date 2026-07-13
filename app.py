@@ -45,6 +45,12 @@ from pipeline import ConfigPipeline                   # dataclass agregador
 from mandatory_engine import Severidad
 from retrieval_engine import ConfigRetrieval
 
+# Modo lote (N fotos -> reporte consolidado). El paquete lote/ vive en la raíz.
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+from lote import runner as lote_runner                # noqa: E402
+from lote import reporte as lote_reporte              # noqa: E402
+
 
 # ──────────────────────────────────────────────────────────────
 # CONFIG: knowledge base con rutas absolutas
@@ -150,11 +156,24 @@ st.title("Verificador Visual — visual-lv")
 with st.sidebar:
     st.header("Inputs")
 
-    foto = st.file_uploader("Subir foto", type=["jpg", "jpeg", "png"])
+    fotos_subidas = st.file_uploader(
+        "Subir foto(s) — varias fotos activan el modo lote",
+        type=["jpg", "jpeg", "png", "webp"],
+        accept_multiple_files=True,
+    )
 
     etapa_activa = st.selectbox("Etapa activa", ["E1", "E2", "E3"])
 
-    tipo_foto = st.selectbox("Tipo de foto", ["focal_show", "tringla", "mesa_show"])
+    # Honestidad ANTES del click: un tipo sin capa3 en knowledge/ dará
+    # NO_CALIFICA en sus criterios específicos (gap GC-capa3) — se avisa aquí.
+    def _etiqueta_tipo(t: str) -> str:
+        if t == "auto":
+            return "auto (detección del sistema)"
+        return t if (KNOWLEDGE / f"capa3_{t}.json").exists() else f"{t} (sin knowledge aún)"
+
+    tipo_foto = st.selectbox("Tipo de foto",
+                             ["auto", "focal_show", "tringla", "mesa_show"],
+                             format_func=_etiqueta_tipo)
 
     verificar = st.button("Verificar", type="primary", width="stretch")
 
@@ -169,6 +188,122 @@ with st.sidebar:
 if not verificar:
     st.info("Configura los inputs en la barra lateral y presiona **Verificar**.")
     st.stop()
+
+_tipo_efectivo = None if tipo_foto == "auto" else tipo_foto
+
+
+def _banner_parcial(es_parcial: bool, causa: str | None) -> None:
+    """Fix del gap de honestidad (schema 1.1): una corrida parcial se dice
+    ARRIBA del veredicto, nunca se presenta como completa."""
+    if es_parcial:
+        st.error(f"⚠️ EVALUACIÓN PARCIAL — {causa or 'ver resumen'}. "
+                 "El resultado mezcla veredictos reales con NO_CALIFICA de "
+                 "infraestructura y NO debe leerse como una corrida completa.",
+                 icon="⚠️")
+
+
+# ══════════════════════════════════════════════════════════════
+# MODO LOTE (2+ fotos): procesar_lote + reporte consolidado
+# ══════════════════════════════════════════════════════════════
+if fotos_subidas and len(fotos_subidas) > 1:
+    import shutil
+
+    tmp_dir = tempfile.mkdtemp(prefix="lote_verificador_")
+    try:
+        # Conservar los nombres originales (el reporte los muestra); si dos
+        # archivos se llaman igual, se desambiguan con sufijo _2, _3, …
+        rutas, usados = [], set()
+        for f in fotos_subidas:
+            nombre = Path(f.name).name or "foto.jpg"
+            base, ext = os.path.splitext(nombre)
+            k = 1
+            while nombre.lower() in usados:
+                k += 1
+                nombre = f"{base}_{k}{ext}"
+            usados.add(nombre.lower())
+            destino = Path(tmp_dir) / nombre
+            destino.write_bytes(f.getbuffer())
+            rutas.append(str(destino))
+
+        ejecutar_fn, cuota_fn, n_base = lote_runner.crear_ejecutor_real(etapa_activa)
+        if n_base == 0:
+            st.error(f"El knowledge cargó 0 criterios para la etapa '{etapa_activa}' — "
+                     "todo saldría NO_CALIFICA. Revisa pipeline/knowledge/.")
+            st.stop()
+
+        barra = st.progress(0.0, text=f"Procesando lote de {len(rutas)} fotos…")
+
+        def _prog(i, total, nombre):
+            barra.progress(i / total, text=f"{i}/{total} — {nombre}")
+
+        with st.spinner("Ejecutando pipeline por foto…"):
+            lote = lote_runner.procesar_lote(
+                rutas, etapa_activa, _tipo_efectivo, ejecutar_fn,
+                cuota_agotada_fn=cuota_fn, progreso_cb=_prog)
+
+        # Generar los reportes ANTES de borrar los temporales: las miniaturas
+        # del HTML se leen de disco en este punto.
+        html_reporte = lote_reporte.generar_html(lote)
+        xlsx         = lote_reporte.generar_excel(lote)
+        csv_detalle  = lote_reporte.generar_csv_detalle(lote)
+        import json as _json
+        json_lote    = _json.dumps(lote, ensure_ascii=False, indent=2).encode("utf-8")
+    except Exception as exc:  # el lote no debe tumbar la UI
+        st.error("El modo lote lanzó un error y no pudo completar la corrida.")
+        st.exception(exc)
+        st.stop()
+    finally:
+        shutil.rmtree(tmp_dir, ignore_errors=True)
+
+    r  = lote["resumen"]
+    pv = r["por_veredicto"]
+    _banner_parcial(r["lote_parcial"], r["causa_lote_parcial"])
+
+    c1, c2, c3, c4, c5 = st.columns(5)
+    c1.metric("GRAVE",       pv["GRAVE"])
+    c2.metric("OBSERVACION", pv["OBSERVACION"])
+    c3.metric("NO_CALIFICA", pv["NO_CALIFICA"])
+    c4.metric("CUMPLE",      pv["CUMPLE"])
+    c5.metric("% cumplimiento",
+              f"{r['pct_cumplimiento']}%" if r["pct_cumplimiento"] is not None else "—")
+
+    st.subheader(f"Lote: {lote['meta']['fotos_procesadas']}/{lote['meta']['fotos_totales']} "
+                 f"fotos procesadas — campaña {etapa_activa}")
+
+    import pandas as pd
+    filas = [{
+        "foto":       f["nombre"],
+        "estado":     f["estado"],
+        "veredicto":  f["veredicto_global"] or "—",
+        "graves":     f["n_graves"],
+        "obs.":       f["n_observaciones"],
+        "no_califica": f["n_no_califica"],
+        "parcial":    "sí" if f["evaluacion_parcial"] else "no",
+    } for f in sorted(lote["fotos"],
+                      key=lambda x: (lote_reporte._ORDEN_REPORTE.get(x["veredicto_global"], 3),
+                                     x["nombre"]))]
+    st.dataframe(pd.DataFrame(filas), width="stretch", hide_index=True)
+
+    # on_click="ignore": la descarga no dispara rerun (mismo patrón del CSV single)
+    d1, d2, d3 = st.columns(3)
+    d1.download_button("Descargar reporte HTML", data=html_reporte.encode("utf-8"),
+                       file_name="reporte_lote.html", mime="text/html", on_click="ignore")
+    if xlsx is not None:
+        d2.download_button("Descargar Excel", data=xlsx, file_name="datos_lote.xlsx",
+                           mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                           on_click="ignore")
+    else:
+        d2.download_button("Descargar CSV (detalle)", data=csv_detalle,
+                           file_name="datos_lote_detalle.csv", mime="text/csv",
+                           on_click="ignore")
+    d3.download_button("Descargar JSON", data=json_lote, file_name="resultados_lote.json",
+                       mime="application/json", on_click="ignore")
+    st.stop()
+
+# ══════════════════════════════════════════════════════════════
+# MODO 1 FOTO (o ninguna): vista original
+# ══════════════════════════════════════════════════════════════
+foto = fotos_subidas[0] if fotos_subidas else None
 
 # Guardar la foto subida a un archivo temporal y pasar su ruta como imagen_path.
 # Sin foto → imagen_path=None (el pipeline ya lo maneja).
@@ -186,7 +321,7 @@ try:
         resultado = pipeline_mod.ejecutar(
             imagen_path  = imagen_path,
             etapa_activa = etapa_activa,
-            tipo_foto    = tipo_foto,
+            tipo_foto    = _tipo_efectivo,
             config       = _config_pipeline(etapa_activa),
         )
 except Exception as exc:  # el pipeline no debe tumbar la UI
@@ -202,6 +337,10 @@ finally:
             pass
 
 if resultado is not None:
+    # Honestidad primero: si la corrida fue parcial, se dice ANTES del veredicto.
+    _banner_parcial(getattr(resultado, "evaluacion_parcial", False),
+                    getattr(resultado, "causa_parcial", None))
+
     # Veredicto global con color
     _mostrar_veredicto_global(resultado.veredicto_global)
 
