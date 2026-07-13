@@ -1,5 +1,5 @@
 {
-  "fecha": "2026-07-12 14:17:02",
+  "fecha": "2026-07-12 19:13:13",
   "guard_anti_red_ok": true,
   "casos_con_red_inesperada": [],
   "casos": [
@@ -9,11 +9,11 @@
       "observado": {
         "veredicto_global": "NO_CALIFICA",
         "puede_continuar": true,
-        "n_criterios": 137,
+        "n_criterios": 138,
         "criterios_por_severidad": {
-          "NO_CALIFICA": 137
+          "NO_CALIFICA": 138
         },
-        "decididos_codigo": 0,
+        "decididos_codigo": 1,
         "delegados_modelo": 137,
         "ids_criterios": [
           "2_maniquies_1_etiqueta",
@@ -93,6 +93,7 @@
           "focal_show_infantiles_etapa1_2",
           "focal_show_mujeres_departamento_juniors",
           "focal_show_mujeres_etapa1_2",
+          "grafico_no_detectado",
           "graficos_requeridos",
           "identificar_cartulina_descuento",
           "identificar_cartulina_shots_promocionales",
@@ -154,10 +155,10 @@
           "vestir_maniquies_prendas_esten_exhibicion",
           "visibilidad_producto_descuento_alto_corridas"
         ],
-        "resumen_ejecutivo": "VEREDICTO GLOBAL: NO_CALIFICA | NO CALIFICA (137): 2_maniquies_1_etiqueta | acercate_jefe_seccion_pueda_dar | agrupa_producto_zoopet_descuento_gondola | agrupa_tipo_producto | agrupar_mercancia_calificada_barata_liquidacion | alineacion | asegura_coloque_cartulina_beneficio | atriles_primera_etapa_generico | barras_etapa1_40_60 | barras_etapa2_100 | barras_etapa3_100 | campamento_realiza_1_2_etapa | caso_contar_espacio_necesario_mercancia | caso_muebles_focal_coloca_etiqueta | clasificacion_seccion_muebles_modifica_campana | coloca_cartulina_descuento_agresivo_cuentes | coloca_coleccion_mundial_mesas_frente | coloca_exhibiciones_masivas_producto_participante | coloca_material_grafico_forma_alternada | colocar_alternando_largo_seccion_focales | colocar_alternando_seccion | colocar_cartulina_descuento_especifico_mercancia | colocar_cartulinas | colocar_etiquetas_cuidando_esten_misma | colocar_forma_alterna_material_grafico | colocar_producto_apuesta_comercial | colocar_producto_descuento_mayor_menor | colocar_producto_mayor_descuento | columnas_etapa1_40_60 | columnas_etapa2_100 | columnas_etapa3_parches_20 | consulta_liga_manual_senalizacion_barata | cuidar_entallado_variantes_color_completos | cuidar_senalizacion_saturar_seccion_recuerda | dar_prioridad_mercancia_calificada | dentro_clasificacion_agrupa_marca_rimax | dentro_clasificacion_agrupa_producto_descuento | dentro_clasificacion_senaliza_exhibicion_cubos | distribuir_cartulinas_equilibradamente_piso_garantizar | distribuir_material_largo_departamento | evitar_mezclar_marcas_respetar_clasificacion | exhibe_bloque_tipo_producto_marca | exhibe_colecciones_indica_book_impulsos | exhibe_mesa_parte_visible_descuentos | exhibe_producto_tendencia_oasis_floral | exhibe_siembra_espacio_visible_disciplina | exhibicion_disciplinas_mantiene_dentro_separan | exhibir_1_focal_por_marca | exhibir_liquidacion_zapatera | exhibir_modelos_repetirlos | exhibir_producto_descuento_mezclar | focal_bloque_marca_tipo_producto | focal_show_hombres_departamento_juveniles | focal_show_hombres_etapa1_2 | focal_show_infantiles_departamento_ninos8 | focal_show_infantiles_etapa1_2 | focal_show_mujeres_departamento_juniors | focal_show_mujeres_etapa1_2 | graficos_requeridos | identificar_cartulina_descuento | identificar_cartulina_shots_promocionales | identificar_producto_descuento_participante | impulsar_producto_especial_acuerdo_matriz | limpieza | maniqui_maniquies_deben_integrarse_elementos | maniquies_3_etiquetas_2 | maniquies_5_etiquetas_3 | mantener_orden_exhibicion | masivo_bloque_marca_tipo_producto | masivos_pasillo_deben_contar_espacio | mercadeo_bloqueo_producto | no_mezclar_marcas | perimetro_coloca_parte_superior_descuentos | permitido_material_pop_marcas_autorizadas | planchado | prioridad_producto_mobility_cloe_40 | producto_focal_show | realiza_mercadeo_descuento_mayor_menor | recuerda_etiquetas_solo_van_cadera | requiere_1_fotografia_focal | respetar_alturas_estiba_maxima | respetar_capacidad_ideal_mobiliario_permita | respetar_mundos_romper_clasificaciones | revisa_producto_focal_sea_mercancia | selecciona_producto_mezclar_descuentos_mundos | senaliza_cartulina_30 | senaliza_resto_seccion_promocion_25 | separacion_masivos_3_5_metros | surtido | ubica_puntos_focales_accesos_importantes | ubicar_frente_seccion_sea_mueble | utilizar_siguiente_formula | angulo_foto_deficiente | caja_vajilla_cerrada_narrative_kostlich | cajas_organizadoras | colorizacion | colorizacion_descuidada | impulsa_textiles_entran_98_puedes | looks_incompletos | mesa_lanzamientos_sigue_manejando_lanzamientos | mochilas_loncheras_lapiceras_concepto | protectores_sofa | puedes_sacar_pasillo_masivos_cajas | puff_caja | punto_verde_sin_actualizar | realizar_campamento_punt_roma_98 | triangulacion | triangulacion_debil | agrupar_combos_espacios_principales_seccion | barra_ballet_exhibe_producto_sola | barra_prendas_descuentos_altos_incluyendo | beneficio_etapa_incorrecto | calidad_evidencia_fotografica | campamento_maniquies_tringlas_barra_cartulina | campana_anterior_visible | cantidad_maniquies | caso_tener_modelos_exhibidos_zapateras | coloca_caja_vajilla_cerrada_general | cuentas_espacio_disponible_dentro_seccion | cuentas_espacio_suficiente_obstruya_paso | etiqueta_ausente_maniqui | exhibicion_ropa_deportiva_estanterias_maniquies | importante_mantener_surtido_caso_vaciarse | imprimir_torre_slim_mandar_parche | mercadea_forme_book_impulsos_mayo | mesa_realizar_bloques_mercancia_doblada | mezcla_descuentos | nada_resguarda | nota_exhibicion_producto_mesas_perimetros | poner_etiquetas_descuento_prendas_saturar | producto_sin_descuento | props_decoracion | puede_colocar_etiquetas_colgantes_maniquies | selecciona_producto_dando_prioridad_descuento | vestimenta_maniquies_revisa_apuestas_comerciales | vestir_maniquies_prendas_esten_exhibicion | visibilidad_producto_descuento_alto_corridas | código=0 | modelo=137"
+        "resumen_ejecutivo": "VEREDICTO GLOBAL: NO_CALIFICA | NO CALIFICA (138): 2_maniquies_1_etiqueta | acercate_jefe_seccion_pueda_dar | agrupa_producto_zoopet_descuento_gondola | agrupa_tipo_producto | agrupar_mercancia_calificada_barata_liquidacion | alineacion | asegura_coloque_cartulina_beneficio | atriles_primera_etapa_generico | barras_etapa1_40_60 | barras_etapa2_100 | barras_etapa3_100 | campamento_realiza_1_2_etapa | caso_contar_espacio_necesario_mercancia | caso_muebles_focal_coloca_etiqueta | clasificacion_seccion_muebles_modifica_campana | coloca_cartulina_descuento_agresivo_cuentes | coloca_coleccion_mundial_mesas_frente | coloca_exhibiciones_masivas_producto_participante | coloca_material_grafico_forma_alternada | colocar_alternando_largo_seccion_focales | colocar_alternando_seccion | colocar_cartulina_descuento_especifico_mercancia | colocar_cartulinas | colocar_etiquetas_cuidando_esten_misma | colocar_forma_alterna_material_grafico | colocar_producto_apuesta_comercial | colocar_producto_descuento_mayor_menor | colocar_producto_mayor_descuento | columnas_etapa1_40_60 | columnas_etapa2_100 | columnas_etapa3_parches_20 | consulta_liga_manual_senalizacion_barata | cuidar_entallado_variantes_color_completos | cuidar_senalizacion_saturar_seccion_recuerda | dar_prioridad_mercancia_calificada | dentro_clasificacion_agrupa_marca_rimax | dentro_clasificacion_agrupa_producto_descuento | dentro_clasificacion_senaliza_exhibicion_cubos | distribuir_cartulinas_equilibradamente_piso_garantizar | distribuir_material_largo_departamento | evitar_mezclar_marcas_respetar_clasificacion | exhibe_bloque_tipo_producto_marca | exhibe_colecciones_indica_book_impulsos | exhibe_mesa_parte_visible_descuentos | exhibe_producto_tendencia_oasis_floral | exhibe_siembra_espacio_visible_disciplina | exhibicion_disciplinas_mantiene_dentro_separan | exhibir_1_focal_por_marca | exhibir_liquidacion_zapatera | exhibir_modelos_repetirlos | exhibir_producto_descuento_mezclar | focal_bloque_marca_tipo_producto | focal_show_hombres_departamento_juveniles | focal_show_hombres_etapa1_2 | focal_show_infantiles_departamento_ninos8 | focal_show_infantiles_etapa1_2 | focal_show_mujeres_departamento_juniors | focal_show_mujeres_etapa1_2 | graficos_requeridos | identificar_cartulina_descuento | identificar_cartulina_shots_promocionales | identificar_producto_descuento_participante | impulsar_producto_especial_acuerdo_matriz | limpieza | maniqui_maniquies_deben_integrarse_elementos | maniquies_3_etiquetas_2 | maniquies_5_etiquetas_3 | mantener_orden_exhibicion | masivo_bloque_marca_tipo_producto | masivos_pasillo_deben_contar_espacio | mercadeo_bloqueo_producto | no_mezclar_marcas | perimetro_coloca_parte_superior_descuentos | permitido_material_pop_marcas_autorizadas | planchado | prioridad_producto_mobility_cloe_40 | producto_focal_show | realiza_mercadeo_descuento_mayor_menor | recuerda_etiquetas_solo_van_cadera | requiere_1_fotografia_focal | respetar_alturas_estiba_maxima | respetar_capacidad_ideal_mobiliario_permita | respetar_mundos_romper_clasificaciones | revisa_producto_focal_sea_mercancia | selecciona_producto_mezclar_descuentos_mundos | senaliza_cartulina_30 | senaliza_resto_seccion_promocion_25 | separacion_masivos_3_5_metros | surtido | ubica_puntos_focales_accesos_importantes | ubicar_frente_seccion_sea_mueble | utilizar_siguiente_formula | angulo_foto_deficiente | caja_vajilla_cerrada_narrative_kostlich | cajas_organizadoras | colorizacion | colorizacion_descuidada | impulsa_textiles_entran_98_puedes | looks_incompletos | mesa_lanzamientos_sigue_manejando_lanzamientos | mochilas_loncheras_lapiceras_concepto | protectores_sofa | puedes_sacar_pasillo_masivos_cajas | puff_caja | punto_verde_sin_actualizar | realizar_campamento_punt_roma_98 | triangulacion | triangulacion_debil | agrupar_combos_espacios_principales_seccion | barra_ballet_exhibe_producto_sola | barra_prendas_descuentos_altos_incluyendo | beneficio_etapa_incorrecto | calidad_evidencia_fotografica | campamento_maniquies_tringlas_barra_cartulina | campana_anterior_visible | cantidad_maniquies | caso_tener_modelos_exhibidos_zapateras | coloca_caja_vajilla_cerrada_general | cuentas_espacio_disponible_dentro_seccion | cuentas_espacio_suficiente_obstruya_paso | etiqueta_ausente_maniqui | exhibicion_ropa_deportiva_estanterias_maniquies | importante_mantener_surtido_caso_vaciarse | imprimir_torre_slim_mandar_parche | mercadea_forme_book_impulsos_mayo | mesa_realizar_bloques_mercancia_doblada | mezcla_descuentos | nada_resguarda | nota_exhibicion_producto_mesas_perimetros | poner_etiquetas_descuento_prendas_saturar | producto_sin_descuento | props_decoracion | puede_colocar_etiquetas_colgantes_maniquies | selecciona_producto_dando_prioridad_descuento | vestimenta_maniquies_revisa_apuestas_comerciales | vestir_maniquies_prendas_esten_exhibicion | visibilidad_producto_descuento_alto_corridas | grafico_no_detectado | código=1 | modelo=137 | EVALUACIÓN PARCIAL: el modelo no respondió 10 de 10 lote(s) de criterios delegados"
       },
       "excepcion": null,
-      "duracion_s": 0.277,
+      "duracion_s": 0.283,
       "intentos_red": 0,
       "sleep_solicitado_s": 0.0,
       "logs_warning_error": [
@@ -200,7 +201,7 @@
         "quality_photo_analyzer": "regular"
       },
       "excepcion": null,
-      "duracion_s": 0.022,
+      "duracion_s": 0.024,
       "intentos_red": 0,
       "sleep_solicitado_s": 0.0,
       "logs_warning_error": [
@@ -225,7 +226,7 @@
         "quality_photo_analyzer": "regular"
       },
       "excepcion": null,
-      "duracion_s": 0.021,
+      "duracion_s": 0.023,
       "intentos_red": 0,
       "sleep_solicitado_s": 0.0,
       "logs_warning_error": [
@@ -240,11 +241,11 @@
       "observado": {
         "veredicto_global": "NO_CALIFICA",
         "puede_continuar": true,
-        "n_criterios": 137,
+        "n_criterios": 138,
         "criterios_por_severidad": {
-          "NO_CALIFICA": 137
+          "NO_CALIFICA": 138
         },
-        "decididos_codigo": 0,
+        "decididos_codigo": 1,
         "delegados_modelo": 137,
         "ids_criterios": [
           "2_maniquies_1_etiqueta",
@@ -324,6 +325,7 @@
           "focal_show_infantiles_etapa1_2",
           "focal_show_mujeres_departamento_juniors",
           "focal_show_mujeres_etapa1_2",
+          "grafico_no_detectado",
           "graficos_requeridos",
           "identificar_cartulina_descuento",
           "identificar_cartulina_shots_promocionales",
@@ -385,12 +387,12 @@
           "vestir_maniquies_prendas_esten_exhibicion",
           "visibilidad_producto_descuento_alto_corridas"
         ],
-        "resumen_ejecutivo": "VEREDICTO GLOBAL: NO_CALIFICA | NO CALIFICA (137): 2_maniquies_1_etiqueta | acercate_jefe_seccion_pueda_dar | agrupa_producto_zoopet_descuento_gondola | agrupa_tipo_producto | agrupar_mercancia_calificada_barata_liquidacion | alineacion | asegura_coloque_cartulina_beneficio | atriles_primera_etapa_generico | barras_etapa1_40_60 | barras_etapa2_100 | barras_etapa3_100 | campamento_realiza_1_2_etapa | caso_contar_espacio_necesario_mercancia | caso_muebles_focal_coloca_etiqueta | clasificacion_seccion_muebles_modifica_campana | coloca_cartulina_descuento_agresivo_cuentes | coloca_coleccion_mundial_mesas_frente | coloca_exhibiciones_masivas_producto_participante | coloca_material_grafico_forma_alternada | colocar_alternando_largo_seccion_focales | colocar_alternando_seccion | colocar_cartulina_descuento_especifico_mercancia | colocar_cartulinas | colocar_etiquetas_cuidando_esten_misma | colocar_forma_alterna_material_grafico | colocar_producto_apuesta_comercial | colocar_producto_descuento_mayor_menor | colocar_producto_mayor_descuento | columnas_etapa1_40_60 | columnas_etapa2_100 | columnas_etapa3_parches_20 | consulta_liga_manual_senalizacion_barata | cuidar_entallado_variantes_color_completos | cuidar_senalizacion_saturar_seccion_recuerda | dar_prioridad_mercancia_calificada | dentro_clasificacion_agrupa_marca_rimax | dentro_clasificacion_agrupa_producto_descuento | dentro_clasificacion_senaliza_exhibicion_cubos | distribuir_cartulinas_equilibradamente_piso_garantizar | distribuir_material_largo_departamento | evitar_mezclar_marcas_respetar_clasificacion | exhibe_bloque_tipo_producto_marca | exhibe_colecciones_indica_book_impulsos | exhibe_mesa_parte_visible_descuentos | exhibe_producto_tendencia_oasis_floral | exhibe_siembra_espacio_visible_disciplina | exhibicion_disciplinas_mantiene_dentro_separan | exhibir_1_focal_por_marca | exhibir_liquidacion_zapatera | exhibir_modelos_repetirlos | exhibir_producto_descuento_mezclar | focal_bloque_marca_tipo_producto | focal_show_hombres_departamento_juveniles | focal_show_hombres_etapa1_2 | focal_show_infantiles_departamento_ninos8 | focal_show_infantiles_etapa1_2 | focal_show_mujeres_departamento_juniors | focal_show_mujeres_etapa1_2 | graficos_requeridos | identificar_cartulina_descuento | identificar_cartulina_shots_promocionales | identificar_producto_descuento_participante | impulsar_producto_especial_acuerdo_matriz | limpieza | maniqui_maniquies_deben_integrarse_elementos | maniquies_3_etiquetas_2 | maniquies_5_etiquetas_3 | mantener_orden_exhibicion | masivo_bloque_marca_tipo_producto | masivos_pasillo_deben_contar_espacio | mercadeo_bloqueo_producto | no_mezclar_marcas | perimetro_coloca_parte_superior_descuentos | permitido_material_pop_marcas_autorizadas | planchado | prioridad_producto_mobility_cloe_40 | producto_focal_show | realiza_mercadeo_descuento_mayor_menor | recuerda_etiquetas_solo_van_cadera | requiere_1_fotografia_focal | respetar_alturas_estiba_maxima | respetar_capacidad_ideal_mobiliario_permita | respetar_mundos_romper_clasificaciones | revisa_producto_focal_sea_mercancia | selecciona_producto_mezclar_descuentos_mundos | senaliza_cartulina_30 | senaliza_resto_seccion_promocion_25 | separacion_masivos_3_5_metros | surtido | ubica_puntos_focales_accesos_importantes | ubicar_frente_seccion_sea_mueble | utilizar_siguiente_formula | angulo_foto_deficiente | caja_vajilla_cerrada_narrative_kostlich | cajas_organizadoras | colorizacion | colorizacion_descuidada | impulsa_textiles_entran_98_puedes | looks_incompletos | mesa_lanzamientos_sigue_manejando_lanzamientos | mochilas_loncheras_lapiceras_concepto | protectores_sofa | puedes_sacar_pasillo_masivos_cajas | puff_caja | punto_verde_sin_actualizar | realizar_campamento_punt_roma_98 | triangulacion | triangulacion_debil | agrupar_combos_espacios_principales_seccion | barra_ballet_exhibe_producto_sola | barra_prendas_descuentos_altos_incluyendo | beneficio_etapa_incorrecto | calidad_evidencia_fotografica | campamento_maniquies_tringlas_barra_cartulina | campana_anterior_visible | cantidad_maniquies | caso_tener_modelos_exhibidos_zapateras | coloca_caja_vajilla_cerrada_general | cuentas_espacio_disponible_dentro_seccion | cuentas_espacio_suficiente_obstruya_paso | etiqueta_ausente_maniqui | exhibicion_ropa_deportiva_estanterias_maniquies | importante_mantener_surtido_caso_vaciarse | imprimir_torre_slim_mandar_parche | mercadea_forme_book_impulsos_mayo | mesa_realizar_bloques_mercancia_doblada | mezcla_descuentos | nada_resguarda | nota_exhibicion_producto_mesas_perimetros | poner_etiquetas_descuento_prendas_saturar | producto_sin_descuento | props_decoracion | puede_colocar_etiquetas_colgantes_maniquies | selecciona_producto_dando_prioridad_descuento | vestimenta_maniquies_revisa_apuestas_comerciales | vestir_maniquies_prendas_esten_exhibicion | visibilidad_producto_descuento_alto_corridas | código=0 | modelo=137",
+        "resumen_ejecutivo": "VEREDICTO GLOBAL: NO_CALIFICA | NO CALIFICA (138): 2_maniquies_1_etiqueta | acercate_jefe_seccion_pueda_dar | agrupa_producto_zoopet_descuento_gondola | agrupa_tipo_producto | agrupar_mercancia_calificada_barata_liquidacion | alineacion | asegura_coloque_cartulina_beneficio | atriles_primera_etapa_generico | barras_etapa1_40_60 | barras_etapa2_100 | barras_etapa3_100 | campamento_realiza_1_2_etapa | caso_contar_espacio_necesario_mercancia | caso_muebles_focal_coloca_etiqueta | clasificacion_seccion_muebles_modifica_campana | coloca_cartulina_descuento_agresivo_cuentes | coloca_coleccion_mundial_mesas_frente | coloca_exhibiciones_masivas_producto_participante | coloca_material_grafico_forma_alternada | colocar_alternando_largo_seccion_focales | colocar_alternando_seccion | colocar_cartulina_descuento_especifico_mercancia | colocar_cartulinas | colocar_etiquetas_cuidando_esten_misma | colocar_forma_alterna_material_grafico | colocar_producto_apuesta_comercial | colocar_producto_descuento_mayor_menor | colocar_producto_mayor_descuento | columnas_etapa1_40_60 | columnas_etapa2_100 | columnas_etapa3_parches_20 | consulta_liga_manual_senalizacion_barata | cuidar_entallado_variantes_color_completos | cuidar_senalizacion_saturar_seccion_recuerda | dar_prioridad_mercancia_calificada | dentro_clasificacion_agrupa_marca_rimax | dentro_clasificacion_agrupa_producto_descuento | dentro_clasificacion_senaliza_exhibicion_cubos | distribuir_cartulinas_equilibradamente_piso_garantizar | distribuir_material_largo_departamento | evitar_mezclar_marcas_respetar_clasificacion | exhibe_bloque_tipo_producto_marca | exhibe_colecciones_indica_book_impulsos | exhibe_mesa_parte_visible_descuentos | exhibe_producto_tendencia_oasis_floral | exhibe_siembra_espacio_visible_disciplina | exhibicion_disciplinas_mantiene_dentro_separan | exhibir_1_focal_por_marca | exhibir_liquidacion_zapatera | exhibir_modelos_repetirlos | exhibir_producto_descuento_mezclar | focal_bloque_marca_tipo_producto | focal_show_hombres_departamento_juveniles | focal_show_hombres_etapa1_2 | focal_show_infantiles_departamento_ninos8 | focal_show_infantiles_etapa1_2 | focal_show_mujeres_departamento_juniors | focal_show_mujeres_etapa1_2 | graficos_requeridos | identificar_cartulina_descuento | identificar_cartulina_shots_promocionales | identificar_producto_descuento_participante | impulsar_producto_especial_acuerdo_matriz | limpieza | maniqui_maniquies_deben_integrarse_elementos | maniquies_3_etiquetas_2 | maniquies_5_etiquetas_3 | mantener_orden_exhibicion | masivo_bloque_marca_tipo_producto | masivos_pasillo_deben_contar_espacio | mercadeo_bloqueo_producto | no_mezclar_marcas | perimetro_coloca_parte_superior_descuentos | permitido_material_pop_marcas_autorizadas | planchado | prioridad_producto_mobility_cloe_40 | producto_focal_show | realiza_mercadeo_descuento_mayor_menor | recuerda_etiquetas_solo_van_cadera | requiere_1_fotografia_focal | respetar_alturas_estiba_maxima | respetar_capacidad_ideal_mobiliario_permita | respetar_mundos_romper_clasificaciones | revisa_producto_focal_sea_mercancia | selecciona_producto_mezclar_descuentos_mundos | senaliza_cartulina_30 | senaliza_resto_seccion_promocion_25 | separacion_masivos_3_5_metros | surtido | ubica_puntos_focales_accesos_importantes | ubicar_frente_seccion_sea_mueble | utilizar_siguiente_formula | angulo_foto_deficiente | caja_vajilla_cerrada_narrative_kostlich | cajas_organizadoras | colorizacion | colorizacion_descuidada | impulsa_textiles_entran_98_puedes | looks_incompletos | mesa_lanzamientos_sigue_manejando_lanzamientos | mochilas_loncheras_lapiceras_concepto | protectores_sofa | puedes_sacar_pasillo_masivos_cajas | puff_caja | punto_verde_sin_actualizar | realizar_campamento_punt_roma_98 | triangulacion | triangulacion_debil | agrupar_combos_espacios_principales_seccion | barra_ballet_exhibe_producto_sola | barra_prendas_descuentos_altos_incluyendo | beneficio_etapa_incorrecto | calidad_evidencia_fotografica | campamento_maniquies_tringlas_barra_cartulina | campana_anterior_visible | cantidad_maniquies | caso_tener_modelos_exhibidos_zapateras | coloca_caja_vajilla_cerrada_general | cuentas_espacio_disponible_dentro_seccion | cuentas_espacio_suficiente_obstruya_paso | etiqueta_ausente_maniqui | exhibicion_ropa_deportiva_estanterias_maniquies | importante_mantener_surtido_caso_vaciarse | imprimir_torre_slim_mandar_parche | mercadea_forme_book_impulsos_mayo | mesa_realizar_bloques_mercancia_doblada | mezcla_descuentos | nada_resguarda | nota_exhibicion_producto_mesas_perimetros | poner_etiquetas_descuento_prendas_saturar | producto_sin_descuento | props_decoracion | puede_colocar_etiquetas_colgantes_maniquies | selecciona_producto_dando_prioridad_descuento | vestimenta_maniquies_revisa_apuestas_comerciales | vestir_maniquies_prendas_esten_exhibicion | visibilidad_producto_descuento_alto_corridas | grafico_no_detectado | código=1 | modelo=137 | EVALUACIÓN PARCIAL: el modelo no respondió 10 de 10 lote(s) de criterios delegados",
         "brillo_medido_photo_analyzer": 40.0,
         "quality_photo_analyzer": "regular"
       },
       "excepcion": null,
-      "duracion_s": 0.255,
+      "duracion_s": 0.262,
       "intentos_red": 0,
       "sleep_solicitado_s": 0.0,
       "logs_warning_error": [
@@ -423,11 +425,11 @@
       "observado": {
         "veredicto_global": "NO_CALIFICA",
         "puede_continuar": true,
-        "n_criterios": 137,
+        "n_criterios": 138,
         "criterios_por_severidad": {
-          "NO_CALIFICA": 137
+          "NO_CALIFICA": 138
         },
-        "decididos_codigo": 0,
+        "decididos_codigo": 1,
         "delegados_modelo": 137,
         "ids_criterios": [
           "2_maniquies_1_etiqueta",
@@ -507,6 +509,7 @@
           "focal_show_infantiles_etapa1_2",
           "focal_show_mujeres_departamento_juniors",
           "focal_show_mujeres_etapa1_2",
+          "grafico_no_detectado",
           "graficos_requeridos",
           "identificar_cartulina_descuento",
           "identificar_cartulina_shots_promocionales",
@@ -568,12 +571,12 @@
           "vestir_maniquies_prendas_esten_exhibicion",
           "visibilidad_producto_descuento_alto_corridas"
         ],
-        "resumen_ejecutivo": "VEREDICTO GLOBAL: NO_CALIFICA | NO CALIFICA (137): 2_maniquies_1_etiqueta | acercate_jefe_seccion_pueda_dar | agrupa_producto_zoopet_descuento_gondola | agrupa_tipo_producto | agrupar_mercancia_calificada_barata_liquidacion | alineacion | asegura_coloque_cartulina_beneficio | atriles_primera_etapa_generico | barras_etapa1_40_60 | barras_etapa2_100 | barras_etapa3_100 | campamento_realiza_1_2_etapa | caso_contar_espacio_necesario_mercancia | caso_muebles_focal_coloca_etiqueta | clasificacion_seccion_muebles_modifica_campana | coloca_cartulina_descuento_agresivo_cuentes | coloca_coleccion_mundial_mesas_frente | coloca_exhibiciones_masivas_producto_participante | coloca_material_grafico_forma_alternada | colocar_alternando_largo_seccion_focales | colocar_alternando_seccion | colocar_cartulina_descuento_especifico_mercancia | colocar_cartulinas | colocar_etiquetas_cuidando_esten_misma | colocar_forma_alterna_material_grafico | colocar_producto_apuesta_comercial | colocar_producto_descuento_mayor_menor | colocar_producto_mayor_descuento | columnas_etapa1_40_60 | columnas_etapa2_100 | columnas_etapa3_parches_20 | consulta_liga_manual_senalizacion_barata | cuidar_entallado_variantes_color_completos | cuidar_senalizacion_saturar_seccion_recuerda | dar_prioridad_mercancia_calificada | dentro_clasificacion_agrupa_marca_rimax | dentro_clasificacion_agrupa_producto_descuento | dentro_clasificacion_senaliza_exhibicion_cubos | distribuir_cartulinas_equilibradamente_piso_garantizar | distribuir_material_largo_departamento | evitar_mezclar_marcas_respetar_clasificacion | exhibe_bloque_tipo_producto_marca | exhibe_colecciones_indica_book_impulsos | exhibe_mesa_parte_visible_descuentos | exhibe_producto_tendencia_oasis_floral | exhibe_siembra_espacio_visible_disciplina | exhibicion_disciplinas_mantiene_dentro_separan | exhibir_1_focal_por_marca | exhibir_liquidacion_zapatera | exhibir_modelos_repetirlos | exhibir_producto_descuento_mezclar | focal_bloque_marca_tipo_producto | focal_show_hombres_departamento_juveniles | focal_show_hombres_etapa1_2 | focal_show_infantiles_departamento_ninos8 | focal_show_infantiles_etapa1_2 | focal_show_mujeres_departamento_juniors | focal_show_mujeres_etapa1_2 | graficos_requeridos | identificar_cartulina_descuento | identificar_cartulina_shots_promocionales | identificar_producto_descuento_participante | impulsar_producto_especial_acuerdo_matriz | limpieza | maniqui_maniquies_deben_integrarse_elementos | maniquies_3_etiquetas_2 | maniquies_5_etiquetas_3 | mantener_orden_exhibicion | masivo_bloque_marca_tipo_producto | masivos_pasillo_deben_contar_espacio | mercadeo_bloqueo_producto | no_mezclar_marcas | perimetro_coloca_parte_superior_descuentos | permitido_material_pop_marcas_autorizadas | planchado | prioridad_producto_mobility_cloe_40 | producto_focal_show | realiza_mercadeo_descuento_mayor_menor | recuerda_etiquetas_solo_van_cadera | requiere_1_fotografia_focal | respetar_alturas_estiba_maxima | respetar_capacidad_ideal_mobiliario_permita | respetar_mundos_romper_clasificaciones | revisa_producto_focal_sea_mercancia | selecciona_producto_mezclar_descuentos_mundos | senaliza_cartulina_30 | senaliza_resto_seccion_promocion_25 | separacion_masivos_3_5_metros | surtido | ubica_puntos_focales_accesos_importantes | ubicar_frente_seccion_sea_mueble | utilizar_siguiente_formula | angulo_foto_deficiente | caja_vajilla_cerrada_narrative_kostlich | cajas_organizadoras | colorizacion | colorizacion_descuidada | impulsa_textiles_entran_98_puedes | looks_incompletos | mesa_lanzamientos_sigue_manejando_lanzamientos | mochilas_loncheras_lapiceras_concepto | protectores_sofa | puedes_sacar_pasillo_masivos_cajas | puff_caja | punto_verde_sin_actualizar | realizar_campamento_punt_roma_98 | triangulacion | triangulacion_debil | agrupar_combos_espacios_principales_seccion | barra_ballet_exhibe_producto_sola | barra_prendas_descuentos_altos_incluyendo | beneficio_etapa_incorrecto | calidad_evidencia_fotografica | campamento_maniquies_tringlas_barra_cartulina | campana_anterior_visible | cantidad_maniquies | caso_tener_modelos_exhibidos_zapateras | coloca_caja_vajilla_cerrada_general | cuentas_espacio_disponible_dentro_seccion | cuentas_espacio_suficiente_obstruya_paso | etiqueta_ausente_maniqui | exhibicion_ropa_deportiva_estanterias_maniquies | importante_mantener_surtido_caso_vaciarse | imprimir_torre_slim_mandar_parche | mercadea_forme_book_impulsos_mayo | mesa_realizar_bloques_mercancia_doblada | mezcla_descuentos | nada_resguarda | nota_exhibicion_producto_mesas_perimetros | poner_etiquetas_descuento_prendas_saturar | producto_sin_descuento | props_decoracion | puede_colocar_etiquetas_colgantes_maniquies | selecciona_producto_dando_prioridad_descuento | vestimenta_maniquies_revisa_apuestas_comerciales | vestir_maniquies_prendas_esten_exhibicion | visibilidad_producto_descuento_alto_corridas | código=0 | modelo=137",
+        "resumen_ejecutivo": "VEREDICTO GLOBAL: NO_CALIFICA | NO CALIFICA (138): 2_maniquies_1_etiqueta | acercate_jefe_seccion_pueda_dar | agrupa_producto_zoopet_descuento_gondola | agrupa_tipo_producto | agrupar_mercancia_calificada_barata_liquidacion | alineacion | asegura_coloque_cartulina_beneficio | atriles_primera_etapa_generico | barras_etapa1_40_60 | barras_etapa2_100 | barras_etapa3_100 | campamento_realiza_1_2_etapa | caso_contar_espacio_necesario_mercancia | caso_muebles_focal_coloca_etiqueta | clasificacion_seccion_muebles_modifica_campana | coloca_cartulina_descuento_agresivo_cuentes | coloca_coleccion_mundial_mesas_frente | coloca_exhibiciones_masivas_producto_participante | coloca_material_grafico_forma_alternada | colocar_alternando_largo_seccion_focales | colocar_alternando_seccion | colocar_cartulina_descuento_especifico_mercancia | colocar_cartulinas | colocar_etiquetas_cuidando_esten_misma | colocar_forma_alterna_material_grafico | colocar_producto_apuesta_comercial | colocar_producto_descuento_mayor_menor | colocar_producto_mayor_descuento | columnas_etapa1_40_60 | columnas_etapa2_100 | columnas_etapa3_parches_20 | consulta_liga_manual_senalizacion_barata | cuidar_entallado_variantes_color_completos | cuidar_senalizacion_saturar_seccion_recuerda | dar_prioridad_mercancia_calificada | dentro_clasificacion_agrupa_marca_rimax | dentro_clasificacion_agrupa_producto_descuento | dentro_clasificacion_senaliza_exhibicion_cubos | distribuir_cartulinas_equilibradamente_piso_garantizar | distribuir_material_largo_departamento | evitar_mezclar_marcas_respetar_clasificacion | exhibe_bloque_tipo_producto_marca | exhibe_colecciones_indica_book_impulsos | exhibe_mesa_parte_visible_descuentos | exhibe_producto_tendencia_oasis_floral | exhibe_siembra_espacio_visible_disciplina | exhibicion_disciplinas_mantiene_dentro_separan | exhibir_1_focal_por_marca | exhibir_liquidacion_zapatera | exhibir_modelos_repetirlos | exhibir_producto_descuento_mezclar | focal_bloque_marca_tipo_producto | focal_show_hombres_departamento_juveniles | focal_show_hombres_etapa1_2 | focal_show_infantiles_departamento_ninos8 | focal_show_infantiles_etapa1_2 | focal_show_mujeres_departamento_juniors | focal_show_mujeres_etapa1_2 | graficos_requeridos | identificar_cartulina_descuento | identificar_cartulina_shots_promocionales | identificar_producto_descuento_participante | impulsar_producto_especial_acuerdo_matriz | limpieza | maniqui_maniquies_deben_integrarse_elementos | maniquies_3_etiquetas_2 | maniquies_5_etiquetas_3 | mantener_orden_exhibicion | masivo_bloque_marca_tipo_producto | masivos_pasillo_deben_contar_espacio | mercadeo_bloqueo_producto | no_mezclar_marcas | perimetro_coloca_parte_superior_descuentos | permitido_material_pop_marcas_autorizadas | planchado | prioridad_producto_mobility_cloe_40 | producto_focal_show | realiza_mercadeo_descuento_mayor_menor | recuerda_etiquetas_solo_van_cadera | requiere_1_fotografia_focal | respetar_alturas_estiba_maxima | respetar_capacidad_ideal_mobiliario_permita | respetar_mundos_romper_clasificaciones | revisa_producto_focal_sea_mercancia | selecciona_producto_mezclar_descuentos_mundos | senaliza_cartulina_30 | senaliza_resto_seccion_promocion_25 | separacion_masivos_3_5_metros | surtido | ubica_puntos_focales_accesos_importantes | ubicar_frente_seccion_sea_mueble | utilizar_siguiente_formula | angulo_foto_deficiente | caja_vajilla_cerrada_narrative_kostlich | cajas_organizadoras | colorizacion | colorizacion_descuidada | impulsa_textiles_entran_98_puedes | looks_incompletos | mesa_lanzamientos_sigue_manejando_lanzamientos | mochilas_loncheras_lapiceras_concepto | protectores_sofa | puedes_sacar_pasillo_masivos_cajas | puff_caja | punto_verde_sin_actualizar | realizar_campamento_punt_roma_98 | triangulacion | triangulacion_debil | agrupar_combos_espacios_principales_seccion | barra_ballet_exhibe_producto_sola | barra_prendas_descuentos_altos_incluyendo | beneficio_etapa_incorrecto | calidad_evidencia_fotografica | campamento_maniquies_tringlas_barra_cartulina | campana_anterior_visible | cantidad_maniquies | caso_tener_modelos_exhibidos_zapateras | coloca_caja_vajilla_cerrada_general | cuentas_espacio_disponible_dentro_seccion | cuentas_espacio_suficiente_obstruya_paso | etiqueta_ausente_maniqui | exhibicion_ropa_deportiva_estanterias_maniquies | importante_mantener_surtido_caso_vaciarse | imprimir_torre_slim_mandar_parche | mercadea_forme_book_impulsos_mayo | mesa_realizar_bloques_mercancia_doblada | mezcla_descuentos | nada_resguarda | nota_exhibicion_producto_mesas_perimetros | poner_etiquetas_descuento_prendas_saturar | producto_sin_descuento | props_decoracion | puede_colocar_etiquetas_colgantes_maniquies | selecciona_producto_dando_prioridad_descuento | vestimenta_maniquies_revisa_apuestas_comerciales | vestir_maniquies_prendas_esten_exhibicion | visibilidad_producto_descuento_alto_corridas | grafico_no_detectado | código=1 | modelo=137 | EVALUACIÓN PARCIAL: el modelo no respondió 10 de 10 lote(s) de criterios delegados",
         "brillo_medido_photo_analyzer": 40.1,
         "quality_photo_analyzer": "regular"
       },
       "excepcion": null,
-      "duracion_s": 0.256,
+      "duracion_s": 0.258,
       "intentos_red": 0,
       "sleep_solicitado_s": 0.0,
       "logs_warning_error": [
@@ -606,11 +609,11 @@
       "observado": {
         "veredicto_global": "NO_CALIFICA",
         "puede_continuar": true,
-        "n_criterios": 137,
+        "n_criterios": 138,
         "criterios_por_severidad": {
-          "NO_CALIFICA": 137
+          "NO_CALIFICA": 138
         },
-        "decididos_codigo": 0,
+        "decididos_codigo": 1,
         "delegados_modelo": 137,
         "ids_criterios": [
           "2_maniquies_1_etiqueta",
@@ -690,6 +693,7 @@
           "focal_show_infantiles_etapa1_2",
           "focal_show_mujeres_departamento_juniors",
           "focal_show_mujeres_etapa1_2",
+          "grafico_no_detectado",
           "graficos_requeridos",
           "identificar_cartulina_descuento",
           "identificar_cartulina_shots_promocionales",
@@ -751,12 +755,12 @@
           "vestir_maniquies_prendas_esten_exhibicion",
           "visibilidad_producto_descuento_alto_corridas"
         ],
-        "resumen_ejecutivo": "VEREDICTO GLOBAL: NO_CALIFICA | NO CALIFICA (137): 2_maniquies_1_etiqueta | acercate_jefe_seccion_pueda_dar | agrupa_producto_zoopet_descuento_gondola | agrupa_tipo_producto | agrupar_mercancia_calificada_barata_liquidacion | alineacion | asegura_coloque_cartulina_beneficio | atriles_primera_etapa_generico | barras_etapa1_40_60 | barras_etapa2_100 | barras_etapa3_100 | campamento_realiza_1_2_etapa | caso_contar_espacio_necesario_mercancia | caso_muebles_focal_coloca_etiqueta | clasificacion_seccion_muebles_modifica_campana | coloca_cartulina_descuento_agresivo_cuentes | coloca_coleccion_mundial_mesas_frente | coloca_exhibiciones_masivas_producto_participante | coloca_material_grafico_forma_alternada | colocar_alternando_largo_seccion_focales | colocar_alternando_seccion | colocar_cartulina_descuento_especifico_mercancia | colocar_cartulinas | colocar_etiquetas_cuidando_esten_misma | colocar_forma_alterna_material_grafico | colocar_producto_apuesta_comercial | colocar_producto_descuento_mayor_menor | colocar_producto_mayor_descuento | columnas_etapa1_40_60 | columnas_etapa2_100 | columnas_etapa3_parches_20 | consulta_liga_manual_senalizacion_barata | cuidar_entallado_variantes_color_completos | cuidar_senalizacion_saturar_seccion_recuerda | dar_prioridad_mercancia_calificada | dentro_clasificacion_agrupa_marca_rimax | dentro_clasificacion_agrupa_producto_descuento | dentro_clasificacion_senaliza_exhibicion_cubos | distribuir_cartulinas_equilibradamente_piso_garantizar | distribuir_material_largo_departamento | evitar_mezclar_marcas_respetar_clasificacion | exhibe_bloque_tipo_producto_marca | exhibe_colecciones_indica_book_impulsos | exhibe_mesa_parte_visible_descuentos | exhibe_producto_tendencia_oasis_floral | exhibe_siembra_espacio_visible_disciplina | exhibicion_disciplinas_mantiene_dentro_separan | exhibir_1_focal_por_marca | exhibir_liquidacion_zapatera | exhibir_modelos_repetirlos | exhibir_producto_descuento_mezclar | focal_bloque_marca_tipo_producto | focal_show_hombres_departamento_juveniles | focal_show_hombres_etapa1_2 | focal_show_infantiles_departamento_ninos8 | focal_show_infantiles_etapa1_2 | focal_show_mujeres_departamento_juniors | focal_show_mujeres_etapa1_2 | graficos_requeridos | identificar_cartulina_descuento | identificar_cartulina_shots_promocionales | identificar_producto_descuento_participante | impulsar_producto_especial_acuerdo_matriz | limpieza | maniqui_maniquies_deben_integrarse_elementos | maniquies_3_etiquetas_2 | maniquies_5_etiquetas_3 | mantener_orden_exhibicion | masivo_bloque_marca_tipo_producto | masivos_pasillo_deben_contar_espacio | mercadeo_bloqueo_producto | no_mezclar_marcas | perimetro_coloca_parte_superior_descuentos | permitido_material_pop_marcas_autorizadas | planchado | prioridad_producto_mobility_cloe_40 | producto_focal_show | realiza_mercadeo_descuento_mayor_menor | recuerda_etiquetas_solo_van_cadera | requiere_1_fotografia_focal | respetar_alturas_estiba_maxima | respetar_capacidad_ideal_mobiliario_permita | respetar_mundos_romper_clasificaciones | revisa_producto_focal_sea_mercancia | selecciona_producto_mezclar_descuentos_mundos | senaliza_cartulina_30 | senaliza_resto_seccion_promocion_25 | separacion_masivos_3_5_metros | surtido | ubica_puntos_focales_accesos_importantes | ubicar_frente_seccion_sea_mueble | utilizar_siguiente_formula | angulo_foto_deficiente | caja_vajilla_cerrada_narrative_kostlich | cajas_organizadoras | colorizacion | colorizacion_descuidada | impulsa_textiles_entran_98_puedes | looks_incompletos | mesa_lanzamientos_sigue_manejando_lanzamientos | mochilas_loncheras_lapiceras_concepto | protectores_sofa | puedes_sacar_pasillo_masivos_cajas | puff_caja | punto_verde_sin_actualizar | realizar_campamento_punt_roma_98 | triangulacion | triangulacion_debil | agrupar_combos_espacios_principales_seccion | barra_ballet_exhibe_producto_sola | barra_prendas_descuentos_altos_incluyendo | beneficio_etapa_incorrecto | calidad_evidencia_fotografica | campamento_maniquies_tringlas_barra_cartulina | campana_anterior_visible | cantidad_maniquies | caso_tener_modelos_exhibidos_zapateras | coloca_caja_vajilla_cerrada_general | cuentas_espacio_disponible_dentro_seccion | cuentas_espacio_suficiente_obstruya_paso | etiqueta_ausente_maniqui | exhibicion_ropa_deportiva_estanterias_maniquies | importante_mantener_surtido_caso_vaciarse | imprimir_torre_slim_mandar_parche | mercadea_forme_book_impulsos_mayo | mesa_realizar_bloques_mercancia_doblada | mezcla_descuentos | nada_resguarda | nota_exhibicion_producto_mesas_perimetros | poner_etiquetas_descuento_prendas_saturar | producto_sin_descuento | props_decoracion | puede_colocar_etiquetas_colgantes_maniquies | selecciona_producto_dando_prioridad_descuento | vestimenta_maniquies_revisa_apuestas_comerciales | vestir_maniquies_prendas_esten_exhibicion | visibilidad_producto_descuento_alto_corridas | código=0 | modelo=137",
+        "resumen_ejecutivo": "VEREDICTO GLOBAL: NO_CALIFICA | NO CALIFICA (138): 2_maniquies_1_etiqueta | acercate_jefe_seccion_pueda_dar | agrupa_producto_zoopet_descuento_gondola | agrupa_tipo_producto | agrupar_mercancia_calificada_barata_liquidacion | alineacion | asegura_coloque_cartulina_beneficio | atriles_primera_etapa_generico | barras_etapa1_40_60 | barras_etapa2_100 | barras_etapa3_100 | campamento_realiza_1_2_etapa | caso_contar_espacio_necesario_mercancia | caso_muebles_focal_coloca_etiqueta | clasificacion_seccion_muebles_modifica_campana | coloca_cartulina_descuento_agresivo_cuentes | coloca_coleccion_mundial_mesas_frente | coloca_exhibiciones_masivas_producto_participante | coloca_material_grafico_forma_alternada | colocar_alternando_largo_seccion_focales | colocar_alternando_seccion | colocar_cartulina_descuento_especifico_mercancia | colocar_cartulinas | colocar_etiquetas_cuidando_esten_misma | colocar_forma_alterna_material_grafico | colocar_producto_apuesta_comercial | colocar_producto_descuento_mayor_menor | colocar_producto_mayor_descuento | columnas_etapa1_40_60 | columnas_etapa2_100 | columnas_etapa3_parches_20 | consulta_liga_manual_senalizacion_barata | cuidar_entallado_variantes_color_completos | cuidar_senalizacion_saturar_seccion_recuerda | dar_prioridad_mercancia_calificada | dentro_clasificacion_agrupa_marca_rimax | dentro_clasificacion_agrupa_producto_descuento | dentro_clasificacion_senaliza_exhibicion_cubos | distribuir_cartulinas_equilibradamente_piso_garantizar | distribuir_material_largo_departamento | evitar_mezclar_marcas_respetar_clasificacion | exhibe_bloque_tipo_producto_marca | exhibe_colecciones_indica_book_impulsos | exhibe_mesa_parte_visible_descuentos | exhibe_producto_tendencia_oasis_floral | exhibe_siembra_espacio_visible_disciplina | exhibicion_disciplinas_mantiene_dentro_separan | exhibir_1_focal_por_marca | exhibir_liquidacion_zapatera | exhibir_modelos_repetirlos | exhibir_producto_descuento_mezclar | focal_bloque_marca_tipo_producto | focal_show_hombres_departamento_juveniles | focal_show_hombres_etapa1_2 | focal_show_infantiles_departamento_ninos8 | focal_show_infantiles_etapa1_2 | focal_show_mujeres_departamento_juniors | focal_show_mujeres_etapa1_2 | graficos_requeridos | identificar_cartulina_descuento | identificar_cartulina_shots_promocionales | identificar_producto_descuento_participante | impulsar_producto_especial_acuerdo_matriz | limpieza | maniqui_maniquies_deben_integrarse_elementos | maniquies_3_etiquetas_2 | maniquies_5_etiquetas_3 | mantener_orden_exhibicion | masivo_bloque_marca_tipo_producto | masivos_pasillo_deben_contar_espacio | mercadeo_bloqueo_producto | no_mezclar_marcas | perimetro_coloca_parte_superior_descuentos | permitido_material_pop_marcas_autorizadas | planchado | prioridad_producto_mobility_cloe_40 | producto_focal_show | realiza_mercadeo_descuento_mayor_menor | recuerda_etiquetas_solo_van_cadera | requiere_1_fotografia_focal | respetar_alturas_estiba_maxima | respetar_capacidad_ideal_mobiliario_permita | respetar_mundos_romper_clasificaciones | revisa_producto_focal_sea_mercancia | selecciona_producto_mezclar_descuentos_mundos | senaliza_cartulina_30 | senaliza_resto_seccion_promocion_25 | separacion_masivos_3_5_metros | surtido | ubica_puntos_focales_accesos_importantes | ubicar_frente_seccion_sea_mueble | utilizar_siguiente_formula | angulo_foto_deficiente | caja_vajilla_cerrada_narrative_kostlich | cajas_organizadoras | colorizacion | colorizacion_descuidada | impulsa_textiles_entran_98_puedes | looks_incompletos | mesa_lanzamientos_sigue_manejando_lanzamientos | mochilas_loncheras_lapiceras_concepto | protectores_sofa | puedes_sacar_pasillo_masivos_cajas | puff_caja | punto_verde_sin_actualizar | realizar_campamento_punt_roma_98 | triangulacion | triangulacion_debil | agrupar_combos_espacios_principales_seccion | barra_ballet_exhibe_producto_sola | barra_prendas_descuentos_altos_incluyendo | beneficio_etapa_incorrecto | calidad_evidencia_fotografica | campamento_maniquies_tringlas_barra_cartulina | campana_anterior_visible | cantidad_maniquies | caso_tener_modelos_exhibidos_zapateras | coloca_caja_vajilla_cerrada_general | cuentas_espacio_disponible_dentro_seccion | cuentas_espacio_suficiente_obstruya_paso | etiqueta_ausente_maniqui | exhibicion_ropa_deportiva_estanterias_maniquies | importante_mantener_surtido_caso_vaciarse | imprimir_torre_slim_mandar_parche | mercadea_forme_book_impulsos_mayo | mesa_realizar_bloques_mercancia_doblada | mezcla_descuentos | nada_resguarda | nota_exhibicion_producto_mesas_perimetros | poner_etiquetas_descuento_prendas_saturar | producto_sin_descuento | props_decoracion | puede_colocar_etiquetas_colgantes_maniquies | selecciona_producto_dando_prioridad_descuento | vestimenta_maniquies_revisa_apuestas_comerciales | vestir_maniquies_prendas_esten_exhibicion | visibilidad_producto_descuento_alto_corridas | grafico_no_detectado | código=1 | modelo=137 | EVALUACIÓN PARCIAL: el modelo no respondió 10 de 10 lote(s) de criterios delegados",
         "brillo_medido_photo_analyzer": 41.0,
         "quality_photo_analyzer": "regular"
       },
       "excepcion": null,
-      "duracion_s": 0.257,
+      "duracion_s": 0.26,
       "intentos_red": 0,
       "sleep_solicitado_s": 0.0,
       "logs_warning_error": [
@@ -830,7 +834,7 @@
         }
       },
       "excepcion": null,
-      "duracion_s": 0.033,
+      "duracion_s": 0.034,
       "intentos_red": 0,
       "sleep_solicitado_s": 0.0,
       "logs_warning_error": [
@@ -858,7 +862,7 @@
         }
       },
       "excepcion": null,
-      "duracion_s": 0.002,
+      "duracion_s": 0.003,
       "intentos_red": 0,
       "sleep_solicitado_s": 0.0,
       "logs_warning_error": [
@@ -886,7 +890,7 @@
         }
       },
       "excepcion": null,
-      "duracion_s": 0.002,
+      "duracion_s": 0.003,
       "intentos_red": 0,
       "sleep_solicitado_s": 0.0,
       "logs_warning_error": [
@@ -914,7 +918,7 @@
         }
       },
       "excepcion": null,
-      "duracion_s": 0.002,
+      "duracion_s": 0.007,
       "intentos_red": 0,
       "sleep_solicitado_s": 0.0,
       "logs_warning_error": [
@@ -929,11 +933,11 @@
       "observado": {
         "veredicto_global": "NO_CALIFICA",
         "puede_continuar": true,
-        "n_criterios": 137,
+        "n_criterios": 138,
         "criterios_por_severidad": {
-          "NO_CALIFICA": 137
+          "NO_CALIFICA": 138
         },
-        "decididos_codigo": 0,
+        "decididos_codigo": 1,
         "delegados_modelo": 137,
         "ids_criterios": [
           "2_maniquies_1_etiqueta",
@@ -1013,6 +1017,7 @@
           "focal_show_infantiles_etapa1_2",
           "focal_show_mujeres_departamento_juniors",
           "focal_show_mujeres_etapa1_2",
+          "grafico_no_detectado",
           "graficos_requeridos",
           "identificar_cartulina_descuento",
           "identificar_cartulina_shots_promocionales",
@@ -1074,10 +1079,10 @@
           "vestir_maniquies_prendas_esten_exhibicion",
           "visibilidad_producto_descuento_alto_corridas"
         ],
-        "resumen_ejecutivo": "VEREDICTO GLOBAL: NO_CALIFICA | NO CALIFICA (137): 2_maniquies_1_etiqueta | acercate_jefe_seccion_pueda_dar | agrupa_producto_zoopet_descuento_gondola | agrupa_tipo_producto | agrupar_mercancia_calificada_barata_liquidacion | alineacion | asegura_coloque_cartulina_beneficio | atriles_primera_etapa_generico | barras_etapa1_40_60 | barras_etapa2_100 | barras_etapa3_100 | campamento_realiza_1_2_etapa | caso_contar_espacio_necesario_mercancia | caso_muebles_focal_coloca_etiqueta | clasificacion_seccion_muebles_modifica_campana | coloca_cartulina_descuento_agresivo_cuentes | coloca_coleccion_mundial_mesas_frente | coloca_exhibiciones_masivas_producto_participante | coloca_material_grafico_forma_alternada | colocar_alternando_largo_seccion_focales | colocar_alternando_seccion | colocar_cartulina_descuento_especifico_mercancia | colocar_cartulinas | colocar_etiquetas_cuidando_esten_misma | colocar_forma_alterna_material_grafico | colocar_producto_apuesta_comercial | colocar_producto_descuento_mayor_menor | colocar_producto_mayor_descuento | columnas_etapa1_40_60 | columnas_etapa2_100 | columnas_etapa3_parches_20 | consulta_liga_manual_senalizacion_barata | cuidar_entallado_variantes_color_completos | cuidar_senalizacion_saturar_seccion_recuerda | dar_prioridad_mercancia_calificada | dentro_clasificacion_agrupa_marca_rimax | dentro_clasificacion_agrupa_producto_descuento | dentro_clasificacion_senaliza_exhibicion_cubos | distribuir_cartulinas_equilibradamente_piso_garantizar | distribuir_material_largo_departamento | evitar_mezclar_marcas_respetar_clasificacion | exhibe_bloque_tipo_producto_marca | exhibe_colecciones_indica_book_impulsos | exhibe_mesa_parte_visible_descuentos | exhibe_producto_tendencia_oasis_floral | exhibe_siembra_espacio_visible_disciplina | exhibicion_disciplinas_mantiene_dentro_separan | exhibir_1_focal_por_marca | exhibir_liquidacion_zapatera | exhibir_modelos_repetirlos | exhibir_producto_descuento_mezclar | focal_bloque_marca_tipo_producto | focal_show_hombres_departamento_juveniles | focal_show_hombres_etapa1_2 | focal_show_infantiles_departamento_ninos8 | focal_show_infantiles_etapa1_2 | focal_show_mujeres_departamento_juniors | focal_show_mujeres_etapa1_2 | graficos_requeridos | identificar_cartulina_descuento | identificar_cartulina_shots_promocionales | identificar_producto_descuento_participante | impulsar_producto_especial_acuerdo_matriz | limpieza | maniqui_maniquies_deben_integrarse_elementos | maniquies_3_etiquetas_2 | maniquies_5_etiquetas_3 | mantener_orden_exhibicion | masivo_bloque_marca_tipo_producto | masivos_pasillo_deben_contar_espacio | mercadeo_bloqueo_producto | no_mezclar_marcas | perimetro_coloca_parte_superior_descuentos | permitido_material_pop_marcas_autorizadas | planchado | prioridad_producto_mobility_cloe_40 | producto_focal_show | realiza_mercadeo_descuento_mayor_menor | recuerda_etiquetas_solo_van_cadera | requiere_1_fotografia_focal | respetar_alturas_estiba_maxima | respetar_capacidad_ideal_mobiliario_permita | respetar_mundos_romper_clasificaciones | revisa_producto_focal_sea_mercancia | selecciona_producto_mezclar_descuentos_mundos | senaliza_cartulina_30 | senaliza_resto_seccion_promocion_25 | separacion_masivos_3_5_metros | surtido | ubica_puntos_focales_accesos_importantes | ubicar_frente_seccion_sea_mueble | utilizar_siguiente_formula | angulo_foto_deficiente | caja_vajilla_cerrada_narrative_kostlich | cajas_organizadoras | colorizacion | colorizacion_descuidada | impulsa_textiles_entran_98_puedes | looks_incompletos | mesa_lanzamientos_sigue_manejando_lanzamientos | mochilas_loncheras_lapiceras_concepto | protectores_sofa | puedes_sacar_pasillo_masivos_cajas | puff_caja | punto_verde_sin_actualizar | realizar_campamento_punt_roma_98 | triangulacion | triangulacion_debil | agrupar_combos_espacios_principales_seccion | barra_ballet_exhibe_producto_sola | barra_prendas_descuentos_altos_incluyendo | beneficio_etapa_incorrecto | calidad_evidencia_fotografica | campamento_maniquies_tringlas_barra_cartulina | campana_anterior_visible | cantidad_maniquies | caso_tener_modelos_exhibidos_zapateras | coloca_caja_vajilla_cerrada_general | cuentas_espacio_disponible_dentro_seccion | cuentas_espacio_suficiente_obstruya_paso | etiqueta_ausente_maniqui | exhibicion_ropa_deportiva_estanterias_maniquies | importante_mantener_surtido_caso_vaciarse | imprimir_torre_slim_mandar_parche | mercadea_forme_book_impulsos_mayo | mesa_realizar_bloques_mercancia_doblada | mezcla_descuentos | nada_resguarda | nota_exhibicion_producto_mesas_perimetros | poner_etiquetas_descuento_prendas_saturar | producto_sin_descuento | props_decoracion | puede_colocar_etiquetas_colgantes_maniquies | selecciona_producto_dando_prioridad_descuento | vestimenta_maniquies_revisa_apuestas_comerciales | vestir_maniquies_prendas_esten_exhibicion | visibilidad_producto_descuento_alto_corridas | código=0 | modelo=137"
+        "resumen_ejecutivo": "VEREDICTO GLOBAL: NO_CALIFICA | NO CALIFICA (138): 2_maniquies_1_etiqueta | acercate_jefe_seccion_pueda_dar | agrupa_producto_zoopet_descuento_gondola | agrupa_tipo_producto | agrupar_mercancia_calificada_barata_liquidacion | alineacion | asegura_coloque_cartulina_beneficio | atriles_primera_etapa_generico | barras_etapa1_40_60 | barras_etapa2_100 | barras_etapa3_100 | campamento_realiza_1_2_etapa | caso_contar_espacio_necesario_mercancia | caso_muebles_focal_coloca_etiqueta | clasificacion_seccion_muebles_modifica_campana | coloca_cartulina_descuento_agresivo_cuentes | coloca_coleccion_mundial_mesas_frente | coloca_exhibiciones_masivas_producto_participante | coloca_material_grafico_forma_alternada | colocar_alternando_largo_seccion_focales | colocar_alternando_seccion | colocar_cartulina_descuento_especifico_mercancia | colocar_cartulinas | colocar_etiquetas_cuidando_esten_misma | colocar_forma_alterna_material_grafico | colocar_producto_apuesta_comercial | colocar_producto_descuento_mayor_menor | colocar_producto_mayor_descuento | columnas_etapa1_40_60 | columnas_etapa2_100 | columnas_etapa3_parches_20 | consulta_liga_manual_senalizacion_barata | cuidar_entallado_variantes_color_completos | cuidar_senalizacion_saturar_seccion_recuerda | dar_prioridad_mercancia_calificada | dentro_clasificacion_agrupa_marca_rimax | dentro_clasificacion_agrupa_producto_descuento | dentro_clasificacion_senaliza_exhibicion_cubos | distribuir_cartulinas_equilibradamente_piso_garantizar | distribuir_material_largo_departamento | evitar_mezclar_marcas_respetar_clasificacion | exhibe_bloque_tipo_producto_marca | exhibe_colecciones_indica_book_impulsos | exhibe_mesa_parte_visible_descuentos | exhibe_producto_tendencia_oasis_floral | exhibe_siembra_espacio_visible_disciplina | exhibicion_disciplinas_mantiene_dentro_separan | exhibir_1_focal_por_marca | exhibir_liquidacion_zapatera | exhibir_modelos_repetirlos | exhibir_producto_descuento_mezclar | focal_bloque_marca_tipo_producto | focal_show_hombres_departamento_juveniles | focal_show_hombres_etapa1_2 | focal_show_infantiles_departamento_ninos8 | focal_show_infantiles_etapa1_2 | focal_show_mujeres_departamento_juniors | focal_show_mujeres_etapa1_2 | graficos_requeridos | identificar_cartulina_descuento | identificar_cartulina_shots_promocionales | identificar_producto_descuento_participante | impulsar_producto_especial_acuerdo_matriz | limpieza | maniqui_maniquies_deben_integrarse_elementos | maniquies_3_etiquetas_2 | maniquies_5_etiquetas_3 | mantener_orden_exhibicion | masivo_bloque_marca_tipo_producto | masivos_pasillo_deben_contar_espacio | mercadeo_bloqueo_producto | no_mezclar_marcas | perimetro_coloca_parte_superior_descuentos | permitido_material_pop_marcas_autorizadas | planchado | prioridad_producto_mobility_cloe_40 | producto_focal_show | realiza_mercadeo_descuento_mayor_menor | recuerda_etiquetas_solo_van_cadera | requiere_1_fotografia_focal | respetar_alturas_estiba_maxima | respetar_capacidad_ideal_mobiliario_permita | respetar_mundos_romper_clasificaciones | revisa_producto_focal_sea_mercancia | selecciona_producto_mezclar_descuentos_mundos | senaliza_cartulina_30 | senaliza_resto_seccion_promocion_25 | separacion_masivos_3_5_metros | surtido | ubica_puntos_focales_accesos_importantes | ubicar_frente_seccion_sea_mueble | utilizar_siguiente_formula | angulo_foto_deficiente | caja_vajilla_cerrada_narrative_kostlich | cajas_organizadoras | colorizacion | colorizacion_descuidada | impulsa_textiles_entran_98_puedes | looks_incompletos | mesa_lanzamientos_sigue_manejando_lanzamientos | mochilas_loncheras_lapiceras_concepto | protectores_sofa | puedes_sacar_pasillo_masivos_cajas | puff_caja | punto_verde_sin_actualizar | realizar_campamento_punt_roma_98 | triangulacion | triangulacion_debil | agrupar_combos_espacios_principales_seccion | barra_ballet_exhibe_producto_sola | barra_prendas_descuentos_altos_incluyendo | beneficio_etapa_incorrecto | calidad_evidencia_fotografica | campamento_maniquies_tringlas_barra_cartulina | campana_anterior_visible | cantidad_maniquies | caso_tener_modelos_exhibidos_zapateras | coloca_caja_vajilla_cerrada_general | cuentas_espacio_disponible_dentro_seccion | cuentas_espacio_suficiente_obstruya_paso | etiqueta_ausente_maniqui | exhibicion_ropa_deportiva_estanterias_maniquies | importante_mantener_surtido_caso_vaciarse | imprimir_torre_slim_mandar_parche | mercadea_forme_book_impulsos_mayo | mesa_realizar_bloques_mercancia_doblada | mezcla_descuentos | nada_resguarda | nota_exhibicion_producto_mesas_perimetros | poner_etiquetas_descuento_prendas_saturar | producto_sin_descuento | props_decoracion | puede_colocar_etiquetas_colgantes_maniquies | selecciona_producto_dando_prioridad_descuento | vestimenta_maniquies_revisa_apuestas_comerciales | vestir_maniquies_prendas_esten_exhibicion | visibilidad_producto_descuento_alto_corridas | grafico_no_detectado | código=1 | modelo=137 | EVALUACIÓN PARCIAL: el modelo no respondió 10 de 10 lote(s) de criterios delegados"
       },
       "excepcion": null,
-      "duracion_s": 0.252,
+      "duracion_s": 0.247,
       "intentos_red": 0,
       "sleep_solicitado_s": 0.0,
       "logs_warning_error": [
@@ -1110,11 +1115,11 @@
       "observado": {
         "veredicto_global": "NO_CALIFICA",
         "puede_continuar": true,
-        "n_criterios": 21,
+        "n_criterios": 22,
         "criterios_por_severidad": {
-          "NO_CALIFICA": 21
+          "NO_CALIFICA": 22
         },
-        "decididos_codigo": 0,
+        "decididos_codigo": 1,
         "delegados_modelo": 21,
         "ids_criterios": [
           "alineacion",
@@ -1125,6 +1130,7 @@
           "cantidad_maniquies",
           "colorizacion",
           "colorizacion_descuidada",
+          "etapa_no_definida",
           "etiqueta_ausente_maniqui",
           "graficos_requeridos",
           "limpieza",
@@ -1139,8 +1145,8 @@
           "triangulacion",
           "triangulacion_debil"
         ],
-        "resumen_ejecutivo": "VEREDICTO GLOBAL: NO_CALIFICA | NO CALIFICA (21): alineacion | graficos_requeridos | limpieza | planchado | producto_focal_show | surtido | angulo_foto_deficiente | colorizacion | colorizacion_descuidada | looks_incompletos | punto_verde_sin_actualizar | triangulacion | triangulacion_debil | beneficio_etapa_incorrecto | calidad_evidencia_fotografica | campana_anterior_visible | cantidad_maniquies | etiqueta_ausente_maniqui | mezcla_descuentos | producto_sin_descuento | props_decoracion | código=0 | modelo=21",
-        "menciona_etapa_no_definida": false
+        "resumen_ejecutivo": "VEREDICTO GLOBAL: NO_CALIFICA | NO CALIFICA (22): alineacion | graficos_requeridos | limpieza | planchado | producto_focal_show | surtido | angulo_foto_deficiente | colorizacion | colorizacion_descuidada | looks_incompletos | punto_verde_sin_actualizar | triangulacion | triangulacion_debil | beneficio_etapa_incorrecto | calidad_evidencia_fotografica | campana_anterior_visible | cantidad_maniquies | etiqueta_ausente_maniqui | mezcla_descuentos | producto_sin_descuento | props_decoracion | etapa_no_definida | código=1 | modelo=21 | EVALUACIÓN PARCIAL: el modelo no respondió 2 de 2 lote(s) de criterios delegados",
+        "menciona_etapa_no_definida": true
       },
       "excepcion": null,
       "duracion_s": 0.038,
@@ -1160,11 +1166,11 @@
       "observado": {
         "veredicto_global": "NO_CALIFICA",
         "puede_continuar": true,
-        "n_criterios": 21,
+        "n_criterios": 22,
         "criterios_por_severidad": {
-          "NO_CALIFICA": 21
+          "NO_CALIFICA": 22
         },
-        "decididos_codigo": 0,
+        "decididos_codigo": 1,
         "delegados_modelo": 21,
         "ids_criterios": [
           "alineacion",
@@ -1175,6 +1181,7 @@
           "cantidad_maniquies",
           "colorizacion",
           "colorizacion_descuidada",
+          "etapa_no_definida",
           "etiqueta_ausente_maniqui",
           "graficos_requeridos",
           "limpieza",
@@ -1189,11 +1196,11 @@
           "triangulacion",
           "triangulacion_debil"
         ],
-        "resumen_ejecutivo": "VEREDICTO GLOBAL: NO_CALIFICA | NO CALIFICA (21): alineacion | graficos_requeridos | limpieza | planchado | producto_focal_show | surtido | angulo_foto_deficiente | colorizacion | colorizacion_descuidada | looks_incompletos | punto_verde_sin_actualizar | triangulacion | triangulacion_debil | beneficio_etapa_incorrecto | calidad_evidencia_fotografica | campana_anterior_visible | cantidad_maniquies | etiqueta_ausente_maniqui | mezcla_descuentos | producto_sin_descuento | props_decoracion | código=0 | modelo=21",
-        "menciona_etapa_no_definida": false
+        "resumen_ejecutivo": "VEREDICTO GLOBAL: NO_CALIFICA | NO CALIFICA (22): alineacion | graficos_requeridos | limpieza | planchado | producto_focal_show | surtido | angulo_foto_deficiente | colorizacion | colorizacion_descuidada | looks_incompletos | punto_verde_sin_actualizar | triangulacion | triangulacion_debil | beneficio_etapa_incorrecto | calidad_evidencia_fotografica | campana_anterior_visible | cantidad_maniquies | etiqueta_ausente_maniqui | mezcla_descuentos | producto_sin_descuento | props_decoracion | etapa_no_definida | código=1 | modelo=21 | EVALUACIÓN PARCIAL: el modelo no respondió 2 de 2 lote(s) de criterios delegados",
+        "menciona_etapa_no_definida": true
       },
       "excepcion": null,
-      "duracion_s": 0.036,
+      "duracion_s": 0.038,
       "intentos_red": 0,
       "sleep_solicitado_s": 0.0,
       "logs_warning_error": [
@@ -1210,11 +1217,11 @@
       "observado": {
         "veredicto_global": "NO_CALIFICA",
         "puede_continuar": true,
-        "n_criterios": 141,
+        "n_criterios": 142,
         "criterios_por_severidad": {
-          "NO_CALIFICA": 141
+          "NO_CALIFICA": 142
         },
-        "decididos_codigo": 0,
+        "decididos_codigo": 1,
         "delegados_modelo": 141,
         "ids_criterios": [
           "2_maniquies_1_etiqueta",
@@ -1298,6 +1305,7 @@
           "focal_show_mujeres_departamento_juniors",
           "focal_show_mujeres_etapa1_2",
           "focal_show_mujeres_etapa3",
+          "grafico_no_detectado",
           "graficos_requeridos",
           "identificar_cartulina_descuento",
           "identificar_cartulina_shots_promocionales",
@@ -1359,11 +1367,11 @@
           "vestir_maniquies_prendas_esten_exhibicion",
           "visibilidad_producto_descuento_alto_corridas"
         ],
-        "resumen_ejecutivo": "VEREDICTO GLOBAL: NO_CALIFICA | NO CALIFICA (141): 2_maniquies_1_etiqueta | acercate_jefe_seccion_pueda_dar | agregar_puntos_dependiendo_etapa_encuentre | agrupa_producto_zoopet_descuento_gondola | agrupa_tipo_producto | agrupar_mercancia_calificada_barata_liquidacion | alineacion | asegura_coloque_cartulina_beneficio | atriles_primera_etapa_generico | barras_etapa1_40_60 | barras_etapa2_100 | barras_etapa3_100 | campamento_realiza_1_2_etapa | caso_contar_espacio_necesario_mercancia | caso_muebles_focal_coloca_etiqueta | clasificacion_seccion_muebles_modifica_campana | coloca_cartulina_descuento_agresivo_cuentes | coloca_coleccion_mundial_mesas_frente | coloca_exhibiciones_masivas_producto_participante | coloca_material_grafico_forma_alternada | colocar_alternando_largo_seccion_focales | colocar_alternando_seccion | colocar_cartulina_descuento_especifico_mercancia | colocar_cartulinas | colocar_etiquetas_cuidando_esten_misma | colocar_forma_alterna_material_grafico | colocar_producto_apuesta_comercial | colocar_producto_descuento_mayor_menor | colocar_producto_mayor_descuento | columnas_etapa1_40_60 | columnas_etapa2_100 | columnas_etapa3_parches_20 | consulta_liga_manual_senalizacion_barata | cuidar_entallado_variantes_color_completos | cuidar_senalizacion_saturar_seccion_recuerda | dar_prioridad_mercancia_calificada | dentro_clasificacion_agrupa_marca_rimax | dentro_clasificacion_agrupa_producto_descuento | dentro_clasificacion_senaliza_exhibicion_cubos | distribuir_cartulinas_equilibradamente_piso_garantizar | distribuir_material_largo_departamento | evitar_mezclar_marcas_respetar_clasificacion | exhibe_bloque_tipo_producto_marca | exhibe_colecciones_indica_book_impulsos | exhibe_mesa_parte_visible_descuentos | exhibe_producto_tendencia_oasis_floral | exhibe_siembra_espacio_visible_disciplina | exhibicion_disciplinas_mantiene_dentro_separan | exhibir_1_focal_por_marca | exhibir_liquidacion_zapatera | exhibir_modelos_repetirlos | exhibir_producto_descuento_mezclar | focal_bloque_marca_tipo_producto | focal_show_hombres_departamento_juveniles | focal_show_hombres_etapa1_2 | focal_show_hombres_etapa3 | focal_show_infantiles_departamento_ninos8 | focal_show_infantiles_etapa1_2 | focal_show_infantiles_etapa3 | focal_show_mujeres_departamento_juniors | focal_show_mujeres_etapa1_2 | focal_show_mujeres_etapa3 | graficos_requeridos | identificar_cartulina_descuento | identificar_cartulina_shots_promocionales | identificar_producto_descuento_participante | impulsar_producto_especial_acuerdo_matriz | limpieza | maniqui_maniquies_deben_integrarse_elementos | maniquies_3_etiquetas_2 | maniquies_5_etiquetas_3 | mantener_orden_exhibicion | masivo_bloque_marca_tipo_producto | masivos_pasillo_deben_contar_espacio | mercadeo_bloqueo_producto | no_mezclar_marcas | perimetro_coloca_parte_superior_descuentos | permitido_material_pop_marcas_autorizadas | planchado | prioridad_producto_mobility_cloe_40 | producto_focal_show | realiza_mercadeo_descuento_mayor_menor | recuerda_etiquetas_solo_van_cadera | requiere_1_fotografia_focal | respetar_alturas_estiba_maxima | respetar_capacidad_ideal_mobiliario_permita | respetar_mundos_romper_clasificaciones | revisa_producto_focal_sea_mercancia | selecciona_producto_mezclar_descuentos_mundos | senaliza_cartulina_30 | senaliza_resto_seccion_promocion_25 | separacion_masivos_3_5_metros | surtido | ubica_puntos_focales_accesos_importantes | ubicar_frente_seccion_sea_mueble | utilizar_siguiente_formula | angulo_foto_deficiente | caja_vajilla_cerrada_narrative_kostlich | cajas_organizadoras | colorizacion | colorizacion_descuidada | looks_incompletos | mesa_lanzamientos_sigue_manejando_lanzamientos | mochilas_loncheras_lapiceras_concepto | protectores_sofa | puedes_sacar_pasillo_masivos_cajas | puff_caja | punto_verde_sin_actualizar | triangulacion | triangulacion_debil | agrupar_combos_espacios_principales_seccion | barra_ballet_exhibe_producto_sola | barra_prendas_descuentos_altos_incluyendo | beneficio_etapa_incorrecto | calidad_evidencia_fotografica | campamento_maniquies_tringlas_barra_cartulina | campana_anterior_visible | cantidad_maniquies | caso_tener_modelos_exhibidos_zapateras | coloca_caja_vajilla_cerrada_general | cuentas_espacio_disponible_dentro_seccion | cuentas_espacio_suficiente_obstruya_paso | etiqueta_ausente_maniqui | exhibicion_ropa_deportiva_estanterias_maniquies | importante_mantener_surtido_caso_vaciarse | imprimir_torre_slim_mandar_parche | impulsa_textiles_entran_98_puedes | mercadea_forme_book_impulsos_mayo | mesa_realizar_bloques_mercancia_doblada | mezcla_descuentos | nada_resguarda | nota_exhibicion_producto_mesas_perimetros | poner_etiquetas_descuento_prendas_saturar | producto_sin_descuento | props_decoracion | puede_colocar_etiquetas_colgantes_maniquies | realizar_campamento_punt_roma_98 | selecciona_producto_dando_prioridad_descuento | vestimenta_maniquies_revisa_apuestas_comerciales | vestir_maniquies_prendas_esten_exhibicion | visibilidad_producto_descuento_alto_corridas | código=0 | modelo=141",
+        "resumen_ejecutivo": "VEREDICTO GLOBAL: NO_CALIFICA | NO CALIFICA (142): 2_maniquies_1_etiqueta | acercate_jefe_seccion_pueda_dar | agregar_puntos_dependiendo_etapa_encuentre | agrupa_producto_zoopet_descuento_gondola | agrupa_tipo_producto | agrupar_mercancia_calificada_barata_liquidacion | alineacion | asegura_coloque_cartulina_beneficio | atriles_primera_etapa_generico | barras_etapa1_40_60 | barras_etapa2_100 | barras_etapa3_100 | campamento_realiza_1_2_etapa | caso_contar_espacio_necesario_mercancia | caso_muebles_focal_coloca_etiqueta | clasificacion_seccion_muebles_modifica_campana | coloca_cartulina_descuento_agresivo_cuentes | coloca_coleccion_mundial_mesas_frente | coloca_exhibiciones_masivas_producto_participante | coloca_material_grafico_forma_alternada | colocar_alternando_largo_seccion_focales | colocar_alternando_seccion | colocar_cartulina_descuento_especifico_mercancia | colocar_cartulinas | colocar_etiquetas_cuidando_esten_misma | colocar_forma_alterna_material_grafico | colocar_producto_apuesta_comercial | colocar_producto_descuento_mayor_menor | colocar_producto_mayor_descuento | columnas_etapa1_40_60 | columnas_etapa2_100 | columnas_etapa3_parches_20 | consulta_liga_manual_senalizacion_barata | cuidar_entallado_variantes_color_completos | cuidar_senalizacion_saturar_seccion_recuerda | dar_prioridad_mercancia_calificada | dentro_clasificacion_agrupa_marca_rimax | dentro_clasificacion_agrupa_producto_descuento | dentro_clasificacion_senaliza_exhibicion_cubos | distribuir_cartulinas_equilibradamente_piso_garantizar | distribuir_material_largo_departamento | evitar_mezclar_marcas_respetar_clasificacion | exhibe_bloque_tipo_producto_marca | exhibe_colecciones_indica_book_impulsos | exhibe_mesa_parte_visible_descuentos | exhibe_producto_tendencia_oasis_floral | exhibe_siembra_espacio_visible_disciplina | exhibicion_disciplinas_mantiene_dentro_separan | exhibir_1_focal_por_marca | exhibir_liquidacion_zapatera | exhibir_modelos_repetirlos | exhibir_producto_descuento_mezclar | focal_bloque_marca_tipo_producto | focal_show_hombres_departamento_juveniles | focal_show_hombres_etapa1_2 | focal_show_hombres_etapa3 | focal_show_infantiles_departamento_ninos8 | focal_show_infantiles_etapa1_2 | focal_show_infantiles_etapa3 | focal_show_mujeres_departamento_juniors | focal_show_mujeres_etapa1_2 | focal_show_mujeres_etapa3 | graficos_requeridos | identificar_cartulina_descuento | identificar_cartulina_shots_promocionales | identificar_producto_descuento_participante | impulsar_producto_especial_acuerdo_matriz | limpieza | maniqui_maniquies_deben_integrarse_elementos | maniquies_3_etiquetas_2 | maniquies_5_etiquetas_3 | mantener_orden_exhibicion | masivo_bloque_marca_tipo_producto | masivos_pasillo_deben_contar_espacio | mercadeo_bloqueo_producto | no_mezclar_marcas | perimetro_coloca_parte_superior_descuentos | permitido_material_pop_marcas_autorizadas | planchado | prioridad_producto_mobility_cloe_40 | producto_focal_show | realiza_mercadeo_descuento_mayor_menor | recuerda_etiquetas_solo_van_cadera | requiere_1_fotografia_focal | respetar_alturas_estiba_maxima | respetar_capacidad_ideal_mobiliario_permita | respetar_mundos_romper_clasificaciones | revisa_producto_focal_sea_mercancia | selecciona_producto_mezclar_descuentos_mundos | senaliza_cartulina_30 | senaliza_resto_seccion_promocion_25 | separacion_masivos_3_5_metros | surtido | ubica_puntos_focales_accesos_importantes | ubicar_frente_seccion_sea_mueble | utilizar_siguiente_formula | angulo_foto_deficiente | caja_vajilla_cerrada_narrative_kostlich | cajas_organizadoras | colorizacion | colorizacion_descuidada | looks_incompletos | mesa_lanzamientos_sigue_manejando_lanzamientos | mochilas_loncheras_lapiceras_concepto | protectores_sofa | puedes_sacar_pasillo_masivos_cajas | puff_caja | punto_verde_sin_actualizar | triangulacion | triangulacion_debil | agrupar_combos_espacios_principales_seccion | barra_ballet_exhibe_producto_sola | barra_prendas_descuentos_altos_incluyendo | beneficio_etapa_incorrecto | calidad_evidencia_fotografica | campamento_maniquies_tringlas_barra_cartulina | campana_anterior_visible | cantidad_maniquies | caso_tener_modelos_exhibidos_zapateras | coloca_caja_vajilla_cerrada_general | cuentas_espacio_disponible_dentro_seccion | cuentas_espacio_suficiente_obstruya_paso | etiqueta_ausente_maniqui | exhibicion_ropa_deportiva_estanterias_maniquies | importante_mantener_surtido_caso_vaciarse | imprimir_torre_slim_mandar_parche | impulsa_textiles_entran_98_puedes | mercadea_forme_book_impulsos_mayo | mesa_realizar_bloques_mercancia_doblada | mezcla_descuentos | nada_resguarda | nota_exhibicion_producto_mesas_perimetros | poner_etiquetas_descuento_prendas_saturar | producto_sin_descuento | props_decoracion | puede_colocar_etiquetas_colgantes_maniquies | realizar_campamento_punt_roma_98 | selecciona_producto_dando_prioridad_descuento | vestimenta_maniquies_revisa_apuestas_comerciales | vestir_maniquies_prendas_esten_exhibicion | visibilidad_producto_descuento_alto_corridas | grafico_no_detectado | código=1 | modelo=141 | EVALUACIÓN PARCIAL: el modelo no respondió 10 de 10 lote(s) de criterios delegados",
         "menciona_etapa_no_definida": false
       },
       "excepcion": null,
-      "duracion_s": 0.261,
+      "duracion_s": 0.265,
       "intentos_red": 0,
       "sleep_solicitado_s": 0.0,
       "logs_warning_error": [
@@ -1396,11 +1404,11 @@
       "observado": {
         "veredicto_global": "NO_CALIFICA",
         "puede_continuar": true,
-        "n_criterios": 21,
+        "n_criterios": 23,
         "criterios_por_severidad": {
-          "NO_CALIFICA": 21
+          "NO_CALIFICA": 23
         },
-        "decididos_codigo": 0,
+        "decididos_codigo": 2,
         "delegados_modelo": 21,
         "ids_criterios": [
           "alineacion",
@@ -1411,7 +1419,9 @@
           "cantidad_maniquies",
           "colorizacion",
           "colorizacion_descuidada",
+          "conocimiento_incompleto",
           "etiqueta_ausente_maniqui",
+          "grafico_no_detectado",
           "graficos_requeridos",
           "limpieza",
           "looks_incompletos",
@@ -1425,14 +1435,17 @@
           "triangulacion",
           "triangulacion_debil"
         ],
-        "resumen_ejecutivo": "VEREDICTO GLOBAL: NO_CALIFICA | NO CALIFICA (21): alineacion | graficos_requeridos | limpieza | planchado | producto_focal_show | surtido | angulo_foto_deficiente | colorizacion | colorizacion_descuidada | looks_incompletos | punto_verde_sin_actualizar | triangulacion | triangulacion_debil | beneficio_etapa_incorrecto | calidad_evidencia_fotografica | campana_anterior_visible | cantidad_maniquies | etiqueta_ausente_maniqui | mezcla_descuentos | producto_sin_descuento | props_decoracion | código=0 | modelo=21"
+        "resumen_ejecutivo": "VEREDICTO GLOBAL: NO_CALIFICA | NO CALIFICA (23): alineacion | graficos_requeridos | limpieza | planchado | producto_focal_show | surtido | angulo_foto_deficiente | colorizacion | colorizacion_descuidada | looks_incompletos | punto_verde_sin_actualizar | triangulacion | triangulacion_debil | beneficio_etapa_incorrecto | calidad_evidencia_fotografica | campana_anterior_visible | cantidad_maniquies | etiqueta_ausente_maniqui | mezcla_descuentos | producto_sin_descuento | props_decoracion | grafico_no_detectado | conocimiento_incompleto | código=2 | modelo=21 | EVALUACIÓN PARCIAL: el modelo no respondió 2 de 2 lote(s) de criterios delegados"
       },
       "excepcion": null,
-      "duracion_s": 0.018,
+      "duracion_s": 0.029,
       "intentos_red": 0,
       "sleep_solicitado_s": 0.0,
       "logs_warning_error": [
         "WARNING visual_lv.pipeline | [PASO_0][grafico_detectado] visión no invocada — GEMINI_API_KEY ausente en el entorno",
+        "WARNING visual_lv.pipeline | capa ilegible C:\\Users\\jesus\\veristack\\motor1\\stress_test_codigo\\fixtures\\knowledge_roto\\capa2_corrupta.json: JSONDecodeError: Invalid control character at: line 1554 column 28 (char 47658)",
+        "WARNING visual_lv.pipeline | capa ilegible C:\\Users\\jesus\\veristack\\motor1\\stress_test_codigo\\fixtures\\knowledge_roto\\capa2_corrupta.json: JSONDecodeError: Invalid control character at: line 1554 column 28 (char 47658)",
+        "ERROR visual_lv.pipeline | [PASO_2][conocimiento_incompleto] knowledge base incompleto — evaluación no confiable — capa2 sin criterios (capa2_corrupta.json)",
         "WARNING visual_lv.retrieval | [capa2] no se pudo cargar capa C:\\Users\\jesus\\veristack\\motor1\\stress_test_codigo\\fixtures\\knowledge_roto\\capa2_corrupta.json: Invalid control character at: line 1554 column 28 (char 47658)",
         "WARNING visual_lv.pipeline | [PASO_4][-] modelo no invocado — GEMINI_API_KEY ausente en el entorno",
         "WARNING visual_lv.pipeline | [PASO_4][-] lote 1/2 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)",
@@ -1446,11 +1459,11 @@
       "observado": {
         "veredicto_global": "NO_CALIFICA",
         "puede_continuar": true,
-        "n_criterios": 21,
+        "n_criterios": 23,
         "criterios_por_severidad": {
-          "NO_CALIFICA": 21
+          "NO_CALIFICA": 23
         },
-        "decididos_codigo": 0,
+        "decididos_codigo": 2,
         "delegados_modelo": 21,
         "ids_criterios": [
           "alineacion",
@@ -1461,7 +1474,9 @@
           "cantidad_maniquies",
           "colorizacion",
           "colorizacion_descuidada",
+          "conocimiento_incompleto",
           "etiqueta_ausente_maniqui",
+          "grafico_no_detectado",
           "graficos_requeridos",
           "limpieza",
           "looks_incompletos",
@@ -1475,14 +1490,15 @@
           "triangulacion",
           "triangulacion_debil"
         ],
-        "resumen_ejecutivo": "VEREDICTO GLOBAL: NO_CALIFICA | NO CALIFICA (21): alineacion | graficos_requeridos | limpieza | planchado | producto_focal_show | surtido | angulo_foto_deficiente | colorizacion | colorizacion_descuidada | looks_incompletos | punto_verde_sin_actualizar | triangulacion | triangulacion_debil | beneficio_etapa_incorrecto | calidad_evidencia_fotografica | campana_anterior_visible | cantidad_maniquies | etiqueta_ausente_maniqui | mezcla_descuentos | producto_sin_descuento | props_decoracion | código=0 | modelo=21"
+        "resumen_ejecutivo": "VEREDICTO GLOBAL: NO_CALIFICA | NO CALIFICA (23): alineacion | graficos_requeridos | limpieza | planchado | producto_focal_show | surtido | angulo_foto_deficiente | colorizacion | colorizacion_descuidada | looks_incompletos | punto_verde_sin_actualizar | triangulacion | triangulacion_debil | beneficio_etapa_incorrecto | calidad_evidencia_fotografica | campana_anterior_visible | cantidad_maniquies | etiqueta_ausente_maniqui | mezcla_descuentos | producto_sin_descuento | props_decoracion | grafico_no_detectado | conocimiento_incompleto | código=2 | modelo=21 | EVALUACIÓN PARCIAL: el modelo no respondió 2 de 2 lote(s) de criterios delegados"
       },
       "excepcion": null,
-      "duracion_s": 0.016,
+      "duracion_s": 0.02,
       "intentos_red": 0,
       "sleep_solicitado_s": 0.0,
       "logs_warning_error": [
         "WARNING visual_lv.pipeline | [PASO_0][grafico_detectado] visión no invocada — GEMINI_API_KEY ausente en el entorno",
+        "ERROR visual_lv.pipeline | [PASO_2][conocimiento_incompleto] knowledge base incompleto — evaluación no confiable — capa2 sin criterios (capa2_vacia.json)",
         "WARNING visual_lv.pipeline | [PASO_4][-] modelo no invocado — GEMINI_API_KEY ausente en el entorno",
         "WARNING visual_lv.pipeline | [PASO_4][-] lote 1/2 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)",
         "WARNING visual_lv.pipeline | [PASO_4][-] modelo no invocado — GEMINI_API_KEY ausente en el entorno",
@@ -1495,19 +1511,31 @@
       "observado": {
         "veredicto_global": "NO_CALIFICA",
         "puede_continuar": true,
-        "n_criterios": 0,
-        "criterios_por_severidad": {},
-        "decididos_codigo": 0,
+        "n_criterios": 2,
+        "criterios_por_severidad": {
+          "NO_CALIFICA": 2
+        },
+        "decididos_codigo": 2,
         "delegados_modelo": 0,
-        "ids_criterios": [],
-        "resumen_ejecutivo": "VEREDICTO GLOBAL: NO_CALIFICA | código=0 | modelo=0"
+        "ids_criterios": [
+          "conocimiento_no_disponible",
+          "grafico_no_detectado"
+        ],
+        "resumen_ejecutivo": "VEREDICTO GLOBAL: NO_CALIFICA | NO CALIFICA (2): grafico_no_detectado | conocimiento_no_disponible | código=2 | modelo=0"
       },
       "excepcion": null,
-      "duracion_s": 0.014,
+      "duracion_s": 0.018,
       "intentos_red": 0,
       "sleep_solicitado_s": 0.0,
       "logs_warning_error": [
         "WARNING visual_lv.pipeline | [PASO_0][grafico_detectado] visión no invocada — GEMINI_API_KEY ausente en el entorno",
+        "WARNING visual_lv.pipeline | capa ilegible C:\\Users\\jesus\\veristack\\motor1\\stress_test_codigo\\fixtures\\knowledge_roto\\capa1_corrupta.json: JSONDecodeError: Expecting value: line 1 column 1 (char 0)",
+        "WARNING visual_lv.pipeline | capa ilegible C:\\Users\\jesus\\veristack\\motor1\\stress_test_codigo\\fixtures\\knowledge_roto\\capa2_corrupta.json: JSONDecodeError: Invalid control character at: line 1554 column 28 (char 47658)",
+        "WARNING visual_lv.pipeline | capa ilegible C:\\Users\\jesus\\veristack\\motor1\\stress_test_codigo\\fixtures\\knowledge_roto\\capa3_corrupta.json: JSONDecodeError: Expecting value: line 1 column 1 (char 0)",
+        "WARNING visual_lv.pipeline | capa ilegible C:\\Users\\jesus\\veristack\\motor1\\stress_test_codigo\\fixtures\\knowledge_roto\\capa1_corrupta.json: JSONDecodeError: Expecting value: line 1 column 1 (char 0)",
+        "WARNING visual_lv.pipeline | capa ilegible C:\\Users\\jesus\\veristack\\motor1\\stress_test_codigo\\fixtures\\knowledge_roto\\capa2_corrupta.json: JSONDecodeError: Invalid control character at: line 1554 column 28 (char 47658)",
+        "WARNING visual_lv.pipeline | capa ilegible C:\\Users\\jesus\\veristack\\motor1\\stress_test_codigo\\fixtures\\knowledge_roto\\capa3_corrupta.json: JSONDecodeError: Expecting value: line 1 column 1 (char 0)",
+        "ERROR visual_lv.pipeline | [PASO_2][conocimiento_no_disponible] knowledge base incompleto — evaluación no confiable — capa1 sin criterios (capa1_corrupta.json); capa2 sin criterios (capa2_corrupta.json); capa3 sin criterios (capa3_corrupta.json)",
         "WARNING visual_lv.retrieval | [capa1] no se pudo cargar capa C:\\Users\\jesus\\veristack\\motor1\\stress_test_codigo\\fixtures\\knowledge_roto\\capa1_corrupta.json: Expecting value: line 1 column 1 (char 0)",
         "WARNING visual_lv.retrieval | [capa2] no se pudo cargar capa C:\\Users\\jesus\\veristack\\motor1\\stress_test_codigo\\fixtures\\knowledge_roto\\capa2_corrupta.json: Invalid control character at: line 1554 column 28 (char 47658)",
         "WARNING visual_lv.retrieval | [capa3] no se pudo cargar capa C:\\Users\\jesus\\veristack\\motor1\\stress_test_codigo\\fixtures\\knowledge_roto\\capa3_corrupta.json: Expecting value: line 1 column 1 (char 0)",
@@ -1522,11 +1550,12 @@
       "observado": {
         "veredicto_global": "OBSERVACION",
         "puede_continuar": true,
-        "n_criterios": 122,
+        "n_criterios": 124,
         "criterios_por_severidad": {
-          "NO_CALIFICA": 122
+          "NO_CALIFICA": 123,
+          "OBSERVACION": 1
         },
-        "decididos_codigo": 0,
+        "decididos_codigo": 2,
         "delegados_modelo": 122,
         "ids_criterios": [
           "2_maniquies_1_etiqueta",
@@ -1599,6 +1628,7 @@
           "focal_show_infantiles_etapa1_2",
           "focal_show_mujeres_departamento_juniors",
           "focal_show_mujeres_etapa1_2",
+          "grafico_no_detectado",
           "identificar_cartulina_descuento",
           "identificar_cartulina_shots_promocionales",
           "identificar_producto_descuento_participante",
@@ -1644,6 +1674,7 @@
           "senaliza_resto_seccion_promocion_25",
           "separacion_masivos_3_5_metros",
           "surtido",
+          "tipo_foto_invalido",
           "triangulacion",
           "ubica_puntos_focales_accesos_importantes",
           "ubicar_frente_seccion_sea_mueble",
@@ -1652,10 +1683,10 @@
           "vestir_maniquies_prendas_esten_exhibicion",
           "visibilidad_producto_descuento_alto_corridas"
         ],
-        "resumen_ejecutivo": "VEREDICTO GLOBAL: OBSERVACION | NO CALIFICA (122): 2_maniquies_1_etiqueta | acercate_jefe_seccion_pueda_dar | agrupa_producto_zoopet_descuento_gondola | agrupa_tipo_producto | agrupar_mercancia_calificada_barata_liquidacion | alineacion | asegura_coloque_cartulina_beneficio | atriles_primera_etapa_generico | barras_etapa1_40_60 | barras_etapa2_100 | barras_etapa3_100 | campamento_realiza_1_2_etapa | caso_contar_espacio_necesario_mercancia | caso_muebles_focal_coloca_etiqueta | clasificacion_seccion_muebles_modifica_campana | coloca_cartulina_descuento_agresivo_cuentes | coloca_coleccion_mundial_mesas_frente | coloca_exhibiciones_masivas_producto_participante | coloca_material_grafico_forma_alternada | colocar_alternando_largo_seccion_focales | colocar_alternando_seccion | colocar_cartulina_descuento_especifico_mercancia | colocar_cartulinas | colocar_etiquetas_cuidando_esten_misma | colocar_forma_alterna_material_grafico | colocar_producto_apuesta_comercial | colocar_producto_descuento_mayor_menor | colocar_producto_mayor_descuento | columnas_etapa1_40_60 | columnas_etapa2_100 | columnas_etapa3_parches_20 | consulta_liga_manual_senalizacion_barata | cuidar_entallado_variantes_color_completos | cuidar_senalizacion_saturar_seccion_recuerda | dar_prioridad_mercancia_calificada | dentro_clasificacion_agrupa_marca_rimax | dentro_clasificacion_agrupa_producto_descuento | dentro_clasificacion_senaliza_exhibicion_cubos | distribuir_cartulinas_equilibradamente_piso_garantizar | distribuir_material_largo_departamento | evitar_mezclar_marcas_respetar_clasificacion | exhibe_bloque_tipo_producto_marca | exhibe_colecciones_indica_book_impulsos | exhibe_mesa_parte_visible_descuentos | exhibe_producto_tendencia_oasis_floral | exhibe_siembra_espacio_visible_disciplina | exhibicion_disciplinas_mantiene_dentro_separan | exhibir_1_focal_por_marca | exhibir_liquidacion_zapatera | exhibir_modelos_repetirlos | exhibir_producto_descuento_mezclar | focal_bloque_marca_tipo_producto | focal_show_hombres_departamento_juveniles | focal_show_hombres_etapa1_2 | focal_show_infantiles_departamento_ninos8 | focal_show_infantiles_etapa1_2 | focal_show_mujeres_departamento_juniors | focal_show_mujeres_etapa1_2 | identificar_cartulina_descuento | identificar_cartulina_shots_promocionales | identificar_producto_descuento_participante | impulsar_producto_especial_acuerdo_matriz | limpieza | maniqui_maniquies_deben_integrarse_elementos | maniquies_3_etiquetas_2 | maniquies_5_etiquetas_3 | mantener_orden_exhibicion | masivo_bloque_marca_tipo_producto | masivos_pasillo_deben_contar_espacio | mercadeo_bloqueo_producto | no_mezclar_marcas | perimetro_coloca_parte_superior_descuentos | permitido_material_pop_marcas_autorizadas | planchado | prioridad_producto_mobility_cloe_40 | realiza_mercadeo_descuento_mayor_menor | recuerda_etiquetas_solo_van_cadera | requiere_1_fotografia_focal | respetar_alturas_estiba_maxima | respetar_capacidad_ideal_mobiliario_permita | respetar_mundos_romper_clasificaciones | revisa_producto_focal_sea_mercancia | selecciona_producto_mezclar_descuentos_mundos | senaliza_cartulina_30 | senaliza_resto_seccion_promocion_25 | separacion_masivos_3_5_metros | surtido | ubica_puntos_focales_accesos_importantes | ubicar_frente_seccion_sea_mueble | utilizar_siguiente_formula | caja_vajilla_cerrada_narrative_kostlich | cajas_organizadoras | colorizacion | impulsa_textiles_entran_98_puedes | mesa_lanzamientos_sigue_manejando_lanzamientos | mochilas_loncheras_lapiceras_concepto | protectores_sofa | puedes_sacar_pasillo_masivos_cajas | puff_caja | realizar_campamento_punt_roma_98 | triangulacion | agrupar_combos_espacios_principales_seccion | barra_ballet_exhibe_producto_sola | barra_prendas_descuentos_altos_incluyendo | campamento_maniquies_tringlas_barra_cartulina | caso_tener_modelos_exhibidos_zapateras | coloca_caja_vajilla_cerrada_general | cuentas_espacio_disponible_dentro_seccion | cuentas_espacio_suficiente_obstruya_paso | exhibicion_ropa_deportiva_estanterias_maniquies | importante_mantener_surtido_caso_vaciarse | imprimir_torre_slim_mandar_parche | mercadea_forme_book_impulsos_mayo | mesa_realizar_bloques_mercancia_doblada | nada_resguarda | nota_exhibicion_producto_mesas_perimetros | poner_etiquetas_descuento_prendas_saturar | puede_colocar_etiquetas_colgantes_maniquies | selecciona_producto_dando_prioridad_descuento | vestimenta_maniquies_revisa_apuestas_comerciales | vestir_maniquies_prendas_esten_exhibicion | visibilidad_producto_descuento_alto_corridas | código=0 | modelo=122"
+        "resumen_ejecutivo": "VEREDICTO GLOBAL: OBSERVACION | OBSERVACIONES (1): tipo_foto_invalido | NO CALIFICA (123): 2_maniquies_1_etiqueta | acercate_jefe_seccion_pueda_dar | agrupa_producto_zoopet_descuento_gondola | agrupa_tipo_producto | agrupar_mercancia_calificada_barata_liquidacion | alineacion | asegura_coloque_cartulina_beneficio | atriles_primera_etapa_generico | barras_etapa1_40_60 | barras_etapa2_100 | barras_etapa3_100 | campamento_realiza_1_2_etapa | caso_contar_espacio_necesario_mercancia | caso_muebles_focal_coloca_etiqueta | clasificacion_seccion_muebles_modifica_campana | coloca_cartulina_descuento_agresivo_cuentes | coloca_coleccion_mundial_mesas_frente | coloca_exhibiciones_masivas_producto_participante | coloca_material_grafico_forma_alternada | colocar_alternando_largo_seccion_focales | colocar_alternando_seccion | colocar_cartulina_descuento_especifico_mercancia | colocar_cartulinas | colocar_etiquetas_cuidando_esten_misma | colocar_forma_alterna_material_grafico | colocar_producto_apuesta_comercial | colocar_producto_descuento_mayor_menor | colocar_producto_mayor_descuento | columnas_etapa1_40_60 | columnas_etapa2_100 | columnas_etapa3_parches_20 | consulta_liga_manual_senalizacion_barata | cuidar_entallado_variantes_color_completos | cuidar_senalizacion_saturar_seccion_recuerda | dar_prioridad_mercancia_calificada | dentro_clasificacion_agrupa_marca_rimax | dentro_clasificacion_agrupa_producto_descuento | dentro_clasificacion_senaliza_exhibicion_cubos | distribuir_cartulinas_equilibradamente_piso_garantizar | distribuir_material_largo_departamento | evitar_mezclar_marcas_respetar_clasificacion | exhibe_bloque_tipo_producto_marca | exhibe_colecciones_indica_book_impulsos | exhibe_mesa_parte_visible_descuentos | exhibe_producto_tendencia_oasis_floral | exhibe_siembra_espacio_visible_disciplina | exhibicion_disciplinas_mantiene_dentro_separan | exhibir_1_focal_por_marca | exhibir_liquidacion_zapatera | exhibir_modelos_repetirlos | exhibir_producto_descuento_mezclar | focal_bloque_marca_tipo_producto | focal_show_hombres_departamento_juveniles | focal_show_hombres_etapa1_2 | focal_show_infantiles_departamento_ninos8 | focal_show_infantiles_etapa1_2 | focal_show_mujeres_departamento_juniors | focal_show_mujeres_etapa1_2 | identificar_cartulina_descuento | identificar_cartulina_shots_promocionales | identificar_producto_descuento_participante | impulsar_producto_especial_acuerdo_matriz | limpieza | maniqui_maniquies_deben_integrarse_elementos | maniquies_3_etiquetas_2 | maniquies_5_etiquetas_3 | mantener_orden_exhibicion | masivo_bloque_marca_tipo_producto | masivos_pasillo_deben_contar_espacio | mercadeo_bloqueo_producto | no_mezclar_marcas | perimetro_coloca_parte_superior_descuentos | permitido_material_pop_marcas_autorizadas | planchado | prioridad_producto_mobility_cloe_40 | realiza_mercadeo_descuento_mayor_menor | recuerda_etiquetas_solo_van_cadera | requiere_1_fotografia_focal | respetar_alturas_estiba_maxima | respetar_capacidad_ideal_mobiliario_permita | respetar_mundos_romper_clasificaciones | revisa_producto_focal_sea_mercancia | selecciona_producto_mezclar_descuentos_mundos | senaliza_cartulina_30 | senaliza_resto_seccion_promocion_25 | separacion_masivos_3_5_metros | surtido | ubica_puntos_focales_accesos_importantes | ubicar_frente_seccion_sea_mueble | utilizar_siguiente_formula | caja_vajilla_cerrada_narrative_kostlich | cajas_organizadoras | colorizacion | impulsa_textiles_entran_98_puedes | mesa_lanzamientos_sigue_manejando_lanzamientos | mochilas_loncheras_lapiceras_concepto | protectores_sofa | puedes_sacar_pasillo_masivos_cajas | puff_caja | realizar_campamento_punt_roma_98 | triangulacion | agrupar_combos_espacios_principales_seccion | barra_ballet_exhibe_producto_sola | barra_prendas_descuentos_altos_incluyendo | campamento_maniquies_tringlas_barra_cartulina | caso_tener_modelos_exhibidos_zapateras | coloca_caja_vajilla_cerrada_general | cuentas_espacio_disponible_dentro_seccion | cuentas_espacio_suficiente_obstruya_paso | exhibicion_ropa_deportiva_estanterias_maniquies | importante_mantener_surtido_caso_vaciarse | imprimir_torre_slim_mandar_parche | mercadea_forme_book_impulsos_mayo | mesa_realizar_bloques_mercancia_doblada | nada_resguarda | nota_exhibicion_producto_mesas_perimetros | poner_etiquetas_descuento_prendas_saturar | puede_colocar_etiquetas_colgantes_maniquies | selecciona_producto_dando_prioridad_descuento | vestimenta_maniquies_revisa_apuestas_comerciales | vestir_maniquies_prendas_esten_exhibicion | visibilidad_producto_descuento_alto_corridas | grafico_no_detectado | código=2 | modelo=122 | EVALUACIÓN PARCIAL: el modelo no respondió 9 de 9 lote(s) de criterios delegados"
       },
       "excepcion": null,
-      "duracion_s": 0.205,
+      "duracion_s": 0.202,
       "intentos_red": 0,
       "sleep_solicitado_s": 0.0,
       "logs_warning_error": [
@@ -1710,11 +1741,11 @@
       "observado": {
         "veredicto_global": "NO_CALIFICA",
         "puede_continuar": true,
-        "n_criterios": 137,
+        "n_criterios": 138,
         "criterios_por_severidad": {
-          "NO_CALIFICA": 137
+          "NO_CALIFICA": 138
         },
-        "decididos_codigo": 0,
+        "decididos_codigo": 1,
         "delegados_modelo": 137,
         "ids_criterios": [
           "2_maniquies_1_etiqueta",
@@ -1794,6 +1825,7 @@
           "focal_show_infantiles_etapa1_2",
           "focal_show_mujeres_departamento_juniors",
           "focal_show_mujeres_etapa1_2",
+          "grafico_no_detectado",
           "graficos_requeridos",
           "identificar_cartulina_descuento",
           "identificar_cartulina_shots_promocionales",
@@ -1855,57 +1887,22 @@
           "vestir_maniquies_prendas_esten_exhibicion",
           "visibilidad_producto_descuento_alto_corridas"
         ],
-        "resumen_ejecutivo": "VEREDICTO GLOBAL: NO_CALIFICA | NO CALIFICA (137): 2_maniquies_1_etiqueta | acercate_jefe_seccion_pueda_dar | agrupa_producto_zoopet_descuento_gondola | agrupa_tipo_producto | agrupar_mercancia_calificada_barata_liquidacion | alineacion | asegura_coloque_cartulina_beneficio | atriles_primera_etapa_generico | barras_etapa1_40_60 | barras_etapa2_100 | barras_etapa3_100 | campamento_realiza_1_2_etapa | caso_contar_espacio_necesario_mercancia | caso_muebles_focal_coloca_etiqueta | clasificacion_seccion_muebles_modifica_campana | coloca_cartulina_descuento_agresivo_cuentes | coloca_coleccion_mundial_mesas_frente | coloca_exhibiciones_masivas_producto_participante | coloca_material_grafico_forma_alternada | colocar_alternando_largo_seccion_focales | colocar_alternando_seccion | colocar_cartulina_descuento_especifico_mercancia | colocar_cartulinas | colocar_etiquetas_cuidando_esten_misma | colocar_forma_alterna_material_grafico | colocar_producto_apuesta_comercial | colocar_producto_descuento_mayor_menor | colocar_producto_mayor_descuento | columnas_etapa1_40_60 | columnas_etapa2_100 | columnas_etapa3_parches_20 | consulta_liga_manual_senalizacion_barata | cuidar_entallado_variantes_color_completos | cuidar_senalizacion_saturar_seccion_recuerda | dar_prioridad_mercancia_calificada | dentro_clasificacion_agrupa_marca_rimax | dentro_clasificacion_agrupa_producto_descuento | dentro_clasificacion_senaliza_exhibicion_cubos | distribuir_cartulinas_equilibradamente_piso_garantizar | distribuir_material_largo_departamento | evitar_mezclar_marcas_respetar_clasificacion | exhibe_bloque_tipo_producto_marca | exhibe_colecciones_indica_book_impulsos | exhibe_mesa_parte_visible_descuentos | exhibe_producto_tendencia_oasis_floral | exhibe_siembra_espacio_visible_disciplina | exhibicion_disciplinas_mantiene_dentro_separan | exhibir_1_focal_por_marca | exhibir_liquidacion_zapatera | exhibir_modelos_repetirlos | exhibir_producto_descuento_mezclar | focal_bloque_marca_tipo_producto | focal_show_hombres_departamento_juveniles | focal_show_hombres_etapa1_2 | focal_show_infantiles_departamento_ninos8 | focal_show_infantiles_etapa1_2 | focal_show_mujeres_departamento_juniors | focal_show_mujeres_etapa1_2 | graficos_requeridos | identificar_cartulina_descuento | identificar_cartulina_shots_promocionales | identificar_producto_descuento_participante | impulsar_producto_especial_acuerdo_matriz | limpieza | maniqui_maniquies_deben_integrarse_elementos | maniquies_3_etiquetas_2 | maniquies_5_etiquetas_3 | mantener_orden_exhibicion | masivo_bloque_marca_tipo_producto | masivos_pasillo_deben_contar_espacio | mercadeo_bloqueo_producto | no_mezclar_marcas | perimetro_coloca_parte_superior_descuentos | permitido_material_pop_marcas_autorizadas | planchado | prioridad_producto_mobility_cloe_40 | producto_focal_show | realiza_mercadeo_descuento_mayor_menor | recuerda_etiquetas_solo_van_cadera | requiere_1_fotografia_focal | respetar_alturas_estiba_maxima | respetar_capacidad_ideal_mobiliario_permita | respetar_mundos_romper_clasificaciones | revisa_producto_focal_sea_mercancia | selecciona_producto_mezclar_descuentos_mundos | senaliza_cartulina_30 | senaliza_resto_seccion_promocion_25 | separacion_masivos_3_5_metros | surtido | ubica_puntos_focales_accesos_importantes | ubicar_frente_seccion_sea_mueble | utilizar_siguiente_formula | angulo_foto_deficiente | caja_vajilla_cerrada_narrative_kostlich | cajas_organizadoras | colorizacion | colorizacion_descuidada | impulsa_textiles_entran_98_puedes | looks_incompletos | mesa_lanzamientos_sigue_manejando_lanzamientos | mochilas_loncheras_lapiceras_concepto | protectores_sofa | puedes_sacar_pasillo_masivos_cajas | puff_caja | punto_verde_sin_actualizar | realizar_campamento_punt_roma_98 | triangulacion | triangulacion_debil | agrupar_combos_espacios_principales_seccion | barra_ballet_exhibe_producto_sola | barra_prendas_descuentos_altos_incluyendo | beneficio_etapa_incorrecto | calidad_evidencia_fotografica | campamento_maniquies_tringlas_barra_cartulina | campana_anterior_visible | cantidad_maniquies | caso_tener_modelos_exhibidos_zapateras | coloca_caja_vajilla_cerrada_general | cuentas_espacio_disponible_dentro_seccion | cuentas_espacio_suficiente_obstruya_paso | etiqueta_ausente_maniqui | exhibicion_ropa_deportiva_estanterias_maniquies | importante_mantener_surtido_caso_vaciarse | imprimir_torre_slim_mandar_parche | mercadea_forme_book_impulsos_mayo | mesa_realizar_bloques_mercancia_doblada | mezcla_descuentos | nada_resguarda | nota_exhibicion_producto_mesas_perimetros | poner_etiquetas_descuento_prendas_saturar | producto_sin_descuento | props_decoracion | puede_colocar_etiquetas_colgantes_maniquies | selecciona_producto_dando_prioridad_descuento | vestimenta_maniquies_revisa_apuestas_comerciales | vestir_maniquies_prendas_esten_exhibicion | visibilidad_producto_descuento_alto_corridas | código=0 | modelo=137",
-        "cuota_distinguible_en_resultado": false
+        "resumen_ejecutivo": "VEREDICTO GLOBAL: NO_CALIFICA | NO CALIFICA (138): 2_maniquies_1_etiqueta | acercate_jefe_seccion_pueda_dar | agrupa_producto_zoopet_descuento_gondola | agrupa_tipo_producto | agrupar_mercancia_calificada_barata_liquidacion | alineacion | asegura_coloque_cartulina_beneficio | atriles_primera_etapa_generico | barras_etapa1_40_60 | barras_etapa2_100 | barras_etapa3_100 | campamento_realiza_1_2_etapa | caso_contar_espacio_necesario_mercancia | caso_muebles_focal_coloca_etiqueta | clasificacion_seccion_muebles_modifica_campana | coloca_cartulina_descuento_agresivo_cuentes | coloca_coleccion_mundial_mesas_frente | coloca_exhibiciones_masivas_producto_participante | coloca_material_grafico_forma_alternada | colocar_alternando_largo_seccion_focales | colocar_alternando_seccion | colocar_cartulina_descuento_especifico_mercancia | colocar_cartulinas | colocar_etiquetas_cuidando_esten_misma | colocar_forma_alterna_material_grafico | colocar_producto_apuesta_comercial | colocar_producto_descuento_mayor_menor | colocar_producto_mayor_descuento | columnas_etapa1_40_60 | columnas_etapa2_100 | columnas_etapa3_parches_20 | consulta_liga_manual_senalizacion_barata | cuidar_entallado_variantes_color_completos | cuidar_senalizacion_saturar_seccion_recuerda | dar_prioridad_mercancia_calificada | dentro_clasificacion_agrupa_marca_rimax | dentro_clasificacion_agrupa_producto_descuento | dentro_clasificacion_senaliza_exhibicion_cubos | distribuir_cartulinas_equilibradamente_piso_garantizar | distribuir_material_largo_departamento | evitar_mezclar_marcas_respetar_clasificacion | exhibe_bloque_tipo_producto_marca | exhibe_colecciones_indica_book_impulsos | exhibe_mesa_parte_visible_descuentos | exhibe_producto_tendencia_oasis_floral | exhibe_siembra_espacio_visible_disciplina | exhibicion_disciplinas_mantiene_dentro_separan | exhibir_1_focal_por_marca | exhibir_liquidacion_zapatera | exhibir_modelos_repetirlos | exhibir_producto_descuento_mezclar | focal_bloque_marca_tipo_producto | focal_show_hombres_departamento_juveniles | focal_show_hombres_etapa1_2 | focal_show_infantiles_departamento_ninos8 | focal_show_infantiles_etapa1_2 | focal_show_mujeres_departamento_juniors | focal_show_mujeres_etapa1_2 | graficos_requeridos | identificar_cartulina_descuento | identificar_cartulina_shots_promocionales | identificar_producto_descuento_participante | impulsar_producto_especial_acuerdo_matriz | limpieza | maniqui_maniquies_deben_integrarse_elementos | maniquies_3_etiquetas_2 | maniquies_5_etiquetas_3 | mantener_orden_exhibicion | masivo_bloque_marca_tipo_producto | masivos_pasillo_deben_contar_espacio | mercadeo_bloqueo_producto | no_mezclar_marcas | perimetro_coloca_parte_superior_descuentos | permitido_material_pop_marcas_autorizadas | planchado | prioridad_producto_mobility_cloe_40 | producto_focal_show | realiza_mercadeo_descuento_mayor_menor | recuerda_etiquetas_solo_van_cadera | requiere_1_fotografia_focal | respetar_alturas_estiba_maxima | respetar_capacidad_ideal_mobiliario_permita | respetar_mundos_romper_clasificaciones | revisa_producto_focal_sea_mercancia | selecciona_producto_mezclar_descuentos_mundos | senaliza_cartulina_30 | senaliza_resto_seccion_promocion_25 | separacion_masivos_3_5_metros | surtido | ubica_puntos_focales_accesos_importantes | ubicar_frente_seccion_sea_mueble | utilizar_siguiente_formula | angulo_foto_deficiente | caja_vajilla_cerrada_narrative_kostlich | cajas_organizadoras | colorizacion | colorizacion_descuidada | impulsa_textiles_entran_98_puedes | looks_incompletos | mesa_lanzamientos_sigue_manejando_lanzamientos | mochilas_loncheras_lapiceras_concepto | protectores_sofa | puedes_sacar_pasillo_masivos_cajas | puff_caja | punto_verde_sin_actualizar | realizar_campamento_punt_roma_98 | triangulacion | triangulacion_debil | agrupar_combos_espacios_principales_seccion | barra_ballet_exhibe_producto_sola | barra_prendas_descuentos_altos_incluyendo | beneficio_etapa_incorrecto | calidad_evidencia_fotografica | campamento_maniquies_tringlas_barra_cartulina | campana_anterior_visible | cantidad_maniquies | caso_tener_modelos_exhibidos_zapateras | coloca_caja_vajilla_cerrada_general | cuentas_espacio_disponible_dentro_seccion | cuentas_espacio_suficiente_obstruya_paso | etiqueta_ausente_maniqui | exhibicion_ropa_deportiva_estanterias_maniquies | importante_mantener_surtido_caso_vaciarse | imprimir_torre_slim_mandar_parche | mercadea_forme_book_impulsos_mayo | mesa_realizar_bloques_mercancia_doblada | mezcla_descuentos | nada_resguarda | nota_exhibicion_producto_mesas_perimetros | poner_etiquetas_descuento_prendas_saturar | producto_sin_descuento | props_decoracion | puede_colocar_etiquetas_colgantes_maniquies | selecciona_producto_dando_prioridad_descuento | vestimenta_maniquies_revisa_apuestas_comerciales | vestir_maniquies_prendas_esten_exhibicion | visibilidad_producto_descuento_alto_corridas | grafico_no_detectado | código=1 | modelo=137 | EVALUACIÓN PARCIAL: claves del modelo agotadas/inválidas — 9 de 10 lote(s) abortados por circuit breaker",
+        "cuota_distinguible_en_resultado": true
       },
       "excepcion": null,
-      "duracion_s": 0.587,
-      "intentos_red": 33,
-      "sleep_solicitado_s": 22.0,
+      "duracion_s": 0.316,
+      "intentos_red": 6,
+      "sleep_solicitado_s": 4.0,
       "logs_warning_error": [
         "WARNING visual_lv.pipeline | [PASO_0][grafico_detectado] cuota/clave — rotando a clave #2/3 — HTTP 429: {\"error\":{\"status\":\"RESOURCE_EXHAUSTED\"}} (13ms)",
         "WARNING visual_lv.pipeline | [PASO_0][grafico_detectado] cuota/clave — rotando a clave #3/3 — HTTP 429: {\"error\":{\"status\":\"RESOURCE_EXHAUSTED\"}} (23ms)",
-        "ERROR visual_lv.pipeline | [PASO_0][grafico_detectado] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {\"error\":{\"status\":\"RESOURCE_EXHAUSTED\"}} (33ms)",
+        "ERROR visual_lv.pipeline | [PASO_0][grafico_detectado] agotados 3 intento(s) sobre 3 clave(s) — TODAS las claves en cuota/inválidas — HTTP 429: {\"error\":{\"status\":\"RESOURCE_EXHAUSTED\"}} (34ms)",
         "WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {\"error\":{\"status\":\"RESOURCE_EXHAUSTED\"}} (10ms)",
-        "WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {\"error\":{\"status\":\"RESOURCE_EXHAUSTED\"}} (19ms)",
-        "ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {\"error\":{\"status\":\"RESOURCE_EXHAUSTED\"}} (29ms)",
+        "WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {\"error\":{\"status\":\"RESOURCE_EXHAUSTED\"}} (20ms)",
+        "ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — TODAS las claves en cuota/inválidas — HTTP 429: {\"error\":{\"status\":\"RESOURCE_EXHAUSTED\"}} (30ms)",
         "WARNING visual_lv.pipeline | [PASO_4][-] lote 1/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)",
-        "WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {\"error\":{\"status\":\"RESOURCE_EXHAUSTED\"}} (12ms)",
-        "WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {\"error\":{\"status\":\"RESOURCE_EXHAUSTED\"}} (22ms)",
-        "ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {\"error\":{\"status\":\"RESOURCE_EXHAUSTED\"}} (32ms)",
-        "WARNING visual_lv.pipeline | [PASO_4][-] lote 2/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)",
-        "WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {\"error\":{\"status\":\"RESOURCE_EXHAUSTED\"}} (9ms)",
-        "WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {\"error\":{\"status\":\"RESOURCE_EXHAUSTED\"}} (19ms)",
-        "ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {\"error\":{\"status\":\"RESOURCE_EXHAUSTED\"}} (28ms)",
-        "WARNING visual_lv.pipeline | [PASO_4][-] lote 3/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)",
-        "WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {\"error\":{\"status\":\"RESOURCE_EXHAUSTED\"}} (10ms)",
-        "WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {\"error\":{\"status\":\"RESOURCE_EXHAUSTED\"}} (20ms)",
-        "ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {\"error\":{\"status\":\"RESOURCE_EXHAUSTED\"}} (30ms)",
-        "WARNING visual_lv.pipeline | [PASO_4][-] lote 4/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)",
-        "WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {\"error\":{\"status\":\"RESOURCE_EXHAUSTED\"}} (9ms)",
-        "WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {\"error\":{\"status\":\"RESOURCE_EXHAUSTED\"}} (19ms)",
-        "ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {\"error\":{\"status\":\"RESOURCE_EXHAUSTED\"}} (28ms)",
-        "WARNING visual_lv.pipeline | [PASO_4][-] lote 5/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)",
-        "WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {\"error\":{\"status\":\"RESOURCE_EXHAUSTED\"}} (9ms)",
-        "WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {\"error\":{\"status\":\"RESOURCE_EXHAUSTED\"}} (19ms)",
-        "ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {\"error\":{\"status\":\"RESOURCE_EXHAUSTED\"}} (29ms)",
-        "WARNING visual_lv.pipeline | [PASO_4][-] lote 6/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)",
-        "WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {\"error\":{\"status\":\"RESOURCE_EXHAUSTED\"}} (9ms)",
-        "WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {\"error\":{\"status\":\"RESOURCE_EXHAUSTED\"}} (19ms)",
-        "ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {\"error\":{\"status\":\"RESOURCE_EXHAUSTED\"}} (30ms)",
-        "WARNING visual_lv.pipeline | [PASO_4][-] lote 7/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)",
-        "WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {\"error\":{\"status\":\"RESOURCE_EXHAUSTED\"}} (9ms)",
-        "WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {\"error\":{\"status\":\"RESOURCE_EXHAUSTED\"}} (19ms)",
-        "ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {\"error\":{\"status\":\"RESOURCE_EXHAUSTED\"}} (29ms)",
-        "WARNING visual_lv.pipeline | [PASO_4][-] lote 8/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)",
-        "WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {\"error\":{\"status\":\"RESOURCE_EXHAUSTED\"}} (10ms)",
-        "WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {\"error\":{\"status\":\"RESOURCE_EXHAUSTED\"}} (20ms)",
-        "ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {\"error\":{\"status\":\"RESOURCE_EXHAUSTED\"}} (30ms)",
-        "WARNING visual_lv.pipeline | [PASO_4][-] lote 9/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 15 criterio(s)",
-        "WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #2/3 — HTTP 429: {\"error\":{\"status\":\"RESOURCE_EXHAUSTED\"}} (10ms)",
-        "WARNING visual_lv.pipeline | [PASO_4][-] cuota/clave — rotando a clave #3/3 — HTTP 429: {\"error\":{\"status\":\"RESOURCE_EXHAUSTED\"}} (24ms)",
-        "ERROR visual_lv.pipeline | [PASO_4][-] agotados 3 intento(s) sobre 3 clave(s) — HTTP 429: {\"error\":{\"status\":\"RESOURCE_EXHAUSTED\"}} (34ms)",
-        "WARNING visual_lv.pipeline | [PASO_4][-] lote 10/10 sin respuesta — sus criterios degradan a NO_CALIFICA — 2 criterio(s)"
+        "ERROR visual_lv.pipeline | [PASO_4][-] circuit breaker: se abortan 9 lote(s) restante(s) — todas las claves en cuota/inválidas — sus criterios degradan a NO_CALIFICA sin gastar requests"
       ]
     }
   ]

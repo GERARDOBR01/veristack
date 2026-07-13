@@ -1,0 +1,227 @@
+{
+  "sesion": "HH — stress fase 2 (retrieval/merge/confidence/lotes)",
+  "guard_red_no_autorizados": 0,
+  "casos": [
+    {
+      "id": "R0",
+      "descripcion": "Baseline — knowledge intacto, E1 + focal_show",
+      "crash": false,
+      "veredicto": "NO_CALIFICA",
+      "n_criterios": 142,
+      "codigo": 1,
+      "modelo": 141,
+      "versiones_capas": {
+        "capa1": "1.0",
+        "capa2": "1.1",
+        "capa3": "1.0"
+      },
+      "resumen_inicio": "VEREDICTO GLOBAL: NO_CALIFICA | NO CALIFICA (142): 2_maniquies_1_etiqueta | acercate_jefe_seccion_pueda_dar | agregar_puntos_dependiendo_etapa_encuentre | agrupa_producto_zoopet_descuento_gondola | ag",
+      "criterios_mandatory_visibles": [
+        "grafico_etapa_no_verificable"
+      ]
+    },
+    {
+      "id": "R1",
+      "descripcion": "CR-2: capa2 con JSON roto — ¿corrida 'normal' amputada en silencio?",
+      "crash": false,
+      "veredicto": "NO_CALIFICA",
+      "n_criterios": 23,
+      "codigo": 2,
+      "modelo": 21,
+      "versiones_capas": {
+        "capa1": "1.0",
+        "capa2": null,
+        "capa3": "1.0"
+      },
+      "resumen_inicio": "VEREDICTO GLOBAL: NO_CALIFICA | NO CALIFICA (23): alineacion | graficos_requeridos | limpieza | planchado | producto_focal_show | surtido | angulo_foto_deficiente | colorizacion | colorizacion_descuid",
+      "criterios_mandatory_visibles": [
+        "grafico_etapa_no_verificable"
+      ],
+      "traza_visible_del_fallo": true
+    },
+    {
+      "id": "R2a",
+      "descripcion": "CR-2: las 3 capas rotas + mandatory todo CUMPLE — ¿CUMPLE fantasma?",
+      "crash": false,
+      "veredicto": "NO_CALIFICA",
+      "n_criterios": 1,
+      "codigo": 1,
+      "modelo": 0,
+      "versiones_capas": {
+        "capa1": null,
+        "capa2": null,
+        "capa3": null
+      },
+      "resumen_inicio": "VEREDICTO GLOBAL: NO_CALIFICA | NO CALIFICA (1): conocimiento_no_disponible | código=1 | modelo=0",
+      "criterios_mandatory_visibles": [],
+      "cumple_fantasma": false
+    },
+    {
+      "id": "R2b",
+      "descripcion": "CR-2: las 3 capas rotas + etapa E1 — variante NO_CALIFICA",
+      "crash": false,
+      "veredicto": "NO_CALIFICA",
+      "n_criterios": 2,
+      "codigo": 2,
+      "modelo": 0,
+      "versiones_capas": {
+        "capa1": null,
+        "capa2": null,
+        "capa3": null
+      },
+      "resumen_inicio": "VEREDICTO GLOBAL: NO_CALIFICA | NO CALIFICA (2): grafico_etapa_no_verificable | conocimiento_no_disponible | código=2 | modelo=0 | CAMPAÑA NO CONFIRMADA POR CÓDIGO: los criterios de campaña se evaluar",
+      "criterios_mandatory_visibles": [
+        "grafico_etapa_no_verificable"
+      ],
+      "causa_knowledge_visible": true
+    },
+    {
+      "id": "R3",
+      "descripcion": "Path traversal en tipo_foto → ¿carga knowledge fuera de knowledge/?",
+      "crash": false,
+      "veredicto": "OBSERVACION",
+      "n_criterios": 8,
+      "codigo": 2,
+      "modelo": 6,
+      "versiones_capas": {
+        "capa1": "1.0",
+        "capa2": "1.1"
+      },
+      "resumen_inicio": "VEREDICTO GLOBAL: OBSERVACION | OBSERVACIONES (1): tipo_foto_invalido | NO CALIFICA (7): alineacion | limpieza | planchado | surtido | colorizacion | triangulacion | etapa_no_definida | código=2 | mod",
+      "criterios_mandatory_visibles": [
+        "etapa_no_definida"
+      ],
+      "decoy_cargado": false
+    },
+    {
+      "id": "R4",
+      "descripcion": "Capa con entradas basura — coerciones de retrieval",
+      "crash": false,
+      "veredicto": "NO_CALIFICA",
+      "n_criterios": 141,
+      "codigo": 2,
+      "modelo": 139,
+      "versiones_capas": {
+        "capa1": "1.1",
+        "capa2": "1.1",
+        "capa3": "1.0"
+      },
+      "resumen_inicio": "VEREDICTO GLOBAL: NO_CALIFICA | NO CALIFICA (141): texto_none | 2_maniquies_1_etiqueta | acercate_jefe_seccion_pueda_dar | agregar_puntos_dependiendo_etapa_encuentre | agrupa_producto_zoopet_descuento",
+      "criterios_mandatory_visibles": [
+        "grafico_etapa_no_verificable"
+      ],
+      "criterio_sano_presente": true,
+      "basura_filtrada": true
+    },
+    {
+      "id": "M1",
+      "descripcion": "CR-3/H1: NO_CALIFICA de mandatory invisible en ResultadoFinal",
+      "crash": false,
+      "veredicto": "NO_CALIFICA",
+      "n_criterios": 142,
+      "codigo": 1,
+      "modelo": 141,
+      "versiones_capas": {
+        "capa1": "1.0",
+        "capa2": "1.1",
+        "capa3": "1.0"
+      },
+      "resumen_inicio": "VEREDICTO GLOBAL: NO_CALIFICA | NO CALIFICA (142): 2_maniquies_1_etiqueta | acercate_jefe_seccion_pueda_dar | agregar_puntos_dependiendo_etapa_encuentre | agrupa_producto_zoopet_descuento_gondola | ag",
+      "criterios_mandatory_visibles": [
+        "grafico_etapa_no_verificable"
+      ],
+      "mandatory_no_califica_en_criterios": true,
+      "mencion_en_resumen": true
+    },
+    {
+      "id": "M2",
+      "descripcion": "Modelo responde veredicto malformado → ¿CUMPLE fantasma?",
+      "crash": false,
+      "veredicto_final": "NO_CALIFICA",
+      "razon": "preliminar — juicio visual delegado | [MODELO] Respondió un veredicto no reconocido ('Cumple ✓') — degradado, juicio visual no verificado.",
+      "cumple_fantasma": false
+    },
+    {
+      "id": "M3",
+      "descripcion": "Modelo inventa criterios / intenta pisar GRAVE de código",
+      "crash": false,
+      "grave_de_codigo_intacto": true,
+      "inventado_ignorado": true,
+      "delegado_actualizado": true
+    },
+    {
+      "id": "M4",
+      "descripcion": "Modelo duplica evaluaciones del mismo criterio",
+      "crash": false,
+      "veredicto_final": "GRAVE",
+      "gana_ultima": true
+    },
+    {
+      "id": "M5",
+      "descripcion": "Modelo crea un GRAVE de juicio visual (diseño)",
+      "crash": false,
+      "veredicto_final": "GRAVE",
+      "modelo_puede_crear_grave": true
+    },
+    {
+      "id": "C1",
+      "descripcion": "ResultadoRetrieval inconsistente (evidencias=[] + sin_evidencia=False)",
+      "crash": false,
+      "crash_interno": false
+    },
+    {
+      "id": "C2",
+      "descripcion": "evaluar_lote con lista mixta de tipos",
+      "crash": false,
+      "evaluados": 1,
+      "solo_el_valido": true
+    },
+    {
+      "id": "C3",
+      "descripcion": "no_aplica=True evaluado directo (semántica NO_APLICA vs NO_CALIFICA)",
+      "crash": false,
+      "veredicto": "NO_CALIFICA",
+      "razon": "Sin evidencia en ninguna capa de conocimiento. No es posible calificar el criter"
+    },
+    {
+      "id": "B1",
+      "descripcion": "H3: 3 lotes contra 3 keys muertas desde el arranque",
+      "crash": false,
+      "lotes": 3,
+      "requests_totales": 3,
+      "requests_tras_saber_keys_muertas": 0,
+      "sleeps": {
+        "n": 2,
+        "total_s": 2.0
+      },
+      "criterios_no_califica": 45,
+      "razon_distingue_cuota": true
+    },
+    {
+      "id": "B2",
+      "descripcion": "H3: keys mueren tras el lote 1 — resultado parcial sin marca",
+      "crash": false,
+      "requests_totales": 4,
+      "requests_desperdiciados_lotes_2_3": 3,
+      "sleeps": {
+        "n": 2,
+        "total_s": 2.0
+      },
+      "veredictos_reales": 15,
+      "no_califica_por_cuota": 30,
+      "resultado_parcial_marcado_en_resultadofinal": false
+    },
+    {
+      "id": "B3",
+      "descripcion": "H3: escala benchmark (122 delegados, 9 lotes) — el costo del no-breaker",
+      "crash": false,
+      "lotes": 9,
+      "requests_por_foto": 3,
+      "sleep_por_foto_s": 2.0,
+      "proyeccion_25_fotos": {
+        "requests": 75,
+        "sleep_min": 0.8
+      }
+    }
+  ]
+}

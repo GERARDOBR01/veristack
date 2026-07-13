@@ -219,10 +219,21 @@ def _cargar_capa(ruta: str) -> list[dict]:
     return criterios
 
 
+# Fix PT-1 (stress fase 2): tipo_foto entra a un .format() de ruta — un valor
+# con separadores ("x/../../otro") sacaba la carga de capa3 FUERA de knowledge/
+# (Windows resuelve ".." léxicamente aunque el directorio intermedio no exista).
+# Solo identificadores simples consultan capa3.
+_TIPO_FOTO_SEGURO_RE = re.compile(r"[A-Za-z0-9_-]+")
+
+
 def _ruta_capa3(template: str, tipo_foto: Optional[str]) -> Optional[str]:
-    """Retorna None si tipo_foto no está disponible o el template es inválido."""
+    """Retorna None si tipo_foto no está disponible, no es un identificador
+    seguro (fix PT-1) o el template es inválido."""
     tipo = _to_str(tipo_foto)
     if not tipo:
+        return None
+    if not _TIPO_FOTO_SEGURO_RE.fullmatch(tipo):
+        logger.warning("tipo_foto %r no es un identificador seguro — capa3 no se consulta", tipo)
         return None
     try:
         return template.format(tipo_foto=tipo)
