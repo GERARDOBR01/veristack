@@ -1,0 +1,3 @@
+# Los fixtures se regeneran completos en cada corrida (preparar_fixtures()
+# copia el knowledge real y escribe las variantes rotas/decoy). No se versionan.
+fixtures/

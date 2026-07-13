@@ -47,7 +47,9 @@ logger = logging.getLogger("visual_lv.pipeline")
 logger.addHandler(logging.NullHandler())
 
 # Versión del contrato de salida (ResultadoFinal). Si cambia, la UI lo detecta.
-SCHEMA_VERSION_SALIDA = "1.0"
+# 1.1 (Sesión HH): + evaluacion_parcial/causa_parcial; los NO_CALIFICA de
+# mandatory ahora aparecen en criterios (antes solo los GRAVEs).
+SCHEMA_VERSION_SALIDA = "1.1"
 
 
 def _log_paso(nivel: int, paso: str, criterio: str, accion: str,
@@ -84,6 +86,12 @@ class ResultadoFinal:
     timestamp_evaluacion:           str  = ""
     duracion_ms:                    int  = 0
     versiones_capas:                dict = field(default_factory=dict)
+    # ── Honestidad de la corrida (fix H3, Sesión HH) ──
+    # True si algún lote delegado no obtuvo respuesta del modelo (cuota, 503,
+    # sin clave): el resultado mezcla veredictos reales con NO_CALIFICA de
+    # infraestructura y NO debe leerse como una corrida completa.
+    evaluacion_parcial:             bool = False
+    causa_parcial:                  Optional[str] = None
 
 
 # ──────────────────────────────────────────────
@@ -104,15 +112,42 @@ class ConfigPipeline:
 # ──────────────────────────────────────────────
 
 def _leer_capa(ruta: str) -> list[dict]:
-    """Carga entradas de un JSON de capa. Retorna [] si no existe o es inválido."""
+    """Carga entradas de un JSON de capa. Retorna [] si no existe o es inválido.
+    (Fix CR-2: el except ya no es mudo — un JSON corrupto deja WARNING; la señal
+    VISIBLE al usuario la pone _diagnostico_knowledge en ejecutar().)"""
     try:
         path = Path(ruta)
         if not path.exists():
             return []
         data = json.loads(path.read_text(encoding="utf-8"))
         return [e for e in data.get("criterios", []) if isinstance(e, dict)]
-    except Exception:
+    except Exception as exc:
+        logger.warning("capa ilegible %s: %s: %s", ruta, type(exc).__name__, exc)
         return []
+
+
+def _diagnostico_knowledge(
+    config:       ConfigRetrieval,
+    tipo_foto:    Optional[str],
+    etapa_activa: Optional[str],
+) -> list[str]:
+    """
+    Fix CR-2 (stress fase 2): capas ESPERADAS que no aportaron ni un criterio
+    (archivo ausente, JSON corrupto o vacío). Antes esto amputaba la corrida en
+    silencio — capa2 rota = evaluación "normal" con 21 criterios en vez de 141,
+    y con las 3 capas muertas el veredicto podía salir CUMPLE con 0 criterios.
+    Capa3 solo cuenta si su ARCHIVO existe: su ausencia es gap conocido
+    (GC-capa3), no corrupción.
+    """
+    problemas: list[str] = []
+    if not _leer_capa(config.ruta_capa1):
+        problemas.append(f"capa1 sin criterios ({Path(config.ruta_capa1).name})")
+    if etapa_activa and str(etapa_activa).strip() and not _leer_capa(config.ruta_capa2):
+        problemas.append(f"capa2 sin criterios ({Path(config.ruta_capa2).name})")
+    ruta_c3 = retrieval_engine._ruta_capa3(config.ruta_capa3_template, tipo_foto)
+    if ruta_c3 and Path(ruta_c3).exists() and not _leer_capa(ruta_c3):
+        problemas.append(f"capa3 sin criterios ({Path(ruta_c3).name})")
+    return problemas
 
 
 def _extraer_criterios_del_knowledge(
@@ -143,15 +178,15 @@ def _extraer_criterios_del_knowledge(
             if isinstance(id_, str) and id_.strip():
                 ids.add(id_.strip())
 
-    if tipo_foto:
-        try:
-            ruta_c3 = config.ruta_capa3_template.format(tipo_foto=tipo_foto)
-            for entry in _leer_capa(ruta_c3):
-                id_ = entry.get("id")
-                if isinstance(id_, str) and id_.strip():
-                    ids.add(id_.strip())
-        except (KeyError, ValueError):
-            pass
+    # Fix PT-1: la ruta de capa3 se construye SOLO vía retrieval_engine._ruta_capa3,
+    # que valida tipo_foto como identificador seguro (un "x/../../otro" cargaba
+    # un JSON fuera de knowledge/ — confirmado en el stress fase 2).
+    ruta_c3 = retrieval_engine._ruta_capa3(config.ruta_capa3_template, tipo_foto)
+    if ruta_c3:
+        for entry in _leer_capa(ruta_c3):
+            id_ = entry.get("id")
+            if isinstance(id_, str) and id_.strip():
+                ids.add(id_.strip())
 
     return sorted(ids)  # orden determinista en cada ejecución
 
@@ -161,18 +196,28 @@ def _criterios_mandatory_solo_codigo(
     criterios_kb: set[str],
 ) -> list[ResultadoConfianza]:
     """
-    Criterios GRAVE del mandatory que no tienen cobertura en el knowledge base.
-    Sin esta conversión no entran al retrieval y quedan ausentes de
+    Criterios no-CUMPLE del mandatory que no tienen cobertura en el knowledge
+    base. Sin esta conversión no entran al retrieval y quedan ausentes de
     ResultadoFinal.criterios aunque sí afectan el veredicto_global.
+
+    Fix CR-3/H1 (Sesión HH): antes solo se promovían los GRAVEs — los
+    NO_CALIFICA de mandatory (etapa_no_definida, grafico_no_detectado,
+    grafico_etapa_no_verificable, tipo_foto_desconocido) teñían el veredicto
+    global pero eran INVISIBLES en el resultado: el usuario veía NO_CALIFICA
+    sin poder saber por qué. Ahora se promueve todo lo que no sea CUMPLE.
     """
     resultado = []
     for mc in mandatory.criterios:
-        if mc.criterio in criterios_kb or mc.severidad != Severidad.GRAVE:
+        if mc.criterio in criterios_kb or mc.severidad == Severidad.CUMPLE:
             continue
+        try:
+            confianza = Confianza(mc.confianza.value)
+        except (ValueError, AttributeError):
+            confianza = Confianza.ALTO
         resultado.append(ResultadoConfianza(
             criterio         = mc.criterio,
             veredicto        = mc.severidad,
-            confianza        = Confianza.ALTO,
+            confianza        = confianza,
             fuente_dominante = "MANDATORY",
             peso_dominante   = Peso.MANDATORY,
             delegar_a_modelo = False,
@@ -285,12 +330,18 @@ def _calcular_veredicto_global(
     etapa_activa: Optional[str] = None,
 ) -> Severidad:
     jerarquia = [Severidad.GRAVE, Severidad.OBSERVACION, Severidad.NO_CALIFICA, Severidad.CUMPLE]
-    severidades = {c.veredicto for c in criterios}
     # Solo excluir NO_CALIFICA de mandatory cuando etapa_activa es None:
     # en ese caso, "etapa_no_definida" es "Capa2 no aplica", no un fallo real.
     # Otros NO_CALIFICA de mandatory (grafico_no_detectado, tipo_foto_desconocido)
     # sí deben propagarse — son señales reales de evaluación incompleta.
+    # Con el fix CR-3 "etapa_no_definida" ahora también viene promovido dentro
+    # de criterios (para ser VISIBLE) — se excluye aquí con la misma regla para
+    # que su visibilidad no cambie el veredicto del flujo sin etapa.
     sin_etapa = not (etapa_activa and etapa_activa.strip())
+    severidades = {
+        c.veredicto for c in criterios
+        if not (sin_etapa and c.criterio == "etapa_no_definida")
+    }
     if mandatory.veredicto_final != Severidad.NO_CALIFICA or not sin_etapa:
         severidades.add(mandatory.veredicto_final)
     for nivel in jerarquia:
@@ -489,6 +540,15 @@ def _parte_imagen(imagen_path: str) -> Optional[dict]:
 # mismo criterio que motor2/vision_fallback.py.
 _HTTP_ROTAR_CLAVE = frozenset({401, 403, 429})
 
+# Fix H3 (Sesión HH) — circuit breaker: cuando una llamada agota TODOS sus
+# intentos y cada fallo fue de cuota/clave (429/401/403/RESOURCE_EXHAUSTED),
+# reintentar los lotes siguientes contra las mismas claves es quemar requests
+# y sleeps a sabiendas (~27 requests + 18 s por foto; ~675 requests por corrida
+# de benchmark — medido en el stress fase 2). _post_gemini deja la señal aquí;
+# _evaluar_delegados_en_lotes la resetea al arrancar y aborta los lotes
+# restantes si se enciende. Un éxito posterior la apaga.
+_ESTADO_CUOTA = {"claves_agotadas": False}
+
 
 def _cargar_claves_api() -> list[str]:
     """Todas las GEMINI_API_KEY disponibles, en orden y sin duplicados.
@@ -551,6 +611,7 @@ def _post_gemini(cuerpo: dict, timeout_s: int, paso: str,
     idx  = 0
     # Al menos GEMINI_MAX_INTENTOS, y al menos una pasada por cada clave.
     intentos_max = max(GEMINI_MAX_INTENTOS, len(claves))
+    solo_cuota   = True   # fix H3: ¿todos los fallos fueron de cuota/clave?
 
     for intento in range(1, intentos_max + 1):
         url = GEMINI_ENDPOINT.format(model=GEMINI_MODEL) + f"?key={claves[idx]}"
@@ -562,6 +623,7 @@ def _post_gemini(cuerpo: dict, timeout_s: int, paso: str,
         try:
             with urllib.request.urlopen(req, timeout=timeout_s,
                                         context=_contexto_ssl()) as resp:
+                _ESTADO_CUOTA["claves_agotadas"] = False
                 return json.loads(resp.read().decode("utf-8"))
         except urllib.error.HTTPError as exc:
             detalle = ""
@@ -581,9 +643,15 @@ def _post_gemini(cuerpo: dict, timeout_s: int, paso: str,
         except Exception as exc:
             ultimo_error = f"{type(exc).__name__}: {exc}"
 
+        if not rotar:
+            solo_cuota = False
+
         if intento >= intentos_max:
+            if solo_cuota:
+                _ESTADO_CUOTA["claves_agotadas"] = True
             _log_paso(logging.ERROR, paso, criterio,
-                      f"agotados {intentos_max} intento(s) sobre {len(claves)} clave(s)",
+                      f"agotados {intentos_max} intento(s) sobre {len(claves)} clave(s)"
+                      + (" — TODAS las claves en cuota/inválidas" if solo_cuota else ""),
                       ultimo_error, ms=_ms(t0))
             return None
 
@@ -701,6 +769,7 @@ def _evaluar_delegados_en_lotes(
     metadata:               dict,
     imagen_path:            Optional[str],
     tam_lote:               Optional[int] = None,
+    info:                   Optional[dict] = None,
 ) -> tuple[str, int]:
     """
     PASO 5/6 con batching: divide los delegados en lotes de tam_lote, construye
@@ -713,9 +782,23 @@ def _evaluar_delegados_en_lotes(
     Un lote que falla (503 agotado, respuesta no parseable) NO tumba a los
     demás: sus criterios simplemente no aparecen en la respuesta y
     _merge_veredictos los degrada a NO_CALIFICA, igual que antes.
+
+    Circuit breaker (fix H3, Sesión HH): si un lote agota todos sus intentos
+    y CADA fallo fue de cuota/clave (las claves están muertas), los lotes
+    restantes se abortan sin gastar un request — sin el corte eran ~27
+    requests + 18 s dormidos por foto contra claves que se sabían muertas.
+
+    Si el llamador pasa `info` (dict), se llena con:
+      lotes_totales / lotes_fallidos / lotes_abortados / abortado_por_cuota
+    — insumo de evaluacion_parcial en ResultadoFinal. El retorno no cambia.
     Retorna (respuesta_json, tokens_totales); ("" , tokens) si ningún lote
     respondió. Nunca lanza.
     """
+    if info is None:
+        info = {}
+    info.update({"lotes_totales": 0, "lotes_fallidos": 0,
+                 "lotes_abortados": 0, "abortado_por_cuota": False})
+
     if not delegados:
         _log_paso(logging.INFO, "PASO_4", "-", "modelo no invocado",
                   "sin criterios delegados")
@@ -723,14 +806,27 @@ def _evaluar_delegados_en_lotes(
 
     tam   = tam_lote if (tam_lote and tam_lote > 0) else _tam_lote_criterios()
     lotes = [delegados[i:i + tam] for i in range(0, len(delegados), tam)]
+    info["lotes_totales"] = len(lotes)
     if len(lotes) > 1:
         _log_paso(logging.INFO, "PASO_4", "-",
                   f"batching: {len(delegados)} criterio(s) en {len(lotes)} "
                   f"lote(s) de hasta {tam}")
 
+    _ESTADO_CUOTA["claves_agotadas"] = False   # señal fresca para esta corrida
+
     evaluaciones: list[dict] = []
     tokens_total = 0
     for n, lote in enumerate(lotes, 1):
+        if _ESTADO_CUOTA["claves_agotadas"]:
+            restantes = len(lotes) - n + 1
+            info["lotes_abortados"]    = restantes
+            info["lotes_fallidos"]    += restantes
+            info["abortado_por_cuota"] = True
+            _log_paso(logging.ERROR, "PASO_4", "-",
+                      f"circuit breaker: se abortan {restantes} lote(s) restante(s)",
+                      "todas las claves en cuota/inválidas — sus criterios "
+                      "degradan a NO_CALIFICA sin gastar requests")
+            break
         prompt = _construir_prompt(lote, retrieval_por_criterio, metadata,
                                    con_imagen=bool(imagen_path))
         respuesta, tokens = _llamar_modelo(prompt, imagen_path)
@@ -747,6 +843,7 @@ def _evaluar_delegados_en_lotes(
                       f"lote {n}/{len(lotes)} OK",
                       f"{len(lote)} criterio(s), {len(evs)} evaluacion(es)")
         else:
+            info["lotes_fallidos"] += 1
             _log_paso(logging.WARNING, "PASO_4", "-",
                       f"lote {n}/{len(lotes)} sin respuesta — sus criterios "
                       "degradan a NO_CALIFICA",
@@ -785,10 +882,19 @@ def _merge_veredictos(
             continue
         ev = evaluaciones.get(rc.criterio)
         if ev:
+            # Fix MG-1 (stress fase 2): un veredicto que no parsea NO conserva
+            # el CUMPLE preliminar de confidence — eso era un CUMPLE fantasma
+            # con la razón del modelo pegada. Basura del modelo degrada igual
+            # que ausencia de respuesta.
             try:
-                rc.veredicto = Severidad(str(ev.get("veredicto", "")).upper())
+                rc.veredicto = Severidad(str(ev.get("veredicto", "")).upper().strip())
             except ValueError:
-                pass
+                rc.veredicto = Severidad.NO_CALIFICA
+                rc.confianza = Confianza.BAJO
+                rc.razon     = (f"{rc.razon} | [MODELO] Respondió un veredicto no "
+                                f"reconocido ({str(ev.get('veredicto'))[:40]!r}) — "
+                                "degradado, juicio visual no verificado.")
+                continue
             razon_modelo = str(ev.get("razon", "")).strip()
             if razon_modelo:
                 rc.razon = f"[MODELO] {razon_modelo}"
@@ -1142,8 +1248,38 @@ def _autotest_batching() -> int:
         _evaluar_delegados_en_lotes([_rc(i) for i in range(122)], {}, metadata, None)
         check("122 criterios con default(15) -> 9 lotes",
               len(llamadas) == 9 and sum(len(l) for l in llamadas) == 122)
+
+        # 8) info: corrida sana -> 0 fallidos, sin aborto
+        llamadas.clear(); lotes_fallar.clear()
+        info_ok: dict = {}
+        _evaluar_delegados_en_lotes(delegados, {}, metadata, None,
+                                    tam_lote=15, info=info_ok)
+        check("info corrida sana: 3 lotes, 0 fallidos, sin aborto",
+              info_ok == {"lotes_totales": 3, "lotes_fallidos": 0,
+                          "lotes_abortados": 0, "abortado_por_cuota": False})
+
+        # 9) circuit breaker: el lote 1 agota todas las claves (cuota) ->
+        #    los lotes restantes se abortan SIN llamar al modelo
+        def _fake_cuota(prompt, imagen_path=None):
+            ids = re.findall(r"^Criterio: (\S+)$", prompt, re.M)
+            llamadas.append(ids)
+            _ESTADO_CUOTA["claves_agotadas"] = True   # lo que hace _post_gemini
+            return "", 0
+        modulo._llamar_modelo = _fake_cuota
+        llamadas.clear()
+        info_cb: dict = {}
+        resp_cb, _ = _evaluar_delegados_en_lotes(
+            delegados, {}, metadata, None, tam_lote=15, info=info_cb)
+        check("breaker: solo 1 llamada para 3 lotes", len(llamadas) == 1)
+        check("breaker: 2 lotes abortados por cuota + 3 fallidos en total",
+              info_cb["lotes_abortados"] == 2 and info_cb["lotes_fallidos"] == 3
+              and info_cb["abortado_por_cuota"] is True)
+        check("breaker: respuesta vacia (todo degrada a NO_CALIFICA)", resp_cb == "")
+        modulo._llamar_modelo = _fake
+        _ESTADO_CUOTA["claves_agotadas"] = False
     finally:
         modulo._llamar_modelo = orig
+        _ESTADO_CUOTA["claves_agotadas"] = False
 
     print(f"\nAUTOTEST BATCHING PASO_4: {'PASS' if not fallas else 'FAIL'} "
           f"({len(fallas)} falla(s))")
@@ -1160,6 +1296,7 @@ def _construir_resumen_ejecutivo(
     mandatory:        ResultadoPipeline,
     n_codigo:         int,
     n_delegados:      int,
+    causa_parcial:    Optional[str] = None,
 ) -> str:
     graves  = [c for c in criterios if c.veredicto == Severidad.GRAVE]
     obs     = [c for c in criterios if c.veredicto == Severidad.OBSERVACION]
@@ -1175,6 +1312,14 @@ def _construir_resumen_ejecutivo(
     partes.append(f"código={n_codigo} | modelo={n_delegados}")
     if not mandatory.puede_continuar:
         partes.append("MANDATORY bloqueó el pipeline")
+    # Fix H2 (marcar, no bloquear): la campaña no se pudo confirmar por código —
+    # los criterios de campaña (capa2) se evaluaron bajo esa reserva.
+    if any(c.criterio == "grafico_etapa_no_verificable" for c in criterios):
+        partes.append("CAMPAÑA NO CONFIRMADA POR CÓDIGO: los criterios de campaña "
+                      "se evaluaron bajo esa reserva")
+    # Fix H3: la parcialidad se dice, no se esconde.
+    if causa_parcial:
+        partes.append(f"EVALUACIÓN PARCIAL: {causa_parcial}")
 
     return " | ".join(partes)
 
@@ -1268,6 +1413,26 @@ def ejecutar(
         config.config_retrieval, tipo_foto_efectivo, metadata.get("etapa_activa")
     )
     mandatory_extras = _criterios_mandatory_solo_codigo(mandatory, set(criterios_ids))
+
+    # Fix CR-2: knowledge amputado/muerto deja criterio VISIBLE — nunca más
+    # una corrida "normal" con capas fantasma ni un CUMPLE con 0 criterios.
+    problemas_kb = _diagnostico_knowledge(
+        config.config_retrieval, tipo_foto_efectivo, metadata.get("etapa_activa"))
+    if problemas_kb:
+        nombre_kb = "conocimiento_no_disponible" if not criterios_ids else "conocimiento_incompleto"
+        detalle_kb = "; ".join(problemas_kb)
+        _log_paso(logging.ERROR, "PASO_2", nombre_kb,
+                  "knowledge base incompleto — evaluación no confiable", detalle_kb)
+        mandatory_extras.append(ResultadoConfianza(
+            criterio         = nombre_kb,
+            veredicto        = Severidad.NO_CALIFICA,
+            confianza        = Confianza.ALTO,
+            fuente_dominante = "MANDATORY",
+            peso_dominante   = Peso.MANDATORY,
+            delegar_a_modelo = False,
+            razon            = ("El knowledge base activo no cargó completo — la "
+                                f"evaluación no es confiable. {detalle_kb}"),
+        ))
     retrieval_list = retrieval_engine.buscar_lote(
         criterios           = criterios_ids,
         resultado_mandatory = mandatory,
@@ -1302,8 +1467,10 @@ def ejecutar(
     # La llamada única con ~122 criterios daba 503 sostenido; ver nota de
     # batching junto a GEMINI_BATCH_CRITERIOS. La respuesta unificada tiene
     # el mismo shape que una llamada única — PASO 7 no se entera.
+    info_lotes: dict = {}
     respuesta_modelo, tokens_modelo = _evaluar_delegados_en_lotes(
-        delegados, retrieval_por_criterio, metadata, imagen_path)
+        delegados, retrieval_por_criterio, metadata, imagen_path,
+        info=info_lotes)
 
     # ── PASO 7: merge — código + modelo ───────────────────────────
     criterios_finales = _merge_veredictos(
@@ -1318,15 +1485,31 @@ def ejecutar(
     n_codigo          = len(no_delegados) + len(mandatory_extras)
     n_delegados       = len(delegados)
 
+    # Fix H3: si algún lote delegado quedó sin respuesta del modelo, el
+    # resultado es PARCIAL y lo dice — antes era indistinguible de una
+    # corrida completa.
+    evaluacion_parcial = bool(info_lotes.get("lotes_fallidos"))
+    causa_parcial: Optional[str] = None
+    if evaluacion_parcial:
+        if info_lotes.get("abortado_por_cuota"):
+            causa_parcial = (f"claves del modelo agotadas/inválidas — "
+                             f"{info_lotes['lotes_abortados']} de "
+                             f"{info_lotes['lotes_totales']} lote(s) abortados por circuit breaker")
+        else:
+            causa_parcial = (f"el modelo no respondió {info_lotes['lotes_fallidos']} de "
+                             f"{info_lotes['lotes_totales']} lote(s) de criterios delegados")
+
     _log_paso(logging.INFO, "PASO_FINAL", "-", f"veredicto={veredicto_global.value}",
-              f"codigo={n_codigo}, modelo={n_delegados}, tokens={tokens_modelo}",
+              f"codigo={n_codigo}, modelo={n_delegados}, tokens={tokens_modelo}"
+              + (f", PARCIAL: {causa_parcial}" if evaluacion_parcial else ""),
               ms=_ms(t_total))
 
     return ResultadoFinal(
         veredicto_global               = veredicto_global,
         criterios                      = criterios_finales,
         resumen_ejecutivo              = _construir_resumen_ejecutivo(
-            veredicto_global, criterios_finales, mandatory, n_codigo, n_delegados
+            veredicto_global, criterios_finales, mandatory, n_codigo, n_delegados,
+            causa_parcial,
         ),
         puede_continuar                = True,
         tokens_modelo_usados           = tokens_modelo,
@@ -1335,6 +1518,8 @@ def ejecutar(
         timestamp_evaluacion           = timestamp,
         duracion_ms                    = _ms(t_total),
         versiones_capas                = versiones_capas,
+        evaluacion_parcial             = evaluacion_parcial,
+        causa_parcial                  = causa_parcial,
     )
 
 

@@ -126,7 +126,10 @@ def _aplicar_reglas(
 
     # ── Regla 5: sin evidencia — evaluada aquí para evitar acceder ──
     #    a evidencias[] vacío en las reglas siguientes.
-    if retrieval.sin_evidencia:
+    #    Fix CE-1 (stress fase 2): también cubre un ResultadoRetrieval
+    #    inconsistente (evidencias=[] con sin_evidencia=False) — antes
+    #    reventaba con IndexError en evidencias[0].
+    if retrieval.sin_evidencia or not retrieval.evidencias:
         return ResultadoConfianza(
             criterio         = criterio,
             veredicto        = Severidad.NO_CALIFICA,
