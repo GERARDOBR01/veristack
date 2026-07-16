@@ -10,12 +10,23 @@ Input (manifest CSV, rutas explícitas — sin defaults a datos reales):
 
 Output (resultados_sistema.json):
   {"meta": {...}, "fotos": [{"foto_id", "archivo", "tiempo_segundos",
-   "veredicto_global", "detecciones": [{"criterio_id","criterio","veredicto","razon"}]}]}
+   "veredicto_global", "detecciones": [{"criterio_id","criterio","veredicto","razon"}],
+   "evaluacion_parcial", "causa_parcial", "tokens_modelo",
+   "criterios_delegados", "criterios_evaluados", "criterios_no_califica"}]}
 
 Semántica de "detección" (documentada, no implícita): un criterio cuenta como
 detección del sistema cuando su veredicto es GRAVE u OBSERVACION. CUMPLE y
 NO_CALIFICA no son detecciones (NO_CALIFICA = el sistema no pudo evaluar,
 que es distinto de detectar un problema).
+
+Fidelidad de trazabilidad (evaluacion_parcial/causa_parcial): sin esto, una
+corrida degradada por cuota (modelo sin responder → todo NO_CALIFICA) es
+INDISTINGUIBLE de una corrida limpia con 0 hallazgos — ambas dan detecciones=[].
+El pipeline NO expone un flag de parcialidad en ResultadoFinal; la señal se
+DERIVA (ver _metadata_parcial) de campos que sí expone: hubo criterios
+delegados al modelo pero el modelo no consumió tokens → ninguna respuesta
+llegó, esos criterios se degradaron. Se serializan además los conteos crudos
+para que incluso una degradación parcial-parcial quede visible en el reporte.
 
 Uso:
   python correr_motor1_benchmark.py autotest
@@ -127,20 +138,65 @@ def _detecciones_de_bloqueo(resultado) -> list[dict]:
              "razon": resumen} for cid in ids]
 
 
+def _veredicto_str(c) -> str:
+    """Veredicto de un criterio como string en MAYÚSCULAS (Enum .value o str)."""
+    return (getattr(getattr(c, "veredicto", None), "value", None)
+            or str(getattr(c, "veredicto", "") or "")).upper()
+
+
 def _extraer_detecciones(resultado) -> list[dict]:
     """Filtra los criterios del ResultadoFinal a detecciones (GRAVE/OBSERVACION)."""
     detecciones = []
     for c in getattr(resultado, "criterios", []) or []:
-        veredicto = getattr(getattr(c, "veredicto", None), "value", None) \
-                    or str(getattr(c, "veredicto", "") or "")
-        if veredicto.upper() in VEREDICTOS_DETECCION:
+        veredicto = _veredicto_str(c)
+        if veredicto in VEREDICTOS_DETECCION:
             detecciones.append({
                 "criterio_id": str(getattr(c, "criterio", "")),
                 "criterio":    "",
-                "veredicto":   veredicto.upper(),
+                "veredicto":   veredicto,
                 "razon":       str(getattr(c, "razon", "") or ""),
             })
     return detecciones
+
+
+def _metadata_parcial(resultado) -> dict:
+    """Deriva la señal de evaluación parcial/degradada del ResultadoFinal.
+
+    El pipeline NO expone un flag `evaluacion_parcial` (verificado: ResultadoFinal
+    no lo tiene). La señal se DERIVA de campos que sí expone: si hubo criterios
+    delegados al modelo (`criterios_delegados_a_modelo > 0`) pero el modelo no
+    consumió tokens (`tokens_modelo_usados == 0`), NINGUNA respuesta llegó de
+    ningún proveedor → esos criterios se degradaron a NO_CALIFICA (cuota 429 /
+    503 sostenido en todas las claves y proveedores). Ese es exactamente el caso
+    que vuelve una corrida degradada indistinguible de una corrida limpia con 0
+    hallazgos si no se serializa. Los conteos crudos se incluyen siempre para
+    que incluso una degradación parcial-parcial (algunos lotes caídos) sea
+    auditable en el reporte.
+
+    Casos que NO son parciales por diseño: (a) bloqueo mandatory (delegados=0, es
+    un stop duro con detecciones reales, no una degradación); (b) fallback GitHub
+    exitoso (tokens>0 porque el segundo proveedor sí respondió).
+    """
+    tokens    = int(getattr(resultado, "tokens_modelo_usados", 0) or 0)
+    delegados = int(getattr(resultado, "criterios_delegados_a_modelo", 0) or 0)
+    criterios = getattr(resultado, "criterios", []) or []
+    n_total   = len(criterios)
+    n_nc      = sum(1 for c in criterios if _veredicto_str(c) == "NO_CALIFICA")
+
+    parcial = delegados > 0 and tokens == 0
+    causa = ""
+    if parcial:
+        causa = (f"Modelo sin respuesta (0 tokens) con {delegados} criterio(s) "
+                 f"delegado(s); {n_nc} degradado(s) a NO_CALIFICA. Causa probable: "
+                 f"cuota agotada (429) o 503 en todas las claves/proveedores.")
+    return {
+        "evaluacion_parcial":    parcial,
+        "causa_parcial":         causa,
+        "tokens_modelo":         tokens,
+        "criterios_delegados":   delegados,
+        "criterios_evaluados":   n_total,
+        "criterios_no_califica": n_nc,
+    }
 
 
 def correr(manifest: list[dict], ejecutar_fn: Callable, salida: Path) -> dict:
@@ -160,15 +216,18 @@ def correr(manifest: list[dict], ejecutar_fn: Callable, salida: Path) -> dict:
         detecciones = _extraer_detecciones(resultado)
         if getattr(resultado, "puede_continuar", True) is False and not detecciones:
             detecciones = _detecciones_de_bloqueo(resultado)
-        fotos.append({
+        foto = {
             "foto_id":          fid,
             "archivo":          fila["_ruta_imagen"],
             "tiempo_segundos":  segundos,
             "veredicto_global": veredicto_global,
             "detecciones":      detecciones,
-        })
+        }
+        foto.update(_metadata_parcial(resultado))
+        fotos.append(foto)
+        aviso = "  [PARCIAL: degradada por cuota/proveedor]" if foto["evaluacion_parcial"] else ""
         print(f"  {fid}: {segundos}s, veredicto={veredicto_global}, "
-              f"{len(fotos[-1]['detecciones'])} detección(es)")
+              f"{len(detecciones)} detección(es){aviso}")
 
     datos = {
         "meta": {
@@ -201,9 +260,12 @@ def autotest() -> int:
             self.criterio, self.veredicto, self.razon = cid, veredicto, razon
 
     class _ResultadoFicticio:
-        def __init__(self, criterios, veredicto_global="GRAVE"):
+        def __init__(self, criterios, veredicto_global="GRAVE",
+                     tokens=1234, delegados=2):
             self.criterios = criterios
             self.veredicto_global = veredicto_global
+            self.tokens_modelo_usados = tokens
+            self.criterios_delegados_a_modelo = delegados
 
     def ejecutar_ficticio(imagen_path, etapa_activa, tipo_foto):
         time.sleep(0.05)   # tiempo medible pero corto
@@ -285,6 +347,46 @@ def autotest() -> int:
               [d["criterio_id"] for d in _detecciones_de_bloqueo(type("R", (), {
                   "resumen_ejecutivo": "Pipeline detenido. VEREDICTO MANDATORY: GRAVE"})())]
               == ["pipeline_bloqueado_mandatory"])
+        check("bloqueo mandatory NO se marca parcial (delegados=0, es stop duro)",
+              datos_b["fotos"][0]["evaluacion_parcial"] is False)
+
+        # ── Fidelidad de trazabilidad: degradada por cuota vs limpia con 0 hallazgos ──
+        # Ambas dan detecciones=[]; sin evaluacion_parcial serían indistinguibles.
+        def ejecutar_limpio(imagen_path, etapa_activa, tipo_foto):
+            # Modelo respondió de verdad (tokens>0), todo CUMPLE → 0 detecciones reales.
+            return _ResultadoFicticio(
+                [_CriterioFicticio("c_cumple_1", "CUMPLE"),
+                 _CriterioFicticio("c_cumple_2", "CUMPLE")],
+                veredicto_global="CUMPLE", tokens=5000, delegados=2)
+
+        def ejecutar_degradado(imagen_path, etapa_activa, tipo_foto):
+            # Cuota agotada: modelo sin respuesta (tokens=0), delegados degradados a NO_CALIFICA.
+            return _ResultadoFicticio(
+                [_CriterioFicticio("c_nc_1", "NO_CALIFICA"),
+                 _CriterioFicticio("c_nc_2", "NO_CALIFICA")],
+                veredicto_global="NO_CALIFICA", tokens=0, delegados=2)
+
+        una_foto = cargar_manifest(manifest_csv)[:1]
+        d_limpio = correr(una_foto, ejecutar_limpio, tmp / "r_limpio.json")["fotos"][0]
+        d_degr   = correr(una_foto, ejecutar_degradado, tmp / "r_degr.json")["fotos"][0]
+
+        check("foto limpia: 0 detecciones y evaluacion_parcial=False",
+              d_limpio["detecciones"] == [] and d_limpio["evaluacion_parcial"] is False)
+        check("foto degradada por cuota: 0 detecciones pero evaluacion_parcial=True",
+              d_degr["detecciones"] == [] and d_degr["evaluacion_parcial"] is True)
+        check("degradada y limpia son DISTINGUIBLES pese a detecciones=[] en ambas",
+              d_limpio["detecciones"] == d_degr["detecciones"] == []
+              and d_limpio["evaluacion_parcial"] != d_degr["evaluacion_parcial"])
+        check("degradada: causa_parcial no vacía, tokens=0, 2 NO_CALIFICA",
+              bool(d_degr["causa_parcial"]) and d_degr["tokens_modelo"] == 0
+              and d_degr["criterios_no_califica"] == 2)
+        check("limpia: causa_parcial vacía, tokens>0, 0 NO_CALIFICA",
+              d_limpio["causa_parcial"] == "" and d_limpio["tokens_modelo"] > 0
+              and d_limpio["criterios_no_califica"] == 0)
+        rel_degr = json.loads((tmp / "r_degr.json").read_text(encoding="utf-8"))
+        check("evaluacion_parcial/causa_parcial PERSISTEN en el JSON de salida",
+              rel_degr["fotos"][0]["evaluacion_parcial"] is True
+              and rel_degr["fotos"][0]["causa_parcial"] != "")
 
     print(f"\nAUTOTEST RUNNER: {'PASS' if not fallas else 'FAIL'} ({len(fallas)} falla(s))")
     return len(fallas)
