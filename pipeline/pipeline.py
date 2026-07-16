@@ -431,6 +431,38 @@ GEMINI_BACKOFF_429_S = 30           # rate limit: la ventana free tier es por
 # Códigos HTTP deterministas: reintentar no ayuda, se aborta de inmediato.
 _HTTP_NO_REINTENTABLES = frozenset({400, 401, 403, 404})
 
+# ── Fallback: GitHub Models (gpt-4o-mini) ──────────────────────────
+# Gemini da 503 ("high demand") intermitente en la llamada pesada de PASO_4 y
+# su free tier tiene cuota diaria muy ajustada. Cuando _post_gemini agota sus
+# GEMINI_MAX_INTENTOS (todas las claves en 429/503/timeout), _llamar_modelo
+# prueba UNA vez este segundo proveedor antes de degradar el lote a
+# NO_CALIFICA. Es fallback, no reemplazo: Gemini sigue siendo el camino
+# primario. Mismo endpoint/clave que motor2/extractor.py (Sesión K), para
+# consistencia de nombres — pero esta llamada SÍ envía imagen (motor2 no lo
+# hacía; validado con motor1/benchmark/probar_github_vision.py contra F03
+# real antes de escribir este código).
+#
+# ⚠️ ALCANCE: DISPONIBILIDAD, NO SCORING. gpt-4o-mini mantiene el pipeline
+# vivo cuando Gemini está caído (evita degradar todo a NO_CALIFICA), pero sus
+# veredictos NO son de calidad de scoring: son poco reproducibles por criterio.
+# Sweep sobre F03 (identificar_cartulina_descuento, solo GitHub, batch 15/5/3/1):
+# el veredicto NO es monótono con el tamaño de lote — GRAVE apareció solo en
+# batch=3 y batch=1 (el más chico) volvió a NO_CALIFICA; el spike aislado había
+# dado GRAVE. Es no-determinismo del proveedor, no dilución por batching. Además
+# lotes chicos reenvían la imagen por llamada → ~7x tokens de 15→1. Conclusión:
+# Gemini sigue siendo la fuente de verdad del benchmark; los veredictos que
+# vengan de este fallback no deben alimentar métricas de acierto. NO retunear
+# GEMINI_BATCH_CRITERIOS a partir de este fallback.
+GITHUB_MODEL      = os.environ.get("GITHUB_MODEL", "openai/gpt-4o-mini")
+GITHUB_BASE_URL   = os.environ.get(
+    "GITHUB_BASE_URL", "https://models.github.ai/inference/chat/completions")
+GITHUB_TIMEOUT_S  = 60
+
+
+def _fallback_github_habilitado() -> bool:
+    """Bandera MOTOR1_FALLBACK_GITHUB (default activado) — apagable sin tocar código."""
+    return os.environ.get("MOTOR1_FALLBACK_GITHUB", "1").strip() != "0"
+
 
 def _ms(t0: float) -> int:
     """Milisegundos transcurridos desde t0 (time.perf_counter())."""
@@ -519,10 +551,11 @@ def _normalizar_respuesta(texto: str) -> Optional[str]:
     return json.dumps({"evaluaciones": evaluaciones}, ensure_ascii=False)
 
 
-def _parte_imagen(imagen_path: str) -> Optional[dict]:
+def _codificar_imagen_base64(imagen_path: str) -> Optional[tuple[str, str]]:
     """
-    Construye la parte inline_data (base64) de Gemini para la imagen.
-    Retorna None si la imagen no se puede leer — el llamador decide el log.
+    Lee la imagen y la codifica en base64. Retorna (mime, data_base64) o None
+    si no se puede leer — el llamador decide el log. Compartido entre Gemini
+    (inline_data) y GitHub Models (data URI en image_url).
     """
     path = Path(imagen_path)
     try:
@@ -530,10 +563,7 @@ def _parte_imagen(imagen_path: str) -> Optional[dict]:
     except OSError:
         return None
     mime = _MIME_POR_EXTENSION.get(path.suffix.lower(), "image/jpeg")
-    return {"inline_data": {
-        "mime_type": mime,
-        "data":      base64.b64encode(img_bytes).decode("ascii"),
-    }}
+    return mime, base64.b64encode(img_bytes).decode("ascii")
 
 
 # Errores que se resuelven ROTANDO de clave (cuota agotada / clave inválida) —
@@ -673,6 +703,99 @@ def _post_gemini(cuerpo: dict, timeout_s: int, paso: str,
     return None
 
 
+def _cargar_clave_github() -> str:
+    """GITHUB_API_KEY: entorno primero (autoridad), luego <repo>/.env. Nunca la imprime."""
+    env_val = os.environ.get("GITHUB_API_KEY", "").strip()
+    if env_val:
+        return env_val
+    ruta_env = Path(__file__).resolve().parent.parent / ".env"
+    if ruta_env.exists():
+        try:
+            raw = ruta_env.read_text(encoding="utf-8", errors="replace")
+            m = re.search(r"^\s*GITHUB_API_KEY\s*=\s*(.+)$", raw, re.M)
+            if m:
+                return m.group(1).strip()
+        except OSError:
+            pass
+    return ""
+
+
+def _post_github_models(cuerpo: dict, timeout_s: int, paso: str,
+                        criterio: str = "-") -> Optional[dict]:
+    """
+    POST a GitHub Models (endpoint OpenAI-compatible). Mismo contrato de
+    retorno que _post_gemini: dict del payload o None, nunca lanza. Solo hay
+    UNA GITHUB_API_KEY (sin rotación) — reintentos simples con el mismo
+    backoff que Gemini sobre transitorios (5xx/timeout); determinista
+    (400/401/403/404) aborta de inmediato.
+    """
+    clave = _cargar_clave_github()
+    if not clave:
+        _log_paso(logging.WARNING, paso, criterio,
+                  "fallback no invocado", "GITHUB_API_KEY ausente en el entorno")
+        return None
+
+    data = json.dumps(cuerpo).encode("utf-8")
+    t0   = time.perf_counter()
+    ultimo_error = ""
+
+    for intento in range(1, GEMINI_MAX_INTENTOS + 1):
+        req = urllib.request.Request(
+            GITHUB_BASE_URL, data=data, method="POST",
+            headers={
+                "Content-Type":  "application/json",
+                "Authorization": f"Bearer {clave}",
+            },
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=timeout_s,
+                                        context=_contexto_ssl()) as resp:
+                return json.loads(resp.read().decode("utf-8"))
+        except urllib.error.HTTPError as exc:
+            detalle = ""
+            try:
+                detalle = exc.read().decode("utf-8", "replace")[:300]
+            except Exception:
+                pass
+            ultimo_error = f"HTTP {exc.code}: {detalle}"
+            if exc.code in _HTTP_NO_REINTENTABLES or exc.code in (401, 403):
+                _log_paso(logging.ERROR, paso, criterio,
+                          f"HTTP {exc.code} no reintentable (fallback)", detalle, ms=_ms(t0))
+                return None
+        except Exception as exc:
+            ultimo_error = f"{type(exc).__name__}: {exc}"
+
+        if intento >= GEMINI_MAX_INTENTOS:
+            _log_paso(logging.ERROR, paso, criterio,
+                      f"fallback agotó {GEMINI_MAX_INTENTOS} intento(s)",
+                      ultimo_error, ms=_ms(t0))
+            return None
+
+        espera = GEMINI_BACKOFF_S[min(intento - 1, len(GEMINI_BACKOFF_S) - 1)]
+        _log_paso(logging.WARNING, paso, criterio,
+                  f"fallback intento {intento}/{GEMINI_MAX_INTENTOS} falló, "
+                  f"reintenta en {espera}s", ultimo_error, ms=_ms(t0))
+        time.sleep(espera)
+
+    return None
+
+
+def _extraer_texto_openai(payload: dict) -> str:
+    """Texto plano de choices[0].message.content (shape OpenAI/GitHub Models)."""
+    try:
+        return str(payload["choices"][0]["message"]["content"] or "")
+    except (IndexError, KeyError, TypeError):
+        return ""
+
+
+def _extraer_tokens_openai(payload: dict) -> int:
+    """Total de tokens reportados por usage.total_tokens (shape OpenAI)."""
+    try:
+        return int(payload.get("usage", {}).get("total_tokens", 0))
+    except (TypeError, ValueError):
+        return 0
+
+
 def _llamar_modelo(prompt: str, imagen_path: Optional[str] = None) -> tuple[str, int]:
     """
     Llama a Gemini con el prompt ya construido por _construir_prompt().
@@ -687,6 +810,14 @@ def _llamar_modelo(prompt: str, imagen_path: Optional[str] = None) -> tuple[str,
     Loggea WARNING en cada reintento y ERROR si se agotan los intentos.
     Los códigos HTTP deterministas (_HTTP_NO_REINTENTABLES) abortan sin reintentar.
 
+    Fallback (GitHub Models / gpt-4o-mini): si Gemini agota sus intentos
+    (_post_gemini devuelve None — todas las claves en 429/503/timeout, o
+    directamente sin GEMINI_API_KEY configurada), se prueba UNA vez el
+    segundo proveedor con el MISMO prompt/imagen antes de rendirse. Apagable
+    con MOTOR1_FALLBACK_GITHUB=0. La respuesta de GitHub Models pasa por el
+    mismo _normalizar_respuesta() — el prompt ya exige JSON-only para ambos
+    proveedores, así que el shape esperado es idéntico.
+
     Retorna (json_respuesta, tokens_usados).
     Ante cualquier fallo o respuesta inválida retorna ("", 0|tokens) — nunca
     lanza excepción (PASO 6 no debe tumbar el pipeline).
@@ -694,49 +825,74 @@ def _llamar_modelo(prompt: str, imagen_path: Optional[str] = None) -> tuple[str,
     if not prompt:
         return "", 0
 
-    if not _cargar_claves_api():
+    codificada = _codificar_imagen_base64(imagen_path) if imagen_path else None
+    con_imagen = codificada is not None
+    if imagen_path and not con_imagen:
         _log_paso(logging.WARNING, "PASO_4", "-",
-                  "modelo no invocado", "GEMINI_API_KEY ausente en el entorno")
-        return "", 0
-
-    partes: list[dict] = [{"text": prompt + _INSTRUCCION_FORMATO_JSON}]
-    con_imagen = False
-    if imagen_path:
-        parte_img = _parte_imagen(imagen_path)
-        if parte_img:
-            partes.append(parte_img)
-            con_imagen = True
-            _log_paso(logging.INFO, "PASO_4", "-", "imagen adjuntada al modelo",
-                      Path(imagen_path).name)
-        else:
-            _log_paso(logging.WARNING, "PASO_4", "-",
-                      "imagen ilegible — modelo evalúa solo con texto", str(imagen_path))
-    else:
+                  "imagen ilegible — modelo evalúa solo con texto", str(imagen_path))
+    elif not imagen_path:
         _log_paso(logging.WARNING, "PASO_4", "-",
                   "sin imagen — modelo evalúa solo con texto")
+    else:
+        _log_paso(logging.INFO, "PASO_4", "-", "imagen adjuntada al modelo",
+                  Path(imagen_path).name)
     timeout_s = GEMINI_TIMEOUT_IMG_S if con_imagen else GEMINI_TIMEOUT_S
-
-    cuerpo = {
-        "contents": [
-            {"role": "user", "parts": partes}
-        ],
-        "generationConfig": {
-            "temperature":        0.0,
-            "response_mime_type": "application/json",
-        },
-    }
     t0 = time.perf_counter()
 
-    payload = _post_gemini(cuerpo, timeout_s, "PASO_4")   # rota claves internamente
-    if payload is None:
+    payload = None
+    if _cargar_claves_api():
+        partes: list[dict] = [{"text": prompt + _INSTRUCCION_FORMATO_JSON}]
+        if con_imagen:
+            mime, data = codificada
+            partes.append({"inline_data": {"mime_type": mime, "data": data}})
+        cuerpo_gemini = {
+            "contents": [{"role": "user", "parts": partes}],
+            "generationConfig": {
+                "temperature":        0.0,
+                "response_mime_type": "application/json",
+            },
+        }
+        payload = _post_gemini(cuerpo_gemini, timeout_s, "PASO_4")
+    else:
+        _log_paso(logging.WARNING, "PASO_4", "-",
+                  "Gemini no invocado", "GEMINI_API_KEY ausente en el entorno")
+
+    if payload is not None:
+        tokens      = _extraer_tokens(payload)
+        normalizado = _normalizar_respuesta(_extraer_texto(payload))
+        if normalizado is None:
+            _log_paso(logging.WARNING, "PASO_4", "-",
+                      "respuesta de Gemini no es JSON válido; se ignora", "", ms=_ms(t0))
+            return "", tokens
+        _log_paso(logging.INFO, "PASO_4", "-", "Gemini respondió",
+                  f"tokens={tokens}", ms=_ms(t0))
+        return normalizado, tokens
+
+    if not _fallback_github_habilitado():
         return "", 0
-    tokens      = _extraer_tokens(payload)
-    normalizado = _normalizar_respuesta(_extraer_texto(payload))
+
+    contenido: list[dict] = [{"type": "text", "text": prompt + _INSTRUCCION_FORMATO_JSON}]
+    if con_imagen:
+        mime, data = codificada
+        contenido.append({"type": "image_url",
+                          "image_url": {"url": f"data:{mime};base64,{data}"}})
+    cuerpo_github = {
+        "model":       GITHUB_MODEL,
+        "temperature": 0.0,
+        "messages":    [{"role": "user", "content": contenido}],
+    }
+    _log_paso(logging.WARNING, "PASO_4", "-",
+              "Gemini agotado — probando fallback GitHub Models", GITHUB_MODEL)
+    payload_gh = _post_github_models(cuerpo_github, GITHUB_TIMEOUT_S, "PASO_4")
+    if payload_gh is None:
+        return "", 0
+    tokens      = _extraer_tokens_openai(payload_gh)
+    normalizado = _normalizar_respuesta(_extraer_texto_openai(payload_gh))
     if normalizado is None:
         _log_paso(logging.WARNING, "PASO_4", "-",
-                  "respuesta del modelo no es JSON válido; se ignora", "", ms=_ms(t0))
+                  "respuesta de GitHub Models no es JSON válido; se ignora", "", ms=_ms(t0))
         return "", tokens
-    _log_paso(logging.INFO, "PASO_4", "-", "modelo respondió",
+    _log_paso(logging.INFO, "PASO_4", "-", "GitHub Models respondió (fallback)",
               f"tokens={tokens}", ms=_ms(t0))
     return normalizado, tokens
 
@@ -1287,6 +1443,166 @@ def _autotest_batching() -> int:
 
 
 # ──────────────────────────────────────────────
+# AUTOTEST — fallback de proveedor (GitHub Models, 100% offline)
+# Monkeypatchea _post_gemini y _post_github_models directamente (no la red):
+# confirma que un lote que agota Gemini prueba el fallback antes de
+# degradarse, que Gemini sano nunca dispara el fallback, que la bandera
+# MOTOR1_FALLBACK_GITHUB=0 lo desactiva, y que ambos caídos preserva el
+# comportamiento previo (degrada a NO_CALIFICA, sin excepción).
+# ──────────────────────────────────────────────
+
+def _autotest_fallback_proveedor() -> int:
+    fallas: list[str] = []
+
+    def check(nombre: str, cond: bool):
+        print(f"  [{'PASS' if cond else 'FAIL'}] {nombre}")
+        if not cond:
+            fallas.append(nombre)
+
+    modulo         = sys.modules[__name__]
+    orig_gemini    = modulo._post_gemini
+    orig_github    = modulo._post_github_models
+    orig_claves    = modulo._cargar_claves_api
+    orig_sleep     = time.sleep
+
+    _PAYLOAD_GEMINI_OK = {
+        "candidates": [{"content": {"parts": [
+            {"text": '[{"criterio": "c1", "veredicto": "GRAVE", "razon": "gemini"}]'}
+        ]}}],
+        "usageMetadata": {"totalTokenCount": 10},
+    }
+    _PAYLOAD_GITHUB_OK = {
+        "choices": [{"message": {
+            "content": '[{"criterio": "c1", "veredicto": "GRAVE", "razon": "github"}]'
+        }}],
+        "usage": {"total_tokens": 20},
+    }
+
+    llamadas_gemini = []
+    llamadas_github = []
+
+    def _gemini_falla(cuerpo, timeout_s, paso, criterio="-"):
+        llamadas_gemini.append(1)
+        return None
+
+    def _gemini_ok(cuerpo, timeout_s, paso, criterio="-"):
+        llamadas_gemini.append(1)
+        return _PAYLOAD_GEMINI_OK
+
+    def _github_ok(cuerpo, timeout_s, paso, criterio="-"):
+        llamadas_github.append(1)
+        return _PAYLOAD_GITHUB_OK
+
+    def _github_falla(cuerpo, timeout_s, paso, criterio="-"):
+        llamadas_github.append(1)
+        return None
+
+    try:
+        time.sleep = lambda *_a, **_k: None
+        modulo._cargar_claves_api = lambda: ["FAKE1"]
+        os.environ.pop("MOTOR1_FALLBACK_GITHUB", None)
+
+        # 1) Gemini agotado + GitHub sano -> evaluaciones reales, no degrada
+        llamadas_gemini.clear(); llamadas_github.clear()
+        modulo._post_gemini = _gemini_falla
+        modulo._post_github_models = _github_ok
+        texto, tokens = _llamar_modelo("prompt de prueba", imagen_path=None)
+        check("gemini agotado + github sano -> respuesta con evaluaciones",
+              '"evaluaciones"' in texto and '"veredicto": "GRAVE"' in texto)
+        check("tokens vienen del proveedor que respondió (github)", tokens == 20)
+        check("se intentó gemini antes del fallback", len(llamadas_gemini) == 1)
+        check("se probó github tras agotar gemini", len(llamadas_github) == 1)
+
+        # 2) Gemini sano -> github nunca se llama
+        llamadas_gemini.clear(); llamadas_github.clear()
+        modulo._post_gemini = _gemini_ok
+        modulo._post_github_models = _github_ok
+        texto2, tokens2 = _llamar_modelo("prompt de prueba", imagen_path=None)
+        check("gemini sano -> respuesta usa el veredicto de gemini",
+              '"razon": "gemini"' in texto2 and tokens2 == 10)
+        check("github NO se invoca si gemini responde", len(llamadas_github) == 0)
+
+        # 3) Ambos caídos -> ("", 0), sin excepción, comportamiento previo intacto
+        llamadas_gemini.clear(); llamadas_github.clear()
+        modulo._post_gemini = _gemini_falla
+        modulo._post_github_models = _github_falla
+        texto3, tokens3 = _llamar_modelo("prompt de prueba", imagen_path=None)
+        check("ambos proveedores caídos -> ('', 0)", texto3 == "" and tokens3 == 0)
+
+        # 4) MOTOR1_FALLBACK_GITHUB=0 -> no se llama a github aunque esté sano
+        llamadas_gemini.clear(); llamadas_github.clear()
+        os.environ["MOTOR1_FALLBACK_GITHUB"] = "0"
+        modulo._post_gemini = _gemini_falla
+        modulo._post_github_models = _github_ok
+        texto4, tokens4 = _llamar_modelo("prompt de prueba", imagen_path=None)
+        check("bandera en 0 desactiva el fallback", texto4 == "" and tokens4 == 0)
+        check("github no se invoca con la bandera apagada", len(llamadas_github) == 0)
+        os.environ.pop("MOTOR1_FALLBACK_GITHUB", None)
+
+        # 5) Batch parcial: 1 lote se salva por github, el otro por gemini directo
+        llamadas_gemini.clear(); llamadas_github.clear()
+
+        def _criterio_del_prompt(texto: str) -> str:
+            m = re.search(r"Criterio: (\S+)", texto)
+            return m.group(1) if m else "c?"
+
+        secuencia = [None, "ok"]   # lote 1 agota gemini, lote 2 responde directo
+        idx = {"i": 0}
+        def _gemini_secuencial(cuerpo, timeout_s, paso, criterio="-"):
+            llamadas_gemini.append(1)
+            modo = secuencia[min(idx["i"], len(secuencia) - 1)]
+            idx["i"] += 1
+            if modo is None:
+                return None
+            cid = _criterio_del_prompt(cuerpo["contents"][0]["parts"][0]["text"])
+            return {
+                "candidates": [{"content": {"parts": [
+                    {"text": f'[{{"criterio": "{cid}", "veredicto": "GRAVE", "razon": "gemini"}}]'}
+                ]}}],
+                "usageMetadata": {"totalTokenCount": 10},
+            }
+
+        def _github_dinamico(cuerpo, timeout_s, paso, criterio="-"):
+            llamadas_github.append(1)
+            cid = _criterio_del_prompt(cuerpo["messages"][0]["content"][0]["text"])
+            return {
+                "choices": [{"message": {
+                    "content": f'[{{"criterio": "{cid}", "veredicto": "GRAVE", "razon": "github"}}]'
+                }}],
+                "usage": {"total_tokens": 20},
+            }
+
+        modulo._post_gemini = _gemini_secuencial
+        modulo._post_github_models = _github_dinamico
+
+        def _rc(i: int) -> ResultadoConfianza:
+            return ResultadoConfianza(
+                criterio=f"c{i}", veredicto=Severidad.NO_CALIFICA,
+                confianza=Confianza.MEDIO, fuente_dominante="CAPA2",
+                peso_dominante=Peso.MANDATORY, delegar_a_modelo=True,
+                razon="FIXTURE")
+
+        delegados = [_rc(1), _rc(2)]
+        respuesta_lotes, _ = _evaluar_delegados_en_lotes(
+            delegados, {}, {}, None, tam_lote=1)
+        merged = _merge_veredictos(delegados, respuesta_lotes, {"c1", "c2"})
+        check("lote salvado por github queda GRAVE, no degradado",
+              merged[0].veredicto == Severidad.GRAVE)
+        check("lote resuelto directo por gemini también queda GRAVE",
+              merged[1].veredicto == Severidad.GRAVE)
+    finally:
+        modulo._post_gemini        = orig_gemini
+        modulo._post_github_models = orig_github
+        modulo._cargar_claves_api  = orig_claves
+        time.sleep                 = orig_sleep
+        os.environ.pop("MOTOR1_FALLBACK_GITHUB", None)
+
+    print(f"\nAUTOTEST FALLBACK DE PROVEEDOR: {'PASS' if not fallas else 'FAIL'} "
+          f"({len(fallas)} falla(s))")
+    return len(fallas)
+
+
+# ──────────────────────────────────────────────
 # HELPERS — RESUMEN
 # ──────────────────────────────────────────────
 
@@ -1549,6 +1865,11 @@ if __name__ == "__main__":
     # offline (monkeypatchea _llamar_modelo). Uso: python pipeline.py autotest-batching
     if len(sys.argv) > 1 and sys.argv[1] == "autotest-batching":
         sys.exit(1 if _autotest_batching() else 0)
+
+    # Fallback de proveedor (GitHub Models): 100% offline, monkeypatchea
+    # _post_gemini/_post_github_models. Uso: python pipeline.py autotest-fallback
+    if len(sys.argv) > 1 and sys.argv[1] == "autotest-fallback":
+        sys.exit(1 if _autotest_fallback_proveedor() else 0)
 
     def _cargar_env_local() -> None:
         """
