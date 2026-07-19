@@ -12,7 +12,8 @@ Output (resultados_sistema.json):
   {"meta": {...}, "fotos": [{"foto_id", "archivo", "tiempo_segundos",
    "veredicto_global", "detecciones": [{"criterio_id","criterio","veredicto","razon"}],
    "evaluacion_parcial", "causa_parcial", "tokens_modelo",
-   "criterios_delegados", "criterios_evaluados", "criterios_no_califica"}]}
+   "criterios_delegados", "criterios_evaluados", "criterios_no_califica",
+   "criterios_degradados_por_cuota", "pct_degradado_por_cuota"}]}
 
 Semántica de "detección" (documentada, no implícita): un criterio cuenta como
 detección del sistema cuando su veredicto es GRAVE u OBSERVACION. CUMPLE y
@@ -22,11 +23,10 @@ que es distinto de detectar un problema).
 Fidelidad de trazabilidad (evaluacion_parcial/causa_parcial): sin esto, una
 corrida degradada por cuota (modelo sin responder → todo NO_CALIFICA) es
 INDISTINGUIBLE de una corrida limpia con 0 hallazgos — ambas dan detecciones=[].
-El pipeline NO expone un flag de parcialidad en ResultadoFinal; la señal se
-DERIVA (ver _metadata_parcial) de campos que sí expone: hubo criterios
-delegados al modelo pero el modelo no consumió tokens → ninguna respuesta
-llegó, esos criterios se degradaron. Se serializan además los conteos crudos
-para que incluso una degradación parcial-parcial quede visible en el reporte.
+Fix H6 (Sesión KK): la fuente de verdad es `ResultadoFinal.evaluacion_parcial`
+(nivel LOTE) + `pct_degradado_por_cuota` (% de delegados sin respuesta del
+modelo, schema 1.2); la derivación por tokens==0 quedó como fallback para
+resultados sin esos campos. Los conteos crudos se serializan siempre.
 
 Uso:
   python correr_motor1_benchmark.py autotest
@@ -160,18 +160,16 @@ def _extraer_detecciones(resultado) -> list[dict]:
 
 
 def _metadata_parcial(resultado) -> dict:
-    """Deriva la señal de evaluación parcial/degradada del ResultadoFinal.
+    """Señal de evaluación parcial/degradada del ResultadoFinal.
 
-    El pipeline NO expone un flag `evaluacion_parcial` (verificado: ResultadoFinal
-    no lo tiene). La señal se DERIVA de campos que sí expone: si hubo criterios
-    delegados al modelo (`criterios_delegados_a_modelo > 0`) pero el modelo no
-    consumió tokens (`tokens_modelo_usados == 0`), NINGUNA respuesta llegó de
-    ningún proveedor → esos criterios se degradaron a NO_CALIFICA (cuota 429 /
-    503 sostenido en todas las claves y proveedores). Ese es exactamente el caso
-    que vuelve una corrida degradada indistinguible de una corrida limpia con 0
-    hallazgos si no se serializa. Los conteos crudos se incluyen siempre para
-    que incluso una degradación parcial-parcial (algunos lotes caídos) sea
-    auditable en el reporte.
+    Fix H6 (Sesión KK): el pipeline SÍ expone `evaluacion_parcial`/`causa_parcial`
+    (desde Sesión HH, a nivel de LOTE) y desde schema 1.2 también el % real de
+    degradación por cuota (`criterios_degradados_por_cuota`/`pct_degradado_por_
+    cuota`). Este runner los re-derivaba con una señal más gruesa (tokens==0 =
+    degradación TOTAL) y por eso benchmark_mini del 19 Jul reportó `False` en 5
+    fotos con 1-3 lotes caídos cada una. Ahora la fuente de verdad es el
+    pipeline; la derivación por tokens==0 queda solo como fallback para
+    resultados viejos/fixtures sin esos campos.
 
     Casos que NO son parciales por diseño: (a) bloqueo mandatory (delegados=0, es
     un stop duro con detecciones reales, no una degradación); (b) fallback GitHub
@@ -183,12 +181,18 @@ def _metadata_parcial(resultado) -> dict:
     n_total   = len(criterios)
     n_nc      = sum(1 for c in criterios if _veredicto_str(c) == "NO_CALIFICA")
 
-    parcial = delegados > 0 and tokens == 0
-    causa = ""
-    if parcial:
-        causa = (f"Modelo sin respuesta (0 tokens) con {delegados} criterio(s) "
-                 f"delegado(s); {n_nc} degradado(s) a NO_CALIFICA. Causa probable: "
-                 f"cuota agotada (429) o 503 en todas las claves/proveedores.")
+    parcial_pipeline = getattr(resultado, "evaluacion_parcial", None)
+    if parcial_pipeline is not None:
+        parcial = bool(parcial_pipeline)
+        causa   = str(getattr(resultado, "causa_parcial", "") or "")
+    else:
+        # Fallback (resultado sin el campo): derivación gruesa por tokens==0.
+        parcial = delegados > 0 and tokens == 0
+        causa = ""
+        if parcial:
+            causa = (f"Modelo sin respuesta (0 tokens) con {delegados} criterio(s) "
+                     f"delegado(s); {n_nc} degradado(s) a NO_CALIFICA. Causa probable: "
+                     f"cuota agotada (429) o 503 en todas las claves/proveedores.")
     return {
         "evaluacion_parcial":    parcial,
         "causa_parcial":         causa,
@@ -196,6 +200,12 @@ def _metadata_parcial(resultado) -> dict:
         "criterios_delegados":   delegados,
         "criterios_evaluados":   n_total,
         "criterios_no_califica": n_nc,
+        # H6: % real de silencio de cuota (delegados sin respuesta del modelo).
+        # NO_CALIFICA respondidos por el modelo NO cuentan aquí.
+        "criterios_degradados_por_cuota":
+            int(getattr(resultado, "criterios_degradados_por_cuota", 0) or 0),
+        "pct_degradado_por_cuota":
+            float(getattr(resultado, "pct_degradado_por_cuota", 0.0) or 0.0),
     }
 
 
@@ -225,7 +235,10 @@ def correr(manifest: list[dict], ejecutar_fn: Callable, salida: Path) -> dict:
         }
         foto.update(_metadata_parcial(resultado))
         fotos.append(foto)
-        aviso = "  [PARCIAL: degradada por cuota/proveedor]" if foto["evaluacion_parcial"] else ""
+        aviso = ""
+        if foto["evaluacion_parcial"]:
+            aviso = (f"  [PARCIAL: {foto['pct_degradado_por_cuota']}% degradado "
+                     f"por cuota/proveedor]")
         print(f"  {fid}: {segundos}s, veredicto={veredicto_global}, "
               f"{len(detecciones)} detección(es){aviso}")
 
@@ -388,6 +401,33 @@ def autotest() -> int:
               rel_degr["fotos"][0]["evaluacion_parcial"] is True
               and rel_degr["fotos"][0]["causa_parcial"] != "")
 
+        # ── Fix H6 (Sesión KK): el flag del PIPELINE manda ──────────────
+        # Bug reproducido de benchmark_mini 19 Jul: foto con lotes caídos
+        # (parcial a nivel lote) pero tokens>0 — la derivación por tokens==0
+        # la reportaba como corrida completa. Ahora debe salir PARCIAL con %.
+        def ejecutar_parcial_lote(imagen_path, etapa_activa, tipo_foto):
+            r = _ResultadoFicticio(
+                [_CriterioFicticio("c_ok", "CUMPLE"),
+                 _CriterioFicticio("c_nc_lote", "NO_CALIFICA")],
+                veredicto_global="CUMPLE", tokens=5000, delegados=137)
+            r.evaluacion_parcial = True
+            r.causa_parcial = "el modelo no respondió 3 de 10 lote(s) de criterios delegados"
+            r.criterios_degradados_por_cuota = 45
+            r.pct_degradado_por_cuota = 32.8
+            return r
+
+        d_pl = correr(una_foto, ejecutar_parcial_lote, tmp / "r_parcial_lote.json")["fotos"][0]
+        check("H6: parcial a nivel LOTE (tokens>0) YA se reporta como parcial",
+              d_pl["evaluacion_parcial"] is True and d_pl["tokens_modelo"] == 5000)
+        check("H6: causa_parcial viene del pipeline, no derivada",
+              "lote" in d_pl["causa_parcial"])
+        check("H6: % degradado por cuota serializado (45 criterios, 32.8%)",
+              d_pl["criterios_degradados_por_cuota"] == 45
+              and d_pl["pct_degradado_por_cuota"] == 32.8)
+        check("H6 fallback: fixture sin campos nuevos serializa 0/0.0",
+              d_degr["criterios_degradados_por_cuota"] == 0
+              and d_degr["pct_degradado_por_cuota"] == 0.0)
+
     print(f"\nAUTOTEST RUNNER: {'PASS' if not fallas else 'FAIL'} ({len(fallas)} falla(s))")
     return len(fallas)
 
@@ -458,6 +498,10 @@ def main(argv: list[str] | None = None) -> int:
     # fotos todas NO_CALIFICA con las 3 claves en 429 y cero rastro del porqué.
     logging.basicConfig(level=logging.WARNING,
                         format="%(levelname)s %(name)s | %(message)s")
+    # Diagnóstico (Sesión KK): en benchmark el detalle por lote SÍ importa —
+    # a nivel WARNING los "lote N/M OK ... tokens=" (INFO) morían y no se
+    # podía auditar el consumo real de tokens/requests por lote.
+    logging.getLogger("visual_lv.pipeline").setLevel(logging.INFO)
 
     # Pre-flight de CUOTA: 1 llamada mínima ANTES de gastar la corrida. Va por
     # _post_gemini (rota las claves solito): si devuelve None es que TODAS las

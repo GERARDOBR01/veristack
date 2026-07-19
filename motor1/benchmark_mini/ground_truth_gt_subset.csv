@@ -1,0 +1,5 @@
+foto_id,criterio_id,criterio,familia,severidad,tipo_evaluacion,gap
+F03,,"Muebles tipo T en pares, un pasillo por juego",distribucion_mobiliario,OBSERVACION,binario,capa1
+F03,identificar_cartulina_descuento,Falta cartulina de descuento del lado derecho,senalizacion,GRAVE,binario,capa2
+F04,,Hueco de sartenes (vacío de producto),orden_saturacion,GRAVE,escala,capa1
+F04,,Cajas de mesa Westinhouse desacomodadas (desorden),orden_saturacion,GRAVE,escala,capa1

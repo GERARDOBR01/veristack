@@ -1,0 +1,321 @@
+{
+  "meta": {
+    "generado": "2026-07-19T19:37:58+00:00",
+    "fotos": 5,
+    "semantica": "deteccion = criterio con veredicto GRAVE u OBSERVACION"
+  },
+  "fotos": [
+    {
+      "foto_id": "F03",
+      "archivo": "C:\\Users\\jesus\\Downloads\\SF01_F03_E1.jpeg",
+      "tiempo_segundos": 228.42,
+      "veredicto_global": "GRAVE",
+      "detecciones": [
+        {
+          "criterio_id": "2_maniquies_1_etiqueta",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] El maniquí de la derecha cuenta con una etiqueta redonda de descuento (40%), mientras que el maniquí de la izquierda no tiene ninguna etiqueta de precio o descuento visible en su ropa."
+        },
+        {
+          "criterio_id": "acercate_jefe_seccion_pueda_dar",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] No es posible verificar la consistencia del mismo descuento en ambos maniquíes debido a la ausencia de etiqueta en el maniquí de la izquierda."
+        },
+        {
+          "criterio_id": "caso_muebles_focal_coloca_etiqueta",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] El maniquí izquierdo carece de la etiqueta de descuento correspondiente, a diferencia del maniquí derecho que sí la tiene colocada."
+        },
+        {
+          "criterio_id": "coloca_cartulina_descuento_agresivo_cuentes",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] No se observa ninguna cartulina con el descuento agresivo de la campaña E1 en el mueble o maniquíes, únicamente un pequeño tag en el pantalón del maniquí derecho."
+        },
+        {
+          "criterio_id": "coloca_exhibiciones_masivas_producto_participante",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] No se aprecia de forma homogénea el descuento en la exhibición; solo el maniquí derecho cuenta con etiqueta de descuento (40), mientras que el izquierdo y el rack no muestran señalización clara."
+        },
+        {
+          "criterio_id": "coloca_material_grafico_forma_alternada",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] Las dos torres slim visibles son de diseño genérico ('vive la GRAN BARATA') y no muestran de forma alternada el beneficio vigente de la etapa E1."
+        },
+        {
+          "criterio_id": "colocar_cartulina_descuento_especifico_mercancia",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] Falta la colocación de cartulinas con el descuento específico de la mercancía participante en el rack central."
+        },
+        {
+          "criterio_id": "colocar_cartulinas",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] No se observan cartulinas de precio o descuento en el mueble de exhibición, limitándose solo a un pequeño tag colgante en un maniquí."
+        },
+        {
+          "criterio_id": "colocar_etiquetas_cuidando_esten_misma",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] Solo el maniquí de la derecha presenta etiqueta de descuento visible, perdiendo la simetría y consistencia visual entre ambos maniquíes."
+        },
+        {
+          "criterio_id": "colocar_forma_alterna_material_grafico",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] Ambos elementos gráficos laterales (torres slim) son idénticos y genéricos, sin alternar con gráficos que indiquen el beneficio de la etapa."
+        },
+        {
+          "criterio_id": "colocar_producto_apuesta_comercial",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] La comunicación del descuento no es uniforme en la apuesta comercial, ya que el maniquí izquierdo carece de etiqueta de descuento."
+        },
+        {
+          "criterio_id": "colocar_producto_descuento_mayor_menor",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] No se evidencia una correcta homologación o secuencia de descuentos al estar ausente la etiqueta en uno de los maniquíes."
+        },
+        {
+          "criterio_id": "colocar_producto_mayor_descuento",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] No se puede validar la consistencia del mayor descuento debido a la falta de etiquetado en el maniquí izquierdo y en las prendas del rack."
+        },
+        {
+          "criterio_id": "columnas_etapa1_40_60",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] Las columnas/torres slim presentes son 100% genéricas; no se cumple con la proporción de mostrar gráficos con el beneficio de la etapa 1."
+        },
+        {
+          "criterio_id": "dentro_clasificacion_agrupa_producto_descuento",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] Se observa una inconsistencia en la señalización de descuento de los maniquíes: el de la derecha cuenta con un sticker de descuento (40%), mientras que el de la izquierda no presenta etiqueta de descuento visible."
+        },
+        {
+          "criterio_id": "exhibe_siembra_espacio_visible_disciplina",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] No se observa la cartulina con el descuento correspondiente en el mueble central."
+        },
+        {
+          "criterio_id": "exhibir_1_focal_por_marca",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] Las torres slim no muestran el beneficio o porcentaje de descuento de la etapa vigente."
+        },
+        {
+          "criterio_id": "exhibir_producto_descuento_mezclar",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] No es posible validar la homogeneidad del descuento al no estar señalizado en ambos maniquíes."
+        },
+        {
+          "criterio_id": "focal_bloque_marca_tipo_producto",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] Las torres slim carecen de la información del beneficio vigente de la etapa."
+        },
+        {
+          "criterio_id": "graficos_requeridos",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] Las torres slim no cuentan con el gráfico del porcentaje de descuento de la etapa."
+        },
+        {
+          "criterio_id": "identificar_cartulina_descuento",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] No se localiza de forma clara la cartulina con el descuento específico de la campaña."
+        },
+        {
+          "criterio_id": "identificar_cartulina_shots_promocionales",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] Se observa la etiqueta de descuento (40%) en el maniquí derecho, pero el maniquí izquierdo carece de etiqueta promocional visible."
+        },
+        {
+          "criterio_id": "maniqui_maniquies_deben_integrarse_elementos",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] El maniquí de la izquierda no cuenta con la etiqueta de precio/descuento correspondiente en su outfit."
+        },
+        {
+          "criterio_id": "producto_focal_show",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] Falta consistencia en la señalización de descuento: el maniquí derecho tiene la etiqueta de 40% en la cadera, pero el maniquí izquierdo carece de ella."
+        },
+        {
+          "criterio_id": "etiqueta_ausente_maniqui",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] El maniquí de la izquierda no presenta etiqueta de descuento visible en sus prendas."
+        },
+        {
+          "criterio_id": "imprimir_torre_slim_mandar_parche",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] Las torres slim no muestran el parche con el beneficio o porcentaje de descuento vigente para la etapa E1."
+        },
+        {
+          "criterio_id": "mezcla_descuentos",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] Se observa inconsistencia en la comunicación de descuentos, ya que solo un maniquí cuenta con etiqueta de descuento (40%)."
+        },
+        {
+          "criterio_id": "producto_sin_descuento",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] El look del maniquí izquierdo y la mochila central no muestran etiquetas de descuento vigentes."
+        },
+        {
+          "criterio_id": "props_decoracion",
+          "criterio": "",
+          "veredicto": "GRAVE",
+          "razon": "[MODELO] Se detecta el uso de elementos no permitidos en el focal: una planta decorativa y una mochila sobre pedestales en el centro."
+        },
+        {
+          "criterio_id": "selecciona_producto_dando_prioridad_descuento",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] No se evidencia una prioridad de descuento uniforme en toda la exhibición al haber elementos sin etiqueta."
+        },
+        {
+          "criterio_id": "visibilidad_producto_descuento_alto_corridas",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] No se observa consistencia en la señalización de descuento en ambos maniquíes; únicamente el maniquí derecho presenta una etiqueta de descuento (40%), mientras que el izquierdo carece de ella."
+        }
+      ],
+      "evaluacion_parcial": true,
+      "causa_parcial": "el modelo no respondió 2 de 10 lote(s) de criterios delegados",
+      "tokens_modelo": 64015,
+      "criterios_delegados": 137,
+      "criterios_evaluados": 138,
+      "criterios_no_califica": 61,
+      "criterios_degradados_por_cuota": 30,
+      "pct_degradado_por_cuota": 21.9
+    },
+    {
+      "foto_id": "F04",
+      "archivo": "C:\\Users\\jesus\\Downloads\\SF01_F04_E1.webp.png",
+      "tiempo_segundos": 118.42,
+      "veredicto_global": "OBSERVACION",
+      "detecciones": [
+        {
+          "criterio_id": "coloca_cartulina_descuento_agresivo_cuentes",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] No se observa ninguna cartulina con descuento agresivo o beneficio específico de la campaña en la mesa o muebles."
+        },
+        {
+          "criterio_id": "colocar_cartulina_descuento_especifico_mercancia",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] No se visualiza ninguna cartulina que indique el descuento específico aplicable a los muebles o vajilla en exhibición."
+        },
+        {
+          "criterio_id": "colocar_cartulinas",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] Se observa el acrílico promocional de la campaña, pero faltan las cartulinas de precios o descuentos específicos de la mercancía."
+        },
+        {
+          "criterio_id": "colocar_etiquetas_cuidando_esten_misma",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] Las etiquetas de precio colgantes en las sillas no están colocadas de manera uniforme ni en la misma posición/lado."
+        }
+      ],
+      "evaluacion_parcial": false,
+      "causa_parcial": "",
+      "tokens_modelo": 58498,
+      "criterios_delegados": 137,
+      "criterios_evaluados": 138,
+      "criterios_no_califica": 93,
+      "criterios_degradados_por_cuota": 0,
+      "pct_degradado_por_cuota": 0.0
+    },
+    {
+      "foto_id": "SF01_Sin_f00_E1",
+      "archivo": "C:\\Users\\jesus\\Downloads\\SF01_Sin f00_E1.webp.png",
+      "tiempo_segundos": 124.83,
+      "veredicto_global": "GRAVE",
+      "detecciones": [
+        {
+          "criterio_id": "2_maniquies_1_etiqueta",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] No se aprecian etiquetas de precio individuales colocadas en las prendas de los maniquíes."
+        },
+        {
+          "criterio_id": "recuerda_etiquetas_solo_van_cadera",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] No se aprecian etiquetas de precio colocadas en la cadera de los maniquíes exhibidos."
+        },
+        {
+          "criterio_id": "props_decoracion",
+          "criterio": "",
+          "veredicto": "GRAVE",
+          "razon": "[MODELO] Se detecta el uso de elementos decorativos no permitidos en el focal (casita de madera, estrella y letrero de madera) que no corresponden a la gráfica oficial ni al producto."
+        },
+        {
+          "criterio_id": "puede_colocar_etiquetas_colgantes_maniquies",
+          "criterio": "",
+          "veredicto": "OBSERVACION",
+          "razon": "[MODELO] Al contar con dos maniquíes en la exhibición, se debería incluir la etiqueta colgante correspondiente que no es visible en la imagen."
+        }
+      ],
+      "evaluacion_parcial": true,
+      "causa_parcial": "el modelo no respondió 1 de 10 lote(s) de criterios delegados",
+      "tokens_modelo": 58720,
+      "criterios_delegados": 137,
+      "criterios_evaluados": 138,
+      "criterios_no_califica": 65,
+      "criterios_degradados_por_cuota": 15,
+      "pct_degradado_por_cuota": 10.9
+    },
+    {
+      "foto_id": "SF01_sin_f001_E1",
+      "archivo": "C:\\Users\\jesus\\Downloads\\SF01_sin f001_E1.webp.png",
+      "tiempo_segundos": 106.13,
+      "veredicto_global": "NO_CALIFICA",
+      "detecciones": [],
+      "evaluacion_parcial": true,
+      "causa_parcial": "claves del modelo agotadas/inválidas — 2 de 10 lote(s) abortados por circuit breaker",
+      "tokens_modelo": 46898,
+      "criterios_delegados": 137,
+      "criterios_evaluados": 138,
+      "criterios_no_califica": 99,
+      "criterios_degradados_por_cuota": 47,
+      "pct_degradado_por_cuota": 34.3
+    },
+    {
+      "foto_id": "SF02_nueva_E1",
+      "archivo": "C:\\Users\\jesus\\Downloads\\SF02_nueva_E1.webp.png",
+      "tiempo_segundos": 15.77,
+      "veredicto_global": "NO_CALIFICA",
+      "detecciones": [],
+      "evaluacion_parcial": true,
+      "causa_parcial": "claves del modelo agotadas/inválidas — 9 de 10 lote(s) abortados por circuit breaker",
+      "tokens_modelo": 0,
+      "criterios_delegados": 137,
+      "criterios_evaluados": 138,
+      "criterios_no_califica": 138,
+      "criterios_degradados_por_cuota": 137,
+      "pct_degradado_por_cuota": 100.0
+    }
+  ]
+}
