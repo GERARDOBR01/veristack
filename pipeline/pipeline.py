@@ -49,7 +49,9 @@ logger.addHandler(logging.NullHandler())
 # Versión del contrato de salida (ResultadoFinal). Si cambia, la UI lo detecta.
 # 1.1 (Sesión HH): + evaluacion_parcial/causa_parcial; los NO_CALIFICA de
 # mandatory ahora aparecen en criterios (antes solo los GRAVEs).
-SCHEMA_VERSION_SALIDA = "1.1"
+# 1.2 (Sesión KK): + criterios_degradados_por_cuota/pct_degradado_por_cuota —
+# el booleano evaluacion_parcial no dice CUÁNTO se degradó; el % sí.
+SCHEMA_VERSION_SALIDA = "1.2"
 
 
 def _log_paso(nivel: int, paso: str, criterio: str, accion: str,
@@ -92,6 +94,13 @@ class ResultadoFinal:
     # infraestructura y NO debe leerse como una corrida completa.
     evaluacion_parcial:             bool = False
     causa_parcial:                  Optional[str] = None
+    # ── % real de degradación por cuota/lote caído (H6, Sesión KK) ──
+    # Criterios delegados al modelo que quedaron AUSENTES de su respuesta
+    # (lote fallido/abortado). NO incluye NO_CALIFICA que el modelo SÍ
+    # respondió ("no verificable") ni los de mandatory — esos son semántica
+    # normal, no silencio de infraestructura.
+    criterios_degradados_por_cuota: int   = 0
+    pct_degradado_por_cuota:        float = 0.0
 
 
 # ──────────────────────────────────────────────
@@ -579,6 +588,40 @@ _HTTP_ROTAR_CLAVE = frozenset({401, 403, 429})
 # restantes si se enciende. Un éxito posterior la apaga.
 _ESTADO_CUOTA = {"claves_agotadas": False}
 
+# Fix H7 (Sesión KK) — rotación PERSISTENTE: el índice de clave vivía local a
+# cada _post_gemini (idx=0), así que TODA llamada arrancaba en la clave #1
+# aunque llevara la corrida entera en 429 (medido en benchmark_mini 19 Jul:
+# 50/50 rotaciones salieron de la #1, +1 request quemado +1s de sleep por
+# llamada, y las claves #4/#5 jamás se usaron). Aquí se recuerda la última
+# clave que funcionó (o hasta donde avanzó la rotación) entre llamadas.
+_ROTACION = {"idx": 0}
+
+
+def _parsear_error_429(cuerpo: str) -> tuple[str, Optional[float]]:
+    """Extrae (quota_id, retry_delay_s) del cuerpo de error de Gemini.
+
+    El body del 429 nombra QUÉ cuota se excedió (quotaId/quotaMetric — RPM vs
+    TPM vs RPD) y el retryDelay sugerido; antes se truncaba a 300 chars justo
+    antes de esa información y el log no podía distinguir los límites. Regex
+    (no json.loads): tolera cuerpos truncados. Nunca lanza.
+    """
+    quota_id = ""
+    m = re.search(r'"quotaId"\s*:\s*"([^"]+)"', cuerpo)
+    if m:
+        quota_id = m.group(1)
+    else:
+        m = re.search(r'"quotaMetric"\s*:\s*"([^"]+)"', cuerpo)
+        if m:
+            quota_id = m.group(1)
+    retry_s: Optional[float] = None
+    m = re.search(r'"retryDelay"\s*:\s*"([\d.]+)s"', cuerpo)
+    if m:
+        try:
+            retry_s = float(m.group(1))
+        except ValueError:
+            pass
+    return quota_id, retry_s
+
 
 def _cargar_claves_api() -> list[str]:
     """Todas las GEMINI_API_KEY disponibles, en orden y sin duplicados.
@@ -638,7 +681,8 @@ def _post_gemini(cuerpo: dict, timeout_s: int, paso: str,
 
     data = json.dumps(cuerpo).encode("utf-8")
     t0   = time.perf_counter()
-    idx  = 0
+    # Fix H7: arranca en la última clave que funcionó, no siempre en la #1.
+    idx  = _ROTACION["idx"] % len(claves)
     # Al menos GEMINI_MAX_INTENTOS, y al menos una pasada por cada clave.
     intentos_max = max(GEMINI_MAX_INTENTOS, len(claves))
     solo_cuota   = True   # fix H3: ¿todos los fallos fueron de cuota/clave?
@@ -649,21 +693,28 @@ def _post_gemini(cuerpo: dict, timeout_s: int, paso: str,
             url, data=data, method="POST",
             headers={"Content-Type": "application/json"},
         )
-        rotar = False
+        rotar   = False
+        retry_s: Optional[float] = None   # retryDelay sugerido por el 429
         try:
             with urllib.request.urlopen(req, timeout=timeout_s,
                                         context=_contexto_ssl()) as resp:
                 _ESTADO_CUOTA["claves_agotadas"] = False
+                _ROTACION["idx"] = idx        # fix H7: recuerda la clave viva
                 return json.loads(resp.read().decode("utf-8"))
         except urllib.error.HTTPError as exc:
-            detalle = ""
+            cuerpo_err = ""
             try:
-                detalle = exc.read().decode("utf-8", "replace")[:300]
+                cuerpo_err = exc.read().decode("utf-8", "replace")
             except Exception:
                 pass
-            if exc.code in _HTTP_ROTAR_CLAVE or "RESOURCE_EXHAUSTED" in detalle:
+            detalle = cuerpo_err[:1000]
+            if exc.code in _HTTP_ROTAR_CLAVE or "RESOURCE_EXHAUSTED" in cuerpo_err:
                 rotar = True
-                ultimo_error = f"HTTP {exc.code}: {detalle}"
+                quota_id, retry_s = _parsear_error_429(cuerpo_err)
+                ultimo_error = (f"HTTP {exc.code}"
+                                + (f" [cuota={quota_id}]" if quota_id else "")
+                                + (f" [retryDelay={retry_s}s]" if retry_s else "")
+                                + f": {detalle}")
             elif exc.code in _HTTP_NO_REINTENTABLES:   # 400/404 (401/403 ya arriba)
                 _log_paso(logging.ERROR, paso, criterio,
                           f"HTTP {exc.code} no reintentable", detalle, ms=_ms(t0))
@@ -687,6 +738,7 @@ def _post_gemini(cuerpo: dict, timeout_s: int, paso: str,
 
         if rotar and len(claves) > 1:
             idx = (idx + 1) % len(claves)
+            _ROTACION["idx"] = idx   # fix H7: la próxima llamada sigue desde aquí
             _log_paso(logging.WARNING, paso, criterio,
                       f"cuota/clave — rotando a clave #{idx + 1}/{len(claves)}",
                       ultimo_error, ms=_ms(t0))
@@ -694,7 +746,8 @@ def _post_gemini(cuerpo: dict, timeout_s: int, paso: str,
         else:
             espera = GEMINI_BACKOFF_S[min(intento - 1, len(GEMINI_BACKOFF_S) - 1)]
             if rotar:                       # 429 con una sola clave: respeta la ventana
-                espera = max(espera, GEMINI_BACKOFF_429_S)
+                # retryDelay del propio error cuando viene; si no, la ventana fija.
+                espera = retry_s if retry_s else max(espera, GEMINI_BACKOFF_429_S)
             _log_paso(logging.WARNING, paso, criterio,
                       f"fallo intento {intento}/{intentos_max}, reintenta en {espera}s",
                       ultimo_error, ms=_ms(t0))
@@ -859,10 +912,25 @@ def _llamar_modelo(prompt: str, imagen_path: Optional[str] = None) -> tuple[str,
 
     if payload is not None:
         tokens      = _extraer_tokens(payload)
-        normalizado = _normalizar_respuesta(_extraer_texto(payload))
+        texto_crudo = _extraer_texto(payload)
+        normalizado = _normalizar_respuesta(texto_crudo)
         if normalizado is None:
+            # Diagnóstico (Sesión KK): sin finishReason ni snippet era imposible
+            # saber POR QUÉ el JSON venía roto (¿truncado por MAX_TOKENS?
+            # ¿safety? ¿basura?) — 7/50 lotes fallaron así en benchmark_mini
+            # y el log no decía nada.
+            fin = ""
+            try:
+                fin = str((payload.get("candidates") or [{}])[0]
+                          .get("finishReason", "") or "")
+            except (IndexError, TypeError, AttributeError):
+                pass
             _log_paso(logging.WARNING, "PASO_4", "-",
-                      "respuesta de Gemini no es JSON válido; se ignora", "", ms=_ms(t0))
+                      "respuesta de Gemini no es JSON válido; se ignora",
+                      f"finishReason={fin or '?'}, tokens={tokens}, "
+                      f"len={len(texto_crudo)}, "
+                      f"texto[:200]={texto_crudo[:200]!r}, "
+                      f"texto[-200:]={texto_crudo[-200:]!r}", ms=_ms(t0))
             return "", tokens
         _log_paso(logging.INFO, "PASO_4", "-", "Gemini respondió",
                   f"tokens={tokens}", ms=_ms(t0))
@@ -909,6 +977,16 @@ def _llamar_modelo(prompt: str, imagen_path: Optional[str] = None) -> tuple[str,
 # (rotación de claves incluida) — no duplica ningún mecanismo.
 GEMINI_BATCH_CRITERIOS = 15
 
+# Corte temprano por degradación acumulada (H6, Sesión KK — umbral decidido
+# por Gerardo en el plan del 19 Jul): el breaker de cuota (_ESTADO_CUOTA) solo
+# dispara con TODAS las claves muertas; una foto puede ir perdiendo lotes uno
+# a uno (JSON inválido, 503 intermitente) sin que nada corte. Si tras una
+# muestra mínima la fracción de lotes fallidos alcanza el umbral, los lotes
+# restantes se abortan — la foto ya está condenada a un veredicto parcial y
+# seguir es quemar requests que necesitan las fotos siguientes del benchmark.
+LOTES_MUESTRA_MINIMA = 4     # no cortar por un fallo aislado al arranque
+UMBRAL_CORTE_LOTES   = 0.5   # fracción de lotes fallidos que dispara el corte
+
 
 def _tam_lote_criterios() -> int:
     """Tamaño de lote efectivo: env GEMINI_BATCH_CRITERIOS o el default."""
@@ -953,7 +1031,8 @@ def _evaluar_delegados_en_lotes(
     if info is None:
         info = {}
     info.update({"lotes_totales": 0, "lotes_fallidos": 0,
-                 "lotes_abortados": 0, "abortado_por_cuota": False})
+                 "lotes_abortados": 0, "abortado_por_cuota": False,
+                 "abortado_por_degradacion": False})
 
     if not delegados:
         _log_paso(logging.INFO, "PASO_4", "-", "modelo no invocado",
@@ -971,7 +1050,8 @@ def _evaluar_delegados_en_lotes(
     _ESTADO_CUOTA["claves_agotadas"] = False   # señal fresca para esta corrida
 
     evaluaciones: list[dict] = []
-    tokens_total = 0
+    tokens_total    = 0
+    fallidos_reales = 0   # lotes que SÍ se intentaron y fallaron (no abortados)
     for n, lote in enumerate(lotes, 1):
         if _ESTADO_CUOTA["claves_agotadas"]:
             restantes = len(lotes) - n + 1
@@ -982,6 +1062,22 @@ def _evaluar_delegados_en_lotes(
                       f"circuit breaker: se abortan {restantes} lote(s) restante(s)",
                       "todas las claves en cuota/inválidas — sus criterios "
                       "degradan a NO_CALIFICA sin gastar requests")
+            break
+        # Corte temprano H6: la foto en curso ya perdió demasiados lotes —
+        # los restantes se abortan aunque las claves sigan "vivas".
+        procesados = n - 1
+        if (procesados >= LOTES_MUESTRA_MINIMA
+                and fallidos_reales / procesados >= UMBRAL_CORTE_LOTES):
+            restantes = len(lotes) - n + 1
+            info["lotes_abortados"]          += restantes
+            info["lotes_fallidos"]           += restantes
+            info["abortado_por_degradacion"]  = True
+            _log_paso(logging.ERROR, "PASO_4", "-",
+                      f"corte por degradación: {fallidos_reales}/{procesados} "
+                      f"lote(s) fallidos (umbral {UMBRAL_CORTE_LOTES:.0%}) — "
+                      f"se abortan {restantes} lote(s) restante(s)",
+                      "la foto va a un veredicto parcial de todos modos; sus "
+                      "criterios degradan a NO_CALIFICA sin gastar requests")
             break
         prompt = _construir_prompt(lote, retrieval_por_criterio, metadata,
                                    con_imagen=bool(imagen_path))
@@ -1000,14 +1096,37 @@ def _evaluar_delegados_en_lotes(
                       f"{len(lote)} criterio(s), {len(evs)} evaluacion(es)")
         else:
             info["lotes_fallidos"] += 1
+            fallidos_reales        += 1
             _log_paso(logging.WARNING, "PASO_4", "-",
                       f"lote {n}/{len(lotes)} sin respuesta — sus criterios "
                       "degradan a NO_CALIFICA",
-                      f"{len(lote)} criterio(s)")
+                      f"{len(lote)} criterio(s), tokens={tokens}")
 
     if not evaluaciones:
         return "", tokens_total
     return json.dumps({"evaluaciones": evaluaciones}, ensure_ascii=False), tokens_total
+
+
+def _contar_degradados_por_cuota(ids_delegados: set[str],
+                                 respuesta_modelo: str) -> int:
+    """Criterios delegados AUSENTES de la respuesta del modelo (H6, Sesión KK).
+
+    Esa ausencia es silencio de infraestructura (lote fallido/abortado): el
+    criterio se degradó a NO_CALIFICA sin que ningún modelo lo viera. NO cuenta
+    los NO_CALIFICA que el modelo SÍ respondió ("no verificable en esta foto")
+    — esos son un juicio real y semántica normal. Nunca lanza.
+    """
+    if not ids_delegados:
+        return 0
+    respondidos: set[str] = set()
+    try:
+        for ev in json.loads(respuesta_modelo).get("evaluaciones", []):
+            cid = str(ev.get("criterio", "")).strip()
+            if cid:
+                respondidos.add(cid)
+    except (json.JSONDecodeError, TypeError, AttributeError):
+        pass
+    return len(ids_delegados - respondidos)
 
 
 def _merge_veredictos(
@@ -1217,6 +1336,7 @@ def _autotest_rotacion_claves() -> int:
     try:
         modulo._cargar_claves_api = lambda: ["FAKE1", "FAKE2", "FAKE3"]
         time.sleep = lambda *_a, **_k: None   # el test no espera de verdad
+        _ROTACION["idx"] = 0                  # estado limpio para el test
 
         # 1) key1 en 429 → rota y responde con key2
         def _u_429_luego_ok(req, timeout=None, context=None):
@@ -1235,6 +1355,13 @@ def _autotest_rotacion_claves() -> int:
         check("rotó a key2 en el segundo intento",
               len(urls) >= 2 and "FAKE2" in urls[1])
 
+        # 1b) Fix H7 — persistencia: la SIGUIENTE llamada arranca directo en la
+        # última clave viva (key2), sin quemar un request en la key1 muerta.
+        urls.clear()
+        payload_p = _post_gemini({"contents": []}, 5, "PASO_TEST")
+        check("persistencia H7: la siguiente llamada arranca en key2 (viva)",
+              payload_p == _PAYLOAD_OK and len(urls) == 1 and "FAKE2" in urls[0])
+
         # 2) _llamar_modelo end-to-end: tras rotar devuelve JSON parseable + tokens
         urls.clear()
         texto, tokens = _llamar_modelo("prompt de prueba", imagen_path=None)
@@ -1248,6 +1375,7 @@ def _autotest_rotacion_claves() -> int:
             raise _err(url, 429, b"RESOURCE_EXHAUSTED")
         urllib.request.urlopen = _u_todo_429
         urls.clear()
+        _ROTACION["idx"] = 0
         p3 = _post_gemini({"contents": []}, 5, "PASO_TEST")
         check("todas las claves 429 -> None", p3 is None)
         check("probó las 3 claves antes de rendirse",
@@ -1271,6 +1399,7 @@ def _autotest_rotacion_claves() -> int:
             raise _err(url, 503, b"high demand")
         urllib.request.urlopen = _u_503
         urls.clear()
+        _ROTACION["idx"] = 0
         p5 = _post_gemini({"contents": []}, 5, "PASO_TEST")
         check("HTTP 503 reintenta sin rotar de clave",
               p5 is None and {_clave_de(u) for u in urls} == {"FAKE1"} and len(urls) >= 2)
@@ -1280,10 +1409,28 @@ def _autotest_rotacion_claves() -> int:
         urls.clear()
         p6 = _post_gemini({"contents": []}, 5, "PASO_TEST")
         check("sin claves -> None sin tocar red", p6 is None and not urls)
+
+        # 7) parseo del cuerpo del 429 (Sesión KK): quotaId + retryDelay
+        cuerpo_429 = ('{"error":{"code":429,"details":[{"@type":'
+                      '"type.googleapis.com/google.rpc.QuotaFailure","violations":'
+                      '[{"quotaMetric":"generativelanguage.googleapis.com/'
+                      'generate_requests","quotaId":'
+                      '"GenerateRequestsPerDayPerProjectPerModel-FreeTier"}]},'
+                      '{"@type":"type.googleapis.com/google.rpc.RetryInfo",'
+                      '"retryDelay":"21s"}]}}')
+        qid, rs = _parsear_error_429(cuerpo_429)
+        check("429 parseado: quotaId nombra la cuota (RPD) y retryDelay=21s",
+              qid == "GenerateRequestsPerDayPerProjectPerModel-FreeTier"
+              and rs == 21.0)
+        check("429 sin detalle: parseo vacío sin excepción",
+              _parsear_error_429("") == ("", None))
+        check("429 truncado a media violación: no lanza, retryDelay ausente",
+              _parsear_error_429(cuerpo_429[:170])[1] is None)
     finally:
         modulo._cargar_claves_api = orig_claves
         urllib.request.urlopen    = orig_urlopen
         time.sleep                = orig_sleep
+        _ROTACION["idx"]          = 0
 
     print(f"\nAUTOTEST ROTACIÓN DE CLAVES: {'PASS' if not fallas else 'FAIL'} "
           f"({len(fallas)} falla(s))")
@@ -1412,7 +1559,8 @@ def _autotest_batching() -> int:
                                     tam_lote=15, info=info_ok)
         check("info corrida sana: 3 lotes, 0 fallidos, sin aborto",
               info_ok == {"lotes_totales": 3, "lotes_fallidos": 0,
-                          "lotes_abortados": 0, "abortado_por_cuota": False})
+                          "lotes_abortados": 0, "abortado_por_cuota": False,
+                          "abortado_por_degradacion": False})
 
         # 9) circuit breaker: el lote 1 agota todas las claves (cuota) ->
         #    los lotes restantes se abortan SIN llamar al modelo
@@ -1433,6 +1581,70 @@ def _autotest_batching() -> int:
         check("breaker: respuesta vacia (todo degrada a NO_CALIFICA)", resp_cb == "")
         modulo._llamar_modelo = _fake
         _ESTADO_CUOTA["claves_agotadas"] = False
+
+        # ── 10-14) Corte temprano H6 (casos borde pedidos por Gerardo) ──
+        deleg10 = [_rc(i) for i in range(150)]   # 150 crit, lote=15 → 10 lotes
+
+        # 10) 0% degradado (corrida sana): no corta, no marca nada
+        llamadas.clear(); lotes_fallar.clear()
+        info_0: dict = {}
+        _evaluar_delegados_en_lotes(deleg10, {}, metadata, None,
+                                    tam_lote=15, info=info_0)
+        check("H6 caso 0%: 10 llamadas, 0 fallidos, sin corte",
+              len(llamadas) == 10 and info_0["lotes_fallidos"] == 0
+              and info_0["abortado_por_degradacion"] is False)
+
+        # 11) degradación baja (1 de 10 = 10%): NO debe cortar
+        llamadas.clear(); lotes_fallar.clear(); lotes_fallar.add(2)
+        info_b: dict = {}
+        _evaluar_delegados_en_lotes(deleg10, {}, metadata, None,
+                                    tam_lote=15, info=info_b)
+        check("H6 caso bajo (10%): corre los 10 lotes, no corta",
+              len(llamadas) == 10 and info_b["lotes_fallidos"] == 1
+              and info_b["abortado_por_degradacion"] is False)
+
+        # 12) en el umbral (2 fallos en la muestra mínima de 4 = 50%): corta
+        # ANTES del lote 5 — los 6 restantes se abortan sin gastar requests
+        llamadas.clear(); lotes_fallar.clear(); lotes_fallar.update({1, 2})
+        info_u: dict = {}
+        resp_u, _ = _evaluar_delegados_en_lotes(deleg10, {}, metadata, None,
+                                                tam_lote=15, info=info_u)
+        check("H6 caso umbral (50% tras 4 lotes): corta — solo 4 llamadas",
+              len(llamadas) == 4)
+        check("H6 caso umbral: 6 abortados, 8 fallidos totales, flag encendido",
+              info_u["lotes_abortados"] == 6 and info_u["lotes_fallidos"] == 8
+              and info_u["abortado_por_degradacion"] is True
+              and info_u["abortado_por_cuota"] is False)
+        check("H6 caso umbral: los 2 lotes buenos SÍ conservan sus evaluaciones",
+              len(json.loads(resp_u)["evaluaciones"]) == 30)
+
+        # 13) degradación total (100%): corta tras la muestra mínima, resp
+        # vacía, sin excepción — el comportamiento de fallo total no se rompe
+        llamadas.clear(); lotes_fallar.clear()
+        lotes_fallar.update(range(1, 11))
+        info_t: dict = {}
+        resp_t2, _ = _evaluar_delegados_en_lotes(deleg10, {}, metadata, None,
+                                                 tam_lote=15, info=info_t)
+        check("H6 caso 100%: corta tras 4 llamadas, resp vacía, 10 fallidos",
+              len(llamadas) == 4 and resp_t2 == ""
+              and info_t["lotes_fallidos"] == 10
+              and info_t["abortado_por_degradacion"] is True)
+
+        # 14) mezcla: fallo por cuota Y NO_CALIFICA respondidos por el modelo
+        # en la misma foto — el conteo de degradados_por_cuota NO los confunde
+        ids_del = {f"crit_fixture_{i:03d}" for i in range(30)}
+        resp_mix = json.dumps({"evaluaciones":
+            [{"criterio": f"crit_fixture_{i:03d}", "veredicto": "NO_CALIFICA",
+              "razon": "no verificable en esta foto"} for i in range(10)]
+            + [{"criterio": f"crit_fixture_{i:03d}", "veredicto": "CUMPLE",
+                "razon": "ok"} for i in range(10, 15)]})
+        n_deg = _contar_degradados_por_cuota(ids_del, resp_mix)
+        check("H6 mezcla: 15 ausentes cuentan como cuota; 10 NC respondidos NO",
+              n_deg == 15)
+        check("H6 conteo: respuesta vacía → todos los delegados son cuota",
+              _contar_degradados_por_cuota(ids_del, "") == 30)
+        check("H6 conteo: sin delegados → 0",
+              _contar_degradados_por_cuota(set(), "") == 0)
     finally:
         modulo._llamar_modelo = orig
         _ESTADO_CUOTA["claves_agotadas"] = False
@@ -1811,12 +2023,26 @@ def ejecutar(
             causa_parcial = (f"claves del modelo agotadas/inválidas — "
                              f"{info_lotes['lotes_abortados']} de "
                              f"{info_lotes['lotes_totales']} lote(s) abortados por circuit breaker")
+        elif info_lotes.get("abortado_por_degradacion"):
+            causa_parcial = (f"corte por degradación acumulada — "
+                             f"{info_lotes['lotes_abortados']} de "
+                             f"{info_lotes['lotes_totales']} lote(s) abortados tras superar el "
+                             f"umbral de {UMBRAL_CORTE_LOTES:.0%} de lotes fallidos")
         else:
             causa_parcial = (f"el modelo no respondió {info_lotes['lotes_fallidos']} de "
                              f"{info_lotes['lotes_totales']} lote(s) de criterios delegados")
 
+    # H6 (Sesión KK): % REAL de degradación por cuota/lote caído — el booleano
+    # de arriba no dice cuánto. Se cuenta sobre los delegados ausentes de la
+    # respuesta del modelo (ver _contar_degradados_por_cuota).
+    n_deg_cuota = _contar_degradados_por_cuota(
+        {c.criterio for c in delegados}, respuesta_modelo)
+    pct_deg_cuota = round(100.0 * n_deg_cuota / n_delegados, 1) if n_delegados else 0.0
+
     _log_paso(logging.INFO, "PASO_FINAL", "-", f"veredicto={veredicto_global.value}",
               f"codigo={n_codigo}, modelo={n_delegados}, tokens={tokens_modelo}"
+              + (f", degradado_por_cuota={n_deg_cuota} ({pct_deg_cuota}%)"
+                 if n_deg_cuota else "")
               + (f", PARCIAL: {causa_parcial}" if evaluacion_parcial else ""),
               ms=_ms(t_total))
 
@@ -1836,6 +2062,8 @@ def ejecutar(
         versiones_capas                = versiones_capas,
         evaluacion_parcial             = evaluacion_parcial,
         causa_parcial                  = causa_parcial,
+        criterios_degradados_por_cuota = n_deg_cuota,
+        pct_degradado_por_cuota        = pct_deg_cuota,
     )
 
 
