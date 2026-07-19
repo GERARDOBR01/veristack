@@ -528,6 +528,37 @@ def _extraer_tokens(payload: dict) -> int:
         return 0
 
 
+def _rescatar_array_truncado(texto: str) -> Optional[list]:
+    """
+    H8 (corrida 19 Jul): Gemini a veces emite el array de evaluaciones con
+    finishReason=STOP pero SIN el ']' de cierre — json.loads revienta y el
+    lote entero degradaba a NO_CALIFICA aunque 14/15 evaluaciones venían
+    completas. Decodifica objeto por objeto desde el primer '[' y conserva
+    los objetos completos; un objeto cortado a la mitad se descarta.
+    Retorna None si no se rescata nada (basura real sigue siendo basura).
+    """
+    ini = texto.find("[")
+    if ini < 0:
+        return None
+    dec = json.JSONDecoder()
+    pos = ini + 1
+    n = len(texto)
+    objetos: list = []
+    while True:
+        while pos < n and texto[pos] in " \t\r\n,":
+            pos += 1
+        if pos >= n or texto[pos] == "]":
+            break
+        try:
+            obj, pos = dec.raw_decode(texto, pos)
+        except json.JSONDecodeError:
+            break
+        if not isinstance(obj, dict):
+            return None
+        objetos.append(obj)
+    return objetos or None
+
+
 def _normalizar_respuesta(texto: str) -> Optional[str]:
     """
     El modelo responde con un arreglo [{criterio, veredicto, razon}, ...].
@@ -546,7 +577,12 @@ def _normalizar_respuesta(texto: str) -> Optional[str]:
     try:
         parsed = json.loads(limpio)
     except (json.JSONDecodeError, TypeError):
-        return None
+        parsed = _rescatar_array_truncado(limpio)
+        if parsed is None:
+            return None
+        logger.warning(
+            "[PASO_4] respuesta JSON truncada — rescatadas %d evaluación(es) "
+            "completas; las ausentes degradan a NO_CALIFICA (H8)", len(parsed))
 
     if isinstance(parsed, list):
         evaluaciones = parsed
@@ -1645,6 +1681,25 @@ def _autotest_batching() -> int:
               _contar_degradados_por_cuota(ids_del, "") == 30)
         check("H6 conteo: sin delegados → 0",
               _contar_degradados_por_cuota(set(), "") == 0)
+
+        # 15) H8: array truncado sin ']' final (visto en corrida 19 Jul con
+        # finishReason=STOP) — se rescatan los objetos completos
+        trunc = ('[\n  {"criterio": "c1", "veredicto": "CUMPLE", "razon": "ok"},'
+                 '\n  {"criterio": "c2", "veredicto": "NO_CALIFICA", "razon": "x"}')
+        norm = _normalizar_respuesta(trunc)
+        check("H8 truncado sin ']': rescata las 2 evaluaciones completas",
+              norm is not None
+              and len(json.loads(norm)["evaluaciones"]) == 2)
+        trunc_medio = trunc + ',\n  {"criterio": "c3", "veredicto": "CUM'
+        norm_m = _normalizar_respuesta(trunc_medio)
+        check("H8 objeto cortado a la mitad: se descarta, los completos quedan",
+              norm_m is not None
+              and len(json.loads(norm_m)["evaluaciones"]) == 2)
+        check("H8 basura real sigue siendo None",
+              _normalizar_respuesta("esto no es json") is None
+              and _normalizar_respuesta("[42, 43") is None)
+        check("H8 no interfiere con JSON válido completo",
+              _normalizar_respuesta('[{"criterio": "c1"}]') is not None)
     finally:
         modulo._llamar_modelo = orig
         _ESTADO_CUOTA["claves_agotadas"] = False
