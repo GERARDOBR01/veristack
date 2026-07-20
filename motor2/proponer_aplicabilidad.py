@@ -73,10 +73,10 @@ VOCAB_ELEMENTOS = [
 #     que aparecen dentro del TEXTO de los criterios: "primera etapa", "2da etapa") -
 _PATRONES_ETAPA = [
     r"ETAPA\s*(\d)\s*Y\s*(\d)",                      # "ETAPA 2 Y 3"
-    r"(\d)\w{0,3}\s*Y\s*(\d)\w{0,3}\s*ETAPA",        # "1a y 2da ETAPA"
-    r"(?:PRIMERA|1\w{0,3})\s*ETAPA()",               # "primera etapa" → 1
-    r"(?:SEGUNDA|2\w{0,3})\s*ETAPA()",               # "2da etapa" → 2
-    r"(?:TERCERA|3\w{0,3})\s*ETAPA()",               # "3era etapa" → 3
+    r"(\d)[°ª]?\w{0,3}\s*[YO]\s*(\d)[°ª]?\w{0,3}\s*ETAPA",  # "1a y 2da ETAPA", "1° ó 2° etapa" (Lote 5)
+    r"(?:PRIMERA|1[°ª]?\w{0,3})\s*ETAPA()",          # "primera etapa" → 1
+    r"(?:SEGUNDA|2[°ª]?\w{0,3})\s*ETAPA()",          # "2da etapa" → 2
+    r"(?:TERCERA|3[°ª]?\w{0,3})\s*ETAPA()",          # "3era etapa" → 3
     r"ETAPA\s*(\d)",                                 # "ETAPA 3"
 ]
 _ETAPA_ORDINAL = {2: "1", 3: "2", 4: "3"}  # índice de patrón → dígito implícito
@@ -457,6 +457,10 @@ def autotest() -> None:
     check('"ETAPA 2 Y 3" → E2+E3', et == ["E2", "E3"])
     et, _ = detectar_etapas_texto("vigente 1a y 2da ETAPA", None)
     check('"1a y 2da ETAPA" → E1+E2', et == ["E1", "E2"])
+    et, _ = detectar_etapas_texto("Si el campamento se realiza en la 1° ó 2° etapa de la promoción", None)
+    check('"1° ó 2° etapa" → E1+E2 (fix Lote 5)', et == ["E1", "E2"])
+    et, _ = detectar_etapas_texto("aplicar en la 2° etapa", None)
+    check('"2° etapa" → E2', et == ["E2"])
     # 5. campaña sin etapas → null respetado
     et, _ = detectar_etapas_texto("Arma una exhibición de vinos y licores por tiempo limitado", None)
     check("campaña sin etapas → null (legítimo)", et is None)
