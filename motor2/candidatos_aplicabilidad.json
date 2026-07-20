@@ -14,7 +14,8 @@
     "revision_lote1": "Lote 1 CERRADO (Gerardo 19 Jul): 11 ok (incl. caso_muebles_focal=focal_show, decidido con el filtro actual a la vista), 4 rechazar. Pendiente global: mapeo mueble<->tipo_foto se decide ANTES del swap (torre/barra/columna/maniqui no coinciden con los 3 tipo_foto actuales — decision consciente, seguir curando).",
     "revision_lote2": "Lote 2 CERRADO (Gerardo 19 Jul): 3 ok, 1 editado (zapateras: mesa+zapatera), 11 rechazar (generales; la ref cruzada del manual de senalizacion queda general — se revisan manuales, no ligas). zapatera APROBADA como valor de vocabulario; re-escaneo aplicado a criterios sin decidir.",
     "revision_lote3": "Lote 3 CERRADO (Gerardo 19 Jul): 7 ok, 2 editados (focal_show_mujeres_departamento_juniors -> focal_show para viajar con su cluster; integra_maniquies -> [focal_show, maniqui], valor de ESTA campana — en otras campanas un focal puede no llevar maniquies), 6 rechazar (incl. mueble generico: la herramienta no conoce los muebles autorizados — ante mueble sospechoso se AVISA verificar con jefe de display, no se dictamina).",
-    "revision_lote4": "Lote 4 CERRADO (Gerardo 19 Jul): clusters focal hombres/infantiles espejo del patron de mujeres (Lote 3) — 6 ok, 4 editados (departamento -> focal_show; integra_maniquies -> [focal_show, maniqui]), 5 sin accion (ya curados). Etapas curadas E1,E2/E3 intactas."
+    "revision_lote4": "Lote 4 CERRADO (Gerardo 19 Jul): clusters focal hombres/infantiles espejo del patron de mujeres (Lote 3) — 6 ok, 4 editados (departamento -> focal_show; integra_maniquies -> [focal_show, maniqui]), 5 sin accion (ya curados). Etapas curadas E1,E2/E3 intactas.",
+    "revision_lote5": "Lote 5 CERRADO (Gerardo 19 Jul, ok a recomendaciones): 4 ok, 1 editado (campamento_realiza_1_2_etapa -> focal_show + E1,E2: etapa explicita 1 o 2 que el patron no cazaba — corregido), 10 rechazar (incl. cuentas_espacio general por ambiguedad campamentos-o-focales)."
   },
   "lotes": [
     {
@@ -1315,7 +1316,7 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← condicion_libre: \"FOCALES\"",
-          "decision_gerardo": null
+          "decision_gerardo": "ok"
         },
         {
           "id": "focal_show_infantiles_etapa3",
@@ -1337,7 +1338,7 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← condicion_libre: \"FOCALES\"",
-          "decision_gerardo": null
+          "decision_gerardo": "ok"
         },
         {
           "id": "focal_show_infantiles_etapa3",
@@ -1359,7 +1360,7 @@
           "origen": "ya_curado",
           "confianza": null,
           "motivo": "ambos campos ya curados por Gerardo — no se propone nada",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "visibilidad_producto_descuento_alto_corridas",
@@ -1377,7 +1378,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "mesa_realizar_bloques_mercancia_doblada",
@@ -1397,7 +1398,7 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← texto: \"MESA\"",
-          "decision_gerardo": null
+          "decision_gerardo": "ok"
         },
         {
           "id": "barra_prendas_descuentos_altos_incluyendo",
@@ -1417,7 +1418,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia efectiva (re-propuso un campo ya curado — descartado)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "vestir_maniquies_prendas_esten_exhibicion",
@@ -1437,7 +1438,7 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← texto: \"MANIQUIES\"",
-          "decision_gerardo": null
+          "decision_gerardo": "ok"
         },
         {
           "id": "poner_etiquetas_descuento_prendas_saturar",
@@ -1455,7 +1456,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "cuentas_espacio_suficiente_obstruya_paso",
@@ -1475,7 +1476,7 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← texto: \"FOCALES\"",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "realiza_mercadeo_descuento_mayor_menor",
@@ -1493,7 +1494,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "campamento_realiza_1_2_etapa",
@@ -1513,7 +1514,15 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← texto: \"FOCALES\"",
-          "decision_gerardo": null
+          "decision_gerardo": {
+            "aplica_a": [
+              "focal_show"
+            ],
+            "etapa_aplicable": [
+              "E1",
+              "E2"
+            ]
+          }
         },
         {
           "id": "realizar_campamento_punt_roma_98",
@@ -1531,7 +1540,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "campamento_maniquies_tringlas_barra_cartulina",
@@ -1551,7 +1560,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia efectiva (re-propuso un campo ya curado — descartado)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "colocar_producto_mayor_descuento",
@@ -1569,7 +1578,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": null,
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "mantener_orden_exhibicion",
@@ -1587,7 +1596,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": null,
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         }
       ]
     },
