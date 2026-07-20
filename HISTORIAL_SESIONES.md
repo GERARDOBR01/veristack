@@ -2,6 +2,19 @@
 
 Secciones “Estado previo” migradas desde `CLAUDE.md` (12 Jul 2026, /doctor) para sacarlas del contexto siempre-cargado. Orden: más reciente primero. Las sesiones futuras se archivan aquí al cerrar (ver Protocolo de cierre en `CLAUDE.md`).
 
+## Estado previo (13 Jul 2026 — Sesión JJ: **MÁQUINA NUEVA OPERATIVA + PRIMERA VALIDACIÓN HUMANA DE LA UI (parcial). Cero cambios de código, cero tokens.**)
+
+**Resumen honesto: sesión de portabilidad y validación, no de features. Se montó el entorno completo en una máquina nueva (usuario `gerar`; las sesiones anteriores corrían en `jesus`), se verificó cero regresión con la suite completa de autotests, y Gerardo hizo el PRIMER click humano sobre la UI: modo single con foto real de trabajo mostró exactamente el comportamiento honesto diseñado en Sesión II. No se tocó ni una línea de código del pipeline.**
+
+- **Entorno nuevo:** Python 3.14.6 (winget — paridad exacta con la máquina anterior) + `venv/` en raíz (git-ignored) + `requirements.txt` completo. ⚠️ Portabilidad: la consola de esta PC es cp1252 — todo comando Python del repo necesita `PYTHONUTF8=1` (sin él, el autotest de photo_analyzer revienta en un print con "→"; es entorno, no código). Streamlit requiere `--server.headless true` (su wizard de primer arranque deja el server colgado esperando un email).
+- **Autotests 7/7 módulos, 124 checks PASS:** photo_analyzer 16, rotación de claves 10, batching 20, gráfico-etapa 12, lote/runner 15, lote/reporte 14, arnés benchmark 37 — cero regresión de lógica en máquina nueva.
+- **Validación UI en navegador (primera vez con click humano):** modo single con foto real de trabajo → banner EVALUACIÓN PARCIAL visible ✅, aviso "GEMINI_API_KEY: ausente" en sidebar ✅, breaker sin gastar requests (corrida en 1032 ms) ✅, 1 decidido por código + 122 delegados degradados honestamente a NO_CALIFICA ✅. 🔴 Falta: confirmar a ojo el dropdown "(sin knowledge aún)", modo lote en navegador, y una corrida con key real.
+- **Benchmark confirmado listo para disparo:** `manifest_benchmark.csv` (25 fotos) apunta a `motor1/benchmark/fotos/F*.webp` — no existen en esa máquina (el `.gitignore` excluye imágenes por diseño); GT ya convertido (`ground_truth_arnes.csv`); el runner aborta limpio si falta una imagen. Bloqueado solo por: fotos físicas + key con cuota.
+- 🔴 `.env` no existe en esa máquina — Gerardo lo crea a mano cuando tenga key (regla fija #3).
+- 🔴 El skill `/cerrar-sesion` tiene rutas hardcodeadas de la máquina anterior (`C:\Users\jesus\...`) — esa sesión las sustituyó a mano.
+
+**Tracking: Motor 1: 100% | Motor 2: 100% | Listo-para-mostrar: 45%.**
+
 ## Estado previo (12 Jul 2026 — Sesión II: **MODO LOTE DE PRODUCCIÓN + REPORTE CONSOLIDADO + UI HONESTA — "la herramienta del retail" v1, todo offline, cero tokens.**)
 
 **Resumen honesto: se construyó lo que faltaba entre el motor y la herramienta que reemplaza la revisión manual masiva. Módulo nuevo `lote/` (runner + reportería), CLI `verificar_lote.py` (carpeta → reporte), y `app.py` con multi-upload, banner de EVALUACIÓN PARCIAL (la UI ignoraba los campos 1.1 — una corrida parcial se veía completa) y dropdown que avisa "(sin knowledge aún)" para tringla/mesa_show. Decisiones de Gerardo: HTML visual + Excel de datos; UI y CLI; benchmark de 25 + calibración quedan como Fase 2 con cuota fresca.**
