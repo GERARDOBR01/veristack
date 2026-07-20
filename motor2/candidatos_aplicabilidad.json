@@ -17,7 +17,8 @@
     "revision_lote4": "Lote 4 CERRADO (Gerardo 19 Jul): clusters focal hombres/infantiles espejo del patron de mujeres (Lote 3) — 6 ok, 4 editados (departamento -> focal_show; integra_maniquies -> [focal_show, maniqui]), 5 sin accion (ya curados). Etapas curadas E1,E2/E3 intactas.",
     "revision_lote5": "Lote 5 CERRADO (Gerardo 19 Jul, ok a recomendaciones): 4 ok, 1 editado (campamento_realiza_1_2_etapa -> focal_show + E1,E2: etapa explicita 1 o 2 que el patron no cazaba — corregido), 10 rechazar (incl. cuentas_espacio general por ambiguedad campamentos-o-focales).",
     "revision_lote6": "Lote 6 CERRADO (Gerardo 19 Jul): masivo APROBADO como vocabulario (exhibicion de volumen/venta sin focal trabajado) — 3 ok, 2 editados a [masivo], 10 rechazar (generales/repeticiones de paginas hermanas). Re-escaneo masivo aplicado a criterios sin decidir.",
-    "revision_lote7": "Lote 7 CERRADO (Gerardo 19 Jul): gondola APROBADA como vocabulario. 5 ok, 1 editado (zoopet -> [gondola]), 9 rechazar. Regla de mundos: Mesa Fina/Mesa Casual son SECCIONES, no mueble — oasis rechazado y correccion retroactiva de las 2 vajillas del Lote 6 a general. Pasos del bloque zoopet (tipo/RIMAX/cartulina) quedan generales (no nombran mueble)."
+    "revision_lote7": "Lote 7 CERRADO (Gerardo 19 Jul): gondola APROBADA como vocabulario. 5 ok, 1 editado (zoopet -> [gondola]), 9 rechazar. Regla de mundos: Mesa Fina/Mesa Casual son SECCIONES, no mueble — oasis rechazado y correccion retroactiva de las 2 vajillas del Lote 6 a general. Pasos del bloque zoopet (tipo/RIMAX/cartulina) quedan generales (no nombran mueble).",
+    "revision_lote8": "Lote 8 CERRADO (Gerardo 19 Jul): cubo APROBADO como vocabulario (1 editado); 14 rechazar (generales; mueble generico igual que Lote 3; cama = producto, no mueble de display). LOTES 9 y 10 PENDIENTES — la sesion cerro antes de revisarlos."
   },
   "lotes": [
     {
@@ -2205,7 +2206,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "prioridad_producto_mobility_cloe_40",
@@ -2223,7 +2224,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "dentro_clasificacion_senaliza_exhibicion_cubos",
@@ -2243,7 +2244,11 @@
           "origen": "ia",
           "confianza": "media",
           "motivo": "IA: exhibición en cubos de hidrolavadoras",
-          "decision_gerardo": null
+          "decision_gerardo": {
+            "aplica_a": [
+              "cubo"
+            ]
+          }
         },
         {
           "id": "senaliza_resto_seccion_promocion_25",
@@ -2261,7 +2266,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "coloca_material_grafico_forma_alternada",
@@ -2279,7 +2284,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "clasificacion_seccion_muebles_modifica_campana",
@@ -2297,7 +2302,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "cuentas_espacio_disponible_dentro_seccion",
@@ -2315,7 +2320,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "caso_contar_espacio_necesario_mercancia",
@@ -2335,7 +2340,7 @@
           "origen": "ia",
           "confianza": "media",
           "motivo": "IA: señalizando cada mueble",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "colocar_forma_alterna_material_grafico",
@@ -2355,7 +2360,7 @@
           "origen": "ia",
           "confianza": "media",
           "motivo": "IA: al costado de la cama",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "colocar_producto_mayor_descuento",
@@ -2373,7 +2378,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "mantener_orden_exhibicion",
@@ -2391,7 +2396,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "mercadeo_bloqueo_producto",
@@ -2409,7 +2414,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "cajas_organizadoras",
@@ -2427,7 +2432,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "protectores_sofa",
@@ -2445,7 +2450,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "puff_caja",
@@ -2463,7 +2468,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         }
       ]
     },
