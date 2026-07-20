@@ -6,8 +6,8 @@
     "cobertura": {
       "total": 148,
       "ya_curado": 6,
-      "heuristica": 49,
-      "ia": 12,
+      "heuristica": 52,
+      "ia": 9,
       "sin_propuesta": 81
     },
     "fase_ia": "2026-07-19T18:18:51",
@@ -15,7 +15,8 @@
     "revision_lote2": "Lote 2 CERRADO (Gerardo 19 Jul): 3 ok, 1 editado (zapateras: mesa+zapatera), 11 rechazar (generales; la ref cruzada del manual de senalizacion queda general — se revisan manuales, no ligas). zapatera APROBADA como valor de vocabulario; re-escaneo aplicado a criterios sin decidir.",
     "revision_lote3": "Lote 3 CERRADO (Gerardo 19 Jul): 7 ok, 2 editados (focal_show_mujeres_departamento_juniors -> focal_show para viajar con su cluster; integra_maniquies -> [focal_show, maniqui], valor de ESTA campana — en otras campanas un focal puede no llevar maniquies), 6 rechazar (incl. mueble generico: la herramienta no conoce los muebles autorizados — ante mueble sospechoso se AVISA verificar con jefe de display, no se dictamina).",
     "revision_lote4": "Lote 4 CERRADO (Gerardo 19 Jul): clusters focal hombres/infantiles espejo del patron de mujeres (Lote 3) — 6 ok, 4 editados (departamento -> focal_show; integra_maniquies -> [focal_show, maniqui]), 5 sin accion (ya curados). Etapas curadas E1,E2/E3 intactas.",
-    "revision_lote5": "Lote 5 CERRADO (Gerardo 19 Jul, ok a recomendaciones): 4 ok, 1 editado (campamento_realiza_1_2_etapa -> focal_show + E1,E2: etapa explicita 1 o 2 que el patron no cazaba — corregido), 10 rechazar (incl. cuentas_espacio general por ambiguedad campamentos-o-focales)."
+    "revision_lote5": "Lote 5 CERRADO (Gerardo 19 Jul, ok a recomendaciones): 4 ok, 1 editado (campamento_realiza_1_2_etapa -> focal_show + E1,E2: etapa explicita 1 o 2 que el patron no cazaba — corregido), 10 rechazar (incl. cuentas_espacio general por ambiguedad campamentos-o-focales).",
+    "revision_lote6": "Lote 6 CERRADO (Gerardo 19 Jul): masivo APROBADO como vocabulario (exhibicion de volumen/venta sin focal trabajado) — 3 ok, 2 editados a [masivo], 10 rechazar (generales/repeticiones de paginas hermanas). Re-escaneo masivo aplicado a criterios sin decidir."
   },
   "lotes": [
     {
@@ -1619,7 +1620,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": null,
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "colocar_producto_mayor_descuento",
@@ -1637,7 +1638,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": null,
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "mantener_orden_exhibicion",
@@ -1655,7 +1656,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": null,
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "mercadeo_bloqueo_producto",
@@ -1673,7 +1674,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": null,
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "colocar_alternando_seccion",
@@ -1691,7 +1692,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": null,
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "masivo_bloque_marca_tipo_producto",
@@ -1709,7 +1710,11 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": {
+            "aplica_a": [
+              "masivo"
+            ]
+          }
         },
         {
           "id": "no_mezclar_marcas",
@@ -1727,7 +1732,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": null,
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "exhibir_1_focal_por_marca",
@@ -1747,7 +1752,7 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← texto: \"FOCAL\"",
-          "decision_gerardo": null
+          "decision_gerardo": "ok"
         },
         {
           "id": "caja_vajilla_cerrada_narrative_kostlich",
@@ -1767,7 +1772,7 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← condicion_libre: \"MESA\"",
-          "decision_gerardo": null
+          "decision_gerardo": "ok"
         },
         {
           "id": "coloca_caja_vajilla_cerrada_general",
@@ -1787,7 +1792,7 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← condicion_libre: \"MESA\"",
-          "decision_gerardo": null
+          "decision_gerardo": "ok"
         },
         {
           "id": "coloca_exhibiciones_masivas_producto_participante",
@@ -1807,7 +1812,11 @@
           "origen": "ia",
           "confianza": "media",
           "motivo": "IA: Coloca exhibiciones masivas",
-          "decision_gerardo": null
+          "decision_gerardo": {
+            "aplica_a": [
+              "masivo"
+            ]
+          }
         },
         {
           "id": "exhibe_bloque_tipo_producto_marca",
@@ -1825,7 +1834,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "respetar_alturas_estiba_maxima",
@@ -1843,7 +1852,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "asegura_coloque_cartulina_beneficio",
@@ -1861,7 +1870,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "importante_mantener_surtido_caso_vaciarse",
@@ -1879,7 +1888,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         }
       ]
     },
@@ -1897,13 +1906,13 @@
           },
           "propuesta": {
             "aplica_a": [
-              "masivos"
+              "masivo"
             ],
             "etapa_aplicable": null
           },
-          "origen": "ia",
-          "confianza": "media",
-          "motivo": "IA: Los masivos en pasillo",
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a <- texto: \"MASIVOS\"",
           "decision_gerardo": null
         },
         {
@@ -1917,13 +1926,13 @@
           },
           "propuesta": {
             "aplica_a": [
-              "masivos"
+              "masivo"
             ],
             "etapa_aplicable": null
           },
-          "origen": "ia",
-          "confianza": "media",
-          "motivo": "IA: Separación entre masivos",
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a <- texto: \"MASIVOS\"",
           "decision_gerardo": null
         },
         {
@@ -2523,13 +2532,13 @@
           },
           "propuesta": {
             "aplica_a": [
-              "pasillo"
+              "masivo"
             ],
             "etapa_aplicable": null
           },
-          "origen": "ia",
-          "confianza": "media",
-          "motivo": "IA: sacar al pasillo",
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a <- texto: \"MASIVOS\"",
           "decision_gerardo": null
         },
         {
