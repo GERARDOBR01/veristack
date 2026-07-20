@@ -12,7 +12,8 @@
     },
     "fase_ia": "2026-07-19T18:18:51",
     "revision_lote1": "Lote 1 CERRADO (Gerardo 19 Jul): 11 ok (incl. caso_muebles_focal=focal_show, decidido con el filtro actual a la vista), 4 rechazar. Pendiente global: mapeo mueble<->tipo_foto se decide ANTES del swap (torre/barra/columna/maniqui no coinciden con los 3 tipo_foto actuales — decision consciente, seguir curando).",
-    "revision_lote2": "Lote 2 CERRADO (Gerardo 19 Jul): 3 ok, 1 editado (zapateras: mesa+zapatera), 11 rechazar (generales; la ref cruzada del manual de senalizacion queda general — se revisan manuales, no ligas). zapatera APROBADA como valor de vocabulario; re-escaneo aplicado a criterios sin decidir."
+    "revision_lote2": "Lote 2 CERRADO (Gerardo 19 Jul): 3 ok, 1 editado (zapateras: mesa+zapatera), 11 rechazar (generales; la ref cruzada del manual de senalizacion queda general — se revisan manuales, no ligas). zapatera APROBADA como valor de vocabulario; re-escaneo aplicado a criterios sin decidir.",
+    "revision_lote3": "Lote 3 CERRADO (Gerardo 19 Jul): 7 ok, 2 editados (focal_show_mujeres_departamento_juniors -> focal_show para viajar con su cluster; integra_maniquies -> [focal_show, maniqui], valor de ESTA campana — en otras campanas un focal puede no llevar maniquies), 6 rechazar (incl. mueble generico: la herramienta no conoce los muebles autorizados — ante mueble sospechoso se AVISA verificar con jefe de display, no se dictamina)."
   },
   "lotes": [
     {
@@ -639,7 +640,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "ubicar_frente_seccion_sea_mueble",
@@ -660,7 +661,7 @@
           "origen": "ia",
           "confianza": "media",
           "motivo": "IA: mueble genérico de Display o mueble del departamento",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "exhibir_producto_descuento_mezclar",
@@ -678,7 +679,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "colocar_etiquetas_cuidando_esten_misma",
@@ -696,7 +697,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "cuidar_entallado_variantes_color_completos",
@@ -714,7 +715,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "identificar_cartulina_descuento",
@@ -732,7 +733,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "puede_colocar_etiquetas_colgantes_maniquies",
@@ -752,7 +753,7 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← texto: \"MANIQUIES\"",
-          "decision_gerardo": null
+          "decision_gerardo": "ok"
         },
         {
           "id": "ubica_puntos_focales_accesos_importantes",
@@ -772,7 +773,7 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← condicion_libre: \"FOCALES\"",
-          "decision_gerardo": null
+          "decision_gerardo": "ok"
         },
         {
           "id": "vestimenta_maniquies_revisa_apuestas_comerciales",
@@ -792,7 +793,7 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← texto: \"MANIQUIES\"",
-          "decision_gerardo": null
+          "decision_gerardo": "ok"
         },
         {
           "id": "revisa_producto_focal_sea_mercancia",
@@ -812,7 +813,7 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← condicion_libre: \"FOCALES\"",
-          "decision_gerardo": null
+          "decision_gerardo": "ok"
         },
         {
           "id": "maniqui_maniquies_deben_integrarse_elementos",
@@ -832,7 +833,7 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← texto: \"MANIQUI\"",
-          "decision_gerardo": null
+          "decision_gerardo": "ok"
         },
         {
           "id": "requiere_1_fotografia_focal",
@@ -852,7 +853,7 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← texto: \"FOCAL\"",
-          "decision_gerardo": null
+          "decision_gerardo": "ok"
         },
         {
           "id": "focal_show_mujeres_departamento_juniors",
@@ -873,7 +874,11 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": {
+            "aplica_a": [
+              "focal_show"
+            ]
+          }
         },
         {
           "id": "focal_show_mujeres_etapa1_2",
@@ -896,7 +901,7 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← condicion_libre: \"FOCALES\"",
-          "decision_gerardo": null
+          "decision_gerardo": "ok"
         },
         {
           "id": "focal_show_mujeres_etapa1_2",
@@ -919,7 +924,12 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← texto: \"MANIQUIES\"",
-          "decision_gerardo": null
+          "decision_gerardo": {
+            "aplica_a": [
+              "focal_show",
+              "maniqui"
+            ]
+          }
         }
       ]
     },
