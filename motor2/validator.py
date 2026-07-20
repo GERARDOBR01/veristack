@@ -61,9 +61,19 @@ MOTOR2 = Path(__file__).resolve().parent
 sys.path.insert(0, str(MOTOR2))
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
-# Solo para EXAMPLES y MARCA_AMBIGUO (una sola fuente de verdad con el prompt
-# real). Importar extractor NO ejecuta nada: main() está protegido.
-import extractor as ex  # noqa: E402
+# extractor se importa PEREZOSO (ver _ex()): solo lo necesitan EXAMPLES y
+# MARCA_AMBIGUO (una sola fuente de verdad con el prompt real), pero extractor
+# arrastra langextract — y validar_schema debe ser importable sin esa dep
+# (aplicar_aplicabilidad.py la usa como gate en máquinas sin el venv de motor2).
+_EX = None
+
+
+def _ex():
+    global _EX
+    if _EX is None:
+        import extractor
+        _EX = extractor
+    return _EX
 
 ENTRADA_DEFAULT = MOTOR2 / "criterios_extraidos.json"
 CONSOLIDADO = MOTOR2 / "manual_consolidado.json"
@@ -97,13 +107,22 @@ def _norm_fewshot(s: str) -> str:
 
 
 # Bloques few-shot literales del prompt real (anclados en texto de p26/p31/p20).
-BLOQUES_FEWSHOT = [(i, _norm_fewshot(e.text)) for i, e in enumerate(ex.EXAMPLES, 1)]
+# Perezoso por la misma razón que _ex().
+_BLOQUES_FEWSHOT = None
+
+
+def _bloques_fewshot():
+    global _BLOQUES_FEWSHOT
+    if _BLOQUES_FEWSHOT is None:
+        _BLOQUES_FEWSHOT = [(i, _norm_fewshot(e.text))
+                            for i, e in enumerate(_ex().EXAMPLES, 1)]
+    return _BLOQUES_FEWSHOT
 
 
 def _sin_ambiguo(texto: str) -> str:
     """El prefijo [AMBIGUO] lo agrega el modelo — no es contenido del manual."""
-    if isinstance(texto, str) and texto.startswith(ex.MARCA_AMBIGUO):
-        return texto[len(ex.MARCA_AMBIGUO):]
+    if isinstance(texto, str) and texto.startswith(_ex().MARCA_AMBIGUO):
+        return texto[len(_ex().MARCA_AMBIGUO):]
     return texto if isinstance(texto, str) else ""
 
 
@@ -178,7 +197,7 @@ def detectar_contaminacion_fewshot(criterio):
     t = _norm_fewshot(_sin_ambiguo(criterio.get("texto")))
     if not t:
         return None
-    for i, bloque in BLOQUES_FEWSHOT:
+    for i, bloque in _bloques_fewshot():
         if t in bloque:
             return i
     return None

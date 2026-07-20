@@ -1,0 +1,2946 @@
+{
+  "meta": {
+    "generado": "2026-07-19T18:12:12",
+    "fuente": "capa2_validado_con_candidatos.json",
+    "nota": "PROPUESTAS, no decisiones. decision_gerardo: null=pendiente, \"ok\"=aplicar propuesta, \"rechazar\"=dejar null (general), objeto {aplica_a, etapa_aplicable}=valores finales editados. etapa_aplicable=null es LEGÍTIMO: no toda campaña opera por etapas (la Gran Barata es solo la campaña base).",
+    "cobertura": {
+      "total": 148,
+      "ya_curado": 6,
+      "heuristica": 49,
+      "ia": 12,
+      "sin_propuesta": 81
+    },
+    "fase_ia": "2026-07-19T18:18:51"
+  },
+  "lotes": [
+    {
+      "lote": 1,
+      "criterios": [
+        {
+          "id": "imprimir_torre_slim_mandar_parche",
+          "pagina_origen": 6,
+          "texto": "Imprimir una torre slim, mandar parche 50, colocar el +20 sobre el 50",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": [
+              "torre"
+            ],
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia efectiva (re-propuso un campo ya curado — descartado)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "barras_etapa1_40_60",
+          "pagina_origen": 6,
+          "texto": "Imprimir primera etapa 40% genérico 60% beneficio",
+          "condicion_libre": "BARRAS",
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "barra"
+            ],
+            "etapa_aplicable": [
+              "E1"
+            ]
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← condicion_libre: \"BARRAS\"; etapa_aplicable ← texto: \"PRIMERA ETAPA\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "barras_etapa2_100",
+          "pagina_origen": 6,
+          "texto": "2da etapa 100% beneficio (Como años pasados)",
+          "condicion_libre": "BARRAS",
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "barra"
+            ],
+            "etapa_aplicable": [
+              "E2"
+            ]
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← condicion_libre: \"BARRAS\"; etapa_aplicable ← texto: \"2DA ETAPA\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "barras_etapa3_100",
+          "pagina_origen": 6,
+          "texto": "3era etapa 100% beneficio (Como años pasados)",
+          "condicion_libre": "BARRAS",
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "barra"
+            ],
+            "etapa_aplicable": [
+              "E3"
+            ]
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← condicion_libre: \"BARRAS\"; etapa_aplicable ← texto: \"3ERA ETAPA\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "columnas_etapa1_40_60",
+          "pagina_origen": 6,
+          "texto": "Imprimir primera etapa 40% genérico 60% beneficio",
+          "condicion_libre": "COLUMNAS",
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "columna"
+            ],
+            "etapa_aplicable": [
+              "E1"
+            ]
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← condicion_libre: \"COLUMNAS\"; etapa_aplicable ← texto: \"PRIMERA ETAPA\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "columnas_etapa2_100",
+          "pagina_origen": 6,
+          "texto": "2da etapa 100% beneficio (Como años pasados)",
+          "condicion_libre": "COLUMNAS",
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "columna"
+            ],
+            "etapa_aplicable": [
+              "E2"
+            ]
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← condicion_libre: \"COLUMNAS\"; etapa_aplicable ← texto: \"2DA ETAPA\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "columnas_etapa3_parches_20",
+          "pagina_origen": 6,
+          "texto": "3ERA etapa solo producir parches +20",
+          "condicion_libre": "COLUMNAS",
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "columna"
+            ],
+            "etapa_aplicable": [
+              "E3"
+            ]
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← condicion_libre: \"COLUMNAS\"; etapa_aplicable ← texto: \"3ERA ETAPA\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "atriles_primera_etapa_generico",
+          "pagina_origen": 6,
+          "texto": "Imprimir primera etapa genérico, se usan para ambas secciones",
+          "condicion_libre": "ATRILES",
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "atril"
+            ],
+            "etapa_aplicable": [
+              "E1"
+            ]
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← condicion_libre: \"ATRILES\"; etapa_aplicable ← texto: \"PRIMERA ETAPA\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "nada_resguarda",
+          "pagina_origen": 6,
+          "texto": "Nada se resguarda",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "agregar_puntos_dependiendo_etapa_encuentre",
+          "pagina_origen": 7,
+          "texto": "Agregar los puntos dependiendo la etapa en la que se encuentre la campaña conforme a la visualización.",
+          "condicion_libre": "dependiendo la etapa en la que se encuentre la campaña",
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": [
+              "E2",
+              "E3"
+            ]
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "caso_muebles_focal_coloca_etiqueta",
+          "pagina_origen": 10,
+          "texto": "Para el caso de los muebles de focal, coloca la etiqueta a la misma altura y del mismo lado.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "focal_show"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← texto: \"FOCAL\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "utilizar_siguiente_formula",
+          "pagina_origen": 10,
+          "texto": "Utilizar la siguiente fórmula.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "2_maniquies_1_etiqueta",
+          "pagina_origen": 10,
+          "texto": "2 maniquíes – 1 etiqueta",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "maniqui"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← texto: \"MANIQUIES\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "maniquies_3_etiquetas_2",
+          "pagina_origen": 10,
+          "texto": "3 maniquíes – 2 etiquetas",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "maniqui"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← texto: \"MANIQUIES\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "maniquies_5_etiquetas_3",
+          "pagina_origen": 10,
+          "texto": "5 maniquíes – 3 etiquetas",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "maniqui"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← texto: \"MANIQUIES\"",
+          "decision_gerardo": null
+        }
+      ]
+    },
+    {
+      "lote": 2,
+      "criterios": [
+        {
+          "id": "recuerda_etiquetas_solo_van_cadera",
+          "pagina_origen": 10,
+          "texto": "[AMBIGUO] Recuerda que las etiquetas solo van en la cadera del maniquí.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "maniqui"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← texto: \"MANIQUI\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "consulta_liga_manual_senalizacion_barata",
+          "pagina_origen": 10,
+          "texto": "[AMBIGUO] Consulta en la liga el manual de señalización de Barata en piso, para Hardline.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "agrupar_mercancia_calificada_barata_liquidacion",
+          "pagina_origen": 11,
+          "texto": "Agrupar la mercancía calificada con Barata y Liquidación al frente de la sección sin mezclar",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "dar_prioridad_mercancia_calificada",
+          "pagina_origen": 11,
+          "texto": "DAR PRIORIDAD A MERCANCÍA CALIFICADA.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "colocar_cartulina_descuento_especifico_mercancia",
+          "pagina_origen": 12,
+          "texto": "Colocar cartulina con descuento específico a mercancía participante.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "respetar_capacidad_ideal_mobiliario_permita",
+          "pagina_origen": 12,
+          "texto": "Respetar capacidad ideal del mobiliario, que permita tomar el producto.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "distribuir_cartulinas_equilibradamente_piso_garantizar",
+          "pagina_origen": 12,
+          "texto": "Distribuir cartulinas equilibradamente en piso y garantizar vestir cada sección.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "selecciona_producto_dando_prioridad_descuento",
+          "pagina_origen": 13,
+          "texto": "Selecciona el producto dando prioridad al Descuento:",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "colocar_producto_descuento_mayor_menor",
+          "pagina_origen": 13,
+          "texto": "(1) Colocar el producto por descuento de mayor a menor.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "respetar_mundos_romper_clasificaciones",
+          "pagina_origen": 13,
+          "texto": "(2) Respetar los mundos sin romper las clasificaciones.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "exhibir_modelos_repetirlos",
+          "pagina_origen": 13,
+          "texto": "(3) Exhibir todos los modelos sin repetirlos.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "identificar_cartulina_descuento",
+          "pagina_origen": 13,
+          "texto": "(4) Identificar con cartulina de descuento.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": null,
+          "decision_gerardo": null
+        },
+        {
+          "id": "exhibir_liquidacion_zapatera",
+          "pagina_origen": 13,
+          "texto": "(5) Exhibir la liquidación en la zapatera.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "zapatera"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "ia",
+          "confianza": "media",
+          "motivo": "IA: Exhibir la liquidación en la zapatera",
+          "decision_gerardo": null
+        },
+        {
+          "id": "nota_exhibicion_producto_mesas_perimetros",
+          "pagina_origen": 13,
+          "texto": "Nota: La exhibición de producto en mesas y perímetros de las secciones de zapatos se mantiene con el movimiento de mercadeo de frente y vuelta.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "mesa"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← texto: \"MESAS\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "caso_tener_modelos_exhibidos_zapateras",
+          "pagina_origen": 13,
+          "texto": "En caso de tener todos lo modelos exhibidos en las zapateras o mesas m y cuenten con niveles vacíos es posible realizar repetición de producto, esto solo aplica para zapateras y mesas mmm en exhibiciones fuera de la sección.",
+          "condicion_libre": "zapateras y mesas mmm en exhibiciones fuera de la sección",
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "mesa"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← condicion_libre: \"MESAS\"",
+          "decision_gerardo": null
+        }
+      ]
+    },
+    {
+      "lote": 3,
+      "criterios": [
+        {
+          "id": "selecciona_producto_mezclar_descuentos_mundos",
+          "pagina_origen": 14,
+          "texto": "Selecciona el producto sin mezclar descuentos, mundos y/o secciones: 1. Descuento 50%, 40%, 30%, 20% u otros.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "ubicar_frente_seccion_sea_mueble",
+          "pagina_origen": 14,
+          "texto": "(1) Ubicar al frente de la sección ya sea en mueble genérico de Display o mueble del departamento.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "mueble genérico de Display",
+              "mueble del departamento"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "ia",
+          "confianza": "media",
+          "motivo": "IA: mueble genérico de Display o mueble del departamento",
+          "decision_gerardo": null
+        },
+        {
+          "id": "exhibir_producto_descuento_mezclar",
+          "pagina_origen": 14,
+          "texto": "(2) Exhibir el producto por descuento sin mezclar.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "colocar_etiquetas_cuidando_esten_misma",
+          "pagina_origen": 14,
+          "texto": "(3) Colocar las etiquetas cuidando que estén a la misma altura de la prenda o en el mismo lado de la caja.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "cuidar_entallado_variantes_color_completos",
+          "pagina_origen": 14,
+          "texto": "(4) Cuidar que este el entallado y/o variantes de color completos.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "identificar_cartulina_descuento",
+          "pagina_origen": 14,
+          "texto": "(5) Identificar con cartulina de descuento.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "puede_colocar_etiquetas_colgantes_maniquies",
+          "pagina_origen": 14,
+          "texto": "(6) Se puede colocar etiquetas colgantes en los maniquíes cuidado no saturarlos.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "maniqui"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← texto: \"MANIQUIES\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "ubica_puntos_focales_accesos_importantes",
+          "pagina_origen": 16,
+          "texto": "Ubica los puntos focales en accesos importantes de la tienda.",
+          "condicion_libre": "Focales principales",
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "focal_show"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← condicion_libre: \"FOCALES\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "vestimenta_maniquies_revisa_apuestas_comerciales",
+          "pagina_origen": 16,
+          "texto": "Para la vestimenta de maniquíes revisa las apuestas comerciales.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "maniqui"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← texto: \"MANIQUIES\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "revisa_producto_focal_sea_mercancia",
+          "pagina_origen": 16,
+          "texto": "Revisa que el producto para este focal sea mercancía con descuentos.",
+          "condicion_libre": "Focales principales",
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "focal_show"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← condicion_libre: \"FOCALES\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "maniqui_maniquies_deben_integrarse_elementos",
+          "pagina_origen": 16,
+          "texto": "El maniquí o maniquíes deben integrarse con los elementos y accesorizar con base al enfoque.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "maniqui"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← texto: \"MANIQUI\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "requiere_1_fotografia_focal",
+          "pagina_origen": 18,
+          "texto": "Se requiere 1 fotografía por focal",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "focal_show"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← texto: \"FOCAL\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "focal_show_mujeres_departamento_juniors",
+          "pagina_origen": 20,
+          "texto": "Exhibir producto de la sección de Juniors o Joven Contempo.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": [
+              "E1",
+              "E2"
+            ]
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "focal_show_mujeres_etapa1_2",
+          "pagina_origen": 20,
+          "texto": "Revisa que el producto para este focal sea mercancía con el mismo descuento.",
+          "condicion_libre": "Focales fuera de la sección",
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": [
+              "E1",
+              "E2"
+            ]
+          },
+          "propuesta": {
+            "aplica_a": [
+              "focal_show"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← condicion_libre: \"FOCALES\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "focal_show_mujeres_etapa1_2",
+          "pagina_origen": 20,
+          "texto": "Integra los maniquíes de manera que se logren apreciar bien todos los looks.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": [
+              "E1",
+              "E2"
+            ]
+          },
+          "propuesta": {
+            "aplica_a": [
+              "maniqui"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← texto: \"MANIQUIES\"",
+          "decision_gerardo": null
+        }
+      ]
+    },
+    {
+      "lote": 4,
+      "criterios": [
+        {
+          "id": "focal_show_mujeres_etapa1_2",
+          "pagina_origen": 20,
+          "texto": "[AMBIGUO] En en los focales solo se colocan los gráficos de torres slim y maniquíes.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": [
+              "torre"
+            ],
+            "etapa_aplicable": [
+              "E1",
+              "E2"
+            ]
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "ya_curado",
+          "confianza": null,
+          "motivo": "ambos campos ya curados por Gerardo — no se propone nada",
+          "decision_gerardo": null
+        },
+        {
+          "id": "focal_show_mujeres_etapa3",
+          "pagina_origen": 21,
+          "texto": "Se impulsará IMO con los Avances de Temporada “TENDENCIA …”",
+          "condicion_libre": "Focales fuera de la sección",
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": [
+              "E3"
+            ]
+          },
+          "propuesta": {
+            "aplica_a": [
+              "focal_show"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← condicion_libre: \"FOCALES\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "focal_show_mujeres_etapa3",
+          "pagina_origen": 21,
+          "texto": "No colocar gráficos de Barata.",
+          "condicion_libre": "Focales fuera de la sección",
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": [
+              "E3"
+            ]
+          },
+          "propuesta": {
+            "aplica_a": [
+              "focal_show"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← condicion_libre: \"FOCALES\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "focal_show_mujeres_etapa3",
+          "pagina_origen": 21,
+          "texto": "En estos focales colocar los atriles de marca.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": [
+              "atril"
+            ],
+            "etapa_aplicable": [
+              "E3"
+            ]
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "ya_curado",
+          "confianza": null,
+          "motivo": "ambos campos ya curados por Gerardo — no se propone nada",
+          "decision_gerardo": null
+        },
+        {
+          "id": "focal_show_hombres_departamento_juveniles",
+          "pagina_origen": 22,
+          "texto": "Exhibir producto de la sección de Juveniles o Hombre Contempo.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": [
+              "E1",
+              "E2"
+            ]
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "focal_show_hombres_etapa1_2",
+          "pagina_origen": 22,
+          "texto": "Revisa que el producto para este focal sea mercancía con el mismo descuento.",
+          "condicion_libre": "Focales fuera de la sección",
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": [
+              "E1",
+              "E2"
+            ]
+          },
+          "propuesta": {
+            "aplica_a": [
+              "focal_show"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← condicion_libre: \"FOCALES\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "focal_show_hombres_etapa1_2",
+          "pagina_origen": 22,
+          "texto": "Integra los maniquíes de manera que se logren apreciar bien todos los looks.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": [
+              "E1",
+              "E2"
+            ]
+          },
+          "propuesta": {
+            "aplica_a": [
+              "maniqui"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← texto: \"MANIQUIES\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "focal_show_hombres_etapa1_2",
+          "pagina_origen": 22,
+          "texto": "[AMBIGUO] En en los focales solo se colocan los gráficos de torres slim y maniquíes.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": [
+              "torre"
+            ],
+            "etapa_aplicable": [
+              "E1",
+              "E2"
+            ]
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "ya_curado",
+          "confianza": null,
+          "motivo": "ambos campos ya curados por Gerardo — no se propone nada",
+          "decision_gerardo": null
+        },
+        {
+          "id": "focal_show_hombres_etapa3",
+          "pagina_origen": 23,
+          "texto": "Se impulsará IMO con los Avances de Temporada “TENDENCIA …”",
+          "condicion_libre": "Focales fuera de la sección",
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": [
+              "E3"
+            ]
+          },
+          "propuesta": {
+            "aplica_a": [
+              "focal_show"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← condicion_libre: \"FOCALES\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "focal_show_hombres_etapa3",
+          "pagina_origen": 23,
+          "texto": "No colocar gráficos de Barata.",
+          "condicion_libre": "Focales fuera de la sección",
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": [
+              "E3"
+            ]
+          },
+          "propuesta": {
+            "aplica_a": [
+              "focal_show"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← condicion_libre: \"FOCALES\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "focal_show_hombres_etapa3",
+          "pagina_origen": 23,
+          "texto": "En estos focales colocar los atriles de marca.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": [
+              "atril"
+            ],
+            "etapa_aplicable": [
+              "E3"
+            ]
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "ya_curado",
+          "confianza": null,
+          "motivo": "ambos campos ya curados por Gerardo — no se propone nada",
+          "decision_gerardo": null
+        },
+        {
+          "id": "focal_show_infantiles_departamento_ninos8",
+          "pagina_origen": 24,
+          "texto": "Exhibir producto de la sección de niños 8+ y niñas 8+.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": [
+              "E1",
+              "E2"
+            ]
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "focal_show_infantiles_etapa1_2",
+          "pagina_origen": 24,
+          "texto": "Revisa que el producto para este focal sea mercancía con el mismo descuento.",
+          "condicion_libre": "Focales fuera de la sección",
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": [
+              "E1",
+              "E2"
+            ]
+          },
+          "propuesta": {
+            "aplica_a": [
+              "focal_show"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← condicion_libre: \"FOCALES\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "focal_show_infantiles_etapa1_2",
+          "pagina_origen": 24,
+          "texto": "Integra los maniquíes de manera que se logren apreciar bien todos los looks.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": [
+              "E1",
+              "E2"
+            ]
+          },
+          "propuesta": {
+            "aplica_a": [
+              "maniqui"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← texto: \"MANIQUIES\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "focal_show_infantiles_etapa1_2",
+          "pagina_origen": 24,
+          "texto": "En en los focales solo se colocan los gráficos de torres slim y maniquíes.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": [
+              "torre"
+            ],
+            "etapa_aplicable": [
+              "E1",
+              "E2"
+            ]
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "ya_curado",
+          "confianza": null,
+          "motivo": "ambos campos ya curados por Gerardo — no se propone nada",
+          "decision_gerardo": null
+        }
+      ]
+    },
+    {
+      "lote": 5,
+      "criterios": [
+        {
+          "id": "focal_show_infantiles_etapa3",
+          "pagina_origen": 25,
+          "texto": "Se impulsará IMO con los Avances de Temporada “TENDENCIA …”",
+          "condicion_libre": "Focales fuera de la sección",
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": [
+              "E3"
+            ]
+          },
+          "propuesta": {
+            "aplica_a": [
+              "focal_show"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← condicion_libre: \"FOCALES\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "focal_show_infantiles_etapa3",
+          "pagina_origen": 25,
+          "texto": "No colocar gráficos de Barata.",
+          "condicion_libre": "Focales fuera de la sección",
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": [
+              "E3"
+            ]
+          },
+          "propuesta": {
+            "aplica_a": [
+              "focal_show"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← condicion_libre: \"FOCALES\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "focal_show_infantiles_etapa3",
+          "pagina_origen": 25,
+          "texto": "En estos focales colocar los atriles de marca.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": [
+              "atril"
+            ],
+            "etapa_aplicable": [
+              "E3"
+            ]
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "ya_curado",
+          "confianza": null,
+          "motivo": "ambos campos ya curados por Gerardo — no se propone nada",
+          "decision_gerardo": null
+        },
+        {
+          "id": "visibilidad_producto_descuento_alto_corridas",
+          "pagina_origen": 26,
+          "texto": "Da visibilidad al producto con el descuento más alto y corridas completas",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "mesa_realizar_bloques_mercancia_doblada",
+          "pagina_origen": 26,
+          "texto": "En la mesa realizar bloques con mercancía doblada, se pueden integrar accesorios en bloques con el mismo descuento.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "mesa"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← texto: \"MESA\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "barra_prendas_descuentos_altos_incluyendo",
+          "pagina_origen": 26,
+          "texto": "En la barra prendas con los descuentos más altos, incluyendo prendas altas y prendas bajas, un look por barra.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": [
+              "barra"
+            ],
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia efectiva (re-propuso un campo ya curado — descartado)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "vestir_maniquies_prendas_esten_exhibicion",
+          "pagina_origen": 26,
+          "texto": "Vestir los maniquíes con prendas que estén en la exhibición.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "maniqui"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← texto: \"MANIQUIES\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "poner_etiquetas_descuento_prendas_saturar",
+          "pagina_origen": 26,
+          "texto": "Poner etiquetas de descuento a las prendas, no saturar.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "cuentas_espacio_suficiente_obstruya_paso",
+          "pagina_origen": 27,
+          "texto": "Si cuentas con el espacio suficiente sin que obstruya el paso al cliente o realiza campamentos o focales en espacios principales de tienda. Recuerda no forzar el espacio.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "focal_show"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← texto: \"FOCALES\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "realiza_mercadeo_descuento_mayor_menor",
+          "pagina_origen": 27,
+          "texto": "Realiza el mercadeo por descuento (mayor a menor) y tipo de producto.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "campamento_realiza_1_2_etapa",
+          "pagina_origen": 27,
+          "texto": "Si el campamento se realiza en la 1° ó 2° etapa de la promoción, realiza focales con propuesta de moda.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "focal_show"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← texto: \"FOCALES\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "realizar_campamento_punt_roma_98",
+          "pagina_origen": 27,
+          "texto": "Realizar campamento de Punt Roma con 98´s",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "campamento_maniquies_tringlas_barra_cartulina",
+          "pagina_origen": 27,
+          "texto": "Campamento: Maniquíes + Tringlas o Barra + Cartulina",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": [
+              "barra"
+            ],
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia efectiva (re-propuso un campo ya curado — descartado)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "colocar_producto_mayor_descuento",
+          "pagina_origen": 28,
+          "texto": "Coloca producto con mayor descuento para que sea atractivo al cliente.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": null,
+          "decision_gerardo": null
+        },
+        {
+          "id": "mantener_orden_exhibicion",
+          "pagina_origen": 28,
+          "texto": "Mantén el orden de la exhibición",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": null,
+          "decision_gerardo": null
+        }
+      ]
+    },
+    {
+      "lote": 6,
+      "criterios": [
+        {
+          "id": "mercadeo_bloqueo_producto",
+          "pagina_origen": 28,
+          "texto": "Mercadeo por bloqueo de producto",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": null,
+          "decision_gerardo": null
+        },
+        {
+          "id": "colocar_producto_mayor_descuento",
+          "pagina_origen": 29,
+          "texto": "Coloca producto con mayor descuento para que sea atractivo al cliente.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": null,
+          "decision_gerardo": null
+        },
+        {
+          "id": "mantener_orden_exhibicion",
+          "pagina_origen": 29,
+          "texto": "Mantén el orden de la exhibición.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": null,
+          "decision_gerardo": null
+        },
+        {
+          "id": "mercadeo_bloqueo_producto",
+          "pagina_origen": 29,
+          "texto": "Mercadeo por bloqueo de producto.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": null,
+          "decision_gerardo": null
+        },
+        {
+          "id": "colocar_alternando_seccion",
+          "pagina_origen": 31,
+          "texto": "Colocar alternando a lo largo de la sección",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": null,
+          "decision_gerardo": null
+        },
+        {
+          "id": "masivo_bloque_marca_tipo_producto",
+          "pagina_origen": 31,
+          "texto": "Masivo en bloque de marca y tipo de producto",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "no_mezclar_marcas",
+          "pagina_origen": 31,
+          "texto": "No mezclar marcas",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": null,
+          "decision_gerardo": null
+        },
+        {
+          "id": "exhibir_1_focal_por_marca",
+          "pagina_origen": 31,
+          "texto": "Exhibir 1 focal por marca",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "focal_show"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← texto: \"FOCAL\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "caja_vajilla_cerrada_narrative_kostlich",
+          "pagina_origen": 31,
+          "texto": "caja de vajilla cerrada Narrative y Kostlich.",
+          "condicion_libre": "Mesa Fina",
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "mesa"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← condicion_libre: \"MESA\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "coloca_caja_vajilla_cerrada_general",
+          "pagina_origen": 31,
+          "texto": "coloca caja de vajilla cerrada en general.",
+          "condicion_libre": "Mesa Casual",
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "mesa"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← condicion_libre: \"MESA\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "coloca_exhibiciones_masivas_producto_participante",
+          "pagina_origen": 32,
+          "texto": "Coloca exhibiciones masivas de producto participante y shots promocionales.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "exhibiciones masivas"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "ia",
+          "confianza": "media",
+          "motivo": "IA: Coloca exhibiciones masivas",
+          "decision_gerardo": null
+        },
+        {
+          "id": "exhibe_bloque_tipo_producto_marca",
+          "pagina_origen": 32,
+          "texto": "Exhibe por bloque y tipo de producto (marca/modelo)",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "respetar_alturas_estiba_maxima",
+          "pagina_origen": 32,
+          "texto": "Respetar alturas/estiba máxima",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "asegura_coloque_cartulina_beneficio",
+          "pagina_origen": 32,
+          "texto": "Asegura se coloque la cartulina con el beneficio***",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "importante_mantener_surtido_caso_vaciarse",
+          "pagina_origen": 32,
+          "texto": "Es importante mantener surtido, en caso de vaciarse el modelo, resurtir con otro que tenga suficiente profundidad.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        }
+      ]
+    },
+    {
+      "lote": 7,
+      "criterios": [
+        {
+          "id": "masivos_pasillo_deben_contar_espacio",
+          "pagina_origen": 32,
+          "texto": "Los masivos en pasillo deben contar con espacio que no obstruya la circulación del cliente.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "masivos"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "ia",
+          "confianza": "media",
+          "motivo": "IA: Los masivos en pasillo",
+          "decision_gerardo": null
+        },
+        {
+          "id": "separacion_masivos_3_5_metros",
+          "pagina_origen": 32,
+          "texto": "Separación entre masivos de 3 a 5 metros",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "masivos"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "ia",
+          "confianza": "media",
+          "motivo": "IA: Separación entre masivos",
+          "decision_gerardo": null
+        },
+        {
+          "id": "colocar_producto_mayor_descuento",
+          "pagina_origen": 33,
+          "texto": "Coloca producto con mayor descuento para que sea atractivo al cliente.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": null,
+          "decision_gerardo": null
+        },
+        {
+          "id": "mantener_orden_exhibicion",
+          "pagina_origen": 33,
+          "texto": "Mantén el orden de la exhibición",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": null,
+          "decision_gerardo": null
+        },
+        {
+          "id": "mercadeo_bloqueo_producto",
+          "pagina_origen": 33,
+          "texto": "Mercadeo por bloqueo de producto",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": null,
+          "decision_gerardo": null
+        },
+        {
+          "id": "exhibe_producto_tendencia_oasis_floral",
+          "pagina_origen": 33,
+          "texto": "Exhibe producto de tendencia Oasis Floral y Oasis Tropical de las secciones de Mesa Fina, Mesa Casual, Blancos, Baño, Organización Hogar y Decoración textil. (Evita mezclar las secciones de diferentes mundos).",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "mesa"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← texto: \"MESA\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "mochilas_loncheras_lapiceras_concepto",
+          "pagina_origen": 33,
+          "texto": "Mochilas, loncheras, lapiceras en concepto.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "colocar_alternando_largo_seccion_focales",
+          "pagina_origen": 34,
+          "texto": "Colocar alternando a lo largo de la sección, los focales en volúmen por marca.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "focal_show"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← texto: \"FOCALES\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "focal_bloque_marca_tipo_producto",
+          "pagina_origen": 34,
+          "texto": "Focal en bloque de marca y tipo de producto.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "focal_show"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← texto: \"FOCAL\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "no_mezclar_marcas",
+          "pagina_origen": 34,
+          "texto": "No mezclar marcas.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "exhibir_1_focal_por_marca",
+          "pagina_origen": 34,
+          "texto": "Exhibir 1 focal por marca.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "focal_show"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← texto: \"FOCAL\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "agrupa_producto_zoopet_descuento_gondola",
+          "pagina_origen": 35,
+          "texto": "Agrupa el producto zoopet con descuento en una góndola de la sección a pie de pasillo (hasta 50%)",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "góndola"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "ia",
+          "confianza": "media",
+          "motivo": "IA: en una góndola de la sección",
+          "decision_gerardo": null
+        },
+        {
+          "id": "agrupa_tipo_producto",
+          "pagina_origen": 35,
+          "texto": "Agrupa por tipo de producto",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "dentro_clasificacion_agrupa_marca_rimax",
+          "pagina_origen": 35,
+          "texto": "Dentro de su clasificación, agrupa la marca RIMAX (casas)",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "senaliza_cartulina_30",
+          "pagina_origen": 35,
+          "texto": "Señaliza con cartulina (30%)",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        }
+      ]
+    },
+    {
+      "lote": 8,
+      "criterios": [
+        {
+          "id": "dentro_clasificacion_agrupa_producto_descuento",
+          "pagina_origen": 35,
+          "texto": "Dentro de su clasificación agrupa el producto con descuento",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "prioridad_producto_mobility_cloe_40",
+          "pagina_origen": 35,
+          "texto": "Prioridad de producto: Mobility y Cloe (40%)",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "dentro_clasificacion_senaliza_exhibicion_cubos",
+          "pagina_origen": 35,
+          "texto": "Dentro de su clasificación señaliza las exhibición en cubos de hidrolavadoras (20%)",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "cubos"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "ia",
+          "confianza": "media",
+          "motivo": "IA: exhibición en cubos de hidrolavadoras",
+          "decision_gerardo": null
+        },
+        {
+          "id": "senaliza_resto_seccion_promocion_25",
+          "pagina_origen": 35,
+          "texto": "Señaliza el resto de la sección con la promoción del 25%",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "coloca_material_grafico_forma_alternada",
+          "pagina_origen": 36,
+          "texto": "Coloca el material gráfico de forma alternada entre los diferentes sets para evitar la saturación visual de la sección y mantener una exhibición más limpia y atractiva para el cliente.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "clasificacion_seccion_muebles_modifica_campana",
+          "pagina_origen": 36,
+          "texto": "La clasificación de la sección de Muebles no se modifica con esta campaña; los productos deberán permanecer dentro de su clasificación correspondiente.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "cuentas_espacio_disponible_dentro_seccion",
+          "pagina_origen": 36,
+          "texto": "Si cuentas con espacio disponible dentro de la sección de Muebles, puedes concentrar la mercancía de liquidación en una exhibición tipo campamento, señalizándo con la cartulina correspondiente.",
+          "condicion_libre": "Espacio disponible",
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "caso_contar_espacio_necesario_mercancia",
+          "pagina_origen": 36,
+          "texto": "En caso de no contar con el espacio necesario, la mercancía de liquidación deberá permanecer dentro de su clasificación actual, señalizando cada mueble con la cartulina correspondiente.",
+          "condicion_libre": "Sin espacio disponible",
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "mueble"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "ia",
+          "confianza": "media",
+          "motivo": "IA: señalizando cada mueble",
+          "decision_gerardo": null
+        },
+        {
+          "id": "colocar_forma_alterna_material_grafico",
+          "pagina_origen": 37,
+          "texto": "Colocar de forma alterna el material gráfico al costado de la cama",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "cama"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "ia",
+          "confianza": "media",
+          "motivo": "IA: al costado de la cama",
+          "decision_gerardo": null
+        },
+        {
+          "id": "colocar_producto_mayor_descuento",
+          "pagina_origen": 38,
+          "texto": "Coloca producto con mayor descuento para que sea atractivo al cliente.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "mantener_orden_exhibicion",
+          "pagina_origen": 38,
+          "texto": "Mantén el orden de la exhibición.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "mercadeo_bloqueo_producto",
+          "pagina_origen": 38,
+          "texto": "Mercadeo por bloqueo de producto.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "cajas_organizadoras",
+          "pagina_origen": 38,
+          "texto": "Cajas organizadoras.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "protectores_sofa",
+          "pagina_origen": 38,
+          "texto": "Protectores de sofá.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "puff_caja",
+          "pagina_origen": 38,
+          "texto": "Puff en caja.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        }
+      ]
+    },
+    {
+      "lote": 9,
+      "criterios": [
+        {
+          "id": "colocar_alternando_seccion",
+          "pagina_origen": 39,
+          "texto": "Colocar alternando a lo largo de la sección.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": null,
+          "decision_gerardo": null
+        },
+        {
+          "id": "coloca_coleccion_mundial_mesas_frente",
+          "pagina_origen": 39,
+          "texto": "Coloca la colección del Mundial en las mesas del frente.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "mesa"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← texto: \"MESAS\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "exhibe_colecciones_indica_book_impulsos",
+          "pagina_origen": 39,
+          "texto": "Exhibe las colecciones como se indica en el Book de impulsos tomando en cuenta Mayo y Junio.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "puedes_sacar_pasillo_masivos_cajas",
+          "pagina_origen": 39,
+          "texto": "Puedes sacar al pasillo masivos de cajas de vajilla cerrada.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "pasillo"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "ia",
+          "confianza": "media",
+          "motivo": "IA: sacar al pasillo",
+          "decision_gerardo": null
+        },
+        {
+          "id": "colocar_alternando_seccion",
+          "pagina_origen": 40,
+          "texto": "Colocar alternando a lo largo de la sección.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "cuidar_senalizacion_saturar_seccion_recuerda",
+          "pagina_origen": 40,
+          "texto": "Cuidar señalización y no saturar sección, recuerda mantener producto lujo.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "mercadea_forme_book_impulsos_mayo",
+          "pagina_origen": 40,
+          "texto": "Mercadea con forme al Book de Impulsos de Mayo y Junio.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "impulsa_textiles_entran_98_puedes",
+          "pagina_origen": 40,
+          "texto": "Impulsa todos los textiles que entran en 98´puedes apoyarte de mesa MM para sacarlos a pasillo.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "mesa"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← texto: \"MESA\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "distribuir_material_largo_departamento",
+          "pagina_origen": 41,
+          "texto": "Distribuir material a lo largo del departamento.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "identificar_cartulina_shots_promocionales",
+          "pagina_origen": 41,
+          "texto": "Identificar con cartulina shots promocionales.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "permitido_material_pop_marcas_autorizadas",
+          "pagina_origen": 41,
+          "texto": "NO está permitido material POP de marcas no autorizadas.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "identificar_producto_descuento_participante",
+          "pagina_origen": 41,
+          "texto": "Identificar producto con descuento participante.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "evitar_mezclar_marcas_respetar_clasificacion",
+          "pagina_origen": 41,
+          "texto": "Evitar mezclar marcas y respetar clasificación.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "agrupar_combos_espacios_principales_seccion",
+          "pagina_origen": 41,
+          "texto": "Agrupar combos en espacios principales de la sección.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "colocar_producto_apuesta_comercial",
+          "pagina_origen": 42,
+          "texto": "Colocar producto de apuesta comercial.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        }
+      ]
+    },
+    {
+      "lote": 10,
+      "criterios": [
+        {
+          "id": "impulsar_producto_especial_acuerdo_matriz",
+          "pagina_origen": 42,
+          "texto": "Impulsar producto especial de acuerdo a matriz.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "colocar_cartulinas",
+          "pagina_origen": 42,
+          "texto": "Colocar cartulinas.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "acercate_jefe_seccion_pueda_dar",
+          "pagina_origen": 43,
+          "texto": "Acércate al jefe de la sección para que pueda dar visibilidad del producto de apuestas comerciales participantes con descuento.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": null,
+          "decision_gerardo": null
+        },
+        {
+          "id": "exhibicion_disciplinas_mantiene_dentro_separan",
+          "pagina_origen": 43,
+          "texto": "La exhibición por disciplinas se mantiene y dentro de ellos y se separan por género y descuento.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": null,
+          "decision_gerardo": null
+        },
+        {
+          "id": "exhibe_mesa_parte_visible_descuentos",
+          "pagina_origen": 43,
+          "texto": "Exhibe en mesa en la parte más visible los descuentos más agresivos, en medio los descuentos más bajos y en la parte menos visible los avances de temporada.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "mesa"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← texto: \"MESA\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "coloca_cartulina_descuento_agresivo_cuentes",
+          "pagina_origen": 43,
+          "texto": "Coloca la cartulina con el descuento más agresivo con el que cuentes en la mesa correspondiente.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "mesa"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← texto: \"MESA\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "perimetro_coloca_parte_superior_descuentos",
+          "pagina_origen": 43,
+          "texto": "En perímetro coloca en la parte superior los descuentos más agresivos, en medio los descuentos más bajos y en la parte inferior los avances de temporada.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "perímetro"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "ia",
+          "confianza": "media",
+          "motivo": "IA: En perímetro coloca en la parte superior los descuentos más agresivos",
+          "decision_gerardo": null
+        },
+        {
+          "id": "mesa_lanzamientos_sigue_manejando_lanzamientos",
+          "pagina_origen": 43,
+          "texto": "La mesa de lanzamientos sigue manejando los lanzamientos que tengas por mes.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "mesa"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← texto: \"MESA\"",
+          "decision_gerardo": null
+        },
+        {
+          "id": "acercate_jefe_seccion_pueda_dar",
+          "pagina_origen": 44,
+          "texto": "Acércate al jefe de la sección para que pueda dar visibilidad del producto de apuestas comerciales participantes con descuento.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "exhibicion_disciplinas_mantiene_dentro_separan",
+          "pagina_origen": 44,
+          "texto": "La exhibición por disciplinas se mantiene y dentro de ellos y se separan por género y descuento.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia (sin evidencia)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "exhibe_siembra_espacio_visible_disciplina",
+          "pagina_origen": 44,
+          "texto": "Exhibe y siembra en el espacio más visible de la disciplina el producto con descuentos más agresivos, en medio los descuentos más bajos y en la parte menos visible los avances de temporada, este último puede ir al fondo del departamento o en perímetro. Coloca en el mueble la cartulina con el descuento correspondiente.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "perímetro",
+              "mueble"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "ia",
+          "confianza": "media",
+          "motivo": "IA: este último puede ir al fondo del departamento o en perímetro. Coloca en el mueble la cartulina",
+          "decision_gerardo": null
+        },
+        {
+          "id": "barra_ballet_exhibe_producto_sola",
+          "pagina_origen": 44,
+          "texto": "En barra de Ballet exhibe el producto de una sola disciplina con el descuento más agresivo. Recuerda separar por género y por partes bajas ó altas.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": [
+              "barra"
+            ],
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "origen": "sin_propuesta",
+          "confianza": null,
+          "motivo": "IA: sin evidencia efectiva (re-propuso un campo ya curado — descartado)",
+          "decision_gerardo": null
+        },
+        {
+          "id": "exhibicion_ropa_deportiva_estanterias_maniquies",
+          "pagina_origen": 44,
+          "texto": "Exhibición de ropa deportiva en estanterías y maniquíes, con señalización de descuentos visibles.",
+          "condicion_libre": null,
+          "actual": {
+            "aplica_a": null,
+            "etapa_aplicable": null
+          },
+          "propuesta": {
+            "aplica_a": [
+              "maniqui"
+            ],
+            "etapa_aplicable": null
+          },
+          "origen": "heuristica",
+          "confianza": "alta",
+          "motivo": "aplica_a ← texto: \"MANIQUIES\"",
+          "decision_gerardo": null
+        }
+      ]
+    }
+  ]
+}
