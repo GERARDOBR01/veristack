@@ -16,7 +16,8 @@
     "revision_lote3": "Lote 3 CERRADO (Gerardo 19 Jul): 7 ok, 2 editados (focal_show_mujeres_departamento_juniors -> focal_show para viajar con su cluster; integra_maniquies -> [focal_show, maniqui], valor de ESTA campana — en otras campanas un focal puede no llevar maniquies), 6 rechazar (incl. mueble generico: la herramienta no conoce los muebles autorizados — ante mueble sospechoso se AVISA verificar con jefe de display, no se dictamina).",
     "revision_lote4": "Lote 4 CERRADO (Gerardo 19 Jul): clusters focal hombres/infantiles espejo del patron de mujeres (Lote 3) — 6 ok, 4 editados (departamento -> focal_show; integra_maniquies -> [focal_show, maniqui]), 5 sin accion (ya curados). Etapas curadas E1,E2/E3 intactas.",
     "revision_lote5": "Lote 5 CERRADO (Gerardo 19 Jul, ok a recomendaciones): 4 ok, 1 editado (campamento_realiza_1_2_etapa -> focal_show + E1,E2: etapa explicita 1 o 2 que el patron no cazaba — corregido), 10 rechazar (incl. cuentas_espacio general por ambiguedad campamentos-o-focales).",
-    "revision_lote6": "Lote 6 CERRADO (Gerardo 19 Jul): masivo APROBADO como vocabulario (exhibicion de volumen/venta sin focal trabajado) — 3 ok, 2 editados a [masivo], 10 rechazar (generales/repeticiones de paginas hermanas). Re-escaneo masivo aplicado a criterios sin decidir."
+    "revision_lote6": "Lote 6 CERRADO (Gerardo 19 Jul): masivo APROBADO como vocabulario (exhibicion de volumen/venta sin focal trabajado) — 3 ok, 2 editados a [masivo], 10 rechazar (generales/repeticiones de paginas hermanas). Re-escaneo masivo aplicado a criterios sin decidir.",
+    "revision_lote7": "Lote 7 CERRADO (Gerardo 19 Jul): gondola APROBADA como vocabulario. 5 ok, 1 editado (zoopet -> [gondola]), 9 rechazar. Regla de mundos: Mesa Fina/Mesa Casual son SECCIONES, no mueble — oasis rechazado y correccion retroactiva de las 2 vajillas del Lote 6 a general. Pasos del bloque zoopet (tipo/RIMAX/cartulina) quedan generales (no nombran mueble)."
   },
   "lotes": [
     {
@@ -1772,7 +1773,7 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← condicion_libre: \"MESA\"",
-          "decision_gerardo": "ok"
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "coloca_caja_vajilla_cerrada_general",
@@ -1792,7 +1793,7 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← condicion_libre: \"MESA\"",
-          "decision_gerardo": "ok"
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "coloca_exhibiciones_masivas_producto_participante",
@@ -1913,7 +1914,7 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a <- texto: \"MASIVOS\"",
-          "decision_gerardo": null
+          "decision_gerardo": "ok"
         },
         {
           "id": "separacion_masivos_3_5_metros",
@@ -1933,7 +1934,7 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a <- texto: \"MASIVOS\"",
-          "decision_gerardo": null
+          "decision_gerardo": "ok"
         },
         {
           "id": "colocar_producto_mayor_descuento",
@@ -1951,7 +1952,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": null,
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "mantener_orden_exhibicion",
@@ -1969,7 +1970,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": null,
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "mercadeo_bloqueo_producto",
@@ -1987,7 +1988,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": null,
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "exhibe_producto_tendencia_oasis_floral",
@@ -2007,7 +2008,7 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← texto: \"MESA\"",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "mochilas_loncheras_lapiceras_concepto",
@@ -2025,7 +2026,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "colocar_alternando_largo_seccion_focales",
@@ -2045,7 +2046,7 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← texto: \"FOCALES\"",
-          "decision_gerardo": null
+          "decision_gerardo": "ok"
         },
         {
           "id": "focal_bloque_marca_tipo_producto",
@@ -2065,7 +2066,7 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← texto: \"FOCAL\"",
-          "decision_gerardo": null
+          "decision_gerardo": "ok"
         },
         {
           "id": "no_mezclar_marcas",
@@ -2083,7 +2084,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "exhibir_1_focal_por_marca",
@@ -2103,7 +2104,7 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← texto: \"FOCAL\"",
-          "decision_gerardo": null
+          "decision_gerardo": "ok"
         },
         {
           "id": "agrupa_producto_zoopet_descuento_gondola",
@@ -2123,7 +2124,11 @@
           "origen": "ia",
           "confianza": "media",
           "motivo": "IA: en una góndola de la sección",
-          "decision_gerardo": null
+          "decision_gerardo": {
+            "aplica_a": [
+              "gondola"
+            ]
+          }
         },
         {
           "id": "agrupa_tipo_producto",
@@ -2141,7 +2146,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "dentro_clasificacion_agrupa_marca_rimax",
@@ -2159,7 +2164,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "senaliza_cartulina_30",
@@ -2177,7 +2182,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         }
       ]
     },

@@ -67,6 +67,11 @@ VOCAB_ELEMENTOS = [
     (r"\bZAPATERAS?\b", "zapatera"),  # aprobada por Gerardo en Lote 2 (19 Jul)
     (r"\bMASIVOS?\b", "masivo"),      # aprobado por Gerardo en Lote 6 (19 Jul): exhibición
                                       # de volumen/venta, sin focal ni estilo de vida trabajado
+    (r"\bGONDOLAS?\b", "gondola"),    # aprobada por Gerardo en Lote 7 (19 Jul): mueble muy
+                                      # usado y con especificaciones propias en los manuales
+    # OJO (Gerardo, Lote 7): "Mesa Fina"/"Mesa Casual" son SECCIONES (mundos de
+    # Liverpool), no el mueble mesa — el patrón \bMESAS?\b los caza igual; en la
+    # revisión se rechazan cuando la mención es de sección y no de mueble.
     (r"\bFOCAL(?:ES)?\b", "focal_show"),
     (r"\bMANIQUI(?:ES)?\b", "maniqui"),
 ]
@@ -488,6 +493,8 @@ def autotest() -> None:
     check('"zapateras o mesas" → ambas', els == ["mesa", "zapatera"] or els == ["zapatera", "mesa"])
     els, _, _ = detectar_elementos("Los masivos en pasillo deben contar con espacio", None)
     check('"masivos" → masivo', els == ["masivo"])
+    els, _, _ = detectar_elementos("agrupa el producto en una góndola de la sección", None)
+    check('"góndola" (con acento) → gondola', els == ["gondola"])
     # 9. generar_candidatos: lotes y decision_gerardo
     data = generar_candidatos([crit(f"criterio {i}", id_=f"c{i}") for i in range(31)])
     check("31 criterios → 3 lotes (15/15/1)",
