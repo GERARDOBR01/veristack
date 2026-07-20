@@ -83,36 +83,43 @@ def resolver_decision(entrada: dict):
 
 def aplicar(criterios: list[dict], entradas: list[dict], parcial: bool):
     """(criterios_nuevos, conteos). Pura: no toca disco. Aborta (ValueError)
-    ante inválidos, ids sin criterio, o pendientes sin --parcial."""
-    por_id = {c["id"]: c for c in criterios}
+    ante inválidos, desalineación con la fuente, o pendientes sin --parcial.
+
+    Emparejamiento POSICIONAL, no por id: hay ids compartidos legítimos en la
+    capa (clusters confirmados por Gerardo en Sesión U, ej.
+    focal_show_mujeres_etapa1_2 ×2) y cada entrada de candidatos lleva su
+    propia decisión. Las entradas se generaron 1:1 en el orden de la fuente;
+    aquí se verifica ese alineamiento (id y texto) antes de aplicar nada."""
+    if len(entradas) != len(criterios):
+        raise ValueError(f"candidatos ({len(entradas)}) y fuente ({len(criterios)}) "
+                         "no tienen el mismo número de criterios — no se aplica nada")
+    desalineados = [i for i, (c, e) in enumerate(zip(criterios, entradas))
+                    if c["id"] != e["id"] or c["texto"] != e.get("texto", c["texto"])]
+    if desalineados:
+        raise ValueError(f"candidatos desalineados con la fuente en posiciones "
+                         f"{desalineados[:5]} — no se aplica nada")
+
     conteos = {"aprobado": 0, "editado": 0, "rechazado": 0, "pendiente": 0,
                "sin_cambio_efectivo": 0}
-    nuevos = {c["id"]: dict(c) for c in criterios}
+    resultado = [dict(c) for c in criterios]  # mismo orden que la fuente
 
-    invalidos, fantasmas = [], []
-    for e in entradas:
-        if e["id"] not in por_id:
-            fantasmas.append(e["id"])
-            continue
+    invalidos = []
+    for i, e in enumerate(entradas):
         cambios, estado = resolver_decision(e)
         if estado == "invalido":
-            invalidos.append(e["id"])
+            invalidos.append(f"{e['id']} (pos {i})")
             continue
         conteos[estado] += 1
         if estado in ("aprobado", "editado"):
             if not cambios:
                 conteos["sin_cambio_efectivo"] += 1
             for campo, valor in cambios.items():
-                nuevos[e["id"]][campo] = valor
-    if fantasmas:
-        raise ValueError(f"ids de candidatos sin criterio en la fuente: {fantasmas}")
+                resultado[i][campo] = valor
     if invalidos:
         raise ValueError(f"decisiones inválidas (revisar formato): {invalidos}")
     if conteos["pendiente"] and not parcial:
         raise ValueError(f"{conteos['pendiente']} criterio(s) con decision_gerardo=null — "
                          "revisa los lotes o corre con --parcial")
-
-    resultado = [nuevos[c["id"]] for c in criterios]  # mismo orden que la fuente
 
     # Gate 2: schema (fuente única: validator.validar_schema)
     con_motivos = [(c["id"], m) for c in resultado if (m := validar_schema(c))]
@@ -193,6 +200,14 @@ def autotest() -> None:
 
     crits = [crit("a"), crit("b"), crit("c"), crit("d", aplica=["torre"])]
 
+    def entradas_base(**overrides):
+        """4 entradas alineadas 1:1 con crits; por defecto todas 'rechazar'."""
+        base = [entrada("a", "rechazar"), entrada("b", "rechazar"),
+                entrada("c", "rechazar"), entrada("d", "rechazar")]
+        for i, e in overrides.items():
+            base[int(i)] = e
+        return base
+
     # 1. ok aplica la propuesta
     res, con = aplicar(crits, [entrada("a", "ok", ["barra"], ["E1"]),
                                entrada("b", "rechazar", ["mesa"]),
@@ -209,11 +224,12 @@ def autotest() -> None:
           and con["editado"] == 1 and con["pendiente"] == 0)
     # 2. pendiente bloquea sin --parcial, pasa con --parcial
     try:
-        aplicar(crits, [entrada("a", None)], parcial=False)
+        aplicar(crits, entradas_base(**{"0": entrada("a", None)}), parcial=False)
         check("pendiente sin --parcial aborta", False)
     except ValueError:
         check("pendiente sin --parcial aborta", True)
-    res, con = aplicar(crits, [entrada("a", None), entrada("b", "ok", ["torre"])],
+    res, con = aplicar(crits, entradas_base(**{"0": entrada("a", None),
+                                               "1": entrada("b", "ok", ["torre"])}),
                        parcial=True)
     check("--parcial: aplica lo decidido, pendiente intacto",
           res[0]["aplica_a"] is None and res[1]["aplica_a"] == ["torre"]
@@ -222,19 +238,32 @@ def autotest() -> None:
     for dec in ({"otro_campo": ["x"]}, {"etapa_aplicable": ["E9"]},
                 {"aplica_a": []}, {"aplica_a": ["torre", "torre"]}, "si"):
         try:
-            aplicar(crits, [entrada("a", dec)], parcial=False)
+            aplicar(crits, entradas_base(**{"0": entrada("a", dec)}), parcial=False)
             check(f"decisión inválida {dec!r} aborta", False)
         except ValueError:
             check(f"decisión inválida {dec!r} aborta", True)
-    # 4. id fantasma aborta
+    # 4. desalineación con la fuente aborta (conteo o id/posición)
     try:
-        aplicar(crits, [entrada("nadie", "ok", ["torre"])], parcial=False)
-        check("id sin criterio en la fuente aborta", False)
+        aplicar(crits, entradas_base()[:3], parcial=False)
+        check("conteo distinto de candidatos aborta", False)
     except ValueError:
-        check("id sin criterio en la fuente aborta", True)
+        check("conteo distinto de candidatos aborta", True)
+    try:
+        aplicar(crits, entradas_base(**{"1": entrada("nadie", "ok")}), parcial=False)
+        check("id que no coincide con su posición aborta", False)
+    except ValueError:
+        check("id que no coincide con su posición aborta", True)
+    # 4b. ids COMPARTIDOS (clusters Sesión U): cada posición con SU decisión
+    crits_dup = [crit("dup"), crit("dup")]
+    res, _ = aplicar(crits_dup, [entrada("dup", "ok", ["focal_show"]),
+                                 entrada("dup", "ok", ["maniqui"])], parcial=False)
+    check("id compartido: decisiones independientes por posición",
+          res[0]["aplica_a"] == ["focal_show"] and res[1]["aplica_a"] == ["maniqui"]
+          and res[0]["texto"] == res[1]["texto"] == "criterio dup")
     # 5. gate de schema: propuesta que rompería el schema aborta
     try:
-        aplicar(crits, [entrada("a", "ok", ["barra"], ["E1", "E1"])], parcial=False)
+        aplicar(crits, entradas_base(**{"0": entrada("a", "ok", ["barra"], ["E1", "E1"])}),
+                parcial=False)
         check("etapa con repetidos NO pasa el gate de schema", False)
     except ValueError:
         check("etapa con repetidos NO pasa el gate de schema", True)
