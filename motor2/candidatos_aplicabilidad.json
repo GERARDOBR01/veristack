@@ -13,7 +13,8 @@
     "fase_ia": "2026-07-19T18:18:51",
     "revision_lote1": "Lote 1 CERRADO (Gerardo 19 Jul): 11 ok (incl. caso_muebles_focal=focal_show, decidido con el filtro actual a la vista), 4 rechazar. Pendiente global: mapeo mueble<->tipo_foto se decide ANTES del swap (torre/barra/columna/maniqui no coinciden con los 3 tipo_foto actuales — decision consciente, seguir curando).",
     "revision_lote2": "Lote 2 CERRADO (Gerardo 19 Jul): 3 ok, 1 editado (zapateras: mesa+zapatera), 11 rechazar (generales; la ref cruzada del manual de senalizacion queda general — se revisan manuales, no ligas). zapatera APROBADA como valor de vocabulario; re-escaneo aplicado a criterios sin decidir.",
-    "revision_lote3": "Lote 3 CERRADO (Gerardo 19 Jul): 7 ok, 2 editados (focal_show_mujeres_departamento_juniors -> focal_show para viajar con su cluster; integra_maniquies -> [focal_show, maniqui], valor de ESTA campana — en otras campanas un focal puede no llevar maniquies), 6 rechazar (incl. mueble generico: la herramienta no conoce los muebles autorizados — ante mueble sospechoso se AVISA verificar con jefe de display, no se dictamina)."
+    "revision_lote3": "Lote 3 CERRADO (Gerardo 19 Jul): 7 ok, 2 editados (focal_show_mujeres_departamento_juniors -> focal_show para viajar con su cluster; integra_maniquies -> [focal_show, maniqui], valor de ESTA campana — en otras campanas un focal puede no llevar maniquies), 6 rechazar (incl. mueble generico: la herramienta no conoce los muebles autorizados — ante mueble sospechoso se AVISA verificar con jefe de display, no se dictamina).",
+    "revision_lote4": "Lote 4 CERRADO (Gerardo 19 Jul): clusters focal hombres/infantiles espejo del patron de mujeres (Lote 3) — 6 ok, 4 editados (departamento -> focal_show; integra_maniquies -> [focal_show, maniqui]), 5 sin accion (ya curados). Etapas curadas E1,E2/E3 intactas."
   },
   "lotes": [
     {
@@ -957,7 +958,7 @@
           "origen": "ya_curado",
           "confianza": null,
           "motivo": "ambos campos ya curados por Gerardo — no se propone nada",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "focal_show_mujeres_etapa3",
@@ -979,7 +980,7 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← condicion_libre: \"FOCALES\"",
-          "decision_gerardo": null
+          "decision_gerardo": "ok"
         },
         {
           "id": "focal_show_mujeres_etapa3",
@@ -1001,7 +1002,7 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← condicion_libre: \"FOCALES\"",
-          "decision_gerardo": null
+          "decision_gerardo": "ok"
         },
         {
           "id": "focal_show_mujeres_etapa3",
@@ -1023,7 +1024,7 @@
           "origen": "ya_curado",
           "confianza": null,
           "motivo": "ambos campos ya curados por Gerardo — no se propone nada",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "focal_show_hombres_departamento_juveniles",
@@ -1044,7 +1045,11 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": {
+            "aplica_a": [
+              "focal_show"
+            ]
+          }
         },
         {
           "id": "focal_show_hombres_etapa1_2",
@@ -1067,7 +1072,7 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← condicion_libre: \"FOCALES\"",
-          "decision_gerardo": null
+          "decision_gerardo": "ok"
         },
         {
           "id": "focal_show_hombres_etapa1_2",
@@ -1090,7 +1095,12 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← texto: \"MANIQUIES\"",
-          "decision_gerardo": null
+          "decision_gerardo": {
+            "aplica_a": [
+              "focal_show",
+              "maniqui"
+            ]
+          }
         },
         {
           "id": "focal_show_hombres_etapa1_2",
@@ -1113,7 +1123,7 @@
           "origen": "ya_curado",
           "confianza": null,
           "motivo": "ambos campos ya curados por Gerardo — no se propone nada",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "focal_show_hombres_etapa3",
@@ -1135,7 +1145,7 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← condicion_libre: \"FOCALES\"",
-          "decision_gerardo": null
+          "decision_gerardo": "ok"
         },
         {
           "id": "focal_show_hombres_etapa3",
@@ -1157,7 +1167,7 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← condicion_libre: \"FOCALES\"",
-          "decision_gerardo": null
+          "decision_gerardo": "ok"
         },
         {
           "id": "focal_show_hombres_etapa3",
@@ -1179,7 +1189,7 @@
           "origen": "ya_curado",
           "confianza": null,
           "motivo": "ambos campos ya curados por Gerardo — no se propone nada",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "focal_show_infantiles_departamento_ninos8",
@@ -1200,7 +1210,11 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": {
+            "aplica_a": [
+              "focal_show"
+            ]
+          }
         },
         {
           "id": "focal_show_infantiles_etapa1_2",
@@ -1223,7 +1237,7 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← condicion_libre: \"FOCALES\"",
-          "decision_gerardo": null
+          "decision_gerardo": "ok"
         },
         {
           "id": "focal_show_infantiles_etapa1_2",
@@ -1246,7 +1260,12 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← texto: \"MANIQUIES\"",
-          "decision_gerardo": null
+          "decision_gerardo": {
+            "aplica_a": [
+              "focal_show",
+              "maniqui"
+            ]
+          }
         },
         {
           "id": "focal_show_infantiles_etapa1_2",
@@ -1269,7 +1288,7 @@
           "origen": "ya_curado",
           "confianza": null,
           "motivo": "ambos campos ya curados por Gerardo — no se propone nada",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         }
       ]
     },
