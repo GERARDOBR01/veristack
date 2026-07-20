@@ -10,7 +10,9 @@
       "ia": 12,
       "sin_propuesta": 81
     },
-    "fase_ia": "2026-07-19T18:18:51"
+    "fase_ia": "2026-07-19T18:18:51",
+    "revision_lote1": "Lote 1 CERRADO (Gerardo 19 Jul): 11 ok (incl. caso_muebles_focal=focal_show, decidido con el filtro actual a la vista), 4 rechazar. Pendiente global: mapeo mueble<->tipo_foto se decide ANTES del swap (torre/barra/columna/maniqui no coinciden con los 3 tipo_foto actuales — decision consciente, seguir curando).",
+    "revision_lote2": "Lote 2 CERRADO (Gerardo 19 Jul): 3 ok, 1 editado (zapateras: mesa+zapatera), 11 rechazar (generales; la ref cruzada del manual de senalizacion queda general — se revisan manuales, no ligas). zapatera APROBADA como valor de vocabulario; re-escaneo aplicado a criterios sin decidir."
   },
   "lotes": [
     {
@@ -34,7 +36,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia efectiva (re-propuso un campo ya curado — descartado)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "barras_etapa1_40_60",
@@ -56,7 +58,7 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← condicion_libre: \"BARRAS\"; etapa_aplicable ← texto: \"PRIMERA ETAPA\"",
-          "decision_gerardo": null
+          "decision_gerardo": "ok"
         },
         {
           "id": "barras_etapa2_100",
@@ -78,7 +80,7 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← condicion_libre: \"BARRAS\"; etapa_aplicable ← texto: \"2DA ETAPA\"",
-          "decision_gerardo": null
+          "decision_gerardo": "ok"
         },
         {
           "id": "barras_etapa3_100",
@@ -100,7 +102,7 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← condicion_libre: \"BARRAS\"; etapa_aplicable ← texto: \"3ERA ETAPA\"",
-          "decision_gerardo": null
+          "decision_gerardo": "ok"
         },
         {
           "id": "columnas_etapa1_40_60",
@@ -122,7 +124,7 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← condicion_libre: \"COLUMNAS\"; etapa_aplicable ← texto: \"PRIMERA ETAPA\"",
-          "decision_gerardo": null
+          "decision_gerardo": "ok"
         },
         {
           "id": "columnas_etapa2_100",
@@ -144,7 +146,7 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← condicion_libre: \"COLUMNAS\"; etapa_aplicable ← texto: \"2DA ETAPA\"",
-          "decision_gerardo": null
+          "decision_gerardo": "ok"
         },
         {
           "id": "columnas_etapa3_parches_20",
@@ -166,7 +168,7 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← condicion_libre: \"COLUMNAS\"; etapa_aplicable ← texto: \"3ERA ETAPA\"",
-          "decision_gerardo": null
+          "decision_gerardo": "ok"
         },
         {
           "id": "atriles_primera_etapa_generico",
@@ -188,7 +190,7 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← condicion_libre: \"ATRILES\"; etapa_aplicable ← texto: \"PRIMERA ETAPA\"",
-          "decision_gerardo": null
+          "decision_gerardo": "ok"
         },
         {
           "id": "nada_resguarda",
@@ -206,7 +208,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "agregar_puntos_dependiendo_etapa_encuentre",
@@ -227,7 +229,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "caso_muebles_focal_coloca_etiqueta",
@@ -247,7 +249,7 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← texto: \"FOCAL\"",
-          "decision_gerardo": null
+          "decision_gerardo": "ok"
         },
         {
           "id": "utilizar_siguiente_formula",
@@ -265,7 +267,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "2_maniquies_1_etiqueta",
@@ -285,7 +287,7 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← texto: \"MANIQUIES\"",
-          "decision_gerardo": null
+          "decision_gerardo": "ok"
         },
         {
           "id": "maniquies_3_etiquetas_2",
@@ -305,7 +307,7 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← texto: \"MANIQUIES\"",
-          "decision_gerardo": null
+          "decision_gerardo": "ok"
         },
         {
           "id": "maniquies_5_etiquetas_3",
@@ -325,7 +327,7 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← texto: \"MANIQUIES\"",
-          "decision_gerardo": null
+          "decision_gerardo": "ok"
         }
       ]
     },
@@ -350,7 +352,7 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← texto: \"MANIQUI\"",
-          "decision_gerardo": null
+          "decision_gerardo": "ok"
         },
         {
           "id": "consulta_liga_manual_senalizacion_barata",
@@ -368,7 +370,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "agrupar_mercancia_calificada_barata_liquidacion",
@@ -386,7 +388,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "dar_prioridad_mercancia_calificada",
@@ -404,7 +406,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "colocar_cartulina_descuento_especifico_mercancia",
@@ -422,7 +424,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "respetar_capacidad_ideal_mobiliario_permita",
@@ -440,7 +442,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "distribuir_cartulinas_equilibradamente_piso_garantizar",
@@ -458,7 +460,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "selecciona_producto_dando_prioridad_descuento",
@@ -476,7 +478,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "colocar_producto_descuento_mayor_menor",
@@ -494,7 +496,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "respetar_mundos_romper_clasificaciones",
@@ -512,7 +514,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "exhibir_modelos_repetirlos",
@@ -530,7 +532,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": "IA: sin evidencia (sin evidencia)",
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "identificar_cartulina_descuento",
@@ -548,7 +550,7 @@
           "origen": "sin_propuesta",
           "confianza": null,
           "motivo": null,
-          "decision_gerardo": null
+          "decision_gerardo": "rechazar"
         },
         {
           "id": "exhibir_liquidacion_zapatera",
@@ -568,7 +570,7 @@
           "origen": "ia",
           "confianza": "media",
           "motivo": "IA: Exhibir la liquidación en la zapatera",
-          "decision_gerardo": null
+          "decision_gerardo": "ok"
         },
         {
           "id": "nota_exhibicion_producto_mesas_perimetros",
@@ -588,7 +590,7 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← texto: \"MESAS\"",
-          "decision_gerardo": null
+          "decision_gerardo": "ok"
         },
         {
           "id": "caso_tener_modelos_exhibidos_zapateras",
@@ -608,7 +610,13 @@
           "origen": "heuristica",
           "confianza": "alta",
           "motivo": "aplica_a ← condicion_libre: \"MESAS\"",
-          "decision_gerardo": null
+          "decision_gerardo": {
+            "aplica_a": [
+              "mesa",
+              "zapatera"
+            ],
+            "etapa_aplicable": null
+          }
         }
       ]
     },

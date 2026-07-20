@@ -64,6 +64,7 @@ VOCAB_ELEMENTOS = [
     (r"\bCOLUMNAS?\b", "columna"),
     (r"\bTRINGLAS?\b", "tringla"),
     (r"\bMESAS?\b", "mesa"),
+    (r"\bZAPATERAS?\b", "zapatera"),  # aprobada por Gerardo en Lote 2 (19 Jul)
     (r"\bFOCAL(?:ES)?\b", "focal_show"),
     (r"\bMANIQUI(?:ES)?\b", "maniqui"),
 ]
@@ -477,6 +478,8 @@ def autotest() -> None:
     check('"focal" → focal_show', els == ["focal_show"])
     els, _, _ = detectar_elementos("la gran barata inicia", None)
     check('"barata" NO dispara "barra"', els is None)
+    els, _, _ = detectar_elementos("exhibidos en las zapateras o mesas", None)
+    check('"zapateras o mesas" → ambas', els == ["mesa", "zapatera"] or els == ["zapatera", "mesa"])
     # 9. generar_candidatos: lotes y decision_gerardo
     data = generar_candidatos([crit(f"criterio {i}", id_=f"c{i}") for i in range(31)])
     check("31 criterios → 3 lotes (15/15/1)",
