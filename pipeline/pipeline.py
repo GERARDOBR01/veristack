@@ -135,6 +135,24 @@ def _leer_capa(ruta: str) -> list[dict]:
         return []
 
 
+def _nombre_campana_capa2(ruta: str) -> Optional[str]:
+    """Nombre canónico de la campaña activa declarado en el top-level de capa2
+    (`nombre_campana`). None si no existe, el archivo falta o es inválido.
+    Sirve para corregir la comparación gráfico↔etapa cuando la UI manda solo la
+    etiqueta de etapa ("E1"): _cargar_capa_full no lo expone (su meta solo trae
+    schema_version/fecha), por eso se lee aquí con el mismo patrón de _leer_capa."""
+    try:
+        path = Path(ruta)
+        if not path.exists():
+            return None
+        data = json.loads(path.read_text(encoding="utf-8"))
+        valor = data.get("nombre_campana") if isinstance(data, dict) else None
+        return valor if isinstance(valor, str) and valor.strip() else None
+    except Exception as exc:
+        logger.warning("capa2 ilegible para nombre_campana %s: %s: %s", ruta, type(exc).__name__, exc)
+        return None
+
+
 def _diagnostico_knowledge(
     config:       ConfigRetrieval,
     tipo_foto:    Optional[str],
@@ -1959,6 +1977,16 @@ def ejecutar(
     # ── PASO 0: preparar metadata ──────────────────────────────────
     metadata          = _preparar_metadata(imagen_path, etapa_activa, tipo_foto, metadata_extra)
     tipo_foto_efectivo = metadata.get("tipo_foto")
+
+    # Fix mapeo campaña activa: si hay etapa (→ capa2 se carga) y el knowledge de
+    # capa2 declara el nombre canónico de la campaña, se inyecta para que
+    # _regla_grafico_etapa pueda comparar el gráfico contra la campaña real cuando
+    # la UI solo mandó la etiqueta de etapa ("E1"). Sin este campo, la comparación
+    # cae al NO_CALIFICA honesto de siempre. No sobreescribe metadata_extra si ya lo trae.
+    if etapa_activa and etapa_activa.strip() and "nombre_campana" not in metadata:
+        nombre_campana = _nombre_campana_capa2(config.config_retrieval.ruta_capa2)
+        if nombre_campana:
+            metadata["nombre_campana"] = nombre_campana
 
     # ── PASO 1: mandatory — reglas duras ──────────────────────────
     t1        = time.perf_counter()

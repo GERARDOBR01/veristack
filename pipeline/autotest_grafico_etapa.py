@@ -16,8 +16,10 @@ from mandatory_engine import ConfigEngine, Severidad, _regla_grafico_etapa
 BASE = {"brillo": 80.0, "nitidez": 90.0, "espacio_vacio": 10.0, "tipo_foto": "focal_show"}
 
 
-def caso(nombre, etapa, grafico, criterio_esperado, severidad_esperada):
+def caso(nombre, etapa, grafico, criterio_esperado, severidad_esperada, nombre_campana=None):
     meta = dict(BASE, etapa_activa=etapa, grafico_detectado=grafico)
+    if nombre_campana is not None:
+        meta["nombre_campana"] = nombre_campana
     r = _regla_grafico_etapa(meta, ConfigEngine())
     ok = r.criterio == criterio_esperado and r.severidad == severidad_esperada
     estado = "PASS" if ok else "FAIL"
@@ -45,6 +47,15 @@ resultados = [
          "grafico_etapa_no_verificable", Severidad.NO_CALIFICA),
     caso("UI E1 + gráfico con %", "E1", "Gran Barata 40%",
          "grafico_etapa_no_verificable", Severidad.NO_CALIFICA),
+
+    # ── Fix mapeo campaña activa (etiqueta E1 + nombre_campana del knowledge) ──
+    # El pipeline inyecta nombre_campana desde capa2 → la comparación de gráfico
+    # usa la campaña real, no la etiqueta muda "E1".
+    caso("E1 + nombre_campana da CUMPLE", "E1", "Gran Barata 40%",
+         "grafico_etapa", Severidad.CUMPLE, nombre_campana="gran_barata_pv2026"),
+    # La substitución NO ciega los mismatches reales.
+    caso("E1 + nombre_campana + grafico ajeno da GRAVE", "E1", "Día del Padre",
+         "grafico_etapa_incorrecta", Severidad.GRAVE, nombre_campana="gran_barata_pv2026"),
     # Slogan completo del gráfico real
     caso("slogan completo correcto", "gran_barata_pv2026", "Vive la GRAN BARATA",
          "grafico_etapa", Severidad.CUMPLE),

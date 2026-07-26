@@ -325,6 +325,17 @@ def _regla_grafico_etapa(meta: dict, config: ConfigEngine) -> ResultadoCriterio:
     etapa   = _to_str(meta.get("etapa_activa"))
     grafico = _to_str(meta.get("grafico_detectado"))
 
+    # Fix mapeo campaña activa: la UI/manifest manda la etapa como etiqueta pura
+    # ("E1"), que no nombra la campaña — por sí sola cae siempre a NO_CALIFICA.
+    # Si el knowledge de capa2 aporta el nombre canónico de la campaña activa
+    # (metadata["nombre_campana"], inyectado por el pipeline), se usa ESE nombre
+    # como input de la comparación de gráfico. La etapa original se conserva para
+    # todo lo demás y para los mensajes del fallback honesto.
+    nombre_campana    = _to_str(meta.get("nombre_campana"))
+    etapa_comparacion = etapa
+    if etapa and nombre_campana and _ETIQUETA_ETAPA_RE.match(_canon_grafico(etapa)):
+        etapa_comparacion = nombre_campana
+
     # INSTRUMENTACIÓN DIAGNÓSTICO (sesión bug grafico_etapa_incorrecta):
     # valores exactos y tipo de dato justo antes de la comparación.
     logging.getLogger("mandatory_engine").info(
@@ -351,7 +362,7 @@ def _regla_grafico_etapa(meta: dict, config: ConfigEngine) -> ResultadoCriterio:
             descripcion = "No se detectó gráfico en la imagen. Requiere revisión manual.",
             confianza   = Confianza.MEDIO,
         )
-    corresponde = _corresponde_grafico_etapa(grafico, etapa)
+    corresponde = _corresponde_grafico_etapa(grafico, etapa_comparacion)
     if corresponde is None:
         return ResultadoCriterio(
             criterio    = "grafico_etapa_no_verificable",
@@ -368,8 +379,8 @@ def _regla_grafico_etapa(meta: dict, config: ConfigEngine) -> ResultadoCriterio:
             criterio    = "grafico_etapa_incorrecta",
             severidad   = Severidad.GRAVE,
             fuente      = Fuente.CODIGO,
-            descripcion = f"El gráfico '{grafico}' no corresponde a la etapa activa '{etapa}'.",
-            evidencia   = f"grafico_detectado={grafico}, etapa_activa={etapa}",
+            descripcion = f"El gráfico '{grafico}' no corresponde a la etapa activa '{etapa_comparacion}'.",
+            evidencia   = f"grafico_detectado={grafico}, etapa_activa={etapa_comparacion}",
             confianza   = Confianza.ALTO,
         )
     return ResultadoCriterio(
