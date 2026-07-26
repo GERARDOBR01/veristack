@@ -2,6 +2,19 @@
 
 Secciones “Estado previo” migradas desde `CLAUDE.md` (12 Jul 2026, /doctor) para sacarlas del contexto siempre-cargado. Orden: más reciente primero. Las sesiones futuras se archivan aquí al cerrar (ver Protocolo de cierre en `CLAUDE.md`).
 
+## Estado previo (19 Jul 2026 — Sesión KK: **H6+H7+H8 CERRADOS + CURACIÓN DE APLICABILIDAD 120/148 (lotes 1-8 revisados por Gerardo) + diagnóstico estratégico aprobado.**)
+
+**Resumen honesto: sesión doble. Mañana: se cerraron los 3 críticos de honestidad/costo (H6 flag parcial real, H7 rotación persistente de keys, H8 rescate de JSON truncado del proveedor) con verificación en vivo (F03 re-corrida: 0% degradado vs 10.9% previo). Tarde: se apostó por Motor 2 — infraestructura completa de curación de `aplica_a`/`etapa_aplicable` (el lado DATO de GC-delegacion) y Gerardo revisó 8 de 10 lotes en vivo. Todo en remoto (`b49d737`).**
+
+- **Motor 2 — curación de aplicabilidad (cierra GC-delegacion sin tocar pipeline):** `motor2/proponer_aplicabilidad.py` (heurística determinista con cita textual + IA solo en ambiguos con rotación de keys y fallback GitHub Models; autotest 27) genera `candidatos_aplicabilidad.json` (148 criterios, 10 lotes, decisión por criterio); `motor2/aplicar_aplicabilidad.py` (aplica decisiones sobre COPIA, gate `validar_schema`, invariantes solo-2-campos, emparejamiento POSICIONAL por los 15 grupos de ids compartidos; autotest 18). `validator.py`: import de extractor ahora perezoso — `validar_schema` importable sin langextract.
+- **Decisiones de Gerardo (lotes 1-8, 120/148):** vocabulario `aplica_a` ampliado y aprobado: **zapatera, masivo, gondola, cubo** (+ torre/atril/barra/columna/mesa/maniqui/focal_show/mesa_show/tringla). Reglas de dominio selladas: Mesa Fina/Mesa Casual son SECCIONES (mundos de Liverpool), no mueble; "cama" y listas de producto NO son mueble; "mueble genérico" no restringe; muebles autorizados no son verificables por la herramienta → ante mueble sospechoso se AVISA, no se dictamina. Clusters focal por departamento → patrón espejo `[focal_show]` / `[focal_show, maniqui]`.
+- 🔴 **Lotes 9-10 pendientes (28 criterios)** → después: `aplicar_aplicabilidad.py aplicar` + validator + swap con `swap_capa2_produccion.mjs` (solo con autorización explícita).
+- 🔴 **Hallazgo arquitectónico (decidir ANTES del swap):** el filtro compara `aplica_a` LITERAL contra `tipo_foto` (`retrieval_engine.py:310`) y el vocabulario de muebles no coincide con los 3 `tipo_foto` actuales (focal_show/tringla/mesa_show) — sin mapeo mueble↔tipo_foto, los criterios de mueble quedan excluidos de toda foto tipada.
+- **Diagnóstico estratégico aprobado por Gerardo:** brecha #1 = nada está medido; orden de ataque: curación → benchmark 25 → segundo manual end-to-end → grounding a la UI → exhaustividad Motor 2 → feedback de captura → multi-campaña.
+- **Cuota/keys:** reorganización 1 key/proyecto verificada. La fase IA agotó la cuota diaria de las keys 1-3; la rotación salvó la corrida. 🔴 GITHUB_API_KEY 401 (expirada) — Gerardo la renueva.
+
+**Tracking: Motor 1: 100% | Motor 2: 100% | Listo-para-mostrar: 45%.**
+
 ## Estado previo (13 Jul 2026 — Sesión JJ: **MÁQUINA NUEVA OPERATIVA + PRIMERA VALIDACIÓN HUMANA DE LA UI (parcial). Cero cambios de código, cero tokens.**)
 
 **Resumen honesto: sesión de portabilidad y validación, no de features. Se montó el entorno completo en una máquina nueva (usuario `gerar`; las sesiones anteriores corrían en `jesus`), se verificó cero regresión con la suite completa de autotests, y Gerardo hizo el PRIMER click humano sobre la UI: modo single con foto real de trabajo mostró exactamente el comportamiento honesto diseñado en Sesión II. No se tocó ni una línea de código del pipeline.**
