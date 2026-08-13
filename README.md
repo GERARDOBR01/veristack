@@ -52,15 +52,15 @@ La parte que importa no es el camino feliz, es lo que pasa cuando falta informac
 ```mermaid
 flowchart TD
     C(["criterio"]) --> M{"¿es regla dura?"}
-    M -- "sí" --> G["el código resuelve el veredicto"]
-    M -- "no" --> E{"¿hay evidencia en el knowledge?"}
-    E -- "no" --> N["NO_CALIFICA · confianza ALTA"]
-    E -- "sí" --> K{"¿confianza del código?"}
-    K -- "ALTA" --> D["el código decide · fuente CODIGO"]
-    K -- "MEDIA / BAJA" --> P["se delega al modelo"]
-    P --> R{"¿respuesta válida del modelo?"}
-    R -- "no" --> N2["NO_CALIFICA · degradación declarada"]
-    R -- "sí" --> I["el modelo interpreta · fuente MODELO"]
+    M -- "sí" --> G["resuelve el código"]
+    M -- "no" --> E{"¿hay evidencia?"}
+    E -- "no" --> N["NO_CALIFICA"]
+    E -- "sí" --> K{"¿confianza alta?"}
+    K -- "sí" --> D["decide el código"]
+    K -- "no" --> P["se delega al modelo"]
+    P --> R{"¿respuesta válida?"}
+    R -- "no" --> N2["NO_CALIFICA"]
+    R -- "sí" --> I["interpreta el modelo"]
 
     classDef grave fill:#E5484D,stroke:#E5484D,color:#fff;
     classDef nc fill:#7C8896,stroke:#7C8896,color:#fff;
