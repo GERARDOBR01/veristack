@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="330" viewBox="0 0 1280 330" role="img" aria-label="Pipeline determinista de Veristack: 4 módulos de código y un único paso de modelo">
+  <defs>
+    <style>
+      .t   { font-family: Consolas,'SF Mono',Menlo,monospace; }
+      .s   { font-family: 'Segoe UI',Helvetica,Arial,sans-serif; }
+    </style>
+  </defs>
+
+  <rect width="1280" height="330" rx="14" fill="#0D1117" stroke="#21262D"/>
+
+  <text class="t" x="28" y="40" font-size="13" fill="#6E7681" letter-spacing="2">
+    PIPELINE DETERMINISTA · ORDEN FIJO · EL MODELO ENTRA EN UN SOLO PASO
+  </text>
+
+  <!-- brackets: qué resuelve el código, qué toca el modelo -->
+  <path d="M208 88 V80 H972 V88" fill="none" stroke="#1F6F47" stroke-width="1.5"/>
+  <text class="t" x="590" y="72" text-anchor="middle" font-size="12" fill="#30A46C" letter-spacing="2.4">CÓDIGO — DECIDE</text>
+
+  <path d="M992 88 V80 H1168 V88" fill="none" stroke="#8A5D06" stroke-width="1.5"/>
+  <text class="t" x="1080" y="72" text-anchor="middle" font-size="12" fill="#F5A524" letter-spacing="2.4">MODELO</text>
+
+  <!-- entrada -->
+  <rect x="28" y="104" width="150" height="92" rx="10" fill="#010409" stroke="#30363D" stroke-dasharray="4 4"/>
+  <text class="s" x="103" y="142" text-anchor="middle" font-size="15" fill="#C9D1D9">foto de evidencia</text>
+  <text class="s" x="103" y="166" text-anchor="middle" font-size="15" fill="#C9D1D9">+ mecánica</text>
+
+  <!-- conectores -->
+  <g stroke="#30363D" stroke-width="2" fill="none" stroke-linecap="round">
+    <path d="M182 150 h18"/><path d="M194 144 l6 6 -6 6"/>
+    <path d="M388 150 h12"/><path d="M390 144 l6 6 -6 6"/>
+    <path d="M584 150 h12"/><path d="M586 144 l6 6 -6 6"/>
+    <path d="M780 150 h12"/><path d="M782 144 l6 6 -6 6"/>
+    <path d="M976 150 h12"/><path d="M978 144 l6 6 -6 6"/>
+  </g>
+
+  <!-- nodos -->
+  <g>
+    <rect x="208" y="104" width="176" height="92" rx="10" fill="#0F1620" stroke="#21262D"/>
+    <rect x="208" y="104" width="176" height="92" rx="10" fill="none" stroke="#30A46C" stroke-width="2" stroke-opacity="0">
+      <animate attributeName="stroke-opacity" values="0;0;1;0;0" keyTimes="0;0.01;0.07;0.15;1" dur="5s" repeatCount="indefinite"/>
+    </rect>
+    <text class="t" x="296" y="140" text-anchor="middle" font-size="14" fill="#E6EDF3">[0] photo_analyzer</text>
+    <text class="s" x="296" y="166" text-anchor="middle" font-size="12" fill="#6E7681">brillo · nitidez · tipo de foto</text>
+  </g>
+
+  <g>
+    <rect x="404" y="104" width="176" height="92" rx="10" fill="#0F1620" stroke="#21262D"/>
+    <rect x="404" y="104" width="176" height="92" rx="10" fill="none" stroke="#30A46C" stroke-width="2" stroke-opacity="0">
+      <animate attributeName="stroke-opacity" values="0;0;1;0;0" keyTimes="0;0.16;0.22;0.30;1" dur="5s" repeatCount="indefinite"/>
+    </rect>
+    <text class="t" x="492" y="140" text-anchor="middle" font-size="14" fill="#E6EDF3">[1] mandatory_engine</text>
+    <text class="s" x="492" y="166" text-anchor="middle" font-size="12" fill="#6E7681">reglas duras · bloquea</text>
+    <rect x="404" y="104" width="4" height="92" rx="2" fill="#E5484D"/>
+  </g>
+
+  <g>
+    <rect x="600" y="104" width="176" height="92" rx="10" fill="#0F1620" stroke="#21262D"/>
+    <rect x="600" y="104" width="176" height="92" rx="10" fill="none" stroke="#30A46C" stroke-width="2" stroke-opacity="0">
+      <animate attributeName="stroke-opacity" values="0;0;1;0;0" keyTimes="0;0.32;0.38;0.46;1" dur="5s" repeatCount="indefinite"/>
+    </rect>
+    <text class="t" x="688" y="140" text-anchor="middle" font-size="14" fill="#E6EDF3">[2] retrieval_engine</text>
+    <text class="s" x="688" y="166" text-anchor="middle" font-size="12" fill="#6E7681">evidencia léxica · sin API</text>
+  </g>
+
+  <g>
+    <rect x="796" y="104" width="176" height="92" rx="10" fill="#0F1620" stroke="#21262D"/>
+    <rect x="796" y="104" width="176" height="92" rx="10" fill="none" stroke="#30A46C" stroke-width="2" stroke-opacity="0">
+      <animate attributeName="stroke-opacity" values="0;0;1;0;0" keyTimes="0;0.48;0.54;0.62;1" dur="5s" repeatCount="indefinite"/>
+    </rect>
+    <text class="t" x="884" y="140" text-anchor="middle" font-size="14" fill="#E6EDF3">[3] confidence_engine</text>
+    <text class="s" x="884" y="166" text-anchor="middle" font-size="12" fill="#6E7681">qué puede ver el modelo</text>
+  </g>
+
+  <g>
+    <rect x="992" y="104" width="176" height="92" rx="10" fill="#17130A" stroke="#8A5D06" stroke-dasharray="5 4"/>
+    <rect x="992" y="104" width="176" height="92" rx="10" fill="none" stroke="#F5A524" stroke-width="2" stroke-opacity="0">
+      <animate attributeName="stroke-opacity" values="0;0;1;0;0" keyTimes="0;0.64;0.70;0.78;1" dur="5s" repeatCount="indefinite"/>
+    </rect>
+    <text class="t" x="1080" y="140" text-anchor="middle" font-size="14" fill="#F5A524">[4] modelo</text>
+    <text class="s" x="1080" y="166" text-anchor="middle" font-size="12" fill="#9E7B2E">solo criterios delegados</text>
+  </g>
+
+  <!-- bajada al resultado -->
+  <path d="M1080 200 v40" fill="none" stroke="#30363D" stroke-width="2"/>
+  <path d="M1074 240 l6 8 6 -8" fill="none" stroke="#30363D" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- resultado -->
+  <rect x="28" y="252" width="1224" height="56" rx="10" fill="#0B1A13" stroke="#1F6F47"/>
+  <rect x="28" y="252" width="1224" height="56" rx="10" fill="none" stroke="#30A46C" stroke-width="2" stroke-opacity="0">
+    <animate attributeName="stroke-opacity" values="0;0;1;0.35;0" keyTimes="0;0.80;0.86;0.94;1" dur="5s" repeatCount="indefinite"/>
+  </rect>
+  <text class="t" x="52" y="286" font-size="15" fill="#30A46C" font-weight="bold">ResultadoFinal</text>
+  <text class="s" x="176" y="286" font-size="14" fill="#8B949E">cada criterio con</text>
+  <text class="t" x="304" y="286" font-size="14" fill="#E5484D">severidad</text>
+  <text class="t" x="392" y="286" font-size="14" fill="#6E7681">·</text>
+  <text class="t" x="408" y="286" font-size="14" fill="#F5A524">confianza</text>
+  <text class="t" x="496" y="286" font-size="14" fill="#6E7681">·</text>
+  <text class="t" x="512" y="286" font-size="14" fill="#C9D1D9">fuente</text>
+  <text class="t" x="572" y="286" font-size="14" fill="#6E7681">·</text>
+  <text class="t" x="588" y="286" font-size="14" fill="#C9D1D9">razón</text>
+  <text class="s" x="1228" y="286" text-anchor="end" font-size="13" fill="#6E7681">sin evidencia suficiente → NO_CALIFICA, nunca un CUMPLE inventado</text>
+</svg>

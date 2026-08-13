@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="200" viewBox="0 0 1280 200" role="img" aria-label="VERISTACK — Foto de evidencia + mecánica de la tarea → veredicto con criterio trazable.">
+  <defs>
+    <pattern id="gv" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M28 0H0v28" fill="none" stroke="#161B22" stroke-width="1"/>
+    </pattern>
+    <linearGradient id="fv" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0D1117" stop-opacity="0"/>
+      <stop offset="72%" stop-color="#0D1117" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#0D1117" stop-opacity="1"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="200" rx="12" fill="#0D1117"/>
+  <rect width="1280" height="200" rx="12" fill="url(#gv)"/>
+  <rect width="1280" height="200" rx="12" fill="url(#fv)"/>
+
+  <rect x="56" y="46"  width="5" height="26" rx="2.5" fill="#E5484D"/>
+  <rect x="56" y="78"  width="5" height="26" rx="2.5" fill="#F5A524"/>
+  <rect x="56" y="110" width="5" height="26" rx="2.5" fill="#7C8896"/>
+  <rect x="56" y="142" width="5" height="26" rx="2.5" fill="#30A46C"/>
+
+  <text x="90" y="88" font-family="'Segoe UI',Helvetica,Arial,sans-serif" font-size="40" font-weight="700" fill="#E6EDF3" letter-spacing="1">VERISTACK</text>
+  <text x="92" y="124" font-family="'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" fill="#8B949E">Foto de evidencia + mecánica de la tarea → veredicto con criterio trazable.</text>
+  <text x="92" y="158" font-family="Consolas,'SF Mono',Menlo,monospace" font-size="12.5" fill="#4A525C" letter-spacing="2.4">PYTHON · PIPELINE DETERMINISTA · STREAMLIT · GEMINI (UN SOLO PASO)</text>
+  <text x="1224" y="158" text-anchor="end" font-family="Consolas,'SF Mono',Menlo,monospace" font-size="12.5" fill="#30A46C" letter-spacing="2">EL CÓDIGO DECIDE · EL MODELO INTERPRETA</text>
+</svg>

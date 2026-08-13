@@ -149,8 +149,9 @@ def _tabla_criterios(df) -> None:
 # PÁGINA
 # ──────────────────────────────────────────────────────────────
 
-st.set_page_config(page_title="Verificador Visual", layout="wide")
-st.title("Verificador Visual — visual-lv")
+st.set_page_config(page_title="Veristack — Verificador Visual", layout="wide")
+st.title("Veristack")
+st.caption("Verificador de cumplimiento visual — el código decide, el modelo interpreta.")
 
 # ── SIDEBAR: inputs ───────────────────────────────────────────
 with st.sidebar:
@@ -196,7 +197,7 @@ def _banner_parcial(es_parcial: bool, causa: str | None) -> None:
     """Fix del gap de honestidad (schema 1.1): una corrida parcial se dice
     ARRIBA del veredicto, nunca se presenta como completa."""
     if es_parcial:
-        st.error(f"⚠️ EVALUACIÓN PARCIAL — {causa or 'ver resumen'}. "
+        st.error(f"EVALUACIÓN PARCIAL — {causa or 'ver resumen'}. "
                  "El resultado mezcla veredictos reales con NO_CALIFICA de "
                  "infraestructura y NO debe leerse como una corrida completa.",
                  icon="⚠️")
