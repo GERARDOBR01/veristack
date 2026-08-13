@@ -43,3 +43,16 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
+
+# Datos privados de clientes — jamás al repo
+datos-*/
+*.pdf
+*.xlsx
+*.csv
+*.bak-*
+*.bak
+*.log
+
+# Entornos anidados
+motor2/venv/
+**/venv/

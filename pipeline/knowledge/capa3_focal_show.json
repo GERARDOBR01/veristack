@@ -1,0 +1,75 @@
+{
+  "version": "1.0",
+  "tipo_foto": "focal_show",
+  "descripcion": "Criterios de focal — knowledge de DEMO (cliente ficticio Mercadep).",
+  "criterios": [
+    {
+      "id": "beneficio_etapa_incorrecto",
+      "aliases": [
+        "grafico de otra etapa",
+        "promocion equivocada",
+        "descuento que no es"
+      ],
+      "texto": "El gráfico muestra un beneficio de etapa distinta a la activa (el cliente puede exigir un descuento que no aplica).",
+      "peso": "EXCEPTION",
+      "aplica_a": [
+        "focal_show"
+      ]
+    },
+    {
+      "id": "producto_sin_descuento",
+      "aliases": [
+        "ropa de linea",
+        "mercancia sin promo",
+        "producto no participa"
+      ],
+      "texto": "Producto exhibido en el focal sin descuento activo de la campaña (comunicación engañosa hacia el cliente).",
+      "peso": "EXCEPTION",
+      "aplica_a": [
+        "focal_show"
+      ]
+    },
+    {
+      "id": "mezcla_descuentos",
+      "aliases": [
+        "descuentos revueltos",
+        "varias promos",
+        "precios mezclados"
+      ],
+      "texto": "Descuentos distintos mezclados en el mismo focal: el cliente no puede saber qué precio aplica.",
+      "peso": "EXCEPTION",
+      "aplica_a": [
+        "focal_show"
+      ]
+    },
+    {
+      "id": "etiqueta_ausente_maniqui",
+      "aliases": [
+        "maniqui sin precio",
+        "falta etiqueta",
+        "sin senalizacion"
+      ],
+      "texto": "Etiqueta de precio ausente en maniquí cuando la mecánica de campaña la exige.",
+      "peso": "EXCEPTION",
+      "aplica_a": [
+        "focal_show"
+      ]
+    },
+    {
+      "id": "campana_anterior_visible",
+      "aliases": [
+        "grafico viejo",
+        "material de evento pasado",
+        "publicidad caduca"
+      ],
+      "texto": "Material gráfico de una campaña anterior sigue visible (comunica una vigencia falsa).",
+      "peso": "EXCEPTION",
+      "aplica_a": [
+        "focal_show"
+      ]
+    }
+  ],
+  "schema_version": "1.0",
+  "fecha_actualizacion": "2026-08-13",
+  "hash_contenido": "demo-mercadep-capa3-v1"
+}

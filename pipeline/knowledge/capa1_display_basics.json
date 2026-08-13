@@ -1,0 +1,75 @@
+{
+  "version": "1.0",
+  "descripcion": "Básicos de display permanentes — knowledge de DEMO (cliente ficticio Mercadep). Sin datos reales de ningún cliente.",
+  "criterios": [
+    {
+      "id": "limpieza",
+      "aliases": [
+        "mueble limpio",
+        "sin polvo",
+        "mercancia limpia"
+      ],
+      "texto": "Mobiliario y mercancía deben permanecer libres de polvo y residuos; la limpieza del punto de exhibición es condición permanente.",
+      "peso": "MANDATORY",
+      "aplica_a": null
+    },
+    {
+      "id": "alineacion",
+      "aliases": [
+        "pasillo libre",
+        "mueble derecho",
+        "sin estorbar"
+      ],
+      "texto": "El mobiliario se distribuye sobre líneas horizontales o verticales que mantengan los pasillos libres y faciliten la circulación del cliente.",
+      "peso": "MANDATORY",
+      "aplica_a": null
+    },
+    {
+      "id": "planchado",
+      "aliases": [
+        "ropa lisa",
+        "sin arrugas",
+        "bien vaporizada"
+      ],
+      "texto": "Toda prenda exhibida debe presentarse planchada, con prioridad en perímetros y frentes de departamento.",
+      "peso": "MANDATORY",
+      "aplica_a": null
+    },
+    {
+      "id": "colorizacion",
+      "aliases": [
+        "acomodo por color",
+        "degradado",
+        "tonos juntos"
+      ],
+      "texto": "La mercancía se ordena siguiendo una guía de color: cálidos, fríos y neutros agrupados.",
+      "peso": "RECOMMENDATION",
+      "aplica_a": null
+    },
+    {
+      "id": "triangulacion",
+      "aliases": [
+        "efecto piramide",
+        "focal en triangulo",
+        "alturas diferentes"
+      ],
+      "texto": "Las composiciones focales buscan formas triangulares con alturas distintas para dirigir la mirada.",
+      "peso": "RECOMMENDATION",
+      "aplica_a": null
+    },
+    {
+      "id": "surtido",
+      "aliases": [
+        "mueble lleno",
+        "resurtido",
+        "sin huecos"
+      ],
+      "texto": "El mueble debe mantenerse abastecido: lo que no se ve no se vende.",
+      "peso": "MANDATORY",
+      "aplica_a": null
+    }
+  ],
+  "schema_version": "1.0",
+  "fecha_actualizacion": "2026-08-13",
+  "hash_contenido": "demo-mercadep-capa1-v1"
+}

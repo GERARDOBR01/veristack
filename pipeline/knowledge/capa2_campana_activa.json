@@ -1,0 +1,185 @@
+{
+  "schema_version": "1.1",
+  "etapa": "gran_demo_pv2026",
+  "nombre_campana": "gran_demo_pv2026",
+  "vigencia_inicio": "2026-08-01",
+  "vigencia_fin": "2026-12-31",
+  "fecha_actualizacion": "2026-08-13",
+  "hash_contenido": "demo-mercadep-capa2-v1",
+  "meta": {
+    "origen": "capa de DEMO — criterios sintéticos del cliente ficticio Mercadep",
+    "manual": "manual_campana_demo_mercadep",
+    "sellado": "2026-08-13T00:00:00",
+    "nota": "Knowledge 100% sintético para demostración pública. Ningún criterio proviene de un manual real. El sistema opera en producción con knowledge privado del cliente, mismo esquema."
+  },
+  "criterios": [
+    {
+      "texto": "Colocar el gráfico principal de campaña en la cabecera de cada torre, sin obstruir la mercancía.",
+      "peso": "MANDATORY",
+      "severidad": "GRAVE",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 1,
+      "seccion_aplicable": null,
+      "etapa_aplicable": "E1",
+      "fuente_pagina": "demo",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "grafico_cabecera_torre",
+      "aliases": [
+        "grafico en torre",
+        "cabecera de campana"
+      ],
+      "aplica_a": [
+        "torre"
+      ],
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Primera etapa: comunicación 40% genérica y 60% de beneficio en barras de precio.",
+      "peso": "MANDATORY",
+      "severidad": "GRAVE",
+      "condicion_libre": "BARRAS",
+      "referencia_no_resuelta": false,
+      "pagina_origen": 1,
+      "seccion_aplicable": null,
+      "etapa_aplicable": "E1",
+      "fuente_pagina": "demo",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "barras_etapa1_40_60",
+      "aliases": [
+        "barras primera etapa",
+        "comunicacion mixta"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Segunda etapa: comunicación 100% de beneficio en barras de precio.",
+      "peso": "MANDATORY",
+      "severidad": "GRAVE",
+      "condicion_libre": "BARRAS",
+      "referencia_no_resuelta": false,
+      "pagina_origen": 1,
+      "seccion_aplicable": null,
+      "etapa_aplicable": "E2",
+      "fuente_pagina": "demo",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "barras_etapa2_100",
+      "aliases": [
+        "barras segunda etapa",
+        "beneficio total"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Los maniquíes de focal llevan etiqueta de precio visible cuando la mecánica de la campaña lo exige.",
+      "peso": "MANDATORY",
+      "severidad": "GRAVE",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 2,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "demo",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "etiqueta_precio_maniqui",
+      "aliases": [
+        "maniqui con precio",
+        "etiqueta visible"
+      ],
+      "aplica_a": [
+        "focal_show"
+      ],
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Retirar todo material gráfico de campañas anteriores antes de montar la vigente.",
+      "peso": "MANDATORY",
+      "severidad": "GRAVE",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 2,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "demo",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "retiro_material_anterior",
+      "aliases": [
+        "grafico viejo fuera",
+        "sin campana pasada"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Las mesas de exhibición concentran el producto participante de la campaña; no mezclar línea regular en la superficie principal.",
+      "peso": "RECOMMENDATION",
+      "severidad": "OBSERVACION",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 3,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "demo",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "mesa_solo_participante",
+      "aliases": [
+        "mesa de campana",
+        "sin linea regular"
+      ],
+      "aplica_a": [
+        "mesa_show"
+      ],
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "El frente de cada góndola presenta el beneficio dominante de la etapa activa.",
+      "peso": "RECOMMENDATION",
+      "severidad": "OBSERVACION",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 3,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "demo",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "gondola_beneficio_dominante",
+      "aliases": [
+        "frente de gondola",
+        "beneficio visible"
+      ],
+      "aplica_a": [
+        "gondola"
+      ],
+      "revisado_por_gerardo": true
+    },
+    {
+      "texto": "Los precios tachados solo se comunican cuando el sistema de la campaña lo autoriza para esa etapa.",
+      "peso": "EXCEPTION",
+      "severidad": "GRAVE",
+      "condicion_libre": null,
+      "referencia_no_resuelta": false,
+      "pagina_origen": 4,
+      "seccion_aplicable": null,
+      "etapa_aplicable": null,
+      "fuente_pagina": "demo",
+      "grounding": "exact",
+      "posible_herencia_fewshot": false,
+      "id": "precio_tachado_autorizado",
+      "aliases": [
+        "tachado sin autorizar",
+        "precio comparativo"
+      ],
+      "aplica_a": null,
+      "revisado_por_gerardo": true
+    }
+  ]
+}
