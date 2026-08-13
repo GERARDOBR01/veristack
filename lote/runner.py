@@ -436,6 +436,11 @@ def autotest() -> int:
 
 
 if __name__ == "__main__":
+    # Windows: la consola cp1252 truena al imprimir → en los reportes de autotest.
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
     if len(sys.argv) > 1 and sys.argv[1] == "autotest":
         sys.exit(1 if autotest() else 0)
     print("Uso: python -m lote.runner autotest\n"

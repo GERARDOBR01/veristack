@@ -4,7 +4,8 @@
   <img src="https://img.shields.io/badge/Python-3.13-1F2328?style=for-the-badge&logo=python&logoColor=30A46C" alt="Python">
   <img src="https://img.shields.io/badge/Streamlit-UI-1F2328?style=for-the-badge&logo=streamlit&logoColor=E5484D" alt="Streamlit">
   <img src="https://img.shields.io/badge/Gemini-un_solo_paso-1F2328?style=for-the-badge&logo=googlegemini&logoColor=F5A524" alt="Gemini">
-  <img src="https://img.shields.io/badge/autotests-14%2F14_sin_gastar_API-30A46C?style=for-the-badge" alt="Autotests 14/14">
+  <a href="https://github.com/GERARDOBR01/veristack/actions/workflows/pruebas.yml"><img src="https://img.shields.io/github/actions/workflow/status/GERARDOBR01/veristack/pruebas.yml?style=for-the-badge&label=suite&labelColor=1F2328&color=30A46C" alt="Estado de la suite"></a>
+  <img src="https://img.shields.io/badge/licencia-MIT-1F2328?style=for-the-badge" alt="Licencia MIT">
   <img src="https://img.shields.io/badge/knowledge_pública-100%25_sintética-7C8896?style=for-the-badge" alt="Knowledge sintética">
 </p>
 
@@ -100,8 +101,10 @@ Las decisiones más importantes del sistema son sobre lo que **no** sabe:
 - **Knowledge corrupto → criterio visible `conocimiento_no_disponible`.** Una capa muerta
   nunca produce un CUMPLE con cero criterios.
 
-Cada uno de estos casos tiene autotest propio. El stub del modelo permite correr la suite
-completa sin gastar una sola llamada de API.
+Cada uno de estos casos tiene autotest propio. `python pruebas.py` corre los **10 bloques**
+de la suite en ~2 segundos y **sin gastar una sola llamada de API** — el modelo está
+stubbeado y el knowledge es la capa de demo. Por eso la suite también corre en CI en cada
+push: una prueba que cuesta dinero es una prueba que se deja de correr.
 
 ### Se ve así cuando pasa
 
@@ -127,6 +130,9 @@ cumplimiento del lote.
 
 ```bash
 pip install -r requirements.txt
+
+# la suite completa — 10 bloques, cero llamadas de API
+python pruebas.py
 
 # UI (una foto, o lote con multi-upload)
 streamlit run app.py

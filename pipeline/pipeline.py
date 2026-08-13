@@ -2157,6 +2157,11 @@ def ejecutar(
 # ──────────────────────────────────────────────
 
 if __name__ == "__main__":
+    # Windows: la consola cp1252 truena al imprimir → en los reportes de autotest.
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
 
     # Logging visible solo al correr el módulo directamente. Como librería,
     # el NullHandler mantiene el silencio hasta que la app configure logging.

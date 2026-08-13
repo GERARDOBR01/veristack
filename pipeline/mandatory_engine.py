@@ -522,6 +522,12 @@ def _generar_resumen(veredicto: Severidad, resultados: list[ResultadoCriterio], 
 # ──────────────────────────────────────────────
 
 if __name__ == "__main__":
+    # Windows: la consola cp1252 truena al imprimir → en los reportes de autotest.
+    import sys
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
     config_farma = ConfigEngine(brillo_minimo=50.0, nitidez_minima=40.0)
 
     casos = [

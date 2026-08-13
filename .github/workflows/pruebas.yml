@@ -1,0 +1,27 @@
+name: pruebas
+
+# La suite completa corre sin API key: el modelo está stubbeado y el knowledge
+# es la capa sintética de demo. Por eso puede correr en cada push, gratis.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  suite:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+
+      - name: Suite completa de autotests
+        run: python pruebas.py

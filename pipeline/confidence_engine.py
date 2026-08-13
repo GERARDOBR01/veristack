@@ -305,6 +305,12 @@ def _generar_resumen(resultados: list[ResultadoConfianza]) -> str:
 # ──────────────────────────────────────────────
 
 if __name__ == "__main__":
+    # Windows: la consola cp1252 truena al imprimir → en los reportes de autotest.
+    import sys
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
     from mandatory_engine import Fuente, ResultadoCriterio
 
     # ── Builders de evidencia ────────────────────────────────────
