@@ -25,7 +25,7 @@ ENV/
 pip-log.txt
 pip-delete-this-directory.txt
 
-# Imágenes — nunca al repo
+# Imágenes — nunca al repo (una foto de evidencia es dato del cliente)
 *.jpg
 *.jpeg
 *.png
@@ -33,6 +33,11 @@ pip-delete-this-directory.txt
 *.bmp
 *.tiff
 *.webp
+
+# Única excepción: las capturas de documentación del README. Son corridas sobre
+# fotos sintéticas del cliente ficticio Mercadep, generadas por código. Antes de
+# agregar una imagen aquí: si salió de la cámara de alguien, no va.
+!assets/*.png
 
 # OS
 .DS_Store
