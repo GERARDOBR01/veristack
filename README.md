@@ -101,10 +101,26 @@ Las decisiones más importantes del sistema son sobre lo que **no** sabe:
 - **Knowledge corrupto → criterio visible `conocimiento_no_disponible`.** Una capa muerta
   nunca produce un CUMPLE con cero criterios.
 
-Cada uno de estos casos tiene autotest propio. `python pruebas.py` corre los **10 bloques**
+Cada uno de estos casos tiene autotest propio. `python pruebas.py` corre los **11 bloques**
 de la suite en ~2 segundos y **sin gastar una sola llamada de API** — el modelo está
 stubbeado y el knowledge es la capa de demo. Por eso la suite también corre en CI en cada
 push: una prueba que cuesta dinero es una prueba que se deja de correr.
+
+### Qué tan bien acierta
+
+No basta con declarar la arquitectura: el motor se mide contra un **ground truth sintético**
+de 12 imágenes construidas por código, cada una con un defecto inyectado a propósito — así
+se sabe con certeza qué lleva cada foto. `benchmark/correr.py` saca la **matriz de confusión
+por regla** y publica los casos donde falla en **[benchmark/RESULTADOS.md](benchmark/RESULTADOS.md)**.
+
+Hoy: **11/12 casos correctos**, y el que falla está documentado con su causa — el umbral de
+brillo declarado (40) no corresponde a la luminancia media que uno esperaría, así que una foto
+razonablemente iluminada se rechaza. Enseñar ese caso vale más que esconderlo: es el mismo
+criterio que el sistema aplica a sus propios veredictos.
+
+```bash
+python benchmark/correr.py --escribir
+```
 
 ### Se ve así cuando pasa
 
@@ -131,7 +147,7 @@ cumplimiento del lote.
 ```bash
 pip install -r requirements.txt
 
-# la suite completa — 10 bloques, cero llamadas de API
+# la suite completa — 11 bloques (incluye el benchmark), cero llamadas de API
 python pruebas.py
 
 # UI (una foto, o lote con multi-upload)
@@ -158,6 +174,7 @@ pipeline/
   confidence_engine.py    calibración de confianza y delegación
   knowledge/              capas 1/2/3 — sintéticas (demo Mercadep)
 core/photo_analyzer.py    metadata objetiva de la imagen
+benchmark/                ground truth sintético + matriz de confusión
 motor1/                   arneses de benchmark y stress testing
 motor2/                   extractor de manuales PDF → criterios validados
 ```

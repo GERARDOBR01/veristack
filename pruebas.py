@@ -27,6 +27,7 @@ SUITE = [
     ("gate gráfico ↔ etapa (14 casos)",      [sys.executable, "pipeline/autotest_grafico_etapa.py"]),
     ("lote — runner",                        [sys.executable, "-m", "lote.runner", "autotest"]),
     ("lote — reporte HTML/Excel/CSV",        [sys.executable, "-m", "lote.reporte", "autotest"]),
+    ("benchmark — reglas duras vs. verdad",  [sys.executable, "benchmark/correr.py"]),
 ]
 
 
