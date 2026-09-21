@@ -13,6 +13,11 @@
 visual de exhibición, subes una foto y el sistema dice qué falló y por qué — y si no hay
 evidencia suficiente para juzgar, lo declara en vez de adivinar.
 
+**De dónde salió:** soy promotor visual en Liverpool (Guadalajara), responsable de que las
+exhibiciones cumplan el manual de campaña. La validación de cumplimiento se hace a puro
+criterio y no queda registrada — Veristack nació de ese problema, visto todos los días desde
+el piso. Más contexto en [mi perfil](https://github.com/GERARDOBR01).
+
 **Motor de verificación de cumplimiento visual para retail.** Recibe una foto de evidencia
 y la mecánica de la tarea, la contrasta contra el estándar operativo del cliente y emite
 una calificación con criterio trazable.
