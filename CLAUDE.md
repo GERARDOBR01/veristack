@@ -46,6 +46,5 @@ veristack/
 │   └── knowledge/          ← capas 1/2/3 SINTÉTICAS (demo Mercadep)
 ├── motor1/                 ← arneses de benchmark y stress
 ├── motor2/                 ← extractor de manuales PDF → criterios
-├── core/photo_analyzer.py
-└── prompts/
+└── core/photo_analyzer.py
 ```

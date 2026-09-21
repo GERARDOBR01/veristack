@@ -9,6 +9,10 @@
   <img src="https://img.shields.io/badge/knowledge_pública-100%25_sintética-7C8896?style=for-the-badge" alt="Knowledge sintética">
 </p>
 
+**En una frase:** en vez de que alguien inspeccione a ojo si una tienda cumplió el criterio
+visual de exhibición, subes una foto y el sistema dice qué falló y por qué — y si no hay
+evidencia suficiente para juzgar, lo declara en vez de adivinar.
+
 **Motor de verificación de cumplimiento visual para retail.** Recibe una foto de evidencia
 y la mecánica de la tarea, la contrasta contra el estándar operativo del cliente y emite
 una calificación con criterio trazable.
