@@ -1,4 +1,4 @@
-<img src="assets/banner.svg" alt="Veristack — foto de evidencia + mecánica de la tarea → veredicto con criterio trazable" width="100%">
+<img src="assets/banner-2026.png" alt="Veristack — foto de evidencia + mecánica de la tarea → veredicto con criterio trazable" width="100%">
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.13-1F2328?style=for-the-badge&logo=python&logoColor=30A46C" alt="Python">
