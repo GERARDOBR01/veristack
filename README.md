@@ -179,6 +179,15 @@ motor1/                   arneses de benchmark y stress testing
 motor2/                   extractor de manuales PDF → criterios validados
 ```
 
+## Relación con Asistente de Piso
+
+Veristack y [**Asistente de Piso**](https://github.com/GERARDOBR01/Asistente-de-piso) son las dos
+mitades del mismo problema: uno ayuda a **montar bien desde el principio** (consulta el manual
+desde el celular, cita la página exacta y declara su certeza) y este **verifica el montaje ya
+hecho** con una foto y un criterio trazable. Comparten la misma columna vertebral: el código
+decide lo decidible, el modelo interpreta solo lo delegado, y sin evidencia suficiente el
+sistema lo declara en vez de adivinar. [Verlo en 37 segundos ▶](https://github.com/GERARDOBR01/Asistente-de-piso/blob/main/docs/video-linkedin.mp4)
+
 ## Política de datos
 
 El conocimiento operativo real de un cliente (manuales, criterios, evidencias, resultados
