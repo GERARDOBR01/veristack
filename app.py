@@ -153,10 +153,24 @@ st.set_page_config(page_title="Veristack — Verificador Visual", layout="wide")
 st.title("Veristack")
 st.caption("Verificador de cumplimiento visual — el código decide, el modelo interpreta.")
 
-# ── SIDEBAR: inputs ───────────────────────────────────────────
-with st.sidebar:
-    st.header("Inputs")
+# ── EJEMPLOS: demo de un toque, sin subir nada ────────────────
+# Imágenes del ground truth SINTÉTICO del benchmark (benchmark/casos.py), así
+# la demo corre en celular o en la nube sin fotos reales ni API key.
+_EJEMPLOS = {
+    "Foto oscura":  "oscura_sin_luz",
+    "Foto movida":  "borrosa_movida",
+    "Mueble vacío": "vacio_mueble_pelon",
+}
 
+st.subheader("Probar con un ejemplo")
+ejemplo = None
+for _col, _etiqueta in zip(st.columns(len(_EJEMPLOS)), _EJEMPLOS):
+    if _col.button(_etiqueta, width="stretch"):
+        ejemplo = _EJEMPLOS[_etiqueta]
+st.caption("Imágenes sintéticas generadas por código, con un defecto inyectado a propósito.")
+
+# ── INPUTS: en el área principal para que se vean en celular ──
+with st.expander("Verificar tus propias fotos"):
     fotos_subidas = st.file_uploader(
         "Subir foto(s) — varias fotos activan el modo lote",
         type=["jpg", "jpeg", "png", "webp"],
@@ -178,17 +192,20 @@ with st.sidebar:
 
     verificar = st.button("Verificar", type="primary", width="stretch")
 
-    st.divider()
     if os.environ.get("GEMINI_API_KEY"):
         st.caption("GEMINI_API_KEY: detectada ✅")
     else:
         st.caption("GEMINI_API_KEY: ausente — los criterios delegados "
                    "conservan el veredicto del código.")
 
-# ── ÁREA PRINCIPAL: output ────────────────────────────────────
-if not verificar:
-    st.info("Configura los inputs en la barra lateral y presiona **Verificar**.")
+# ── RESULTADO ─────────────────────────────────────────────────
+if ejemplo:
+    fotos_subidas = []   # un ejemplo manda sobre lo que haya en el uploader
+elif not verificar:
+    st.info("Toca un ejemplo, o abre **Verificar tus propias fotos**.")
     st.stop()
+
+st.divider()
 
 _tipo_efectivo = None if tipo_foto == "auto" else tipo_foto
 
@@ -311,12 +328,24 @@ foto = fotos_subidas[0] if fotos_subidas else None
 imagen_path = None
 tmp_path    = None
 try:
-    if foto is not None:
+    if ejemplo:
+        if str(ROOT / "benchmark") not in sys.path:
+            sys.path.insert(0, str(ROOT / "benchmark"))
+        from casos import CASOS                           # noqa: E402
+        generar = next(g for (cid, g, _, _) in CASOS if cid == ejemplo)
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".png") as tmp:
+            generar().save(tmp, format="PNG")
+            tmp_path = tmp.name
+        imagen_path = tmp_path
+    elif foto is not None:
         sufijo = Path(foto.name).suffix or ".jpg"
         with tempfile.NamedTemporaryFile(delete=False, suffix=sufijo) as tmp:
             tmp.write(foto.getbuffer())
             tmp_path = tmp.name
         imagen_path = tmp_path
+
+    if imagen_path:
+        st.image(imagen_path, caption="Foto evaluada", width="stretch")
 
     with st.spinner("Ejecutando pipeline…"):
         resultado = pipeline_mod.ejecutar(
