@@ -18,6 +18,7 @@ RAIZ = Path(__file__).resolve().parent
 # (nombre legible, comando). El orden va de lo más básico a lo más integrado.
 SUITE = [
     ("photo_analyzer — metadata objetiva",   [sys.executable, "core/photo_analyzer.py", "autotest"]),
+    ("mapa de evidencia — lo medido, pintado", [sys.executable, "core/mapa_evidencia.py", "autotest"]),
     ("mandatory_engine — reglas duras",      [sys.executable, "pipeline/mandatory_engine.py"]),
     ("retrieval_engine — evidencia",         [sys.executable, "pipeline/retrieval_engine.py"]),
     ("confidence_engine — delegación",       [sys.executable, "pipeline/confidence_engine.py"]),
