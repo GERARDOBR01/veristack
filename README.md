@@ -145,6 +145,18 @@ pudo verificar — con su fuente y si estaba delegado o no.
   <img src="assets/ui-veredicto.png" alt="UI de Veristack: banner de evaluación parcial, veredicto global, métricas de código contra modelo y tabla de criterios con fuente" width="100%">
 </p>
 
+### Por qué salió ese veredicto: el mapa de evidencia
+
+Debajo del veredicto, la foto con lo que **el código** midió pintado encima, con las mismas
+funciones y los mismos umbrales que deciden el veredicto (`core/mapa_evidencia.py`): azul el
+espacio vacío, rojo lo quemado, ámbar lo que la sombra dejó sin detalle y verde las zonas con
+gráfico o texto. Si el veredicto dice «espacio vacío elevado», se ve dónde. Ninguna capa la
+dibuja un modelo, y el PNG se descarga para mandarlo con el reporte.
+
+<p align="center">
+  <img src="assets/mapa-evidencia.png" alt="Mapa de evidencia de dos casos sintéticos: un montaje completo con las zonas de gráfico marcadas en verde, y un mueble vacío con el muro marcado en azul como espacio vacío" width="100%">
+</p>
+
 ## Modo lote
 
 Una carpeta de fotos entra, sale un reporte HTML navegable + Excel. Cada foto con su
@@ -187,6 +199,7 @@ pipeline/
   confidence_engine.py    calibración de confianza y delegación
   knowledge/              capas 1/2/3 — sintéticas (demo Mercadep)
 core/photo_analyzer.py    metadata objetiva de la imagen
+core/mapa_evidencia.py    lo medido, pintado sobre la foto
 benchmark/                ground truth sintético + matriz de confusión
 motor1/                   arneses de benchmark y stress testing
 motor2/                   extractor de manuales PDF → criterios validados

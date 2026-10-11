@@ -50,6 +50,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 from lote import runner as lote_runner                # noqa: E402
 from lote import reporte as lote_reporte              # noqa: E402
+from core import mapa_evidencia                        # noqa: E402
 
 
 # ──────────────────────────────────────────────────────────────
@@ -327,6 +328,7 @@ foto = fotos_subidas[0] if fotos_subidas else None
 # Sin foto → imagen_path=None (el pipeline ya lo maneja).
 imagen_path = None
 tmp_path    = None
+mapa        = None   # (imagen, leyenda) del mapa de evidencia, si hubo foto
 try:
     if ejemplo:
         if str(ROOT / "benchmark") not in sys.path:
@@ -354,6 +356,13 @@ try:
             tipo_foto    = _tipo_efectivo,
             config       = _config_pipeline(etapa_activa),
         )
+    # El mapa se arma antes de borrar el temporal. Si falla, la evaluación
+    # sigue: es una vista de lo medido, no parte del veredicto.
+    if imagen_path:
+        try:
+            mapa = mapa_evidencia.generar(imagen_path)
+        except Exception:
+            mapa = None
 except Exception as exc:  # el pipeline no debe tumbar la UI
     st.error("El pipeline lanzó un error y no pudo completar la evaluación.")
     st.exception(exc)
@@ -382,6 +391,25 @@ if resultado is not None:
 
     if resultado.resumen_ejecutivo:
         st.caption(resultado.resumen_ejecutivo)
+
+    # Por qué sale ese veredicto: lo que midió el código, pintado sobre la foto.
+    if mapa is not None:
+        st.subheader("Mapa de evidencia")
+        st.caption("Lo que el código midió en la foto, con los mismos umbrales del veredicto. "
+                   "Azul: espacio vacío · rojo: quemado · ámbar: sin detalle por sombra · "
+                   "verde: zonas con gráfico o texto. Nada de esto lo decide un modelo.")
+        _mapa_img, _ley = mapa
+        st.image(_mapa_img, width="stretch")
+        m1, m2, m3, m4 = st.columns(4)
+        m1.metric("Espacio vacío", f"{_ley['vacio_pct']} %")
+        m2.metric("Quemado", f"{_ley['quemado_pct']} %")
+        m3.metric("Sin detalle", f"{_ley['aplastado_pct']} %")
+        m4.metric("Celdas con gráfico", _ley["celdas_graficos"])
+        import io as _io
+        _buf = _io.BytesIO()
+        _mapa_img.save(_buf, format="PNG")
+        st.download_button("Descargar mapa (PNG)", data=_buf.getvalue(),
+                           file_name="mapa_evidencia.png", mime="image/png", on_click="ignore")
 
     st.subheader("Criterios")
     df_criterios = _df_criterios(resultado.criterios)
