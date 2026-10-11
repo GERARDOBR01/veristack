@@ -122,10 +122,14 @@ de 12 imágenes construidas por código, cada una con un defecto inyectado a pro
 se sabe con certeza qué lleva cada foto. `benchmark/correr.py` saca la **matriz de confusión
 por regla** y publica los casos donde falla en **[benchmark/RESULTADOS.md](benchmark/RESULTADOS.md)**.
 
-Hoy: **11/12 casos correctos**, y el que falla está documentado con su causa — el umbral de
-brillo declarado (40) no corresponde a la luminancia media que uno esperaría, así que una foto
-razonablemente iluminada se rechaza. Enseñar ese caso vale más que esconderlo: es el mismo
-criterio que el sistema aplica a sus propios veredictos.
+Medición del **11 de octubre de 2026: 12/12 escenarios sintéticos cumplen la expectativa global**.
+El anterior 11/12 venía de comparar luminancia en escala 0-255 con brillo en escala 0-100: la escena
+atenuada por 0.30 sí debía rechazarse. Se corrigió la expectativa, sin cambiar el motor ni sus umbrales.
+También se comprueba el brillo por debajo de 40, exactamente en 40 y por encima.
+
+Esto no significa precisión perfecta: los tres montajes normales siguen generando falsos positivos de
+`espacio_vacio_elevado`, visibles en la matriz. Este set mide reglas deterministas, **no** la interpretación
+del modelo ni efectividad en tiendas reales.
 
 ```bash
 python benchmark/correr.py --escribir

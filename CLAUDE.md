@@ -21,7 +21,9 @@ Filosofía: **"Reloj suizo, no cohete espacial"** — robusto, seguro, confiable
 - El historial de sesiones de desarrollo (bitácora técnica completa) se archivó en privado el 2026-08-13, junto con todo el conocimiento real.
 - El vault de Obsidian (`brain/01-Veristack/`) es la memoria de arquitectura y decisiones; este archivo solo gobierna el trabajo dentro del repo.
 
-## Estado actual (13 Ago 2026 — repo público saneado)
+## Estado actual (11 Oct 2026 — benchmark corregido)
+- Benchmark: 12/12 expectativas globales en los mismos escenarios sintéticos; corregida la mezcla de escalas de brillo en la expectativa, sin tocar umbrales. Comprobaciones de frontera 101/102/103 en escala de píxeles.
+- Los falsos positivos de espacio vacío y la trazabilidad estructurada al bloquear siguen documentados. No se presenta el resultado global como precisión por regla ni como evaluación del modelo.
 - Historia reescrita: el conocimiento real del cliente piloto salió del repo y del historial; los 99 commits de ingeniería se conservan.
 - `pipeline/knowledge/` ahora es la capa de demo sintética (Mercadep) con el mismo esquema 1.1.
 - Pipeline: 4 módulos funcionando; gate de autotests como criterio de entrega.

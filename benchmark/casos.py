@@ -81,8 +81,9 @@ CASOS = [
     ("oscura_penumbra",         _oscura(0.15),                     "GRAVE", "imagen_oscura"),
     ("oscura_limite",           _oscura(0.19),                     "GRAVE", "imagen_oscura"),
 
-    # zona gris declarada: cerca del umbral, se espera que YA no dispare
-    ("luz_baja_aceptable",      _oscura(0.30),                     "NO_GRAVE", None),
+    # brightness se expresa en 0-100, no en 0-255. Un factor 0.30 deja
+    # esta escena por debajo de 40: rechazarla por oscuridad es correcto.
+    ("oscura_intermedia",       _oscura(0.30),                     "GRAVE", "imagen_oscura"),
 
     # borrosas: por debajo del minimo de nitidez (30)
     ("borrosa_movida",          _borrosa(9),                       "GRAVE", "imagen_borrosa"),

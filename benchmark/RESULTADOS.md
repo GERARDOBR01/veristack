@@ -1,6 +1,6 @@
 # Resultados del benchmark
 
-Regenerado el 2026-08-13 con `python benchmark/correr.py --escribir`.
+Regenerado el 2026-10-11 con `python benchmark/correr.py --escribir`.
 
 Mide **las reglas que decide el código**, de punta a punta sobre el pipeline completo,
 contra un ground truth **100 % sintético**: 12 imágenes construidas por código con
@@ -8,7 +8,7 @@ un defecto inyectado a propósito, así que se sabe con certeza qué lleva cada 
 criterios delegados al modelo quedan fuera — dependen de un proveedor externo y no serían
 reproducibles.
 
-**11/12 casos correctos.**
+**12/12 casos correctos.**
 
 ## Matriz de confusión por regla
 
@@ -16,7 +16,7 @@ reproducibles.
 |---|---:|---:|---:|---:|---:|---:|
 | `espacio_vacio_elevado` | 1 | 3 | 0 | 8 | 25 % | 100 % |
 | `imagen_borrosa` | 3 | 0 | 0 | 9 | 100 % | 100 % |
-| `imagen_oscura` | 4 | 1 | 0 | 7 | 80 % | 100 % |
+| `imagen_oscura` | 5 | 0 | 0 | 7 | 100 % | 100 % |
 
 ## Caso por caso
 
@@ -28,7 +28,7 @@ reproducibles.
 | `oscura_sin_luz` | GRAVE | GRAVE | imagen_oscura | `imagen_oscura` | ✅ |
 | `oscura_penumbra` | GRAVE | GRAVE | imagen_oscura | `imagen_oscura` | ✅ |
 | `oscura_limite` | GRAVE | GRAVE | imagen_oscura | `imagen_oscura` | ✅ |
-| `luz_baja_aceptable` | NO_GRAVE | GRAVE | — | `imagen_oscura` | ❌ |
+| `oscura_intermedia` | GRAVE | GRAVE | imagen_oscura | `imagen_oscura` | ✅ |
 | `borrosa_movida` | GRAVE | GRAVE | imagen_borrosa | `imagen_borrosa` | ✅ |
 | `borrosa_fuera_de_foco` | GRAVE | GRAVE | imagen_borrosa | `imagen_borrosa` | ✅ |
 | `borrosa_leve` | GRAVE | GRAVE | imagen_borrosa | `imagen_borrosa` | ✅ |
@@ -37,20 +37,25 @@ reproducibles.
 
 ## Dónde falla
 
-| Caso | Esperado | Obtenido |
-|---|---|---|
-| `luz_baja_aceptable` | NO_GRAVE + `—` | **GRAVE** + imagen_oscura |
+Ningún caso del set actual falla. Eso **no** significa que el motor sea perfecto:
+significa que este set todavía no encuentra su límite. La forma útil de usar esta
+tabla es agregar casos hasta que algo se ponga en rojo.
 
 ## Hallazgos del propio benchmark
 
 Construir esta medición encontró algo que el uso normal no muestra:
 
-- **El umbral de brillo declarado no corresponde a la luminancia media.** Una imagen con
-  media de luminancia 57 —bastante por encima del mínimo declarado de 40— sigue disparando
-  `imagen_oscura` (caso `luz_baja_aceptable`). El motor mide algo distinto del promedio, y
-  el mensaje al usuario dice `brillo=N (mínimo aceptable: 40)` como si fueran la misma
-  escala. En producción esto se ve como *«me está rechazando fotos que se ven bien»*.
-  Hay que decidir cuál es la medida correcta y que el mensaje diga esa.
+- **Corregida la expectativa del caso de luz baja, no el motor.** El brillo es la media
+  de luminancia dividida entre 255 y multiplicada por 100. El informe anterior comparó
+  una media de píxeles en escala 0-255 contra el umbral 40 en escala 0-100. La escena
+  atenuada por 0.30 está por debajo del umbral: su GRAVE era correcto. Se conserva la
+  misma imagen como `oscura_intermedia`, con la expectativa corregida; ningún umbral
+  de producción cambió. El comando también comprueba la regla con grises 101, 102 y
+  103: por debajo de 40 bloquea; exactamente en 40 y por encima no bloquea por brillo.
+- **NO_GRAVE no equivale a ausencia de observaciones.** Los tres montajes normales
+  siguen disparando `espacio_vacio_elevado`: son falsos positivos visibles en la matriz,
+  aunque el veredicto global cumpla la expectativa de no bloquear. Un 12/12 global
+  no significa precisión perfecta por regla ni mide la interpretación del modelo.
 - **Cuando el pipeline se detiene por un GRAVE, `ResultadoFinal.criterios` viene vacío.**
   El nombre de la regla que bloqueó solo existe dentro de `resumen_ejecutivo`, en prosa.
   Un consumidor del resultado no debería tener que parsear texto para saber qué regla lo

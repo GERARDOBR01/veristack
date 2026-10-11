@@ -38,7 +38,24 @@ REGLAS = ["imagen_oscura", "imagen_borrosa", "espacio_vacio_elevado"]
 # en rojo en el reporte —esconderlos sería justo lo contrario a lo que hace el motor—
 # pero no tumban el gate, porque su causa ya está identificada y escrita. Cuando el
 # hallazgo se arregle, el caso sale de esta lista y vuelve a ser un gate normal.
-HALLAZGOS_ABIERTOS = {"luz_baja_aceptable"}
+HALLAZGOS_ABIERTOS = set()
+
+
+def comprobar_escala_brillo():
+    """Comprueba la conversión de píxeles y ambos lados del umbral real.
+
+    Estas son comprobaciones de la regla, separadas de los 12 escenarios
+    de extremo a extremo; no inflan el denominador del benchmark.
+    """
+    from PIL import Image
+    from photo_analyzer import _average_brightness
+    from mandatory_engine import ConfigEngine, _regla_imagen_oscura
+
+    for gris, esperado in ((101, "GRAVE"), (102, "CUMPLE"), (103, "CUMPLE")):
+        brillo = _average_brightness(Image.new("L", (16, 16), gris))
+        assert abs(brillo - gris / 255 * 100) < 1e-9
+        resultado = _regla_imagen_oscura({"brillo": brillo}, ConfigEngine())
+        assert resultado.severidad.value == esperado, (gris, brillo, resultado)
 
 
 def _reglas_disparadas(res):
@@ -141,12 +158,17 @@ def informe(filas, matriz):
         "",
         "Construir esta medición encontró algo que el uso normal no muestra:",
         "",
-        "- **El umbral de brillo declarado no corresponde a la luminancia media.** Una imagen con",
-        "  media de luminancia 57 —bastante por encima del mínimo declarado de 40— sigue disparando",
-        "  `imagen_oscura` (caso `luz_baja_aceptable`). El motor mide algo distinto del promedio, y",
-        "  el mensaje al usuario dice `brillo=N (mínimo aceptable: 40)` como si fueran la misma",
-        "  escala. En producción esto se ve como *«me está rechazando fotos que se ven bien»*.",
-        "  Hay que decidir cuál es la medida correcta y que el mensaje diga esa.",
+        "- **Corregida la expectativa del caso de luz baja, no el motor.** El brillo es la media",
+        "  de luminancia dividida entre 255 y multiplicada por 100. El informe anterior comparó",
+        "  una media de píxeles en escala 0-255 contra el umbral 40 en escala 0-100. La escena",
+        "  atenuada por 0.30 está por debajo del umbral: su GRAVE era correcto. Se conserva la",
+        "  misma imagen como `oscura_intermedia`, con la expectativa corregida; ningún umbral",
+        "  de producción cambió. El comando también comprueba la regla con grises 101, 102 y",
+        "  103: por debajo de 40 bloquea; exactamente en 40 y por encima no bloquea por brillo.",
+        "- **NO_GRAVE no equivale a ausencia de observaciones.** Los tres montajes normales",
+        "  siguen disparando `espacio_vacio_elevado`: son falsos positivos visibles en la matriz,",
+        "  aunque el veredicto global cumpla la expectativa de no bloquear. Un 12/12 global",
+        "  no significa precisión perfecta por regla ni mide la interpretación del modelo.",
         "- **Cuando el pipeline se detiene por un GRAVE, `ResultadoFinal.criterios` viene vacío.**",
         "  El nombre de la regla que bloqueó solo existe dentro de `resumen_ejecutivo`, en prosa.",
         "  Un consumidor del resultado no debería tener que parsear texto para saber qué regla lo",
@@ -167,6 +189,8 @@ def informe(filas, matriz):
 
 
 def main():
+    comprobar_escala_brillo()
+    print("Escala de brillo y umbral: 3/3 comprobaciones correctas (separadas del benchmark)")
     filas, matriz = correr()
     aciertos = sum(1 for f in filas if f[5])
 
